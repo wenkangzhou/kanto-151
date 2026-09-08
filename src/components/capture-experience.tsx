@@ -1,9 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent, type CSSProperties } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Check, Sparkles, Ticket } from 'lucide-react';
+import { ArrowRight, Check, Sparkles, Ticket, Gift, Mountain, Backpack } from 'lucide-react';
 import { api } from '@/lib/api-client';
 import { pokemonById, dexNumber } from '@/domain/pokemon';
 import { legendaryEligible } from '@/domain/collection';
@@ -23,9 +23,10 @@ const evolutionStages = [
 function Encounter({ receipt }: { receipt: Receipt }) {
   const { refresh } = useCollection(); const router = useRouter(); const reduced = useReducedMotion();
   const evolution = receipt.kind === 'evolution'; const stages = evolution ? evolutionStages : captureStages;
+  const [giftOpened, setGiftOpened] = useState(false);
   const [phase, setPhase] = useState(0); const [skipped, setSkipped] = useState(false); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   const ticketOnly = receipt.pokemon_id === null;
-  const stage = skipped || reduced || receipt.acknowledged_at || ticketOnly ? 'completed' : stages[phase][0];
+  const stage = skipped || reduced || receipt.acknowledged_at ? 'completed' : ticketOnly ? giftOpened ? 'completed' : 'gift' : stages[phase][0];
   const revealed = ['reveal', 'completed'].includes(stage);
   const target = receipt.pokemon_id ? pokemonById.get(receipt.pokemon_id)! : null;
   const before = receipt.from_pokemon_id ? pokemonById.get(receipt.from_pokemon_id)! : null;
@@ -41,10 +42,13 @@ function Encounter({ receipt }: { receipt: Receipt }) {
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); setBusy(false); }
   }
   const activeArt = evolution && before && ['idle', 'prepare', 'glowing'].includes(stage) ? before : target;
-  return <section className={`encounter ${evolution ? 'evolution-encounter' : 'capture-encounter'} phase-${stage}`}>
-    <div className="encounter-heading"><span className="eyebrow">{receipt.kind === 'mew' ? 'THE FINAL LITTLE MIRACLE' : evolution ? 'A NEW WAY TO GROW' : ticketOnly ? 'A GIFT FOR YOUR JOURNEY' : 'A NEW FRIEND, FOREVER'}</span>{!revealed && <button className="skip-animation" onClick={() => setSkipped(true)}>跳过动画</button>}</div>
-    <div className="encounter-stage" aria-hidden="true">{ticketOnly ? <Ticket className="ticket-reveal" size={110} /> : <><div className="encounter-flash" />{activeArt && <motion.div className="encounter-art" animate={revealed ? { scale: 1, opacity: 1 } : { scale: evolution && stage === 'glowing' ? 1.07 : 1, opacity: 1 }}><PokemonArt pokemon={activeArt} hidden={!revealed && (!evolution || ['silhouette-changing', 'flash'].includes(stage))} priority /></motion.div>}{!evolution && <div className="encounter-ball" key={stage}><div className="pokeball"><span className="pokeball-shine" /><span className="pokeball-button" /></div></div>}<Sparkles className="encounter-sparkle left" size={35} /><Sparkles className="encounter-sparkle right" size={25} /></>}</div>
-    <div className="encounter-copy" aria-live="polite">{revealed ? <><span className="success-label"><Check size={16} />{ticketOnly ? '奖励已放入背包' : '相遇已永久保存'}</span><h1>{target ? target.name : receipt.kind === 'evolution-ticket' ? '获得一张进化券' : '获得一张传说券'}</h1>{target && <p className="mono">{dexNumber(target.id)} · {target.englishName}</p>}<p className="encounter-reason">「{receipt.reason || '一次值得记住的努力'}」</p><button className="button" disabled={busy} onClick={() => void finish()}>{busy ? '正在打开…' : target ? '把这次相遇记进手帐' : '打开我的背包'}<ArrowRight size={17} /></button></> : <><h2>{stages[phase][1]}</h2><p>这次相遇已经保存，放心享受这一刻。</p></>}</div>{error && <p className="form-error" role="alert">{error}</p>}
+  return <section className={`encounter ${skipped || reduced || receipt.acknowledged_at ? 'encounter-quiet' : ''} ${ticketOnly ? 'gift-encounter' : evolution ? 'evolution-encounter' : 'capture-encounter'} ${receipt.kind === 'legendary' || receipt.kind === 'legendary-ticket' ? 'legendary-encounter' : ''} ${receipt.kind === 'mew' ? 'mew-encounter' : ''} phase-${stage}`}>
+    <div className="encounter-heading"><span className="eyebrow">{receipt.kind === 'mew' ? '最后的奇迹' : evolution ? '伙伴长大啦' : ticketOnly ? '一份送给你的鼓励' : '今天的新伙伴'}</span>{!revealed && <button className="skip-animation" onClick={() => setSkipped(true)}>跳过动画</button>}</div>
+    <div className="encounter-stage">
+      {(revealed || stage === 'success') && !reduced && !skipped && !receipt.acknowledged_at && <div className="encounter-confetti" aria-hidden="true">{Array.from({ length: 12 }, (_, index) => <i key={index} style={{ '--piece-angle': `${index * 30}deg`, '--piece-color': ['#dabf72', '#97b596', '#b6a4ce', '#e5a897'][index % 4], '--piece-distance': `${85 + index % 3 * 25}px` } as CSSProperties} />)}</div>}
+      {ticketOnly ? revealed ? <div className={`revealed-gift-ticket ${receipt.kind === 'evolution-ticket' ? 'evolution' : 'legendary'}`} aria-label={receipt.kind === 'evolution-ticket' ? '一张进化券' : '一张传说券'}><span className="gift-ticket-emblem">{receipt.kind === 'evolution-ticket' ? <Sparkles size={55} /> : <Mountain size={55} />}</span><strong>{receipt.kind === 'evolution-ticket' ? '进化券' : '传说券'}</strong><span className="gift-ticket-count"><Ticket size={22} /> × 1</span></div> : <button className="open-gift" aria-label="打开奖励礼物，奖励已保存" onClick={() => setGiftOpened(true)}><span className="gift-halo" aria-hidden="true" /><span className="gift-box" aria-hidden="true"><Gift size={100} strokeWidth={1.4} /><span className="gift-seal"><Sparkles size={27} /></span></span><span className="gift-touch-prompt">点我打开 <Sparkles size={20} /></span></button> : <div className="encounter-scenery" aria-hidden="true"><div className="encounter-ground" /><div className="evolution-aura" /><div className="encounter-flash" />{activeArt && <motion.div className="encounter-art" animate={revealed ? { scale: 1, opacity: 1 } : { scale: evolution && stage === 'glowing' ? 1.07 : 1, opacity: 1 }}><PokemonArt pokemon={activeArt} hidden={!revealed && (!evolution || ['silhouette-changing', 'flash'].includes(stage))} priority /></motion.div>}{!evolution && <div className="encounter-ball" key={stage}><div className="pokeball"><span className="pokeball-shine" /><span className="pokeball-button" /></div></div>}<Sparkles className="encounter-sparkle left" size={35} /><Sparkles className="encounter-sparkle right" size={25} /></div>}
+    </div>
+    <div className="encounter-copy" aria-live="polite">{revealed ? <><span className="success-label"><Check size={16} />{ticketOnly ? '奖励已放入背包' : '相遇已永久保存'}</span><h1>{target ? target.name : receipt.kind === 'evolution-ticket' ? '获得一张进化券' : '获得一张传说券'}</h1>{target && <><p className="mono">{dexNumber(target.id)} · {target.englishName}</p>{!receipt.acknowledged_at && <span className="discovery-stamp"><Sparkles size={20} /> 新伙伴 +1</span>}</>}{evolution && before && <div className="original-kept"><PokemonArt pokemon={before} /><Check size={19} /><span>{before.name}也会一直陪着你</span></div>}<p className="encounter-reason">「{receipt.reason || '一次值得记住的努力'}」</p><button className="button" disabled={busy} onClick={() => void finish()}>{ticketOnly && <Backpack size={23} />}{busy ? '正在打开…' : target ? '看看新伙伴' : '放好啦，去背包'}<ArrowRight size={17} /></button></> : <><h2>{ticketOnly ? '里面藏着什么惊喜呢？' : stages[phase][1]}</h2><p>{ticketOnly ? '这是属于你的一份鼓励。' : '这次相遇已经保存，放心享受这一刻。'}</p></>}</div>{error && <p className="form-error" role="alert">{error}</p>}
   </section>;
 }
 export function CaptureExperience() {

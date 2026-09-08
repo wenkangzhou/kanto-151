@@ -22,3 +22,8 @@ export function TypeBadge({ type, multiplier }: { type: PokemonType; multiplier?
   const Icon = TYPE_ICONS[type];
   return <span className={`type-badge type-${type}`}><span className="type-icon" aria-hidden="true"><Icon size={12} /></span>{TYPE_NAMES[type]}{multiplier !== undefined && <b>×{multiplier}</b>}</span>;
 }
+
+export function TypePicture({ type }: { type: PokemonType }) {
+  const Icon = TYPE_ICONS[type];
+  return <span className={`type-picture type-${type}`}><Icon size={32} aria-hidden="true" /><span>{TYPE_NAMES[type]}</span></span>;
+}
