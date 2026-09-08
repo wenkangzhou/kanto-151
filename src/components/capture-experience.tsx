@@ -10,6 +10,8 @@ import { legendaryEligible } from '@/domain/collection';
 import type { Receipt } from '@/domain/types';
 import { useCollection } from './collection-provider';
 import { PokemonArt } from './pokemon-art';
+import { RewardKeypad } from './reward-keypad';
+import { CollectionMark } from './collection-mark';
 import { PokeballLoader } from './pokeball-loader';
 const captureStages = [
   ['silhouette', '草丛里有新的伙伴', 0], ['throw', '出发吧，精灵球！', 650], ['flash', '相遇的光芒', 1200],
@@ -62,7 +64,7 @@ export function CaptureExperience() {
     return () => controller.abort();
   }, [receiptId, live]);
   async function redeem(event: FormEvent) {
-    event.preventDefault(); if (busy) return; setBusy(true); setError('');
+    event.preventDefault(); if (!live || busy || !/^[0-9]{6}$/.test(code)) return; setBusy(true); setError('');
     try { const result = await api<Receipt>('redeem', { code }); setReceipt(result); router.push(`/capture?receipt=${result.id}`); }
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); }
     finally { setBusy(false); }
@@ -75,5 +77,5 @@ export function CaptureExperience() {
   }
   if (live && receiptId && receipt?.id === receiptId) return <div className="page"><Encounter key={receipt.id} receipt={receipt} /></div>;
   if (live && receiptId) return <div className="page">{error ? <div className="empty-state"><h2>暂时没有读到这次相遇</h2><p role="alert">{error}</p><button className="button" onClick={() => window.location.reload()}>重新读取已保存的结果</button><Link href="/capture" className="text-link">返回兑换入口</Link></div> : <PokeballLoader label="正在读取已经保存的相遇…" />}</div>;
-  return <div className="page"><div className="page-heading"><div><div className="eyebrow"><span /> YOUR EFFORT BECOMES A MEMORY</div><h1>一份努力，一次相遇<span className="title-dot">.</span></h1><p>把家长送给你的六位数字，变成一次新的成长。</p></div></div><section className="access-card redeem-card"><span className="feature-icon"><Ticket size={35} /></span><h2>收到了奖励码吗？</h2><p>{live ? '捕捉一定成功，每次相遇都不会重复。' : '当前是示例冒险。连接家庭服务后，就可以兑换真实奖励。'}</p><form onSubmit={redeem} className="family-form"><label>六位奖励码<input className="code-input mono" value={code} onChange={event => setCode(event.target.value.replace(/\D/g, '').slice(0, 6))} required inputMode="numeric" autoComplete="off" pattern="[0-9]{6}" minLength={6} maxLength={6} placeholder="000000" disabled={!live || busy} /></label>{error && <p className="form-error" role="alert">{error}</p>}<button className="button" disabled={!live || busy || code.length !== 6}>{busy ? '正在保存这次相遇…' : '打开这份奖励'}<ArrowRight size={17} /></button></form><p className="form-note">如果网络中断，可以用同一码重试，结果不会改变。</p></section>{pendingReceipt && <Link href={`/capture?receipt=${pendingReceipt.id}`} className="pending-receipt"><Sparkles size={22} /><span>还有一份已经保存的惊喜，等你打开。</span><ArrowRight size={18} /></Link>}{live && legendaryEligible(151, snapshot) && <section className="mew-unlock"><Sparkles size={32} /><h2>150 位伙伴，让最后的奇迹醒来了</h2><p>这一次，不需要奖励码，也不需要传说券。</p><button className="button" disabled={busy} onClick={() => void mew()}>开启最后的相遇</button></section>}</div>;
+  return <div className="page"><div className="page-heading"><div><div className="eyebrow"><span /> YOUR EFFORT BECOMES A MEMORY</div><h1>一份努力，一次相遇<span className="title-dot">.</span></h1><p>把家长送给你的六位数字，变成一次新的成长。</p></div></div><section className="access-card redeem-card keypad-redeem-card"><span className="redeem-ball-emblem"><CollectionMark state="available" /></span><h2>打开奖励</h2>{!live && <p>当前是示例冒险，连接家庭后即可兑换。</p>}<form onSubmit={redeem} className="family-form"><RewardKeypad value={code} onChange={value => { setCode(value); setError(''); }} disabled={!live || busy} />{error && <p className="form-error" role="alert">{error}</p>}<button className={`button keypad-submit ${code.length === 6 ? 'ready' : ''}`} disabled={!live || busy || code.length !== 6}>{busy ? <><span className="keypad-saving-ball" aria-hidden="true"><span className="pokeball"><span className="pokeball-button" /></span></span>正在打开奖励…</> : <><CollectionMark state="available" />打开！<ArrowRight size={24} /></>}</button></form><p className="keypad-parent-note">家长也可以点数字格，用键盘或粘贴输入。网络中断后，用同一码重试会返回原来的结果。</p></section>{pendingReceipt && <Link href={`/capture?receipt=${pendingReceipt.id}`} className="pending-receipt"><Sparkles size={22} /><span>还有一份已经保存的惊喜，等你打开。</span><ArrowRight size={18} /></Link>}{live && legendaryEligible(151, snapshot) && <section className="mew-unlock"><Sparkles size={32} /><h2>150 位伙伴，让最后的奇迹醒来了</h2><p>这一次，不需要奖励码，也不需要传说券。</p><button className="button" disabled={busy} onClick={() => void mew()}>开启最后的相遇</button></section>}</div>;
 }
