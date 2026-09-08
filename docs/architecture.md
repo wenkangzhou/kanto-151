@@ -1,43 +1,54 @@
-# Kanto 151 第一版架构
+# Kanto 151 家庭奖励架构
 
-## 本次范围
+## 范围
 
-落实原始需求的 First Implementation Milestone：Next.js App Router、完整 151 JSON 数据、图鉴、详情、当前属性倍率、收藏状态、移动端响应式。加上首页、背包/成长足迹的只读展示、PWA 和原创 Logo。
+一个部署、一个 Supabase 项目、一个家庭和一个孩子，多设备共享收藏。全部 151 只宝可梦资料与插画在仓库中；没有运行时 Pokémon API 请求。没有配置 Supabase 时使用只读示例，配置完整后使用真实家庭数据。两者不会混写。
 
-这是**图鉴体验版**。默认显示 10 条固定的示例记录，右上角可切换空白收藏。示例不会写入 Supabase；浏览器只保存预览模式偏好，不保存 PIN、奖励、真实收藏。家长、兑换与进化执行入口明确说明下一阶段开放，不生成虚假的可用奖励码。
+## 模块
 
-## 模块边界
+- `src/data/`：151 只元数据、儿童简介、六个章节、来源与示例数据。
+- `src/domain/`：不依赖 React 的收藏状态、进化选项、传说门槛、属性倍率。
+- `src/components/collection-provider.tsx`：同源会话接口返回的家庭快照；浏览器只在内存保存真实记录。
+- `src/lib/server/`：设备认证、PIN 哈希与签名、限速、请求校验、安全错误响应。
+- `src/app/api/[...path]/route.ts`：同源服务端接口，不接受客户端提供的家庭或孩子 ID。
+- `src/lib/supabase/`：纯配置校验及 `server-only` 客户端工厂。
+- `supabase/migrations/`：表结构、访问权限及原子 RPC。
+- `scripts/generate-sql-rules.ts`：从 JSON 生成 SQL 中的编号规则；构建检查两份规则一致。
 
-- `src/data/pokemon.json`：151 个默认形态，简繁英名称、现行属性、六维种族值、简介、父级进化关系、历史属性、图片路径。
-- `src/data/chapters.json`：6 个故事章节，30 只基础捕捉宝可梦。进化、传说、探索池互斥。
-- `src/data/provenance.json`：导入时间与来源。
-- `src/data/demo.ts`：只读示例与空白状态，Repository 接口的示例实现。
-- `src/domain/`：纯函数，不依赖 React、浏览器或网络。未来服务端可复用规则说明，但正式兑换必须在 PostgreSQL 事务里执行。
-- `src/components/collection-provider.tsx`：将当前快照提供给页面。第二阶段替换为受验证会话的服务端快照。
-- `src/lib/supabase/`：服务端客户端工厂与纯配置校验。客户端按需创建，不共享用户会话；当前图鉴页面尚未调用，不会读取或写入家庭数据。独立连接检查命令只请求服务元数据。
-- `public/pokemon/`：本地宝可梦插画。首次正常访问下载实际需要的图像，离线缓存只保留看过的静态资源。
+## 家庭身份
 
-## 收藏规则
+首次设置要求环境中的随机 `APP_SETUP_TOKEN`，以事务创建家庭和孩子、强哈希 PIN，以及家长设备。设备凭据是 32 字节随机值，浏览器存 HttpOnly / SameSite=Strict cookie（生产另设 Secure），数据库只保留 SHA-256 摘要。设备连接码为 12 位十六进制字符，单次、15 分钟有效；设备可撤销，180 天到期。
 
-`collectionState()` 输出 locked / available / collected / evolvable。只有收集过的宝可梦显示名称、属性和详情。未收集的路由不会在网页标题、替代文本或进化链里透露名称。静态 JSON 是公开知识数据，隐藏属于发现体验，不是数据保密机制。
+家长输入六位 PIN，服务端用带随机盐的 scrypt 校验，返回 HMAC 签名的 15 分钟 cookie，绑定设备 ID 和家庭 PIN 版本。恢复 PIN 会递增版本，令旧家长会话失效。所有家长 API 都在服务端验证，不能通过直接访问页面绕过。浏览器 localStorage 只保存示例模式偏好，不存 PIN、密钥、身份或真实奖励。
 
-故事章节按当前未收集的捕捉池推进，进化不阻塞章节。完成故事后才进入自由探索。进化产生一个新条目，保留原有条目，伊布对应 134、135、136 三个独立选择。皮卡丘等在后代拥有幼年形态的宝可梦在本项目仍作为关都基础形态。
+本版不使用 Supabase Auth，因而无需邮箱服务、Site URL、OAuth 或登录回调。设备配对提供家庭访问身份；PIN 只负责家长区解锁，不能单独连接一个陌生设备。
 
-传说：144 / 145 / 146 分别要求 60 / 80 / 100；150 要求故事结束并达到 140；151 要求已收集其他 150，只开放最终相遇，不消耗传说券。普通捕捉池始终排除传说和进化形态。
+## 数据库边界
 
-## 第二阶段：Supabase、家庭身份与真实奖励
+浏览器只请求本站 `/api`，不接触 Supabase URL 或任何 key。全部 `kanto_` 表开启 RLS；anon、authenticated、PUBLIC 均无表权限和 RPC 执行权限。由服务端 Secret key 调用，身份和孩子范围由每个接口明确验证。`service_role` 是高权限身份，RLS 不代替服务端授权。
 
-需要在开始真实家庭使用前完成：
+五项配置都仅由服务端读取，不使用 Next.js `env` 导出或 `NEXT_PUBLIC_`。布局只向客户端发送是否启用真实模式的布尔值。每个 API 响应都 `private, no-store`。写入请求要求 JSON、同源 Origin，并限制请求体大小；频率计数存 PostgreSQL，适用于无状态部署。生产 IP 限速仅信任 Vercel 覆盖的转发头，其他本地运行使用共享桶。
 
-所有 Supabase 配置仅用于服务端：`SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`、`SUPABASE_SECRET_KEY`，均禁止 `NEXT_PUBLIC_` 前缀。服务端客户端模块使用 `import 'server-only'`，浏览器通过经过身份验证的 Next.js Route Handlers / Server Actions 访问业务功能，不直接调用 Supabase，也不接收这些配置值。
+SQL 固定函数 `search_path`，对业务表使用完整 schema 名，不开放默认 PUBLIC EXECUTE。元数据不建表；RPC 内只有从 JSON 生成的编号、进化边与捕捉权重。
 
-1. 家庭入驻与 Supabase Auth 家长身份。孩子设备用配对后的受限身份，只能读取自己的收藏和兑换本家庭奖励。隐藏家长链接不能代替权限校验。
-2. PIN 只保留服务端强哈希；PIN 校验失败计数、速率限制、HttpOnly + Secure + SameSite 会话，服务端检查所有家长操作。PIN 作为家长区域的二次解锁，不代替家庭身份。
-3. RLS 隔离 families / children / pokemon_collection / reward_codes / inventory / story_progress / legendary_progress。孩子无法直接 INSERT 收藏或 UPDATE 奖励。
-4. 6 位码保留前导零，按家庭范围保证活动码唯一，设置有效期，服务端限速。家长创建捕捉码时不选宝可梦。
-5. `redeem_reward(code)` RPC 验证 auth.uid() 与家庭，按固定顺序锁定孩子状态和奖励码，读取库存/收藏/章节，计算候选池，再在事务中选取、插入、推进章节、标记已兑换并保存结果。对 `(child_id, pokemon_id)` 建唯一约束。候选池为空时不消耗奖励。
-6. 并发兑换同一码和不同码都必须串行化到孩子维度；重试返回已持久化结果，不能再次抽取。RPC 要固定 search_path、限制 EXECUTE 授权并测试跨家庭权限。
-7. `evolve_pokemon(target_id)` RPC 同一事务中验证前置形态和库存、去重、扣券、插入新形态并继承票据的成长理由。传说券也需保留来源理由；梦幻自动开放但仍由原子 RPC 完成收藏。
-8. 只有 RPC 提交成功后才播放可跳过、尊重 reduced-motion 的捕捉/进化动画。刷新恢复相同结果。默认静音，音效另行显式开启。
+## 原子奖励
 
-本版不附未完成的 SQL，也无需执行 SQL。完整 RLS、身份设计和原子 RPC 应作为同一套迁移交付并一起验证，避免把安全尚未完成的数据库用于家庭数据。
+`kanto_create_reward` 接收稳定请求 UUID，同内容重试返回原奖励，不提前选宝可梦。六位奖励码保留前导零，在孩子范围永不复用，首次兑换有效期 30 天。
+
+`kanto_redeem`、`kanto_use_ticket`、`kanto_meet_mew` 首先锁孩子行，再锁奖励码或券。同一孩子的不同兑换操作串行化，按唯一键 `(child_id, pokemon_id)` 阻止重复。选择对象、增加收藏、更新章节、消费奖励、保存相遇结果都在同一事务中。条件不满足则回滚，奖励仍可使用。
+
+每次成功保存 `kanto_receipts`。重复兑换码或重试同张券的同一个目标返回原结果；换目标不会重复消费已用券。相遇理由从奖励传入券，再传入新形态与历史记录。客户端拿到提交后的结果才播放动画，结果地址为 `/capture?receipt=<uuid>`；UUID 之外仍要求有效设备且属于该孩子。未确认结果可从首页或兑换页重新打开。
+
+## 收藏与动画
+
+故事六章，每章五只普通捕捉目标；当前章节普通目标收齐即推进，进化不阻塞。故事完成后按 common / rare / veryRare 的 10 / 3 / 1 权重从剩余探索池选择。普通捕捉排除进化与传说，无重复、无失败。
+
+每张进化券增加一个新形态，前置形态仍保留；伊布三种关都进化分别可选。传说 144 / 145 / 146 门槛为 60 / 80 / 100；150 为故事完成且至少 140；151 在其他 150 只收齐后自动开放免费最终相遇。
+
+捕捉有剪影、投球、闪光、落下、三次摇晃、停顿、成功与揭晓；进化包含 idle 到 completed 的七个状态，约 5.5 秒。可跳过，遵循减少动态效果设置，默认完全静音。跳过会取消剩余计时器；图鉴数量在揭晓时重新读取。未发现名字的隐藏是探索体验，仓库静态知识不是机密数据。
+
+## PWA 与验证
+
+Service Worker 仅缓存公开静态脚本、Logo 与插画，不缓存 HTML、RSC、API 或家长路径；离线时不展示缓存的家庭记录。升级清除旧版 HTML 缓存。
+
+`npm run verify` 运行 lint、生成规则一致性和自动测试；`npm run build` 包含配置、TypeScript、生产构建和公开产物密钥扫描。SQL 测试用本地 PGlite 执行整份迁移及业务生命周期，不接触云端数据，也不等同于多连接并发压力测试。部署和验收步骤见 [部署说明](deployment.md)。

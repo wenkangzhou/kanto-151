@@ -1,23 +1,14 @@
 # Supabase 服务端接入
 
-环境变量模板见 `.env.example`：`SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`、`SUPABASE_SECRET_KEY`。三项均仅在服务端使用，禁止 `NEXT_PUBLIC_` 前缀。使用新版 `sb_publishable_...` 和 `sb_secret_...`，不使用旧 JWT service-role key。
+三项数据库环境变量：`SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`、`SUPABASE_SECRET_KEY`，均为服务端变量，禁止 `NEXT_PUBLIC_` 前缀。家庭应用另需 `APP_SESSION_SECRET` 与 `APP_SETUP_TOKEN`。配置方式见项目 `docs/deployment.md`。
 
-`server.ts` 通过 `import 'server-only'` 阻止客户端组件导入：
+`server.ts` 使用 `import 'server-only'`：
 
-- `createSupabaseServerClient(accessToken?)`：每次请求独立创建，用 publishable key 和可选的已验证用户令牌应用 RLS。无令牌时为匿名权限；函数本身不验证令牌，调用方必须验证身份。
-- `createSupabaseAdminClient()`：使用 secret key 的高权限客户端。调用方必须先验证当前用户的操作权限，不能用它代替身份认证或家庭隔离。
+- `createSupabaseAdminClient()` 为已验证设备、家长 PIN、初始化或配对请求处理业务。高权限 key 不能代替 Next.js 接口的身份与孩子范围校验。
+- `createSupabaseServerClient(accessToken?)` 保留普通权限工厂。当前家庭配对模式不使用 Supabase Auth；无 token 时为匿名权限，对 Kanto 表与 RPC 无访问权限。
 
-两个工厂均禁用浏览器会话存储、自动刷新和 URL 会话检测。不共享带用户身份的全局客户端。浏览器只能通过经过身份验证的 Next.js Route Handlers / Server Actions 访问业务功能；不能通过 props、接口响应或 Next.js `env` 配置传出任何配置值。
+客户端只通过同源 `/api` 读取快照、创建或兑换奖励，不接收任何 Supabase 配置值。禁止从组件导入服务端客户端。每次请求独立创建客户端，关闭会话持久化与自动刷新。
 
-当前图鉴页面尚未调用这两个工厂。真实家庭身份、RLS、奖励事务和 CollectionRepository 适配仍属于下一阶段，见 `docs/architecture.md`。
+数据库迁移位于 `supabase/migrations`；身份与请求校验在 `src/lib/server`，API 在 `src/app/api/[...path]/route.ts`。RLS 与角色权限拒绝浏览器直接访问，高权限 RPC 只由服务端调用。
 
-## 本地检查
-
-```bash
-npm run check:env
-npm run check:supabase
-```
-
-按 Next.js 生产环境的优先级读取 `.env*` 和进程环境变量，只输出检查状态。连接检查只请求 Auth 配置和 REST 服务元数据，不查用户表、不写数据；遇到异常不打印服务响应或配置值。
-
-`npm run build` 自动运行配置校验：完全未配置时允许构建示例图鉴，部分缺失、错误格式、旧变量或公开变量会失败。构建结束后检查公开产物是否包含 Supabase 配置值。
+`npm run check:env` 校验五项配置；`npm run check:supabase` 只联网读取 Auth / REST 元数据。两者不输出配置值。构建允许全部 Supabase 配置留空的示例模式；完整配置后启用真实家庭模式。公开产物扫描会检查五项实际值是否进入客户端脚本、HTML 或 RSC。

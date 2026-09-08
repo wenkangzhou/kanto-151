@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { parseSupabaseConfig } from '../src/lib/supabase/config';
+import { parseAppConfig } from '../src/lib/server/app-config';
 const valid = {
   SUPABASE_URL: 'https://example.supabase.co/',
   SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_test_only',
@@ -11,6 +12,13 @@ test('Supabase config accepts complete new keys, normalizes the URL, allows an e
   assert.equal(parseSupabaseConfig({}, { allowEmpty: true }), null);
   assert.throws(() => parseSupabaseConfig({}), /缺少环境变量/);
   assert.throws(() => parseSupabaseConfig({ SUPABASE_URL: valid.SUPABASE_URL }, { allowEmpty: true }), /缺少环境变量/);
+});
+test('family secrets must be independent, sufficiently long and server-only', () => {
+  const valid = { APP_SESSION_SECRET: 'a'.repeat(43), APP_SETUP_TOKEN: 'b'.repeat(43) };
+  assert.deepEqual(parseAppConfig(valid), { sessionSecret: valid.APP_SESSION_SECRET, setupToken: valid.APP_SETUP_TOKEN });
+  for (const env of [{}, { ...valid, APP_SETUP_TOKEN: 'short-secret' }, { ...valid, APP_SETUP_TOKEN: valid.APP_SESSION_SECRET }, { ...valid, NEXT_PUBLIC_APP_SETUP_TOKEN: valid.APP_SETUP_TOKEN }]) {
+    assert.throws(() => parseAppConfig(env), error => error instanceof Error && !error.message.includes(valid.APP_SESSION_SECRET) && !error.message.includes('short-secret'));
+  }
 });
 test('Supabase config blocks public names and legacy keys', () => {
   assert.throws(() => parseSupabaseConfig({ ...valid, NEXT_PUBLIC_SUPABASE_URL: '' }), /禁止/);

@@ -1,12 +1,14 @@
 import { loadEnvConfig } from '@next/env';
 import { parseSupabaseConfig, SupabaseConfigError } from '../src/lib/supabase/config';
+import { parseAppConfig } from '../src/lib/server/app-config';
 
 async function main() {
 // Match next build's production env precedence. Never log dotenv contents/errors.
 loadEnvConfig(process.cwd(), false, { info() {}, error() {} });
 try {
   const config = parseSupabaseConfig(process.env, { allowEmpty: process.argv.includes('--allow-empty') });
-  console.log(config ? 'Supabase 服务端配置格式检查通过（未输出配置值）。' : '未配置 Supabase：以示例图鉴模式构建。');
+  if (config) parseAppConfig(process.env);
+  console.log(config ? 'Supabase 与家庭应用的五项服务端配置检查通过（未输出配置值）。' : '未配置 Supabase：以示例图鉴模式构建。');
   if (process.argv.includes('--connect')) {
     if (!config) throw new SupabaseConfigError('连接检查需要完整 Supabase 配置。');
     // Read API metadata only. Never query user data or write to the database.

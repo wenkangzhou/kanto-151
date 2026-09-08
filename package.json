@@ -12,7 +12,10 @@
     "data:sync": "python3 scripts/sync-pokemon.py",
     "prebuild": "node --import tsx scripts/check-env.ts --allow-empty",
     "postbuild": "node --import tsx scripts/check-client-bundle.ts",
-    "verify": "npm run lint && npm test",
+    "verify": "npm run lint && npm run sql:check && npm test",
+    "setup:secrets": "node --import tsx scripts/setup-secrets.ts",
+    "sql:rules": "node --import tsx scripts/generate-sql-rules.ts",
+    "sql:check": "node --import tsx scripts/generate-sql-rules.ts --check",
     "check:env": "node --import tsx scripts/check-env.ts",
     "check:supabase": "node --import tsx scripts/check-env.ts --connect"
   },
@@ -27,6 +30,7 @@
     "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "26.4.1",
     "@types/react": "19.2.18",

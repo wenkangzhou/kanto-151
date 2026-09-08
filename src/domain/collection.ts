@@ -39,6 +39,6 @@ export function unlockHint(p: Pokemon, snapshot: CollectionSnapshot): string {
   if (p.id === 151) return '与前 150 位伙伴相遇后，最后的奇迹会自动开启，无需传说券。';
   if (p.category === 'legendary') return `收集 ${p.id === 144 ? 60 : p.id === 145 ? 80 : p.id === 146 ? 100 : 140} 只宝可梦${p.id === 150 ? '并完成所有故事章节' : ''}后，可使用传说券相遇。`;
   if (p.category === 'evolution') return '收集它的前一个形态后，使用进化券就能认识它。原来的伙伴会一直保留。';
-  if (capturePool(snapshot).some(option => option.id === p.id)) return '它就在当前冒险区域里。未来兑换捕捉奖励时，有机会与它相遇。';
+  if (capturePool(snapshot).some(option => option.id === p.id)) return '它就在当前冒险区域里。兑换捕捉奖励时，有机会与它相遇。';
   return p.category === 'story' ? '继续收集当前章节的伙伴，新的区域就会开启。' : '完成所有故事章节后，可以在自由探索中与它相遇。';
 }

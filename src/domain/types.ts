@@ -24,3 +24,19 @@ export interface CollectionSnapshot {
 }
 export interface Chapter { id: number; name: string; location: string; description: string; pokemonIds: number[] }
 export interface CollectionRepository { getSnapshot(): Promise<CollectionSnapshot> }
+
+export interface InventoryTicket { id: string; type: 'evolution' | 'legendary'; reason: string; createdAt: string }
+export interface Receipt {
+  id: string; kind: 'capture' | 'evolution-ticket' | 'legendary-ticket' | 'evolution' | 'legendary' | 'mew';
+  pokemon_id: number | null; from_pokemon_id: number | null; ticket_id: string | null;
+  reason: string; created_at: string; acknowledged_at: string | null;
+}
+export interface LiveSnapshot extends CollectionSnapshot { tickets: InventoryTicket[]; pendingReceipt: Receipt | null }
+export interface FamilySession {
+  status: 'ready' | 'demo' | 'setup-required' | 'unpaired';
+  parent?: boolean; parentExpiresAt?: number | null; familyName?: string; childName?: string; snapshot?: LiveSnapshot;
+}
+export interface ParentReward {
+  id: string; code: string; type: 'capture' | 'evolution' | 'legendary'; reason: string;
+  created_at: string; expires_at: string; redeemed_at: string | null; revoked_at: string | null;
+}
