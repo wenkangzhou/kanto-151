@@ -1,0 +1,4361 @@
+[
+  {
+    "id": 1,
+    "name": "妙蛙种子",
+    "traditionalName": "妙蛙種子",
+    "englishName": "Bulbasaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 45,
+      "attack": 49,
+      "defense": 49,
+      "special-attack": 65,
+      "special-defense": 65,
+      "speed": 45
+    },
+    "height": 0.7,
+    "weight": 6.9,
+    "description": "在出生后的一段时间内，它会吸收背上种子里储存着的营养成长。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/1.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+    "category": "story",
+    "rarity": "rare"
+  },
+  {
+    "id": 2,
+    "name": "妙蛙草",
+    "traditionalName": "妙蛙草",
+    "englishName": "Ivysaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 62,
+      "defense": 63,
+      "special-attack": 80,
+      "special-defense": 80,
+      "speed": 60
+    },
+    "height": 1.0,
+    "weight": 13.0,
+    "description": "沐浴在阳光下越久，身体内会涌出越多力量，背上的花苞也会渐渐成长。",
+    "evolvesFrom": 1,
+    "artwork": "/pokemon/2.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 3,
+    "name": "妙蛙花",
+    "traditionalName": "妙蛙花",
+    "englishName": "Venusaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 82,
+      "defense": 83,
+      "special-attack": 100,
+      "special-defense": 100,
+      "speed": 80
+    },
+    "height": 2.0,
+    "weight": 100.0,
+    "description": "花朵散发出的迷人香味能安抚激动的心情，甚至消弭斗争。",
+    "evolvesFrom": 2,
+    "artwork": "/pokemon/3.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 4,
+    "name": "小火龙",
+    "traditionalName": "小火龍",
+    "englishName": "Charmander",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 39,
+      "attack": 52,
+      "defense": 43,
+      "special-attack": 60,
+      "special-defense": 50,
+      "speed": 65
+    },
+    "height": 0.6,
+    "weight": 8.5,
+    "description": "尾巴上的小火苗，就像它的活力信号。精神饱满时，火焰也会明亮地摇动。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/4.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+    "category": "story",
+    "rarity": "rare"
+  },
+  {
+    "id": 5,
+    "name": "火恐龙",
+    "traditionalName": "火恐龍",
+    "englishName": "Charmeleon",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 58,
+      "attack": 64,
+      "defense": 58,
+      "special-attack": 80,
+      "special-defense": 65,
+      "speed": 80
+    },
+    "height": 1.1,
+    "weight": 19.0,
+    "description": "挥动有力的尾巴，喷出热热的火焰。小火龙长大后，多了几分神气。",
+    "evolvesFrom": 4,
+    "artwork": "/pokemon/5.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 6,
+    "name": "喷火龙",
+    "traditionalName": "噴火龍",
+    "englishName": "Charizard",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "fire",
+      "flying"
+    ],
+    "stats": {
+      "hp": 78,
+      "attack": 84,
+      "defense": 78,
+      "special-attack": 109,
+      "special-defense": 85,
+      "speed": 100
+    },
+    "height": 1.7,
+    "weight": 90.5,
+    "description": "能用翅膀飞到距地面１４００米的高度。会吐出高温火焰。",
+    "evolvesFrom": 5,
+    "artwork": "/pokemon/6.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 7,
+    "name": "杰尼龟",
+    "traditionalName": "傑尼龜",
+    "englishName": "Squirtle",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 44,
+      "attack": 48,
+      "defense": 65,
+      "special-attack": 50,
+      "special-defense": 64,
+      "speed": 43
+    },
+    "height": 0.5,
+    "weight": 9.0,
+    "description": "当它遇到危险的时候，会将四肢收回龟壳里保护自己，同时从嘴里喷出水来。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/7.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+    "category": "story",
+    "rarity": "rare"
+  },
+  {
+    "id": 8,
+    "name": "卡咪龟",
+    "traditionalName": "卡咪龜",
+    "englishName": "Wartortle",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 59,
+      "attack": 63,
+      "defense": 80,
+      "special-attack": 65,
+      "special-defense": 80,
+      "speed": 58
+    },
+    "height": 1.0,
+    "weight": 22.5,
+    "description": "会灵巧地摆动自己毛茸茸的耳朵和尾巴，借此在水中保持平衡。",
+    "evolvesFrom": 7,
+    "artwork": "/pokemon/8.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 9,
+    "name": "水箭龟",
+    "traditionalName": "水箭龜",
+    "englishName": "Blastoise",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 79,
+      "attack": 83,
+      "defense": 100,
+      "special-attack": 85,
+      "special-defense": 105,
+      "speed": 78
+    },
+    "height": 1.6,
+    "weight": 85.5,
+    "description": "从龟壳上的大炮里放出的喷射水流足以贯穿厚实的铁板。",
+    "evolvesFrom": 8,
+    "artwork": "/pokemon/9.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 10,
+    "name": "绿毛虫",
+    "traditionalName": "綠毛蟲",
+    "englishName": "Caterpie",
+    "types": [
+      "bug"
+    ],
+    "kantoEraTypes": [
+      "bug"
+    ],
+    "stats": {
+      "hp": 45,
+      "attack": 30,
+      "defense": 35,
+      "special-attack": 20,
+      "special-defense": 20,
+      "speed": 45
+    },
+    "height": 0.3,
+    "weight": 2.9,
+    "description": "别看它的脚很短，因为是吸盘，所以无论是斜坡还是墙壁都能轻松前进。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/10.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 11,
+    "name": "铁甲蛹",
+    "traditionalName": "鐵甲蛹",
+    "englishName": "Metapod",
+    "types": [
+      "bug"
+    ],
+    "kantoEraTypes": [
+      "bug"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 20,
+      "defense": 55,
+      "special-attack": 25,
+      "special-defense": 25,
+      "speed": 30
+    },
+    "height": 0.7,
+    "weight": 9.9,
+    "description": "安静的外壳里，正发生着了不起的变化。成长有时也需要好好等待。",
+    "evolvesFrom": 10,
+    "artwork": "/pokemon/11.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 12,
+    "name": "巴大蝶",
+    "traditionalName": "巴大蝶",
+    "englishName": "Butterfree",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "flying"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 45,
+      "defense": 50,
+      "special-attack": 90,
+      "special-defense": 80,
+      "speed": 70
+    },
+    "height": 1.1,
+    "weight": 32.0,
+    "description": "每天都忙着采集花蜜。习惯往腿部的细毛上涂满花蜜，然后带回巢穴里。",
+    "evolvesFrom": 11,
+    "artwork": "/pokemon/12.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 13,
+    "name": "独角虫",
+    "traditionalName": "獨角蟲",
+    "englishName": "Weedle",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "poison"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 35,
+      "defense": 30,
+      "special-attack": 20,
+      "special-defense": 20,
+      "speed": 50
+    },
+    "height": 0.3,
+    "weight": 3.2,
+    "description": "头上长有尖锐的针。它喜欢藏在森林或草丛里大量吞食树叶。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/13.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 14,
+    "name": "铁壳蛹",
+    "traditionalName": "鐵殼蛹",
+    "englishName": "Kakuna",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "poison"
+    ],
+    "stats": {
+      "hp": 45,
+      "attack": 25,
+      "defense": 50,
+      "special-attack": 25,
+      "special-defense": 25,
+      "speed": 35
+    },
+    "height": 0.6,
+    "weight": 10.0,
+    "description": "它把自己包在坚实的壳里，静静准备下一次蜕变。",
+    "evolvesFrom": 13,
+    "artwork": "/pokemon/14.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/14.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 15,
+    "name": "大针蜂",
+    "traditionalName": "大針蜂",
+    "englishName": "Beedrill",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "poison"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 40,
+      "special-attack": 45,
+      "special-defense": 80,
+      "speed": 75
+    },
+    "height": 1.0,
+    "weight": 29.5,
+    "description": "扇动翅膀在树林间飞行，手臂上有醒目的尖针。观察它时记得保持距离。",
+    "evolvesFrom": 14,
+    "artwork": "/pokemon/15.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 16,
+    "name": "波波",
+    "traditionalName": "波波",
+    "englishName": "Pidgey",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "flying"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 40,
+      "special-attack": 35,
+      "special-defense": 35,
+      "speed": 56
+    },
+    "height": 0.3,
+    "weight": 1.8,
+    "description": "性格沉着冷静，即使受到攻击也很少反击，只会朝对手扬起沙子保护自己。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/16.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 17,
+    "name": "比比鸟",
+    "traditionalName": "比比鳥",
+    "englishName": "Pidgeotto",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "flying"
+    ],
+    "stats": {
+      "hp": 63,
+      "attack": 60,
+      "defense": 55,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 71
+    },
+    "height": 1.1,
+    "weight": 30.0,
+    "description": "拥有超群的体力，而且飞翔范围广，经常飞到很远的地方寻找食物。",
+    "evolvesFrom": 16,
+    "artwork": "/pokemon/17.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 18,
+    "name": "大比鸟",
+    "traditionalName": "大比鳥",
+    "englishName": "Pidgeot",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "flying"
+    ],
+    "stats": {
+      "hp": 83,
+      "attack": 80,
+      "defense": 75,
+      "special-attack": 70,
+      "special-defense": 70,
+      "speed": 101
+    },
+    "height": 1.5,
+    "weight": 39.5,
+    "description": "宽大的翅膀让它成为飞行高手，能从高空看见远处的动静。",
+    "evolvesFrom": 17,
+    "artwork": "/pokemon/18.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/18.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 19,
+    "name": "小拉达",
+    "traditionalName": "小拉達",
+    "englishName": "Rattata",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 30,
+      "attack": 56,
+      "defense": 35,
+      "special-attack": 25,
+      "special-defense": 35,
+      "speed": 72
+    },
+    "height": 0.3,
+    "weight": 3.5,
+    "description": "小小的身体配着醒目的大门牙，活跃的它总能找到藏身的地方。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/19.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/19.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 20,
+    "name": "拉达",
+    "traditionalName": "拉達",
+    "englishName": "Raticate",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 55,
+      "attack": 81,
+      "defense": 60,
+      "special-attack": 50,
+      "special-defense": 70,
+      "speed": 97
+    },
+    "height": 0.7,
+    "weight": 18.5,
+    "description": "它的后脚上长着小蹼，以便它在水中游泳寻找食物。",
+    "evolvesFrom": 19,
+    "artwork": "/pokemon/20.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/20.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 21,
+    "name": "烈雀",
+    "traditionalName": "烈雀",
+    "englishName": "Spearow",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "flying"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 60,
+      "defense": 30,
+      "special-attack": 31,
+      "special-defense": 31,
+      "speed": 70
+    },
+    "height": 0.3,
+    "weight": 2.0,
+    "description": "它喜欢贴近地面灵活飞行，用响亮的叫声提醒同伴。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/21.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/21.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 22,
+    "name": "大嘴雀",
+    "traditionalName": "大嘴雀",
+    "englishName": "Fearow",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "flying"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 65,
+      "special-attack": 61,
+      "special-defense": 61,
+      "speed": 100
+    },
+    "height": 1.2,
+    "weight": 38.0,
+    "description": "很久以前就存在的宝可梦。哪怕只察觉到一丝危险，都会立即飞向高空。",
+    "evolvesFrom": 21,
+    "artwork": "/pokemon/22.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/22.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 23,
+    "name": "阿柏蛇",
+    "traditionalName": "阿柏蛇",
+    "englishName": "Ekans",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 35,
+      "attack": 60,
+      "defense": 44,
+      "special-attack": 40,
+      "special-defense": 54,
+      "speed": 55
+    },
+    "height": 2.0,
+    "weight": 6.9,
+    "description": "身体会随着年龄增长不断变长。每到夜里，它会一圈圈地将身体缠绕在树枝上休息。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/23.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/23.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 24,
+    "name": "阿柏怪",
+    "traditionalName": "阿柏怪",
+    "englishName": "Arbok",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 95,
+      "defense": 69,
+      "special-attack": 65,
+      "special-defense": 79,
+      "speed": 80
+    },
+    "height": 3.5,
+    "weight": 65.0,
+    "description": "展开颈部时，会露出特别的花纹。不同地方的阿柏怪，花纹也可能不同。",
+    "evolvesFrom": 23,
+    "artwork": "/pokemon/24.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 25,
+    "name": "皮卡丘",
+    "traditionalName": "皮卡丘",
+    "englishName": "Pikachu",
+    "types": [
+      "electric"
+    ],
+    "kantoEraTypes": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 35,
+      "attack": 55,
+      "defense": 40,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 90
+    },
+    "height": 0.4,
+    "weight": 6.0,
+    "description": "皮卡丘们把尾巴贴在一起交换电流，其实是在互相打招呼。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/25.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 26,
+    "name": "雷丘",
+    "traditionalName": "雷丘",
+    "englishName": "Raichu",
+    "types": [
+      "electric"
+    ],
+    "kantoEraTypes": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 90,
+      "defense": 55,
+      "special-attack": 90,
+      "special-defense": 80,
+      "speed": 110
+    },
+    "height": 0.8,
+    "weight": 30.0,
+    "description": "如果电囊空了，它就会直直地竖起尾巴，收集空气中的电流。",
+    "evolvesFrom": 25,
+    "artwork": "/pokemon/26.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 27,
+    "name": "穿山鼠",
+    "traditionalName": "穿山鼠",
+    "englishName": "Sandshrew",
+    "types": [
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "ground"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 75,
+      "defense": 85,
+      "special-attack": 20,
+      "special-defense": 30,
+      "speed": 40
+    },
+    "height": 0.6,
+    "weight": 12.0,
+    "description": "会在地上挖洞建造巢穴。挖洞时，即便遇到地里的坚硬岩石，也能用尖锐的爪子弄碎后继续挖进。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/27.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/27.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 28,
+    "name": "穿山王",
+    "traditionalName": "穿山王",
+    "englishName": "Sandslash",
+    "types": [
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "ground"
+    ],
+    "stats": {
+      "hp": 75,
+      "attack": 100,
+      "defense": 110,
+      "special-attack": 45,
+      "special-defense": 55,
+      "speed": 65
+    },
+    "height": 1.0,
+    "weight": 29.5,
+    "description": "会将锐利的爪子钩在树上爬树。这是为了设法使树果掉落，分给等在树下的穿山鼠们。",
+    "evolvesFrom": 27,
+    "artwork": "/pokemon/28.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 29,
+    "name": "尼多兰",
+    "traditionalName": "尼多蘭",
+    "englishName": "Nidoran♀",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 55,
+      "attack": 47,
+      "defense": 52,
+      "special-attack": 40,
+      "special-defense": 40,
+      "speed": 41
+    },
+    "height": 0.4,
+    "weight": 7.0,
+    "description": "用坚硬的门牙咬碎树果吃。和雄性相比，角的尖端稍圆一些。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/29.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/29.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 30,
+    "name": "尼多娜",
+    "traditionalName": "尼多娜",
+    "englishName": "Nidorina",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 70,
+      "attack": 62,
+      "defense": 67,
+      "special-attack": 55,
+      "special-defense": 55,
+      "speed": 56
+    },
+    "height": 0.8,
+    "weight": 20.0,
+    "description": "如果族群遇到了危险，会和伙伴们团结起来，施展出超音波大合唱。",
+    "evolvesFrom": 29,
+    "artwork": "/pokemon/30.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/30.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 31,
+    "name": "尼多后",
+    "traditionalName": "尼多后",
+    "englishName": "Nidoqueen",
+    "types": [
+      "poison",
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "poison",
+      "ground"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 92,
+      "defense": 87,
+      "special-attack": 75,
+      "special-defense": 85,
+      "speed": 76
+    },
+    "height": 1.3,
+    "weight": 60.0,
+    "description": "把孩子放在背上刺与刺的空隙里来哄它们。在这时绝对不会释放毒素。",
+    "evolvesFrom": 30,
+    "artwork": "/pokemon/31.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 32,
+    "name": "尼多朗",
+    "traditionalName": "尼多朗",
+    "englishName": "Nidoran♂",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 46,
+      "attack": 57,
+      "defense": 40,
+      "special-attack": 40,
+      "special-defense": 40,
+      "speed": 50
+    },
+    "height": 0.5,
+    "weight": 9.0,
+    "description": "虽然个头不大，却是个勇敢的伙伴。大耳朵帮助它听见周围的声音。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/32.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 33,
+    "name": "尼多力诺",
+    "traditionalName": "尼多力諾",
+    "englishName": "Nidorino",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 61,
+      "attack": 72,
+      "defense": 57,
+      "special-attack": 55,
+      "special-defense": 55,
+      "speed": 65
+    },
+    "height": 0.9,
+    "weight": 19.5,
+    "description": "它的耳朵很灵敏，能留意草丛里的小小动静。头上的角是醒目的标志。",
+    "evolvesFrom": 32,
+    "artwork": "/pokemon/33.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/33.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 34,
+    "name": "尼多王",
+    "traditionalName": "尼多王",
+    "englishName": "Nidoking",
+    "types": [
+      "poison",
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "poison",
+      "ground"
+    ],
+    "stats": {
+      "hp": 81,
+      "attack": 102,
+      "defense": 77,
+      "special-attack": 85,
+      "special-defense": 75,
+      "speed": 85
+    },
+    "height": 1.4,
+    "weight": 62.0,
+    "description": "强壮的尾巴帮助它保持平衡。魁梧的外表，让它看起来十分威风。",
+    "evolvesFrom": 33,
+    "artwork": "/pokemon/34.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/34.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 35,
+    "name": "皮皮",
+    "traditionalName": "皮皮",
+    "englishName": "Clefairy",
+    "types": [
+      "fairy"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 70,
+      "attack": 45,
+      "defense": 48,
+      "special-attack": 60,
+      "special-defense": 65,
+      "speed": 35
+    },
+    "height": 0.6,
+    "weight": 7.5,
+    "description": "因可爱的举止和叫声而广受欢迎的宝可梦。不过很少被人发现。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/35.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 36,
+    "name": "皮可西",
+    "traditionalName": "皮可西",
+    "englishName": "Clefable",
+    "types": [
+      "fairy"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 95,
+      "attack": 70,
+      "defense": 73,
+      "special-attack": 95,
+      "special-defense": 90,
+      "speed": 60
+    },
+    "height": 1.3,
+    "weight": 40.0,
+    "description": "听觉灵敏，连１公里以外针落地的声音都听得见，因此平时会待在安静的地方。",
+    "evolvesFrom": 35,
+    "artwork": "/pokemon/36.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/36.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 37,
+    "name": "六尾",
+    "traditionalName": "六尾",
+    "englishName": "Vulpix",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 38,
+      "attack": 41,
+      "defense": 40,
+      "special-attack": 50,
+      "special-defense": 65,
+      "speed": 65
+    },
+    "height": 0.6,
+    "weight": 9.9,
+    "description": "随着身体的成长，６根尾巴的毛发也会变得更漂亮。紧紧抱着它时能感到微微的温暖。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/37.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 38,
+    "name": "九尾",
+    "traditionalName": "九尾",
+    "englishName": "Ninetales",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 73,
+      "attack": 76,
+      "defense": 75,
+      "special-attack": 81,
+      "special-defense": 100,
+      "speed": 100
+    },
+    "height": 1.1,
+    "weight": 19.9,
+    "description": "九条金色的尾巴轻轻展开，显得优雅又神秘。它也是非常聪明的伙伴。",
+    "evolvesFrom": 37,
+    "artwork": "/pokemon/38.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 39,
+    "name": "胖丁",
+    "traditionalName": "胖丁",
+    "englishName": "Jigglypuff",
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "normal"
+    ],
+    "stats": {
+      "hp": 115,
+      "attack": 45,
+      "defense": 20,
+      "special-attack": 45,
+      "special-defense": 25,
+      "speed": 20
+    },
+    "height": 0.5,
+    "weight": 5.5,
+    "description": "能够随意改变声音的波长，唱出听了绝对会犯困的神奇旋律。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/39.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 40,
+    "name": "胖可丁",
+    "traditionalName": "胖可丁",
+    "englishName": "Wigglytuff",
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "normal"
+    ],
+    "stats": {
+      "hp": 140,
+      "attack": 70,
+      "defense": 45,
+      "special-attack": 85,
+      "special-defense": 50,
+      "speed": 45
+    },
+    "height": 1.0,
+    "weight": 12.0,
+    "description": "以自己细腻的体毛为傲。尤其是额头上的卷毛，更是有着天堂般的极致触感。",
+    "evolvesFrom": 39,
+    "artwork": "/pokemon/40.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/40.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 41,
+    "name": "超音蝠",
+    "traditionalName": "超音蝠",
+    "englishName": "Zubat",
+    "types": [
+      "poison",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "poison",
+      "flying"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 35,
+      "special-attack": 30,
+      "special-defense": 40,
+      "speed": 55
+    },
+    "height": 0.8,
+    "weight": 7.5,
+    "description": "栖息在晒不到阳光的洞窟里。到了早晨便会和同伴聚集起来，一边互相取暖一边睡觉。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/41.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/41.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 42,
+    "name": "大嘴蝠",
+    "traditionalName": "大嘴蝠",
+    "englishName": "Golbat",
+    "types": [
+      "poison",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "poison",
+      "flying"
+    ],
+    "stats": {
+      "hp": 75,
+      "attack": 80,
+      "defense": 70,
+      "special-attack": 65,
+      "special-defense": 75,
+      "speed": 90
+    },
+    "height": 1.6,
+    "weight": 55.0,
+    "description": "张开宽宽的翅膀，在夜晚轻巧飞行。洞窟是它熟悉的家。",
+    "evolvesFrom": 41,
+    "artwork": "/pokemon/42.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/42.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 43,
+    "name": "走路草",
+    "traditionalName": "走路草",
+    "englishName": "Oddish",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 45,
+      "attack": 50,
+      "defense": 55,
+      "special-attack": 75,
+      "special-defense": 65,
+      "speed": 30
+    },
+    "height": 0.5,
+    "weight": 5.4,
+    "description": "白天会为躲避太阳而钻入凉爽的地下。会通过沐浴月光成长。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/43.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/43.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 44,
+    "name": "臭臭花",
+    "traditionalName": "臭臭花",
+    "englishName": "Gloom",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 70,
+      "special-attack": 85,
+      "special-defense": 75,
+      "speed": 40
+    },
+    "height": 0.8,
+    "weight": 8.6,
+    "description": "看似口水的东西其实是甜甜的蜜。非常黏稠，只要碰到就会一直黏住。",
+    "evolvesFrom": 43,
+    "artwork": "/pokemon/44.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/44.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 45,
+    "name": "霸王花",
+    "traditionalName": "霸王花",
+    "englishName": "Vileplume",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 75,
+      "attack": 80,
+      "defense": 85,
+      "special-attack": 110,
+      "special-defense": 90,
+      "speed": 50
+    },
+    "height": 1.2,
+    "weight": 18.6,
+    "description": "虽然花瓣越大，就能放出越多的花粉，但这样脑袋会变沉，容易疲倦。",
+    "evolvesFrom": 44,
+    "artwork": "/pokemon/45.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/45.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 46,
+    "name": "派拉斯",
+    "traditionalName": "派拉斯",
+    "englishName": "Paras",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "grass"
+    ],
+    "stats": {
+      "hp": 35,
+      "attack": 70,
+      "defense": 55,
+      "special-attack": 45,
+      "special-defense": 55,
+      "speed": 25
+    },
+    "height": 0.3,
+    "weight": 5.4,
+    "description": "背上长着两朵小蘑菇，喜欢在树根附近挖洞。仔细找找阴凉的地方吧。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/46.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/46.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 47,
+    "name": "派拉斯特",
+    "traditionalName": "派拉斯特",
+    "englishName": "Parasect",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "grass"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 95,
+      "defense": 80,
+      "special-attack": 60,
+      "special-defense": 80,
+      "speed": 30
+    },
+    "height": 1.0,
+    "weight": 29.5,
+    "description": "背上的大蘑菇非常醒目，像撑开了一把小伞。它喜欢潮湿阴凉的环境。",
+    "evolvesFrom": 46,
+    "artwork": "/pokemon/47.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/47.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 48,
+    "name": "毛球",
+    "traditionalName": "毛球",
+    "englishName": "Venonat",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "poison"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 55,
+      "defense": 50,
+      "special-attack": 40,
+      "special-defense": 55,
+      "speed": 45
+    },
+    "height": 1.0,
+    "weight": 30.0,
+    "description": "在明亮的地方你便能发现它具有雷达功能的大眼其实是由许多个小眼睛聚集而成的。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/48.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/48.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 49,
+    "name": "摩鲁蛾",
+    "traditionalName": "摩魯蛾",
+    "englishName": "Venomoth",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "poison"
+    ],
+    "stats": {
+      "hp": 70,
+      "attack": 65,
+      "defense": 60,
+      "special-attack": 90,
+      "special-defense": 75,
+      "speed": 90
+    },
+    "height": 1.5,
+    "weight": 12.5,
+    "description": "翅膀上覆盖着细细的鳞粉，飞起来轻盈又安静。远远观察就很好。",
+    "evolvesFrom": 48,
+    "artwork": "/pokemon/49.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/49.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 50,
+    "name": "地鼠",
+    "traditionalName": "地鼠",
+    "englishName": "Diglett",
+    "types": [
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "ground"
+    ],
+    "stats": {
+      "hp": 10,
+      "attack": 55,
+      "defense": 25,
+      "special-attack": 35,
+      "special-defense": 45,
+      "speed": 95
+    },
+    "height": 0.2,
+    "weight": 0.8,
+    "description": "在地下较浅的地方移动。被它挖掘过的地面会鼓起来，所以非常容易发现。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/50.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/50.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 51,
+    "name": "三地鼠",
+    "traditionalName": "三地鼠",
+    "englishName": "Dugtrio",
+    "types": [
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "ground"
+    ],
+    "stats": {
+      "hp": 35,
+      "attack": 100,
+      "defense": 50,
+      "special-attack": 50,
+      "special-defense": 70,
+      "speed": 120
+    },
+    "height": 0.7,
+    "weight": 33.3,
+    "description": "三胞胎的地鼠，拥有能够挖掘到地下１００公里深的潜力。没人知道它在地下的部分究竟长成什么样子。",
+    "evolvesFrom": 50,
+    "artwork": "/pokemon/51.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/51.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 52,
+    "name": "喵喵",
+    "traditionalName": "喵喵",
+    "englishName": "Meowth",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 35,
+      "special-attack": 40,
+      "special-defense": 40,
+      "speed": 90
+    },
+    "height": 0.4,
+    "weight": 4.2,
+    "description": "额头上的金币闪闪发亮，它也喜欢收集亮晶晶的小东西。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/52.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 53,
+    "name": "猫老大",
+    "traditionalName": "貓老大",
+    "englishName": "Persian",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 70,
+      "defense": 60,
+      "special-attack": 65,
+      "special-defense": 65,
+      "speed": 115
+    },
+    "height": 1.0,
+    "weight": 32.0,
+    "description": "走路时轻盈优雅，胡须十分灵敏，是个很有气质的伙伴。",
+    "evolvesFrom": 52,
+    "artwork": "/pokemon/53.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/53.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 54,
+    "name": "可达鸭",
+    "traditionalName": "可達鴨",
+    "englishName": "Psyduck",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 52,
+      "defense": 48,
+      "special-attack": 65,
+      "special-defense": 50,
+      "speed": 55
+    },
+    "height": 0.8,
+    "weight": 19.6,
+    "description": "常常抱着脑袋发呆，看起来迷迷糊糊，却藏着不可思议的力量。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/54.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 55,
+    "name": "哥达鸭",
+    "traditionalName": "哥達鴨",
+    "englishName": "Golduck",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 82,
+      "defense": 78,
+      "special-attack": 95,
+      "special-defense": 80,
+      "speed": 85
+    },
+    "height": 1.7,
+    "weight": 76.6,
+    "description": "脚上的蹼帮助它轻松游泳，在水里能展现灵巧的身手。",
+    "evolvesFrom": 54,
+    "artwork": "/pokemon/55.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 56,
+    "name": "猴怪",
+    "traditionalName": "猴怪",
+    "englishName": "Mankey",
+    "types": [
+      "fighting"
+    ],
+    "kantoEraTypes": [
+      "fighting"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 80,
+      "defense": 35,
+      "special-attack": 35,
+      "special-defense": 45,
+      "speed": 70
+    },
+    "height": 0.5,
+    "weight": 28.0,
+    "description": "它身手轻巧，能在树间活动。情绪激动时，蓬松的毛也会跟着竖起来。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/56.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/56.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 57,
+    "name": "火暴猴",
+    "traditionalName": "火爆猴",
+    "englishName": "Primeape",
+    "types": [
+      "fighting"
+    ],
+    "kantoEraTypes": [
+      "fighting"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 105,
+      "defense": 60,
+      "special-attack": 60,
+      "special-defense": 70,
+      "speed": 95
+    },
+    "height": 1.0,
+    "weight": 32.0,
+    "description": "它充满力量和干劲，行动非常迅速。认识它时要给它一点自己的空间。",
+    "evolvesFrom": 56,
+    "artwork": "/pokemon/57.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/57.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 58,
+    "name": "卡蒂狗",
+    "traditionalName": "卡蒂狗",
+    "englishName": "Growlithe",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 55,
+      "attack": 70,
+      "defense": 45,
+      "special-attack": 70,
+      "special-defense": 50,
+      "speed": 60
+    },
+    "height": 0.7,
+    "weight": 19.0,
+    "description": "忠诚又勇敢，喜欢陪在信任的人身边。鼻子和耳朵都很灵敏。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/58.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 59,
+    "name": "风速狗",
+    "traditionalName": "風速狗",
+    "englishName": "Arcanine",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 110,
+      "defense": 80,
+      "special-attack": 100,
+      "special-defense": 80,
+      "speed": 95
+    },
+    "height": 1.9,
+    "weight": 155.0,
+    "description": "从古时候起就是俘获了众多人心的美丽宝可梦。能像飞一样轻巧地奔跑。",
+    "evolvesFrom": 58,
+    "artwork": "/pokemon/59.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 60,
+    "name": "蚊香蝌蚪",
+    "traditionalName": "蚊香蝌蚪",
+    "englishName": "Poliwag",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 50,
+      "defense": 40,
+      "special-attack": 40,
+      "special-defense": 40,
+      "speed": 90
+    },
+    "height": 0.6,
+    "weight": 12.4,
+    "description": "在水流湍急的河里，会把厚厚的嘴唇像吸盘那样紧紧吸在岩石上避免被冲走。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/60.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/60.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 61,
+    "name": "蚊香君",
+    "traditionalName": "蚊香君",
+    "englishName": "Poliwhirl",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 65,
+      "defense": 65,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 90
+    },
+    "height": 1.0,
+    "weight": 20.0,
+    "description": "流出的汗是黏滑的粘液状。即使被敌人捉住，也能哧溜一下滑走逃脱。",
+    "evolvesFrom": 60,
+    "artwork": "/pokemon/61.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/61.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 62,
+    "name": "蚊香泳士",
+    "traditionalName": "蚊香泳士",
+    "englishName": "Poliwrath",
+    "types": [
+      "water",
+      "fighting"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "fighting"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 95,
+      "defense": 95,
+      "special-attack": 70,
+      "special-defense": 90,
+      "speed": 70
+    },
+    "height": 1.3,
+    "weight": 54.0,
+    "description": "它不仅是游泳高手，还拥有结实有力的手臂。胸前的旋涡很有辨识度。",
+    "evolvesFrom": 61,
+    "artwork": "/pokemon/62.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/62.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 63,
+    "name": "凯西",
+    "traditionalName": "凱西",
+    "englishName": "Abra",
+    "types": [
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 25,
+      "attack": 20,
+      "defense": 15,
+      "special-attack": 105,
+      "special-defense": 55,
+      "speed": 90
+    },
+    "height": 0.9,
+    "weight": 19.5,
+    "description": "能够在睡梦中使出瞬间移动。据说它睡得越熟，就能移动到越遥远的地方。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/63.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/63.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 64,
+    "name": "勇基拉",
+    "traditionalName": "勇基拉",
+    "englishName": "Kadabra",
+    "types": [
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 35,
+      "defense": 30,
+      "special-attack": 120,
+      "special-defense": 70,
+      "speed": 105
+    },
+    "height": 1.3,
+    "weight": 56.5,
+    "description": "念力的威力大得惊人。会把精神力量储存在额头的星星里，以备进化之需。",
+    "evolvesFrom": 63,
+    "artwork": "/pokemon/64.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/64.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 65,
+    "name": "胡地",
+    "traditionalName": "胡地",
+    "englishName": "Alakazam",
+    "types": [
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 55,
+      "attack": 50,
+      "defense": 45,
+      "special-attack": 135,
+      "special-defense": 95,
+      "speed": 120
+    },
+    "height": 1.5,
+    "weight": 48.0,
+    "description": "会操纵强大的超能力。据说它双手握着的汤勺就是用那力量制造出来的。",
+    "evolvesFrom": 64,
+    "artwork": "/pokemon/65.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 66,
+    "name": "腕力",
+    "traditionalName": "腕力",
+    "englishName": "Machop",
+    "types": [
+      "fighting"
+    ],
+    "kantoEraTypes": [
+      "fighting"
+    ],
+    "stats": {
+      "hp": 70,
+      "attack": 80,
+      "defense": 50,
+      "special-attack": 35,
+      "special-defense": 35,
+      "speed": 35
+    },
+    "height": 0.8,
+    "weight": 19.5,
+    "description": "时时刻刻都充满力量。由于体力过剩而去举起岩石消磨时间，也因此变得更强。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/66.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/66.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 67,
+    "name": "豪力",
+    "traditionalName": "豪力",
+    "englishName": "Machoke",
+    "types": [
+      "fighting"
+    ],
+    "kantoEraTypes": [
+      "fighting"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 100,
+      "defense": 70,
+      "special-attack": 50,
+      "special-defense": 60,
+      "speed": 45
+    },
+    "height": 1.5,
+    "weight": 70.5,
+    "description": "有着不会疲劳的强韧肉体。会去帮助人类完成例如搬运沉重行李之类的工作。",
+    "evolvesFrom": 66,
+    "artwork": "/pokemon/67.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/67.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 68,
+    "name": "怪力",
+    "traditionalName": "怪力",
+    "englishName": "Machamp",
+    "types": [
+      "fighting"
+    ],
+    "kantoEraTypes": [
+      "fighting"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 130,
+      "defense": 80,
+      "special-attack": 65,
+      "special-defense": 85,
+      "speed": 55
+    },
+    "height": 1.6,
+    "weight": 130.0,
+    "description": "四条强壮的手臂配合默契，能同时完成不同的动作。",
+    "evolvesFrom": 67,
+    "artwork": "/pokemon/68.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 69,
+    "name": "喇叭芽",
+    "traditionalName": "喇叭芽",
+    "englishName": "Bellsprout",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 75,
+      "defense": 35,
+      "special-attack": 70,
+      "special-defense": 30,
+      "speed": 40
+    },
+    "height": 0.7,
+    "weight": 4.0,
+    "description": "喜欢温度高，有一定湿度的地方。它会用身上的藤蔓抓小虫来吃。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/69.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/69.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 70,
+    "name": "口呆花",
+    "traditionalName": "口呆花",
+    "englishName": "Weepinbell",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 50,
+      "special-attack": 85,
+      "special-defense": 45,
+      "speed": 55
+    },
+    "height": 1.0,
+    "weight": 6.4,
+    "description": "像一只会活动的小铃铛，喜欢温暖潮湿的地方。头顶的叶子很醒目。",
+    "evolvesFrom": 69,
+    "artwork": "/pokemon/70.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/70.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 71,
+    "name": "大食花",
+    "traditionalName": "大食花",
+    "englishName": "Victreebel",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "poison"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 105,
+      "defense": 65,
+      "special-attack": 100,
+      "special-defense": 70,
+      "speed": 70
+    },
+    "height": 1.7,
+    "weight": 15.5,
+    "description": "大大的叶子和甜甜的香气，是它独特的标志。它喜欢热闹茂密的丛林。",
+    "evolvesFrom": 70,
+    "artwork": "/pokemon/71.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/71.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 72,
+    "name": "玛瑙水母",
+    "traditionalName": "瑪瑙水母",
+    "englishName": "Tentacool",
+    "types": [
+      "water",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "poison"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 40,
+      "defense": 35,
+      "special-attack": 50,
+      "special-defense": 100,
+      "speed": 70
+    },
+    "height": 0.9,
+    "weight": 45.5,
+    "description": "身体的大部分由水组成。在海中，会和海水混为一体，非常难以发现。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/72.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/72.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 73,
+    "name": "毒刺水母",
+    "traditionalName": "毒刺水母",
+    "englishName": "Tentacruel",
+    "types": [
+      "water",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "poison"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 70,
+      "defense": 65,
+      "special-attack": 80,
+      "special-defense": 120,
+      "speed": 100
+    },
+    "height": 1.6,
+    "weight": 55.0,
+    "description": "许多长长的触手能自在伸缩，帮助它在海里灵活活动。",
+    "evolvesFrom": 72,
+    "artwork": "/pokemon/73.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/73.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 74,
+    "name": "小拳石",
+    "traditionalName": "小拳石",
+    "englishName": "Geodude",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "ground"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 80,
+      "defense": 100,
+      "special-attack": 30,
+      "special-defense": 30,
+      "speed": 20
+    },
+    "height": 0.4,
+    "weight": 20.0,
+    "description": "常常待在山路旁，看起来像一块圆圆的石头。路过时留心脚下，别打扰它。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/74.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/74.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 75,
+    "name": "隆隆石",
+    "traditionalName": "隆隆石",
+    "englishName": "Graveler",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "ground"
+    ],
+    "stats": {
+      "hp": 55,
+      "attack": 95,
+      "defense": 115,
+      "special-attack": 45,
+      "special-defense": 45,
+      "speed": 35
+    },
+    "height": 1.0,
+    "weight": 105.0,
+    "description": "圆滚滚的身体适合沿着山坡滚动，它的手臂也非常有力。",
+    "evolvesFrom": 74,
+    "artwork": "/pokemon/75.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/75.png",
+    "category": "evolution",
+    "rarity": "common"
+  },
+  {
+    "id": 76,
+    "name": "隆隆岩",
+    "traditionalName": "隆隆岩",
+    "englishName": "Golem",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "ground"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 120,
+      "defense": 130,
+      "special-attack": 55,
+      "special-defense": 65,
+      "speed": 45
+    },
+    "height": 1.4,
+    "weight": 300.0,
+    "description": "刚蜕皮时浑身都白白的非常柔软，但是接触到空气之后会迅速变坚硬。",
+    "evolvesFrom": 75,
+    "artwork": "/pokemon/76.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/76.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 77,
+    "name": "小火马",
+    "traditionalName": "小火馬",
+    "englishName": "Ponyta",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 85,
+      "defense": 55,
+      "special-attack": 65,
+      "special-defense": 65,
+      "speed": 90
+    },
+    "height": 1.0,
+    "weight": 30.0,
+    "description": "得到了小火马认可的人，在触摸它燃烧着的鬃毛时不会觉得烫手，真是不可思议。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/77.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/77.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 78,
+    "name": "烈焰马",
+    "traditionalName": "烈焰馬",
+    "englishName": "Rapidash",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 100,
+      "defense": 70,
+      "special-attack": 80,
+      "special-defense": 80,
+      "speed": 105
+    },
+    "height": 1.7,
+    "weight": 95.0,
+    "description": "奔跑速度最快的烈焰马会成为首领，决定族群前往的地点和奔跑速度。",
+    "evolvesFrom": 77,
+    "artwork": "/pokemon/78.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/78.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 79,
+    "name": "呆呆兽",
+    "traditionalName": "呆呆獸",
+    "englishName": "Slowpoke",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 65,
+      "defense": 65,
+      "special-attack": 40,
+      "special-defense": 40,
+      "speed": 15
+    },
+    "height": 1.2,
+    "weight": 36.0,
+    "description": "把尾巴泡在水里后会有甜味渗出，因此它会以尾巴为诱饵吸引宝可梦并将其钓起。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/79.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/79.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 80,
+    "name": "呆壳兽",
+    "traditionalName": "呆殼獸",
+    "englishName": "Slowbro",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 95,
+      "attack": 75,
+      "defense": 110,
+      "special-attack": 100,
+      "special-defense": 80,
+      "speed": 30
+    },
+    "height": 1.6,
+    "weight": 78.5,
+    "description": "因为被大舌贝咬住而受到的刺激使它变得能够两足直立行走。当大舌贝离开后，它似乎就会变回呆呆兽。",
+    "evolvesFrom": 79,
+    "artwork": "/pokemon/80.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/80.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 81,
+    "name": "小磁怪",
+    "traditionalName": "小磁怪",
+    "englishName": "Magnemite",
+    "types": [
+      "electric",
+      "steel"
+    ],
+    "kantoEraTypes": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 25,
+      "attack": 35,
+      "defense": 70,
+      "special-attack": 95,
+      "special-defense": 55,
+      "speed": 45
+    },
+    "height": 0.3,
+    "weight": 6.0,
+    "description": "靠吃电来维持生命。会一边从左右两边的组件放射电磁波一边在空中飞行。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/81.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/81.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 82,
+    "name": "三合一磁怪",
+    "traditionalName": "三合一磁怪",
+    "englishName": "Magneton",
+    "types": [
+      "electric",
+      "steel"
+    ],
+    "kantoEraTypes": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 60,
+      "defense": 95,
+      "special-attack": 120,
+      "special-defense": 70,
+      "speed": 70
+    },
+    "height": 1.0,
+    "weight": 60.0,
+    "description": "会不断释放很强的的磁力。在三合一磁怪接近时，大多数电脑都会发生异常情况。",
+    "evolvesFrom": 81,
+    "artwork": "/pokemon/82.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/82.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 83,
+    "name": "大葱鸭",
+    "traditionalName": "大蔥鴨",
+    "englishName": "Farfetch’d",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "flying"
+    ],
+    "stats": {
+      "hp": 52,
+      "attack": 90,
+      "defense": 55,
+      "special-attack": 58,
+      "special-defense": 62,
+      "speed": 60
+    },
+    "height": 0.8,
+    "weight": 15.0,
+    "description": "用植物的茎来战斗。茎的挥舞方式存在着好几种不同的流派。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/83.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/83.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 84,
+    "name": "嘟嘟",
+    "traditionalName": "嘟嘟",
+    "englishName": "Doduo",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "flying"
+    ],
+    "stats": {
+      "hp": 35,
+      "attack": 85,
+      "defense": 45,
+      "special-attack": 35,
+      "special-defense": 35,
+      "speed": 75
+    },
+    "height": 1.4,
+    "weight": 39.2,
+    "description": "羽毛较短所以不擅长飞行，但是拥有发达的双脚，能够以很快的速度奔跑。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/84.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/84.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 85,
+    "name": "嘟嘟利",
+    "traditionalName": "嘟嘟利",
+    "englishName": "Dodrio",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "normal",
+      "flying"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 110,
+      "defense": 70,
+      "special-attack": 60,
+      "special-defense": 60,
+      "speed": 110
+    },
+    "height": 1.8,
+    "weight": 85.2,
+    "description": "由嘟嘟的某个头分裂出的变种。以60千米的时速在草原上奔跑。",
+    "evolvesFrom": 84,
+    "artwork": "/pokemon/85.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/85.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 86,
+    "name": "小海狮",
+    "traditionalName": "小海獅",
+    "englishName": "Seel",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 45,
+      "defense": 55,
+      "special-attack": 45,
+      "special-defense": 70,
+      "speed": 45
+    },
+    "height": 1.1,
+    "weight": 90.0,
+    "description": "喜欢天寒地冻的地方，就算零下10度也能愉快地游泳。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/86.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/86.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 87,
+    "name": "白海狮",
+    "traditionalName": "白海獅",
+    "englishName": "Dewgong",
+    "types": [
+      "water",
+      "ice"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "ice"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 70,
+      "defense": 80,
+      "special-attack": 70,
+      "special-defense": 95,
+      "speed": 70
+    },
+    "height": 1.7,
+    "weight": 120.0,
+    "description": "全身像雪一样白。十分耐寒，即使是在有浮冰的大海里也能很精神地游来游去。",
+    "evolvesFrom": 86,
+    "artwork": "/pokemon/87.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/87.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 88,
+    "name": "臭泥",
+    "traditionalName": "臭泥",
+    "englishName": "Grimer",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 80,
+      "defense": 50,
+      "special-attack": 40,
+      "special-defense": 50,
+      "speed": 25
+    },
+    "height": 0.9,
+    "weight": 30.0,
+    "description": "它有柔软的身体，能穿过很窄的缝隙。保持环境清洁，是观察它时想到的小提醒。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/88.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/88.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 89,
+    "name": "臭臭泥",
+    "traditionalName": "臭臭泥",
+    "englishName": "Muk",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 105,
+      "attack": 105,
+      "defense": 75,
+      "special-attack": 65,
+      "special-defense": 100,
+      "speed": 50
+    },
+    "height": 1.2,
+    "weight": 30.0,
+    "description": "身体软软的，可以自由改变形状。它有很特别的气味，适合保持距离观察。",
+    "evolvesFrom": 88,
+    "artwork": "/pokemon/89.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/89.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 90,
+    "name": "大舌贝",
+    "traditionalName": "大舌貝",
+    "englishName": "Shellder",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 30,
+      "attack": 65,
+      "defense": 100,
+      "special-attack": 45,
+      "special-defense": 25,
+      "speed": 40
+    },
+    "height": 0.3,
+    "weight": 4.0,
+    "description": "两片结实的贝壳保护着身体，常常能看到它悄悄伸出的小舌头。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/90.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/90.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 91,
+    "name": "刺甲贝",
+    "traditionalName": "刺甲貝",
+    "englishName": "Cloyster",
+    "types": [
+      "water",
+      "ice"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "ice"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 95,
+      "defense": 180,
+      "special-attack": 85,
+      "special-defense": 45,
+      "speed": 70
+    },
+    "height": 1.5,
+    "weight": 132.5,
+    "description": "厚厚的壳能牢牢闭合，像一座小小的海底堡垒。",
+    "evolvesFrom": 90,
+    "artwork": "/pokemon/91.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/91.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 92,
+    "name": "鬼斯",
+    "traditionalName": "鬼斯",
+    "englishName": "Gastly",
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "ghost",
+      "poison"
+    ],
+    "stats": {
+      "hp": 30,
+      "attack": 35,
+      "defense": 30,
+      "special-attack": 100,
+      "special-defense": 35,
+      "speed": 80
+    },
+    "height": 1.3,
+    "weight": 0.1,
+    "description": "能用稀薄气体状的身体潜入任何地方，但只要起风就会被吹跑。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/92.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/92.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 93,
+    "name": "鬼斯通",
+    "traditionalName": "鬼斯通",
+    "englishName": "Haunter",
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "ghost",
+      "poison"
+    ],
+    "stats": {
+      "hp": 45,
+      "attack": 50,
+      "defense": 45,
+      "special-attack": 115,
+      "special-defense": 55,
+      "speed": 95
+    },
+    "height": 1.6,
+    "weight": 0.1,
+    "description": "它喜欢躲在暗处，伸出轻飘飘的手，像个爱玩捉迷藏的伙伴。",
+    "evolvesFrom": 92,
+    "artwork": "/pokemon/93.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/93.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 94,
+    "name": "耿鬼",
+    "traditionalName": "耿鬼",
+    "englishName": "Gengar",
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "ghost",
+      "poison"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 60,
+      "special-attack": 130,
+      "special-defense": 75,
+      "speed": 110
+    },
+    "height": 1.5,
+    "weight": 40.5,
+    "description": "圆圆的身体配着大大的笑容，喜欢藏在影子里，是个神秘的捉迷藏高手。",
+    "evolvesFrom": 93,
+    "artwork": "/pokemon/94.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 95,
+    "name": "大岩蛇",
+    "traditionalName": "大岩蛇",
+    "englishName": "Onix",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "ground"
+    ],
+    "stats": {
+      "hp": 35,
+      "attack": 45,
+      "defense": 160,
+      "special-attack": 30,
+      "special-defense": 45,
+      "speed": 70
+    },
+    "height": 8.8,
+    "weight": 210.0,
+    "description": "弯曲扭动巨大结实的身体，以时速８０公里的猛烈劲头向前挖进。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/95.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/95.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 96,
+    "name": "催眠貘",
+    "traditionalName": "催眠貘",
+    "englishName": "Drowzee",
+    "types": [
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 48,
+      "defense": 45,
+      "special-attack": 43,
+      "special-defense": 90,
+      "speed": 42
+    },
+    "height": 1.0,
+    "weight": 32.4,
+    "description": "如果你每晚与它一起睡觉，它偶尔会让你梦见它以前吃过的梦。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/96.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/96.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 97,
+    "name": "引梦貘人",
+    "traditionalName": "引夢貘人",
+    "englishName": "Hypno",
+    "types": [
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 85,
+      "attack": 73,
+      "defense": 70,
+      "special-attack": 73,
+      "special-defense": 115,
+      "speed": 67
+    },
+    "height": 1.6,
+    "weight": 75.6,
+    "description": "手里拿着轻轻摇摆的钟摆，擅长神奇的催眠本领。",
+    "evolvesFrom": 96,
+    "artwork": "/pokemon/97.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/97.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 98,
+    "name": "大钳蟹",
+    "traditionalName": "大鉗蟹",
+    "englishName": "Krabby",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 30,
+      "attack": 105,
+      "defense": 90,
+      "special-attack": 25,
+      "special-defense": 25,
+      "speed": 50
+    },
+    "height": 0.4,
+    "weight": 6.5,
+    "description": "如果危险逼近，就会从嘴里吐出泡沫包裹全身，让身体看起来更大。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/98.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/98.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 99,
+    "name": "巨钳蟹",
+    "traditionalName": "巨鉗蟹",
+    "englishName": "Kingler",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 55,
+      "attack": 130,
+      "defense": 115,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 75
+    },
+    "height": 1.3,
+    "weight": 60.0,
+    "description": "一只大钳子特别醒目，是它引以为傲的本领。它喜欢待在海边。",
+    "evolvesFrom": 98,
+    "artwork": "/pokemon/99.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/99.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 100,
+    "name": "霹雳电球",
+    "traditionalName": "霹靂電球",
+    "englishName": "Voltorb",
+    "types": [
+      "electric"
+    ],
+    "kantoEraTypes": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 30,
+      "defense": 50,
+      "special-attack": 55,
+      "special-defense": 55,
+      "speed": 100
+    },
+    "height": 0.5,
+    "weight": 10.4,
+    "description": "圆圆的外形让人容易认错，身体里储存着电能。观察时不要突然惊动它。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/100.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/100.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 101,
+    "name": "顽皮雷弹",
+    "traditionalName": "頑皮雷彈",
+    "englishName": "Electrode",
+    "types": [
+      "electric"
+    ],
+    "kantoEraTypes": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 70,
+      "special-attack": 80,
+      "special-defense": 80,
+      "speed": 150
+    },
+    "height": 1.2,
+    "weight": 66.6,
+    "description": "圆滚滚又充满电力，表情总像在微笑。它对周围的动静十分敏感。",
+    "evolvesFrom": 100,
+    "artwork": "/pokemon/101.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/101.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 102,
+    "name": "蛋蛋",
+    "traditionalName": "蛋蛋",
+    "englishName": "Exeggcute",
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 40,
+      "defense": 80,
+      "special-attack": 60,
+      "special-defense": 45,
+      "speed": 40
+    },
+    "height": 0.4,
+    "weight": 2.5,
+    "description": "６只不在一起就不安心。哪怕只是少了１只，都会马上想要逃跑。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/102.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/102.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 103,
+    "name": "椰蛋树",
+    "traditionalName": "椰蛋樹",
+    "englishName": "Exeggutor",
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "grass",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 95,
+      "attack": 95,
+      "defense": 85,
+      "special-attack": 125,
+      "special-defense": 75,
+      "speed": 55
+    },
+    "height": 2.0,
+    "weight": 120.0,
+    "description": "３个脑袋联合起来能使出强大的精神力量。天气变阴时动作会变得迟钝。",
+    "evolvesFrom": 102,
+    "artwork": "/pokemon/103.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/103.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 104,
+    "name": "卡拉卡拉",
+    "traditionalName": "卡拉卡拉",
+    "englishName": "Cubone",
+    "types": [
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "ground"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 50,
+      "defense": 95,
+      "special-attack": 40,
+      "special-defense": 50,
+      "speed": 35
+    },
+    "height": 0.4,
+    "weight": 6.5,
+    "description": "戴着特别的骨头头盔，手里握着小骨棒。它会慢慢学着变得勇敢。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/104.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/104.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 105,
+    "name": "嘎啦嘎啦",
+    "traditionalName": "嘎啦嘎啦",
+    "englishName": "Marowak",
+    "types": [
+      "ground"
+    ],
+    "kantoEraTypes": [
+      "ground"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 80,
+      "defense": 110,
+      "special-attack": 50,
+      "special-defense": 80,
+      "speed": 45
+    },
+    "height": 1.0,
+    "weight": 45.0,
+    "description": "长大后的它更有力量，也更擅长挥动骨棒，展现自己独特的本领。",
+    "evolvesFrom": 104,
+    "artwork": "/pokemon/105.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/105.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 106,
+    "name": "飞腿郎",
+    "traditionalName": "飛腿郎",
+    "englishName": "Hitmonlee",
+    "types": [
+      "fighting"
+    ],
+    "kantoEraTypes": [
+      "fighting"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 120,
+      "defense": 53,
+      "special-attack": 35,
+      "special-defense": 110,
+      "speed": 87
+    },
+    "height": 1.5,
+    "weight": 49.8,
+    "description": "有弹性的双腿能伸得很长，平衡能力也是它的拿手好戏。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/106.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/106.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 107,
+    "name": "快拳郎",
+    "traditionalName": "快拳郎",
+    "englishName": "Hitmonchan",
+    "types": [
+      "fighting"
+    ],
+    "kantoEraTypes": [
+      "fighting"
+    ],
+    "stats": {
+      "hp": 50,
+      "attack": 105,
+      "defense": 79,
+      "special-attack": 35,
+      "special-defense": 110,
+      "speed": 76
+    },
+    "height": 1.4,
+    "weight": 50.2,
+    "description": "擅长快速挥拳，动作十分利落。认真练习之后，它也需要休息。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/107.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/107.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 108,
+    "name": "大舌头",
+    "traditionalName": "大舌頭",
+    "englishName": "Lickitung",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 55,
+      "defense": 75,
+      "special-attack": 60,
+      "special-defense": 75,
+      "speed": 30
+    },
+    "height": 1.2,
+    "weight": 65.5,
+    "description": "长长的舌头特别灵活，能帮助它探索周围的东西。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/108.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/108.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 109,
+    "name": "瓦斯弹",
+    "traditionalName": "瓦斯彈",
+    "englishName": "Koffing",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 65,
+      "defense": 95,
+      "special-attack": 60,
+      "special-defense": 45,
+      "speed": 35
+    },
+    "height": 0.6,
+    "weight": 1.0,
+    "description": "圆圆的身体里装着气体，能够轻轻飘浮。它有独特的生活环境。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/109.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/109.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 110,
+    "name": "双弹瓦斯",
+    "traditionalName": "雙彈瓦斯",
+    "englishName": "Weezing",
+    "types": [
+      "poison"
+    ],
+    "kantoEraTypes": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 120,
+      "special-attack": 85,
+      "special-defense": 70,
+      "speed": 60
+    },
+    "height": 1.2,
+    "weight": 9.5,
+    "description": "两个脑袋相连，能交替处理体内的气体。它的样子很容易辨认。",
+    "evolvesFrom": 109,
+    "artwork": "/pokemon/110.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/110.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 111,
+    "name": "独角犀牛",
+    "traditionalName": "獨角犀牛",
+    "englishName": "Rhyhorn",
+    "types": [
+      "ground",
+      "rock"
+    ],
+    "kantoEraTypes": [
+      "ground",
+      "rock"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 85,
+      "defense": 95,
+      "special-attack": 30,
+      "special-defense": 30,
+      "speed": 25
+    },
+    "height": 1.0,
+    "weight": 115.0,
+    "description": "结实的身体和鼻子上的小角，让它看起来很有力量。它喜欢直直地向前跑。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/111.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/111.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 112,
+    "name": "钻角犀兽",
+    "traditionalName": "鑽角犀獸",
+    "englishName": "Rhydon",
+    "types": [
+      "ground",
+      "rock"
+    ],
+    "kantoEraTypes": [
+      "ground",
+      "rock"
+    ],
+    "stats": {
+      "hp": 105,
+      "attack": 130,
+      "defense": 120,
+      "special-attack": 45,
+      "special-defense": 45,
+      "speed": 40
+    },
+    "height": 1.9,
+    "weight": 120.0,
+    "description": "能用两条腿站立，全身有像铠甲一样结实的皮肤。",
+    "evolvesFrom": 111,
+    "artwork": "/pokemon/112.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/112.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 113,
+    "name": "吉利蛋",
+    "traditionalName": "吉利蛋",
+    "englishName": "Chansey",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 250,
+      "attack": 5,
+      "defense": 5,
+      "special-attack": 35,
+      "special-defense": 105,
+      "speed": 50
+    },
+    "height": 1.1,
+    "weight": 34.6,
+    "description": "原本动作迟缓。为了保护蛋不被抢走，逃跑的速度才变快了。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/113.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/113.png",
+    "category": "exploration",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 114,
+    "name": "蔓藤怪",
+    "traditionalName": "蔓藤怪",
+    "englishName": "Tangela",
+    "types": [
+      "grass"
+    ],
+    "kantoEraTypes": [
+      "grass"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 55,
+      "defense": 115,
+      "special-attack": 100,
+      "special-defense": 40,
+      "speed": 60
+    },
+    "height": 1.0,
+    "weight": 35.0,
+    "description": "藤蔓有着独特的香气。在伽勒尔的部分地区被当做香草使用。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/114.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/114.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 115,
+    "name": "袋兽",
+    "traditionalName": "袋獸",
+    "englishName": "Kangaskhan",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 105,
+      "attack": 95,
+      "defense": 80,
+      "special-attack": 40,
+      "special-defense": 80,
+      "speed": 90
+    },
+    "height": 2.2,
+    "weight": 80.0,
+    "description": "腹部的育儿袋里住着小宝宝，它会认真守护孩子，让孩子安心成长。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/115.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/115.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 116,
+    "name": "墨海马",
+    "traditionalName": "墨海馬",
+    "englishName": "Horsea",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 30,
+      "attack": 40,
+      "defense": 70,
+      "special-attack": 70,
+      "special-defense": 25,
+      "speed": 60
+    },
+    "height": 0.4,
+    "weight": 8.0,
+    "description": "会像跳舞一样在水中游动以制造漩涡。作为娱乐，会和伙伴比拼谁的漩涡更大。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/116.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/116.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 117,
+    "name": "海刺龙",
+    "traditionalName": "海刺龍",
+    "englishName": "Seadra",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 55,
+      "attack": 65,
+      "defense": 95,
+      "special-attack": 95,
+      "special-defense": 45,
+      "speed": 85
+    },
+    "height": 1.2,
+    "weight": 25.0,
+    "description": "背上有醒目的尖刺，尾巴能卷住珊瑚，在水中稳稳停留。",
+    "evolvesFrom": 116,
+    "artwork": "/pokemon/117.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/117.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 118,
+    "name": "角金鱼",
+    "traditionalName": "角金魚",
+    "englishName": "Goldeen",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 45,
+      "attack": 67,
+      "defense": 60,
+      "special-attack": 35,
+      "special-defense": 50,
+      "speed": 63
+    },
+    "height": 0.6,
+    "weight": 15.0,
+    "description": "背鳍和尾鳍像肌肉那样发达。能够以５节的速度在水中游泳。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/118.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/118.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 119,
+    "name": "金鱼王",
+    "traditionalName": "金魚王",
+    "englishName": "Seaking",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 92,
+      "defense": 65,
+      "special-attack": 65,
+      "special-defense": 80,
+      "speed": 68
+    },
+    "height": 1.3,
+    "weight": 39.0,
+    "description": "金鱼王之所以会用角挖穿河底的岩石来筑巢，是为了防止产下的卵被水流冲走。",
+    "evolvesFrom": 118,
+    "artwork": "/pokemon/119.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/119.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 120,
+    "name": "海星星",
+    "traditionalName": "海星星",
+    "englishName": "Staryu",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 30,
+      "attack": 45,
+      "defense": 55,
+      "special-attack": 70,
+      "special-defense": 55,
+      "speed": 85
+    },
+    "height": 0.8,
+    "weight": 34.5,
+    "description": "中心有一颗红色核心，五只腕足组成了漂亮的星星形状。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/120.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/120.png",
+    "category": "exploration",
+    "rarity": "common"
+  },
+  {
+    "id": 121,
+    "name": "宝石海星",
+    "traditionalName": "寶石海星",
+    "englishName": "Starmie",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 75,
+      "defense": 85,
+      "special-attack": 100,
+      "special-defense": 85,
+      "speed": 115
+    },
+    "height": 1.1,
+    "weight": 80.0,
+    "description": "会高速旋转着身体一边游泳一边吸收微小的浮游生物。",
+    "evolvesFrom": 120,
+    "artwork": "/pokemon/121.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 122,
+    "name": "魔墙人偶",
+    "traditionalName": "魔牆人偶",
+    "englishName": "Mr. Mime",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "kantoEraTypes": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 65,
+      "special-attack": 100,
+      "special-defense": 120,
+      "speed": 90
+    },
+    "height": 1.3,
+    "weight": 54.5,
+    "description": "擅长表演默剧。用手指放出的波动制造墙壁，保护自己免于大多数攻击。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/122.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/122.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 123,
+    "name": "飞天螳螂",
+    "traditionalName": "飛天螳螂",
+    "englishName": "Scyther",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "bug",
+      "flying"
+    ],
+    "stats": {
+      "hp": 70,
+      "attack": 110,
+      "defense": 80,
+      "special-attack": 55,
+      "special-defense": 80,
+      "speed": 105
+    },
+    "height": 1.5,
+    "weight": 56.0,
+    "description": "绿色的身体能融入树林，镰刀形的手臂和轻快的动作是它的标志。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/123.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/123.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 124,
+    "name": "迷唇姐",
+    "traditionalName": "迷唇姐",
+    "englishName": "Jynx",
+    "types": [
+      "ice",
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "ice",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 50,
+      "defense": 35,
+      "special-attack": 115,
+      "special-defense": 95,
+      "speed": 95
+    },
+    "height": 1.4,
+    "weight": 40.6,
+    "description": "喜欢有节奏地摇摆身体，独特的声音和动作就像一段表演。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/124.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/124.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 125,
+    "name": "电击兽",
+    "traditionalName": "電擊獸",
+    "englishName": "Electabuzz",
+    "types": [
+      "electric"
+    ],
+    "kantoEraTypes": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 83,
+      "defense": 57,
+      "special-attack": 95,
+      "special-defense": 85,
+      "speed": 105
+    },
+    "height": 1.1,
+    "weight": 30.0,
+    "description": "暴风雨来临时，它们就会集结在高高的大树周围，耐心地等待落雷。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/125.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/125.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 126,
+    "name": "鸭嘴火兽",
+    "traditionalName": "鴨嘴火獸",
+    "englishName": "Magmar",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 95,
+      "defense": 57,
+      "special-attack": 100,
+      "special-defense": 85,
+      "speed": 93
+    },
+    "height": 1.3,
+    "weight": 44.5,
+    "description": "身体带着很高的温度，喜欢炎热的地方，看起来像一团跳动的火焰。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/126.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/126.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 127,
+    "name": "凯罗斯",
+    "traditionalName": "凱羅斯",
+    "englishName": "Pinsir",
+    "types": [
+      "bug"
+    ],
+    "kantoEraTypes": [
+      "bug"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 125,
+      "defense": 100,
+      "special-attack": 55,
+      "special-defense": 70,
+      "speed": 85
+    },
+    "height": 1.5,
+    "weight": 55.0,
+    "description": "头顶有两只醒目的大角，拥有很强的力量。它喜欢温暖的环境。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/127.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/127.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 128,
+    "name": "肯泰罗",
+    "traditionalName": "肯泰羅",
+    "englishName": "Tauros",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 75,
+      "attack": 100,
+      "defense": 95,
+      "special-attack": 40,
+      "special-defense": 70,
+      "speed": 110
+    },
+    "height": 1.4,
+    "weight": 88.4,
+    "description": "跑起来充满力量，身后的三条尾巴会跟着摆动。宽阔的草原很适合它。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/128.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 129,
+    "name": "鲤鱼王",
+    "traditionalName": "鯉魚王",
+    "englishName": "Magikarp",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 20,
+      "attack": 10,
+      "defense": 55,
+      "special-attack": 15,
+      "special-defense": 20,
+      "speed": 80
+    },
+    "height": 0.9,
+    "weight": 10.0,
+    "description": "虽然现在看起来只会蹦跳，但它藏着令人期待的成长可能。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/129.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png",
+    "category": "story",
+    "rarity": "common"
+  },
+  {
+    "id": 130,
+    "name": "暴鲤龙",
+    "traditionalName": "暴鯉龍",
+    "englishName": "Gyarados",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "flying"
+    ],
+    "stats": {
+      "hp": 95,
+      "attack": 125,
+      "defense": 79,
+      "special-attack": 60,
+      "special-defense": 100,
+      "speed": 81
+    },
+    "height": 6.5,
+    "weight": 235.0,
+    "description": "长长的身体在水中游动，外表十分威风。很难想象它是由小小的鲤鱼王长大的。",
+    "evolvesFrom": 129,
+    "artwork": "/pokemon/130.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 131,
+    "name": "拉普拉斯",
+    "traditionalName": "拉普拉斯",
+    "englishName": "Lapras",
+    "types": [
+      "water",
+      "ice"
+    ],
+    "kantoEraTypes": [
+      "water",
+      "ice"
+    ],
+    "stats": {
+      "hp": 130,
+      "attack": 85,
+      "defense": 80,
+      "special-attack": 85,
+      "special-defense": 95,
+      "speed": 60
+    },
+    "height": 2.5,
+    "weight": 220.0,
+    "description": "十分耐寒，不畏冰海。皮肤滑滑的，摸上去会有点凉。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/131.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png",
+    "category": "exploration",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 132,
+    "name": "百变怪",
+    "traditionalName": "百變怪",
+    "englishName": "Ditto",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 48,
+      "attack": 48,
+      "defense": 48,
+      "special-attack": 48,
+      "special-defense": 48,
+      "speed": 48
+    },
+    "height": 0.3,
+    "weight": 4.0,
+    "description": "当两只百变怪相遇的时候，为了能变成和对方相同的样子，它们动起来会比平常更加剧烈。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/132.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 133,
+    "name": "伊布",
+    "traditionalName": "伊布",
+    "englishName": "Eevee",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 55,
+      "attack": 55,
+      "defense": 50,
+      "special-attack": 45,
+      "special-defense": 65,
+      "speed": 55
+    },
+    "height": 0.3,
+    "weight": 6.5,
+    "description": "由于不稳定的遗传基因，蕴含着各种各样进化可能性的特殊宝可梦。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/133.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+    "category": "story",
+    "rarity": "rare"
+  },
+  {
+    "id": 134,
+    "name": "水伊布",
+    "traditionalName": "水伊布",
+    "englishName": "Vaporeon",
+    "types": [
+      "water"
+    ],
+    "kantoEraTypes": [
+      "water"
+    ],
+    "stats": {
+      "hp": 130,
+      "attack": 65,
+      "defense": 60,
+      "special-attack": 110,
+      "special-defense": 95,
+      "speed": 65
+    },
+    "height": 1.0,
+    "weight": 29.0,
+    "description": "身体细胞的结构与水分子相似。它能和水融为一体，让别人无法看见它。",
+    "evolvesFrom": 133,
+    "artwork": "/pokemon/134.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 135,
+    "name": "雷伊布",
+    "traditionalName": "雷伊布",
+    "englishName": "Jolteon",
+    "types": [
+      "electric"
+    ],
+    "kantoEraTypes": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 65,
+      "defense": 60,
+      "special-attack": 110,
+      "special-defense": 95,
+      "speed": 130
+    },
+    "height": 0.8,
+    "weight": 24.5,
+    "description": "尖尖的毛发能储存电力，兴奋时会发出噼里啪啦的小电光。",
+    "evolvesFrom": 133,
+    "artwork": "/pokemon/135.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 136,
+    "name": "火伊布",
+    "traditionalName": "火伊布",
+    "englishName": "Flareon",
+    "types": [
+      "fire"
+    ],
+    "kantoEraTypes": [
+      "fire"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 130,
+      "defense": 60,
+      "special-attack": 95,
+      "special-defense": 110,
+      "speed": 65
+    },
+    "height": 0.9,
+    "weight": 25.0,
+    "description": "柔软蓬松的毛发能散发热量，颈部像围着一条暖暖的围巾。",
+    "evolvesFrom": 133,
+    "artwork": "/pokemon/136.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 137,
+    "name": "多边兽",
+    "traditionalName": "多邊獸",
+    "englishName": "Porygon",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 65,
+      "attack": 60,
+      "defense": 70,
+      "special-attack": 85,
+      "special-defense": 75,
+      "speed": 40
+    },
+    "height": 0.8,
+    "weight": 36.5,
+    "description": "近年来十分活跃于电脑空间。到处检查有没有可疑的数据。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/137.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/137.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 138,
+    "name": "菊石兽",
+    "traditionalName": "菊石獸",
+    "englishName": "Omanyte",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "water"
+    ],
+    "stats": {
+      "hp": 35,
+      "attack": 40,
+      "defense": 100,
+      "special-attack": 90,
+      "special-defense": 55,
+      "speed": 35
+    },
+    "height": 0.4,
+    "weight": 7.5,
+    "description": "来自遥远的古代，背着螺旋形的壳，靠小小的腕足在海中活动。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/138.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/138.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 139,
+    "name": "多刺菊石兽",
+    "traditionalName": "多刺菊石獸",
+    "englishName": "Omastar",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "water"
+    ],
+    "stats": {
+      "hp": 70,
+      "attack": 60,
+      "defense": 125,
+      "special-attack": 115,
+      "special-defense": 70,
+      "speed": 55
+    },
+    "height": 1.0,
+    "weight": 35.0,
+    "description": "背上的螺旋壳长出了尖刺，腕足让它能在海底灵活活动。",
+    "evolvesFrom": 138,
+    "artwork": "/pokemon/139.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/139.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 140,
+    "name": "化石盔",
+    "traditionalName": "化石盔",
+    "englishName": "Kabuto",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "water"
+    ],
+    "stats": {
+      "hp": 30,
+      "attack": 80,
+      "defense": 90,
+      "special-attack": 55,
+      "special-defense": 45,
+      "speed": 55
+    },
+    "height": 0.5,
+    "weight": 11.5,
+    "description": "有坚实的外壳，是来自古代海洋的宝可梦。它的故事像一页活着的自然笔记。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/140.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/140.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 141,
+    "name": "镰刀盔",
+    "traditionalName": "鐮刀盔",
+    "englishName": "Kabutops",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "water"
+    ],
+    "stats": {
+      "hp": 60,
+      "attack": 115,
+      "defense": 105,
+      "special-attack": 65,
+      "special-defense": 70,
+      "speed": 80
+    },
+    "height": 1.3,
+    "weight": 40.5,
+    "description": "流线形的身体适合游泳，镰刀形的手臂让它非常有辨识度。",
+    "evolvesFrom": 140,
+    "artwork": "/pokemon/141.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/141.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 142,
+    "name": "化石翼龙",
+    "traditionalName": "化石翼龍",
+    "englishName": "Aerodactyl",
+    "types": [
+      "rock",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "rock",
+      "flying"
+    ],
+    "stats": {
+      "hp": 80,
+      "attack": 105,
+      "defense": 65,
+      "special-attack": 60,
+      "special-defense": 75,
+      "speed": 130
+    },
+    "height": 1.8,
+    "weight": 59.0,
+    "description": "从远古而来的飞行伙伴，宽大的翅膀让它能够在天空翱翔。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/142.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/142.png",
+    "category": "exploration",
+    "rarity": "rare"
+  },
+  {
+    "id": 143,
+    "name": "卡比兽",
+    "traditionalName": "卡比獸",
+    "englishName": "Snorlax",
+    "types": [
+      "normal"
+    ],
+    "kantoEraTypes": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 160,
+      "attack": 110,
+      "defense": 65,
+      "special-attack": 65,
+      "special-defense": 110,
+      "speed": 30
+    },
+    "height": 2.1,
+    "weight": 460.0,
+    "description": "喜欢吃饱后舒舒服服地睡觉，圆圆的大身体让它十分好认。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/143.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
+    "category": "exploration",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 144,
+    "name": "急冻鸟",
+    "traditionalName": "急凍鳥",
+    "englishName": "Articuno",
+    "types": [
+      "ice",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "ice",
+      "flying"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 85,
+      "defense": 100,
+      "special-attack": 95,
+      "special-defense": 125,
+      "speed": 85
+    },
+    "height": 1.7,
+    "weight": 55.4,
+    "description": "拥有能够自由操纵冰的能力。据说它栖息在永久冻土的雪山。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/144.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/144.png",
+    "category": "legendary",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 145,
+    "name": "闪电鸟",
+    "traditionalName": "閃電鳥",
+    "englishName": "Zapdos",
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "electric",
+      "flying"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 90,
+      "defense": 85,
+      "special-attack": 125,
+      "special-defense": 90,
+      "speed": 100
+    },
+    "height": 1.6,
+    "weight": 52.6,
+    "description": "传说的鸟宝可梦。据说只要它一摩擦翅膀，就会立刻发生落雷。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/145.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/145.png",
+    "category": "legendary",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 146,
+    "name": "火焰鸟",
+    "traditionalName": "火焰鳥",
+    "englishName": "Moltres",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "fire",
+      "flying"
+    ],
+    "stats": {
+      "hp": 90,
+      "attack": 100,
+      "defense": 90,
+      "special-attack": 125,
+      "special-defense": 85,
+      "speed": 90
+    },
+    "height": 2.0,
+    "weight": 60.0,
+    "description": "相传它会用燃烧着的美丽翅膀照亮山道，救助在此遇险的人。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/146.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png",
+    "category": "legendary",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 147,
+    "name": "迷你龙",
+    "traditionalName": "迷你龍",
+    "englishName": "Dratini",
+    "types": [
+      "dragon"
+    ],
+    "kantoEraTypes": [
+      "dragon"
+    ],
+    "stats": {
+      "hp": 41,
+      "attack": 64,
+      "defense": 45,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 50
+    },
+    "height": 1.8,
+    "weight": 3.3,
+    "description": "长久以来被认为只存在于幻想之中。额头小小的突起是正在发育的角。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/147.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/147.png",
+    "category": "story",
+    "rarity": "rare"
+  },
+  {
+    "id": 148,
+    "name": "哈克龙",
+    "traditionalName": "哈克龍",
+    "englishName": "Dragonair",
+    "types": [
+      "dragon"
+    ],
+    "kantoEraTypes": [
+      "dragon"
+    ],
+    "stats": {
+      "hp": 61,
+      "attack": 84,
+      "defense": 65,
+      "special-attack": 70,
+      "special-defense": 70,
+      "speed": 70
+    },
+    "height": 4.0,
+    "weight": 16.5,
+    "description": "把力量集中在尾巴的珠子上操纵天气。散发气场的样子非常神秘。",
+    "evolvesFrom": 147,
+    "artwork": "/pokemon/148.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/148.png",
+    "category": "evolution",
+    "rarity": "rare"
+  },
+  {
+    "id": 149,
+    "name": "快龙",
+    "traditionalName": "快龍",
+    "englishName": "Dragonite",
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "kantoEraTypes": [
+      "dragon",
+      "flying"
+    ],
+    "stats": {
+      "hp": 91,
+      "attack": 134,
+      "defense": 95,
+      "special-attack": 100,
+      "special-defense": 100,
+      "speed": 80
+    },
+    "height": 2.2,
+    "weight": 210.0,
+    "description": "被称为大海的化身。很多船都会把快龙的雕像设置在船头。",
+    "evolvesFrom": 148,
+    "artwork": "/pokemon/149.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
+    "category": "evolution",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 150,
+    "name": "超梦",
+    "traditionalName": "超夢",
+    "englishName": "Mewtwo",
+    "types": [
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 106,
+      "attack": 110,
+      "defense": 90,
+      "special-attack": 154,
+      "special-defense": 90,
+      "speed": 130
+    },
+    "height": 2.0,
+    "weight": 122.0,
+    "description": "拥有强大的超能力和与梦幻相近的基因。它的故事里，还有许多等待了解的秘密。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/150.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png",
+    "category": "legendary",
+    "rarity": "veryRare"
+  },
+  {
+    "id": 151,
+    "name": "梦幻",
+    "traditionalName": "夢幻",
+    "englishName": "Mew",
+    "types": [
+      "psychic"
+    ],
+    "kantoEraTypes": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 100,
+      "attack": 100,
+      "defense": 100,
+      "special-attack": 100,
+      "special-defense": 100,
+      "speed": 100
+    },
+    "height": 0.4,
+    "weight": 4.0,
+    "description": "小小的身体藏着许多不可思议的可能。与所有伙伴相遇后，这份最后的惊喜就会到来。",
+    "evolvesFrom": null,
+    "artwork": "/pokemon/151.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png",
+    "category": "legendary",
+    "rarity": "veryRare"
+  }
+]
