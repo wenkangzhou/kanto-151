@@ -2,7 +2,7 @@
 
 选曲为《宝可梦 火红／叶绿》的 **六之岛・七之岛（Sevii Islands: Six & Seven Islands）**，取其舒缓的海岛与探索氛围。
 
-音频文件尚未提供，当前没有原曲播放。将可用于本项目的 MP3 放到 `public/audio/sevii-islands-6-7.mp3`，重新构建部署后启用。未提供时大屏显示禁用的静音图标，悬停提示缺少音乐文件，不会请求不存在的音频。
+原曲音频已由用户提供，应用使用 `public/audio/sevii-islands-6-7.mp3`。完整专辑目录已忽略，只提交选用的背景乐及 `effects/` 中的场景片段。
 
 行为：
 - 开关只显示小图标，以扬声器、静音、加载图标表达状态，无可见文字与边框；保留 44px 触控区域和无障碍名称。
@@ -13,4 +13,18 @@
 - 切换后台、离开页面或变成窄屏会暂停，回到页面需主动点开。
 - 音频不进入 Service Worker 缓存；加载错误与浏览器拒绝播放会恢复关闭状态并提示重试。
 
-曲目核对：[专辑曲目表](https://bulbapedia.bulbagarden.net/wiki/FRLG_music)。官方收听渠道：[Nintendo Music 火红／叶绿公告](https://www.nintendo.com/us/whatsnew/tracks-from-pokemon-firered-version-and-pokemon-leafgreen-version-added-to-nintendo-music/)。收听渠道不作为网页音频文件的下载接口；本项目没有提取或附带原曲。
+曲目核对：[专辑曲目表](https://bulbapedia.bulbagarden.net/wiki/FRLG_music)。官方收听渠道：[Nintendo Music 火红／叶绿公告](https://www.nintendo.com/us/whatsnew/tracks-from-pokemon-firered-version-and-pokemon-leafgreen-version-added-to-nintendo-music/)。收听渠道不作为网页音频文件的下载接口；应用素材来自用户提供的本地音频。
+
+
+## 收服、进化与礼物
+
+共用右上角的小声音开关，默认关闭，手机不加载音频。场景音频在孩子点击精灵球、进化或礼物时创建，不会因进入或刷新页面自动播放。开关关闭时跳过音频，不影响动画和奖励。
+
+- 收服：`1-18. Battle! (Wild Pokémon)` 前 4.5 秒，接 `1-54. Caught a Pokémon!`；成功提示对应动画成功阶段。
+- 进化：`1-30. Evolution` 前 4.55 秒，接 `1-31. Congratulations, Your Pokémon Evolved!`；成功提示对应新模样揭晓阶段。
+- 礼物：`1-14. Obtained an Item! (Version 1)`，播放一次。
+- 减少动态效果模式：只播放相应的成功提示，不播放前奏。
+
+场景音频暂时暂停背景乐，结束、跳过或离开后恢复原位置。静音、切后台或缩至小屏会停止所有声音且不自动恢复。加载失败时恢复背景乐；20 秒超时保护避免音频一直占用。浏览器拒绝恢复播放时开关显示关闭，可手动重试。
+
+这几首是音乐片段，并非球体碰撞／摇晃的独立音效。短前奏在末尾做 0.18 秒淡出，再接成功提示；原始文件不变。

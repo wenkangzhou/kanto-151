@@ -13,7 +13,7 @@ export interface Pokemon {
   category: 'story' | 'exploration' | 'evolution' | 'legendary';
   rarity: 'common' | 'rare' | 'veryRare';
 }
-export type CollectionState = 'locked' | 'available' | 'collected' | 'evolvable';
+export type CollectionState = 'locked' | 'available' | 'collected' | 'evolvable' | 'evolution-ready' | 'needs-evolution-ticket';
 export interface CollectionRecord {
   pokemonId: number; acquiredAt: string; reason: string; method: 'capture' | 'evolution' | 'legendary';
 }
@@ -29,7 +29,7 @@ export interface InventoryTicket { id: string; type: 'evolution' | 'legendary'; 
 export interface Receipt {
   id: string; kind: 'capture' | 'evolution-ticket' | 'legendary-ticket' | 'evolution' | 'legendary' | 'mew';
   pokemon_id: number | null; from_pokemon_id: number | null; ticket_id: string | null;
-  reason: string; created_at: string; acknowledged_at: string | null; completed_chapter?: number | null;
+  reason: string; created_at: string; acknowledged_at: string | null; completed_chapter?: number | null; route_version?: 'game-v1' | 'anime-v1';
 }
 export interface LiveSnapshot extends CollectionSnapshot { tickets: InventoryTicket[]; pendingReceipt: Receipt | null }
 export interface FamilySession {

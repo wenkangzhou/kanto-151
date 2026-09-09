@@ -8,7 +8,7 @@
 
 [`supabase/migrations/202609080001_family_rewards.sql`](../supabase/migrations/202609080001_family_rewards.sql)
 
-首次安装按文件编号依次执行：先上面的 `001`，再执行 [`202609080002_chapter_discoveries.sql`](../supabase/migrations/202609080002_chapter_discoveries.sql)。已经运行过 `001` 的家庭只执行新增的 `002`，不要重复初始化。
+首次安装按文件编号依次执行：先上面的 `001`，再执行 [`202609080002_chapter_discoveries.sql`](../supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](../supabase/migrations/202609090003_anime_route.sql)。已执行 `001`、`002` 的家庭只执行 `003`，不要重复初始化。先升级 SQL，再部署新版代码，避免页面与奖励顺序不一致。
 
 `002` 给相遇结果增加可为空的章节完成编号，并升级兑换函数，使解锁事件和捕捉结果一起提交。已有收藏、券、奖励码与旧相遇保持可用；旧记录不会被猜测补写成解锁事件。尚未执行 `002` 时地图仍可浏览，但新相遇不会显示章节庆祝。
 
@@ -81,3 +81,5 @@ npm run check:env
 本地测试覆盖 PostgreSQL 迁移、角色访问限制、奖励创建重试、兑换去重、空池、章节推进、伊布分支、传说与梦幻条件、PIN 哈希、会话签名和 PWA 缓存限制。PGlite 是单连接测试环境，不代表已经完成多连接并发压力测试。云端真实操作及手机安装应在你执行迁移和部署后，按上面的首次使用流程验收。
 
 参考：[Vercel GitHub 集成](https://vercel.com/docs/git/vercel-for-github)、[环境变量](https://vercel.com/docs/environment-variables)、[Supabase API Keys](https://supabase.com/docs/guides/getting-started/api-keys)。
+
+`003` 将奖励顺序切换为动画路线，并保留旧收藏、进化券和已兑换结果。原有章节进度会按新路线重新计算，从最早缺失的伙伴继续；旧章节庆祝保留 `game-v1` 标记，不会被改写为新路线。新奖励标记 `anime-v1`。

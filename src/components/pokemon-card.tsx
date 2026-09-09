@@ -17,7 +17,7 @@ export function PokemonCard({ pokemon: p, priority = false }: { pokemon: Pokemon
     <div className="card-art"><PokemonArt pokemon={p} hidden={!known} priority={priority} /></div>
     <div className="card-name">{known ? p.name : '???'}</div>
     <div className="card-subtitle">{known ? p.englishName : stateNames[state]}</div>
-    <div className="card-types">{known ? p.types.map(type => <TypeBadge key={type} type={type} />) : <span className="undiscovered">{state === 'available' ? '等待一次相遇' : '冒险还在继续'}</span>}</div>
+    <div className="card-types">{known ? p.types.map(type => <TypeBadge key={type} type={type} />) : <span className="undiscovered">{state === 'evolution-ready' ? '去背包使用进化券' : state === 'needs-evolution-ticket' ? '等一张进化券' : state === 'available' ? '等待一次相遇' : '冒险还在继续'}</span>}</div>
     {state === 'evolvable' && <span className="evolution-label"><Sparkles size={11} /> 可进化</span>}
   </Link>;
 }

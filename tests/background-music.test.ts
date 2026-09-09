@@ -44,3 +44,15 @@ test('a rejected play or media error never reports playing and can be retried', 
   reject = false; await player.toggle(); assert.equal(states.at(-1), 'playing');
   audio.emit('error'); assert.equal(states.at(-1), 'error'); player.dispose();
 });
+test('scene interruption preserves the music position and never resumes after mute', async () => {
+  let plays = 0;
+  const audio = fakeAudio(async () => { plays++; }); const states: MusicState[] = [];
+  const player = createMusicPlayer(() => audio, state => states.push(state));
+  await player.toggle();
+  const resume = player.suspendForCue();
+  assert.equal(audio.paused, true); assert.equal(states.at(-1), 'playing');
+  resume(); await Promise.resolve(); assert.equal(plays, 2);
+  const mutedResume = player.suspendForCue();
+  player.stop(); mutedResume(); await Promise.resolve();
+  assert.equal(plays, 2); assert.equal(states.at(-1), 'off'); player.dispose();
+});

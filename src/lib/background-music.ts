@@ -21,14 +21,14 @@ export interface MusicAudio {
 // One player for the root layout. Creating the audio and loading its source require a click.
 export function createMusicPlayer(createAudio: () => MusicAudio, notify: (state: MusicState) => void) {
   let audio: MusicAudio | null = null;
-  let wanted = false; let disposed = false; let revision = 0;
+  let wanted = false; let disposed = false; let revision = 0; let suspended = false;
   let timeout: ReturnType<typeof setTimeout> | undefined;
   const clear = () => { clearTimeout(timeout); timeout = undefined; };
   const emit = (state: MusicState) => { if (!disposed) notify(state); };
-  const stop = () => { wanted = false; revision++; clear(); audio?.pause(); emit('off'); };
+  const stop = () => { wanted = false; suspended = false; revision++; clear(); audio?.pause(); emit('off'); };
   const fail = () => { stop(); emit('error'); };
-  const playing = () => { if (!wanted || disposed) { audio?.pause(); return; } clear(); emit('playing'); };
-  const paused = () => { if (wanted) { wanted = false; revision++; clear(); emit('off'); } };
+  const playing = () => { if (!wanted || disposed || suspended) { audio?.pause(); return; } clear(); emit('playing'); };
+  const paused = () => { if (wanted && !suspended) { wanted = false; revision++; clear(); emit('off'); } };
   return {
     async toggle() {
       if (disposed) return;
@@ -45,6 +45,15 @@ export function createMusicPlayer(createAudio: () => MusicAudio, notify: (state:
       } catch { if (attempt === revision && !disposed) fail(); }
     },
     stop,
+    suspendForCue() {
+      if (!wanted || !audio || disposed) return () => {};
+      suspended = true; clear(); audio.pause(); const attempt = revision;
+      return () => {
+        if (disposed || !wanted || attempt !== revision) return;
+        suspended = false;
+        void audio!.play().then(() => { if (attempt === revision && wanted) playing(); }).catch(() => { if (attempt === revision && wanted) fail(); });
+      };
+    },
     dispose() {
       disposed = true; stop();
       if (audio) {

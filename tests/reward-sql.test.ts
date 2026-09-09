@@ -10,6 +10,7 @@ test('PostgreSQL migration and atomic family reward lifecycle', async t => {
   await pg.exec('create role anon; create role authenticated; create role service_role bypassrls;');
   await pg.exec(readFileSync('supabase/migrations/202609080001_family_rewards.sql', 'utf8'));
   await pg.exec(readFileSync('supabase/migrations/202609080002_chapter_discoveries.sql', 'utf8'));
+  await pg.exec(readFileSync('supabase/migrations/202609090003_anime_route.sql', 'utf8'));
   async function rpc<T = Record<string, unknown>>(fn: string, args: unknown[] = []): Promise<T> {
     const result = await pg.query<{ value: T }>(`select public.${fn}(${args.map((_, i) => `$${i + 1}`).join(',')}) as value`, args);
     return result.rows[0].value;
@@ -69,9 +70,9 @@ test('PostgreSQL migration and atomic family reward lifecycle', async t => {
       }
     });
     await t.test('different codes never duplicate a capture and advance the chapter without evolutions', async () => {
-      const codes = await Promise.all(Array.from({ length: 4 }, () => reward()));
+      const codes = await Promise.all(Array.from({ length: chapters[0].pokemonIds.length - 1 }, () => reward()));
       const results = await Promise.all(codes.map(r => rpc('kanto_redeem', [child, r.code])));
-      assert.equal(new Set(results.map(r => r.pokemon_id)).size, 4);
+      assert.equal(new Set(results.map(r => r.pokemon_id)).size, chapters[0].pokemonIds.length - 1);
       assert.equal(await rpc('kanto_current_chapter', [child]), 2);
       const chapter = (await pg.query<{ chapter: number }>('select chapter from kanto_story_progress where child_id=$1', [child])).rows[0].chapter;
       assert.equal(chapter, 2);
@@ -149,9 +150,10 @@ test('chapter upgrade preserves old rewards and records final-story completion o
     }
     const before = (await pg.query('select * from kanto_pokemon_collection order by pokemon_id')).rows;
     await pg.exec(readFileSync('supabase/migrations/202609080002_chapter_discoveries.sql', 'utf8'));
+    await pg.exec(readFileSync('supabase/migrations/202609090003_anime_route.sql', 'utf8'));
     assert.deepEqual((await pg.query('select * from kanto_pokemon_collection order by pokemon_id')).rows, before);
     const oldReplay = await run('kanto_redeem', [child, originalCode.code]);
-    assert.deepEqual(oldReplay, { ...originalReceipt, completed_chapter: null });
+    assert.deepEqual(oldReplay, { ...originalReceipt, completed_chapter: null, route_version: 'game-v1' });
     const finalCode = await run('kanto_create_reward', [child, randomUUID(), 'capture', '最后一站']);
     const finalReceipt = await run('kanto_redeem', [child, finalCode.code]);
     assert.equal(finalReceipt.pokemon_id, finalId);
@@ -160,5 +162,40 @@ test('chapter upgrade preserves old rewards and records final-story completion o
     const explorationCode = await run('kanto_create_reward', [child, randomUUID(), 'capture', '自由探索']);
     assert.equal((await run('kanto_redeem', [child, explorationCode.code])).completed_chapter, null);
     assert.deepEqual(await run('kanto_redeem', [child, finalCode.code]), finalReceipt);
+  } finally { await pg.close(); }
+});
+
+test('anime migration preserves redeemed and unredeemed rewards, tickets and versioned chapter memories', async () => {
+  const pg = new PGlite();
+  try {
+    await pg.exec('create role anon; create role authenticated; create role service_role bypassrls;');
+    for (const file of ['202609080001_family_rewards.sql', '202609080002_chapter_discoveries.sql']) await pg.exec(readFileSync(`supabase/migrations/${file}`, 'utf8'));
+    await pg.query('select kanto_setup($1,$2,$3,$4)', ['家庭', '孩子', 'scrypt:fixture', 'e'.repeat(64)]);
+    const child = (await pg.query<{ id: string }>('select id from kanto_children')).rows[0].id;
+    const call = async (name: string, args: unknown[]) => (await pg.query<{ value: Record<string, unknown> }>(`select ${name}(${args.map((_, i) => `$${i + 1}`).join(',')}) as value`, args)).rows[0].value;
+    const issued = await call('kanto_create_reward', [child, randomUUID(), 'capture', '升级前未使用']);
+    const ticketCode = await call('kanto_create_reward', [child, randomUUID(), 'evolution', '升级前进化券']);
+    const ticketReceipt = await call('kanto_redeem', [child, ticketCode.code]);
+    for (const id of [1, 4, 7, 16]) await pg.query("insert into kanto_pokemon_collection(child_id,pokemon_id,method) values($1,$2,'capture')", [child, id]);
+    const last = await call('kanto_create_reward', [child, randomUUID(), 'capture', '旧第一章']);
+    const oldReceipt = await call('kanto_redeem', [child, last.code]);
+    assert.equal(oldReceipt.completed_chapter, 1);
+    const before = (await pg.query('select * from kanto_pokemon_collection order by pokemon_id')).rows;
+    const inventory = (await pg.query('select * from kanto_inventory order by id')).rows;
+    await pg.exec(readFileSync('supabase/migrations/202609090003_anime_route.sql', 'utf8'));
+    assert.deepEqual((await pg.query('select * from kanto_pokemon_collection order by pokemon_id')).rows, before);
+    assert.deepEqual((await pg.query('select * from kanto_inventory order by id')).rows, inventory);
+    assert.deepEqual(await call('kanto_redeem', [child, last.code]), { ...oldReceipt, route_version: 'game-v1' });
+    assert.deepEqual(await call('kanto_redeem', [child, ticketCode.code]), { ...ticketReceipt, route_version: 'game-v1' });
+    const next = await call('kanto_redeem', [child, issued.code]);
+    assert.equal(next.pokemon_id, 25); assert.equal(next.route_version, 'anime-v1');
+    assert.equal(next.reason, '升级前未使用');
+    assert.deepEqual(await call('kanto_redeem', [child, issued.code]), next);
+    const following = await call('kanto_create_reward', [child, randomUUID(), 'capture', '继续']);
+    const result = await call('kanto_redeem', [child, following.code]);
+    assert.equal(result.pokemon_id, 21); // Pidgey and Rattata were already owned.
+    await pg.exec('set role anon');
+    await assert.rejects(() => pg.query('select kanto_rules()'), /permission denied/);
+    await pg.exec('reset role');
   } finally { await pg.close(); }
 });

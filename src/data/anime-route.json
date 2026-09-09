@@ -1,0 +1,319 @@
+{
+  "version": "anime-v1",
+  "basis": "无印关都篇主要故事顺序；不以梦境、电视画面、图鉴插图等短暂露面排序。同集为产品编排，非逐镜头顺序。",
+  "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_animated_series_debut",
+    "https://www.pokemon.com/us/animation/seasons/1/episode-10-bulbasaur-and-the-hidden-village",
+    "https://www.pokemon.com/us/animation/seasons/1/episode-11-charmander-the-stray-pokemon"
+  ],
+  "notes": {
+    "1,4,7": "以各自加入旅途的主要故事（EP010–012）替代 EP001 梦境。",
+    "10": "以 EP003 收服故事替代 EP002 末尾露面。",
+    "27": "以 EP008 训练家小明故事替代 EP001 短暂露面。",
+    "56": "以 EP025 猴怪故事替代 EP001 短暂露面。",
+    "95": "以 EP005 小刚道馆故事替代 EP001 画面。",
+    "88": "以 EP030 发电厂故事替代 EP026 回忆。",
+    "118,120": "按 EP007 华蓝道馆主要故事编排。",
+    "129": "以 EP015 大船上的鲤鱼王故事替代 EP001 短暂露面。",
+    "124,131": "电视特别篇，不强行编入普通集数路线；留在路线之后。",
+    "137,147": "EP038/EP035 在部分发行版缺席；为避免孩子按观看平台找不到，留在路线之后。"
+  },
+  "encounters": [
+    {
+      "pokemonId": 25,
+      "episode": "EP001"
+    },
+    {
+      "pokemonId": 16,
+      "episode": "EP001"
+    },
+    {
+      "pokemonId": 19,
+      "episode": "EP001"
+    },
+    {
+      "pokemonId": 21,
+      "episode": "EP001"
+    },
+    {
+      "pokemonId": 52,
+      "episode": "EP002"
+    },
+    {
+      "pokemonId": 23,
+      "episode": "EP002"
+    },
+    {
+      "pokemonId": 109,
+      "episode": "EP002"
+    },
+    {
+      "pokemonId": 113,
+      "episode": "EP002"
+    },
+    {
+      "pokemonId": 10,
+      "episode": "EP003"
+    },
+    {
+      "pokemonId": 13,
+      "episode": "EP004"
+    },
+    {
+      "pokemonId": 127,
+      "episode": "EP004"
+    },
+    {
+      "pokemonId": 74,
+      "episode": "EP005"
+    },
+    {
+      "pokemonId": 95,
+      "episode": "EP005"
+    },
+    {
+      "pokemonId": 35,
+      "episode": "EP006"
+    },
+    {
+      "pokemonId": 41,
+      "episode": "EP006"
+    },
+    {
+      "pokemonId": 46,
+      "episode": "EP006"
+    },
+    {
+      "pokemonId": 120,
+      "episode": "EP007"
+    },
+    {
+      "pokemonId": 86,
+      "episode": "EP007"
+    },
+    {
+      "pokemonId": 118,
+      "episode": "EP007"
+    },
+    {
+      "pokemonId": 27,
+      "episode": "EP008"
+    },
+    {
+      "pokemonId": 104,
+      "episode": "EP009"
+    },
+    {
+      "pokemonId": 1,
+      "episode": "EP010"
+    },
+    {
+      "pokemonId": 43,
+      "episode": "EP010"
+    },
+    {
+      "pokemonId": 4,
+      "episode": "EP011"
+    },
+    {
+      "pokemonId": 7,
+      "episode": "EP012"
+    },
+    {
+      "pokemonId": 98,
+      "episode": "EP013"
+    },
+    {
+      "pokemonId": 129,
+      "episode": "EP015"
+    },
+    {
+      "pokemonId": 79,
+      "episode": "EP017"
+    },
+    {
+      "pokemonId": 72,
+      "episode": "EP019"
+    },
+    {
+      "pokemonId": 116,
+      "episode": "EP019"
+    },
+    {
+      "pokemonId": 92,
+      "episode": "EP020"
+    },
+    {
+      "pokemonId": 63,
+      "episode": "EP022"
+    },
+    {
+      "pokemonId": 56,
+      "episode": "EP025"
+    },
+    {
+      "pokemonId": 60,
+      "episode": "EP025"
+    },
+    {
+      "pokemonId": 69,
+      "episode": "EP025"
+    },
+    {
+      "pokemonId": 102,
+      "episode": "EP026"
+    },
+    {
+      "pokemonId": 114,
+      "episode": "EP026"
+    },
+    {
+      "pokemonId": 54,
+      "episode": "EP027"
+    },
+    {
+      "pokemonId": 96,
+      "episode": "EP027"
+    },
+    {
+      "pokemonId": 32,
+      "episode": "EP028"
+    },
+    {
+      "pokemonId": 37,
+      "episode": "EP028"
+    },
+    {
+      "pokemonId": 48,
+      "episode": "EP028"
+    },
+    {
+      "pokemonId": 100,
+      "episode": "EP028"
+    },
+    {
+      "pokemonId": 66,
+      "episode": "EP029"
+    },
+    {
+      "pokemonId": 106,
+      "episode": "EP029"
+    },
+    {
+      "pokemonId": 107,
+      "episode": "EP029"
+    },
+    {
+      "pokemonId": 29,
+      "episode": "EP030"
+    },
+    {
+      "pokemonId": 58,
+      "episode": "EP030"
+    },
+    {
+      "pokemonId": 81,
+      "episode": "EP030"
+    },
+    {
+      "pokemonId": 88,
+      "episode": "EP030"
+    },
+    {
+      "pokemonId": 50,
+      "episode": "EP031"
+    },
+    {
+      "pokemonId": 77,
+      "episode": "EP033"
+    },
+    {
+      "pokemonId": 111,
+      "episode": "EP033"
+    },
+    {
+      "pokemonId": 128,
+      "episode": "EP033"
+    },
+    {
+      "pokemonId": 115,
+      "episode": "EP034"
+    },
+    {
+      "pokemonId": 90,
+      "episode": "EP036"
+    },
+    {
+      "pokemonId": 132,
+      "episode": "EP037"
+    },
+    {
+      "pokemonId": 133,
+      "episode": "EP040"
+    },
+    {
+      "pokemonId": 143,
+      "episode": "EP041"
+    },
+    {
+      "pokemonId": 123,
+      "episode": "EP042"
+    },
+    {
+      "pokemonId": 125,
+      "episode": "EP042"
+    },
+    {
+      "pokemonId": 39,
+      "episode": "EP045"
+    },
+    {
+      "pokemonId": 138,
+      "episode": "EP046"
+    },
+    {
+      "pokemonId": 140,
+      "episode": "EP046"
+    },
+    {
+      "pokemonId": 142,
+      "episode": "EP046"
+    },
+    {
+      "pokemonId": 83,
+      "episode": "EP049"
+    },
+    {
+      "pokemonId": 108,
+      "episode": "EP052"
+    },
+    {
+      "pokemonId": 126,
+      "episode": "EP058"
+    },
+    {
+      "pokemonId": 122,
+      "episode": "EP064"
+    },
+    {
+      "pokemonId": 84,
+      "episode": "EP065"
+    },
+    {
+      "pokemonId": 147,
+      "episode": null
+    },
+    {
+      "pokemonId": 137,
+      "episode": null
+    },
+    {
+      "pokemonId": 124,
+      "episode": null
+    },
+    {
+      "pokemonId": 131,
+      "episode": null
+    }
+  ]
+}

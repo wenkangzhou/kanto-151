@@ -1,5 +1,12 @@
-# 背景音乐文件
+# 音频素材
 
-选曲：Pokémon FireRed / LeafGreen — Sevii Islands: Six & Seven Islands（六之岛・七之岛）。
+`sevii-islands-6-7.mp3`：大屏日常背景乐。
 
-当前仓库不含原曲音频。准备好可用于本项目的 MP3 后，将文件命名为 `sevii-islands-6-7.mp3` 放在本目录，然后重新构建 / 部署。不要用其他音频冒充这首曲目。曲目来源记录在 `docs/background-music.md`。
+`effects/`：从用户提供的《火红／叶绿》专辑中选用的场景片段，应随应用提交部署。
+
+- `capture.mp3`：野生对战开场 4.5 秒 + 捕获宝可梦提示曲。
+- `evolution.mp3`：进化开场 4.55 秒 + 进化完成提示曲。
+- `capture-success.mp3` / `evolution-success.mp3`：减少动态效果时直接播放成功提示曲。
+- `gift.mp3`：获得道具提示曲，用于打开券类奖励。
+
+完整专辑目录由用户维护，并通过 `.gitignore` 排除。后续选曲从该目录复制或提取到本目录的应用资源中，不修改原始曲目。
