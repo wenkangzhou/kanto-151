@@ -9,6 +9,7 @@ test('PostgreSQL migration and atomic family reward lifecycle', async t => {
   const pg = new PGlite();
   await pg.exec('create role anon; create role authenticated; create role service_role bypassrls;');
   await pg.exec(readFileSync('supabase/migrations/202609080001_family_rewards.sql', 'utf8'));
+  await pg.exec(readFileSync('supabase/migrations/202609080002_chapter_discoveries.sql', 'utf8'));
   async function rpc<T = Record<string, unknown>>(fn: string, args: unknown[] = []): Promise<T> {
     const result = await pg.query<{ value: T }>(`select public.${fn}(${args.map((_, i) => `$${i + 1}`).join(',')}) as value`, args);
     return result.rows[0].value;
@@ -51,6 +52,7 @@ test('PostgreSQL migration and atomic family reward lifecycle', async t => {
       const again = await rpc('kanto_redeem', [child, r.code]);
       assert.deepEqual(again, first); assert.equal(first.reason, '认真阅读');
       assert.ok(chapters[0].pokemonIds.includes(first.pokemon_id as number));
+      assert.equal(first.completed_chapter, null);
       const snapshot = await rpc<{ records: unknown[] }>('kanto_snapshot', [child]);
       assert.equal(snapshot.records.length, 1);
       await assert.rejects(() => rpc('kanto_redeem', [otherChild, r.code]), /NOT_FOUND/);
@@ -73,12 +75,21 @@ test('PostgreSQL migration and atomic family reward lifecycle', async t => {
       assert.equal(await rpc('kanto_current_chapter', [child]), 2);
       const chapter = (await pg.query<{ chapter: number }>('select chapter from kanto_story_progress where child_id=$1', [child])).rows[0].chapter;
       assert.equal(chapter, 2);
+      const completions = results.filter(receipt => receipt.completed_chapter === 1);
+      assert.equal(completions.length, 1);
+      const completed = completions[0];
+      const completingCode = codes[results.indexOf(completed)];
+      const next = await reward();
+      await rpc('kanto_redeem', [child, next.code]);
+      assert.deepEqual(await rpc('kanto_redeem', [child, completingCode.code]), completed);
+      assert.equal((await pg.query<{ completed_chapter: number }>('select completed_chapter from kanto_receipts where id=$1', [completed.id])).rows[0].completed_chapter, 1);
     });
     await t.test('Eevee evolutions preserve the original and consume precisely one reason-carrying ticket', async () => {
       await seed([133]);
       const r = await reward('evolution', '尝试困难的事');
       const ticketReceipt = await rpc('kanto_redeem', [child, r.code]);
       assert.equal(ticketReceipt.kind, 'evolution-ticket');
+      assert.equal(ticketReceipt.completed_chapter, null);
       await assert.rejects(() => rpc('kanto_use_ticket', [child, ticketReceipt.ticket_id, 149]), /EVOLUTION_LOCKED/);
       const result = await rpc('kanto_use_ticket', [child, ticketReceipt.ticket_id, 134]);
       assert.equal(result.reason, '尝试困难的事'); assert.equal(result.from_pokemon_id, 133);
@@ -101,6 +112,7 @@ test('PostgreSQL migration and atomic family reward lifecycle', async t => {
       assert.equal(await rpc('kanto_current_chapter', [child]), 7);
       const r = await reward(); const result = await rpc('kanto_redeem', [child, r.code]);
       assert.ok(pokemon.some(p => p.id === result.pokemon_id && p.category === 'exploration'));
+      assert.equal(result.completed_chapter, null);
       await seed(pokemon.filter(p => p.category === 'exploration').map(p => p.id));
       const exhausted = await reward();
       await assert.rejects(() => rpc('kanto_redeem', [child, exhausted.code]), /CAPTURE_POOL_EMPTY/);
@@ -118,5 +130,35 @@ test('PostgreSQL migration and atomic family reward lifecycle', async t => {
       assert.equal((await pg.query<{ auth_version: number }>('select auth_version from kanto_families')).rows[0].auth_version, 2);
       assert.equal((await rpc<{ records: unknown[] }>('kanto_snapshot', [child])).records.length, 151);
     });
+  } finally { await pg.close(); }
+});
+
+test('chapter upgrade preserves old rewards and records final-story completion on exactly one receipt', async () => {
+  const pg = new PGlite();
+  try {
+    await pg.exec('create role anon; create role authenticated; create role service_role bypassrls;');
+    await pg.exec(readFileSync('supabase/migrations/202609080001_family_rewards.sql', 'utf8'));
+    await pg.query('select kanto_setup($1,$2,$3,$4)', ['家庭', '孩子', 'scrypt:fixture', 'f'.repeat(64)]);
+    const child = (await pg.query<{ id: string }>('select id from kanto_children')).rows[0].id;
+    const run = async (name: string, args: unknown[]) => (await pg.query<{ value: Record<string, unknown> }>(`select ${name}(${args.map((_, i) => `$${i + 1}`).join(',')}) as value`, args)).rows[0].value;
+    const originalCode = await run('kanto_create_reward', [child, randomUUID(), 'capture', '旧奖励']);
+    const originalReceipt = await run('kanto_redeem', [child, originalCode.code]);
+    const finalId = chapters[5].pokemonIds.at(-1)!;
+    for (const id of chapters.flatMap(chapter => chapter.pokemonIds).filter(id => id !== finalId)) {
+      await pg.query("insert into kanto_pokemon_collection(child_id,pokemon_id,method) values($1,$2,'capture') on conflict do nothing", [child, id]);
+    }
+    const before = (await pg.query('select * from kanto_pokemon_collection order by pokemon_id')).rows;
+    await pg.exec(readFileSync('supabase/migrations/202609080002_chapter_discoveries.sql', 'utf8'));
+    assert.deepEqual((await pg.query('select * from kanto_pokemon_collection order by pokemon_id')).rows, before);
+    const oldReplay = await run('kanto_redeem', [child, originalCode.code]);
+    assert.deepEqual(oldReplay, { ...originalReceipt, completed_chapter: null });
+    const finalCode = await run('kanto_create_reward', [child, randomUUID(), 'capture', '最后一站']);
+    const finalReceipt = await run('kanto_redeem', [child, finalCode.code]);
+    assert.equal(finalReceipt.pokemon_id, finalId);
+    assert.equal(finalReceipt.completed_chapter, 6);
+    assert.equal((await pg.query<{ chapter: number }>('select chapter from kanto_story_progress')).rows[0].chapter, 7);
+    const explorationCode = await run('kanto_create_reward', [child, randomUUID(), 'capture', '自由探索']);
+    assert.equal((await run('kanto_redeem', [child, explorationCode.code])).completed_chapter, null);
+    assert.deepEqual(await run('kanto_redeem', [child, finalCode.code]), finalReceipt);
   } finally { await pg.close(); }
 });

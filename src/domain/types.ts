@@ -29,7 +29,7 @@ export interface InventoryTicket { id: string; type: 'evolution' | 'legendary'; 
 export interface Receipt {
   id: string; kind: 'capture' | 'evolution-ticket' | 'legendary-ticket' | 'evolution' | 'legendary' | 'mew';
   pokemon_id: number | null; from_pokemon_id: number | null; ticket_id: string | null;
-  reason: string; created_at: string; acknowledged_at: string | null;
+  reason: string; created_at: string; acknowledged_at: string | null; completed_chapter?: number | null;
 }
 export interface LiveSnapshot extends CollectionSnapshot { tickets: InventoryTicket[]; pendingReceipt: Receipt | null }
 export interface FamilySession {
