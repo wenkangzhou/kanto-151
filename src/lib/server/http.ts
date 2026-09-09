@@ -47,6 +47,7 @@ export function pin(input: Record<string, unknown>) {
   return value;
 }
 const messages: Record<string, string> = {
+  TEAM_CHANGED: '另一台设备调整了小队，已为你刷新，请重新选择。', TEAM_NOT_COLLECTED: '只能邀请已经收集的伙伴加入小队。',
   ALREADY_SETUP: '家庭已初始化，请连接设备或使用恢复入口。', INVALID_PAIRING: '连接码不正确、已使用或已过期。',
   REQUEST_CONFLICT: '这次操作已处理，请刷新查看结果。', INVALID_CODE: '没有找到这个奖励码，请检查六位数字。', EXPIRED_CODE: '奖励码已过期或已撤销，请联系家长。',
   CAPTURE_POOL_EMPTY: '普通捕捉伙伴已收集完！这个奖励码没有被消耗。可以继续进化或探索传说。',

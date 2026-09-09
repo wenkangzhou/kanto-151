@@ -18,6 +18,7 @@ export interface CollectionRecord {
   pokemonId: number; acquiredAt: string; reason: string; method: 'capture' | 'evolution' | 'legendary';
 }
 export interface CollectionSnapshot {
+  team?: number[];
   records: CollectionRecord[];
   inventory: { evolution: number; legendary: number };
   source: 'demo' | 'empty' | 'supabase';

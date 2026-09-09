@@ -7,6 +7,7 @@ import { collectedIds, currentChapter } from '@/domain/collection';
 import { PokemonArt } from './pokemon-art';
 import { CollectionMark } from './collection-mark';
 import { AdventureMap } from './adventure-map';
+import { TeamPreview } from './team';
 import { PokemonCard } from './pokemon-card';
 export function Adventure() {
   const { snapshot, demo, pendingReceipt } = useCollection();
@@ -18,6 +19,7 @@ export function Adventure() {
     <section className="adventure-hero"><div className="hero-content"><span className="hero-tag"><MapPin size={14} />{chapter?.location ?? '关都地区 · 自由探索'}</span><h2>{chapter?.name ?? '世界很大，继续探索'}</h2><p>{chapter?.description ?? '故事已经写完，新的相遇还在路上。'}</p><span className="hero-footnote">每一次努力，都让冒险向前一步。</span></div><div className="hero-art" aria-hidden><span className="hero-orbit" /><span className="hero-art-number mono">151</span><PokemonArt pokemon={pokemonById.get(25)!} priority /><Sparkles className="hero-sparkles" size={34} /></div></section>
     {pendingReceipt && <Link href={`/capture?receipt=${pendingReceipt.id}`} className="pending-receipt"><Sparkles size={22} /><span>打开已经保存的相遇</span><ArrowRight size={18} /></Link>}
     <div className="home-stats"><Link href="/pokedex"><BookOpen size={24} /><div><strong>{ids.size}<span> / 151</span></strong><small>已相遇的伙伴</small></div><ChevronRight size={18} /></Link><Link href="/bag"><Ticket size={24} /><div><strong>{snapshot.inventory.evolution}<span> 张</span></strong><small>背包里的进化券</small></div><ChevronRight size={18} /></Link><Link href="/history"><Footprints size={24} /><div><strong>{snapshot.records.length}<span> 个</span></strong><small>值得纪念的成长</small></div><ChevronRight size={18} /></Link></div>
+    <TeamPreview />
     <AdventureMap snapshot={snapshot} />
     <section><div className="section-heading"><div><span className="eyebrow">NICE TO MEET YOU</span><h2>最近认识的伙伴</h2></div><Link href="/pokedex" className="text-link">翻开图鉴 <ArrowRight size={16} /></Link></div>{recent.length ? <div className="pokemon-grid recent-grid">{recent.map(record => <PokemonCard key={record.pokemonId} pokemon={pokemonById.get(record.pokemonId)!} />)}</div> : <div className="empty-state compact"><Sparkles size={28} /><h3>第一位伙伴，还在等你</h3><p>先翻翻图鉴，看看神秘的剪影吧。</p><Link href="/pokedex" className="text-link">打开图鉴 <ArrowRight size={16} /></Link></div>}</section>
     {demo && <p className="demo-note">你正在体验一份示例冒险。右上角可切换「全新图鉴」，看看冒险刚开始的样子。</p>}

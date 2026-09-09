@@ -1,6 +1,6 @@
 # 数据库初始化
 
-在 Supabase SQL Editor 中完整执行一次 `migrations/202609080001_family_rewards.sql`。首次迁移在一个事务中创建 `kanto_` 前缀的表、权限与函数，不插入家庭或示例收藏。然后执行 `migrations/202609080002_chapter_discoveries.sql`，支持持久化章节解锁事件。之后执行 `migrations/202609090003_anime_route.sql`，切换到动画路线。已执行 `001`、`002` 的家庭只需执行 `003`，然后部署新代码。成功后不要重复运行。
+在 Supabase SQL Editor 中完整执行一次 `migrations/202609080001_family_rewards.sql`。首次迁移在一个事务中创建 `kanto_` 前缀的表、权限与函数，不插入家庭或示例收藏。然后执行 `migrations/202609080002_chapter_discoveries.sql`，支持持久化章节解锁事件。之后执行 `migrations/202609090003_anime_route.sql`，切换到动画路线。最后执行 `migrations/202609090004_team.sql`，支持六人小队与精灵中心。已执行 `001`—`003` 的家庭只需执行 `004`，然后部署新代码。成功后不要重复运行。
 
 家庭通过部署后 `/setup` 页面创建，要求家长提供环境变量 `APP_SETUP_TOKEN` 中的口令。PIN 使用服务端 scrypt 哈希；数据库不保存明文 PIN 或设备连接凭据。
 

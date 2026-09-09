@@ -2,12 +2,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Compass, BookOpen, Backpack, Footprints, ArrowUpRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Compass, BookOpen, Backpack, Footprints, ArrowUpRight, ShieldCheck, Sparkles, UsersRound } from 'lucide-react';
 import { useCollection } from './collection-provider';
 import { BackgroundMusic } from './background-music';
 import { PwaControls } from './pwa-controls';
 import { FamilyGate } from './family-access';
-const links = [{ href: '/', name: '去冒险', en: 'ADVENTURE', icon: Compass }, { href: '/pokedex', name: '宝可梦图鉴', en: 'POKÉDEX', icon: BookOpen }, { href: '/bag', name: '我的背包', en: 'BACKPACK', icon: Backpack }, { href: '/history', name: '成长足迹', en: 'MEMORIES', icon: Footprints }];
+const links = [{ href: '/', name: '去冒险', en: 'ADVENTURE', icon: Compass }, { href: '/pokedex', name: '宝可梦图鉴', en: 'POKÉDEX', icon: BookOpen }, { href: '/team', name: '我的小队', en: 'MY TEAM', icon: UsersRound }, { href: '/bag', name: '我的背包', en: 'BACKPACK', icon: Backpack }, { href: '/history', name: '成长足迹', en: 'MEMORIES', icon: Footprints }];
 export function Shell({ children, musicAvailable = false }: { children: React.ReactNode; musicAvailable?: boolean }) {
   const pathname = usePathname();
   const { snapshot, demo, toggleDemo, live, status } = useCollection();

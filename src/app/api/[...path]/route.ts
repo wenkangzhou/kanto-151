@@ -87,6 +87,14 @@ export async function POST(request: NextRequest, context: Context) {
       response.cookies.set('kanto_parent', '', { ...cookieOptions, maxAge: 0 });
       return response;
     }
+    if (path === 'team') {
+      const session = await deviceSession(request);
+      const valid = (value: unknown): value is number[] => Array.isArray(value) && value.length <= 6
+        && value.every(id => Number.isInteger(id) && id >= 1 && id <= 151) && new Set(value).size === value.length;
+      if (!valid(input.team) || !valid(input.expected)) throw new ApiError(400, 'INPUT', '小队最多选择六位已收集的伙伴。');
+      await limit(`team:${session.childId}`, 120, 60);
+      return reply(await rpc('kanto_set_team', { p_child_id: session.childId, p_expected: input.expected, p_team: input.team }));
+    }
     if (path === 'parent/unlock') {
       const session = await deviceSession(request);
       await limit(`pin:${session.familyId}`, 10);

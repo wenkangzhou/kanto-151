@@ -8,7 +8,7 @@
 
 [`supabase/migrations/202609080001_family_rewards.sql`](../supabase/migrations/202609080001_family_rewards.sql)
 
-首次安装按文件编号依次执行：先上面的 `001`，再执行 [`202609080002_chapter_discoveries.sql`](../supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](../supabase/migrations/202609090003_anime_route.sql)。已执行 `001`、`002` 的家庭只执行 `003`，不要重复初始化。先升级 SQL，再部署新版代码，避免页面与奖励顺序不一致。
+首次安装按文件编号依次执行：先上面的 `001`，再执行 [`202609080002_chapter_discoveries.sql`](../supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](../supabase/migrations/202609090003_anime_route.sql)。最后执行 [`202609090004_team.sql`](../supabase/migrations/202609090004_team.sql)。已执行 `001`—`003` 的家庭只执行 `004`，不要重复初始化。先升级 SQL，再部署新版代码，避免页面与奖励顺序不一致。
 
 `002` 给相遇结果增加可为空的章节完成编号，并升级兑换函数，使解锁事件和捕捉结果一起提交。已有收藏、券、奖励码与旧相遇保持可用；旧记录不会被猜测补写成解锁事件。尚未执行 `002` 时地图仍可浏览，但新相遇不会显示章节庆祝。
 
@@ -83,3 +83,11 @@ npm run check:env
 参考：[Vercel GitHub 集成](https://vercel.com/docs/git/vercel-for-github)、[环境变量](https://vercel.com/docs/environment-variables)、[Supabase API Keys](https://supabase.com/docs/guides/getting-started/api-keys)。
 
 `003` 将奖励顺序切换为动画路线，并保留旧收藏、进化券和已兑换结果。原有章节进度会按新路线重新计算，从最早缺失的伙伴继续；旧章节庆祝保留 `game-v1` 标记，不会被改写为新路线。新奖励标记 `anime-v1`。
+
+## 六人小队升级（004）
+
+在已完成 `003` 的数据库执行 `202609090004_team.sql`，然后部署代码。此迁移新增开启 RLS 的 `kanto_team` 表及仅服务端可调用的换队函数，并扩展家庭快照。不删除收藏、不消耗奖励或进化券，已有伙伴最初都在精灵中心，由孩子自行选出最多六位。
+
+验收：打开「我的小队」，选择空位邀请伙伴；满六位后点「换伙伴」，确认图片中的交换；旧伙伴应回到精灵中心，图鉴总数不变。只有图鉴详情页点击已收集的伙伴图片会出现简短回应，不显示手势提示；小队和精灵中心图片不触发互动。另一台已连接设备重新进入应用或刷新后应看到相同队伍。两台设备使用旧队伍提交不同修改时，后一次应提示重新选择，不能覆盖刚保存的队伍。
+
+本地 UI 验证使用隔离的虚构数据；真实 Supabase 写入及实体 iPad PWA 验收仍需在执行迁移后进行。
