@@ -89,7 +89,7 @@ SQL 测试在本地 PGlite PostgreSQL 执行整份迁移及奖励生命周期，
 
 元数据与插画来源于 [PokéAPI](https://pokeapi.co/docs/v2/) 及 [sprites 仓库](https://github.com/PokeAPI/sprites)。导入时间见 `src/data/provenance.json`；部分简介经项目改写以适合儿童阅读。
 
-宝可梦名称、角色与官方插画属于其各自权利人。本项目是非官方的家庭学习与收藏体验。原创手帐 Logo 位于 `public/logo.png`，提示词见 [Logo 记录](docs/logo-prompt.md)。
+宝可梦名称、角色与官方插画属于其各自权利人。本项目是非官方的家庭学习与收藏体验。精灵球主题 Logo 位于 `public/logo-pokeball.png`，提示词见 [Logo 记录](docs/logo-prompt.md)。
 
 ## 动画相遇路线
 

@@ -13,7 +13,7 @@ export function Shell({ children, musicAvailable = false }: { children: React.Re
   const { snapshot, demo, toggleDemo, live, status } = useCollection();
   return <div className="app-shell">
     <aside className="sidebar">
-      <Link href="/" className="brand"><Image src="/logo.png" alt="" width={46} height={46} unoptimized /><span>KANTO <b>151</b><small>我的关都冒险手帐</small></span></Link>
+      <Link href="/" className="brand"><Image src="/logo-pokeball.png" alt="" width={46} height={46} unoptimized /><span>KANTO <b>151</b><small>我的关都冒险手帐</small></span></Link>
       <nav aria-label="主要导航">{links.map(({ href, name, en, icon: Icon }) => <Link key={href} href={href} className={`nav-link ${pathname === href || (href === '/pokedex' && pathname.startsWith('/pokemon/')) ? 'active' : ''}`}><Icon size={21} strokeWidth={1.7} /><span>{name}<small>{en}</small></span></Link>)}</nav>
       <div className="sidebar-bottom"><Link href="/parent" className="parent-link"><ShieldCheck size={18} /> 家长中心</Link></div>
     </aside>

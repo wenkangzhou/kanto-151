@@ -51,10 +51,12 @@ test('HTML is never persisted; offline navigation uses only the generic fallback
   assert.equal(saved.size, 1);
   assert.equal(await visit('/pokemon/1.png', 'cors'), 'public artwork');
   assert.equal(saved.size, 2);
+  assert.equal(await visit('/logo-pokeball.png', 'cors'), 'public artwork');
   offline = true;
   assert.equal(await visit('/pokedex'), 'offline page');
   assert.equal(await visit('/pokemon/151'), 'offline page');
   assert.equal(await visit('/setup'), 'offline page');
+  assert.equal(await visit('/logo-pokeball.png', 'cors'), 'public artwork');
   assert.equal(await visit('/pokemon/1.png', 'cors'), 'public artwork');
 });
 
@@ -63,11 +65,11 @@ test('upgrading removes the old HTML cache without deleting other applications c
   const removed: string[] = []; let claimed = false;
   vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
     self: { addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; }, clients: { claim: async () => { claimed = true; } } },
-    caches: { keys: async () => ['kanto-public-v1', 'kanto-public-v2', 'other-app'], delete: async (key: string) => { removed.push(key); } },
+    caches: { keys: async () => ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'other-app'], delete: async (key: string) => { removed.push(key); } },
   });
   let completion: Promise<unknown> | undefined;
   handlers.activate({ waitUntil: (promise: Promise<unknown>) => { completion = promise; } });
   await completion;
-  assert.deepEqual(removed, ['kanto-public-v1']);
+  assert.deepEqual(removed, ['kanto-public-v1', 'kanto-public-v2']);
   assert.equal(claimed, true);
 });

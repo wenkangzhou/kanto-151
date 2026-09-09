@@ -1,6 +1,6 @@
 /* Only public static assets are cached. Family data and HTML are always online. */
-const VERSION = 'kanto-public-v2';
-const SHELL = ['/offline.html', '/logo.png', '/icons/icon-192.png', '/icons/icon-512.png'];
+const VERSION = 'kanto-public-v3';
+const SHELL = ['/offline.html', '/logo-pokeball.png', '/icons/pokeball-192.png', '/icons/pokeball-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(VERSION).then(cache => cache.addAll(SHELL)));
   self.skipWaiting();
@@ -13,7 +13,7 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/parent') || request.headers.get('RSC') === '1' || url.searchParams.has('_rsc')) return;
-  const staticAsset = /^\/(pokemon\/\d+\.png|icons\/[^/]+\.png|logo\.png|_next\/static\/.*)$/.test(url.pathname);
+  const staticAsset = /^\/(pokemon\/\d+\.png|icons\/[^/]+\.png|logo(?:-pokeball)?\.png|_next\/static\/.*)$/.test(url.pathname);
   if (request.mode === 'navigate') {
     event.respondWith(fetch(request).catch(() => caches.match('/offline.html')));
     return;

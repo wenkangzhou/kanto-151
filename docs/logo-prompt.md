@@ -1,4 +1,12 @@
-# Logo
+# 精灵球 Logo
+
+使用内置 image_gen 生成。网站资源 `public/logo-pokeball.png`（512×512）；安装图标 `public/icons/pokeball-192.png`、`pokeball-512.png`、`pokeball-apple-touch.png`（180×180）。使用 sips 等比导出尺寸，更新 PWA 静态缓存至 v3。
+
+最终提示词：
+
+Use case: logo-brand. Create one polished square app icon for Kanto 151, a warm private Pokémon adventure app for a five-year-old child on iPad. Main subject: a classic instantly recognizable red-and-white Poké Ball, front view, dark charcoal horizontal band and central white circular button. Simple bold rounded silhouette, friendly clean animation-style illustration with restrained soft shading, warm coral red upper half, ivory white lower half, subtle charcoal outline. A tiny warm golden four-point glint near the upper right suggests the joy of meeting a Pokémon. Solid pale warm cream background fills the entire square edge to edge (no rounded-square frame, the OS will mask it). Ball centered and large but fully within the central 74% of the image for maskable icon safety. Extremely clear when displayed at 46 pixels. No notebook, no compass, no text, no letters, no digits, no extra objects, no watermark, no mockup. 1024x1024.
+
+## 旧版手帐 Logo（保留资源）
 
 使用内置 image_gen 生成，项目文件 `public/logo.png`。安装图标由该图像等比缩小导出。
 
