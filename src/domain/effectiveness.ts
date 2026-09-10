@@ -33,3 +33,8 @@ export function resistances(types: PokemonType[]) {
 export function strengths(types: PokemonType[]) {
   return (Object.keys(TYPE_NAMES) as PokemonType[]).filter(target => types.some(attack => effectiveness(attack, [target]) > 1));
 }
+
+// Prefer an informative opening example, while keeping every same-type option selectable.
+export function defaultExampleType(types: PokemonType[]): PokemonType {
+  return types.find(type => strengths([type]).length > 0) ?? types[0];
+}

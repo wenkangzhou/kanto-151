@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { existsSync } from 'node:fs';
 import { pokemon, chapters, pokemonById, evolutionFamily, baseStatTotal } from '../src/domain/pokemon';
-import { effectiveness, weaknesses, strengths } from '../src/domain/effectiveness';
+import { defaultExampleType, effectiveness, weaknesses, strengths, resistances } from '../src/domain/effectiveness';
 import { capturePool, collectionState, currentChapter, evolutionOptions, legendaryEligible } from '../src/domain/collection';
 import { emptySnapshot, demoSnapshot } from '../src/data/demo';
 import type { CollectionSnapshot } from '../src/domain/types';
@@ -109,4 +109,19 @@ test('anime route has one next encounter and skips every previously collected pa
   }
   assert.deepEqual(earned.slice(0, route.length - 3), route.filter(id => !owned.includes(id)));
   assert.equal(new Set([...owned, ...earned]).size, pokemon.filter(p => p.category === 'story' || p.category === 'exploration').length);
+});
+
+test('Pidgey uses Flying as its initial example and multiplies Normal/Flying defense correctly', () => {
+  const types = pokemonById.get(16)!.types;
+  assert.deepEqual(types, ['normal', 'flying']);
+  assert.equal(defaultExampleType(types), 'flying');
+  assert.equal(defaultExampleType(['normal']), 'normal');
+  assert.deepEqual(strengths(['normal']), []);
+  assert.deepEqual(new Set(strengths(['flying'])), new Set(['grass', 'bug', 'fighting']));
+  assert.deepEqual(new Set(weaknesses(types).map(item => `${item.type}:${item.multiplier}`)), new Set(['electric:2', 'ice:2', 'rock:2']));
+  assert.equal(effectiveness('fighting', types), 1);
+  assert.deepEqual(new Set(resistances(types).map(item => `${item.type}:${item.multiplier}`)), new Set(['grass:0.5', 'bug:0.5', 'ground:0', 'ghost:0']));
+  // A super-effective move against one type can be neutral against a dual-type partner.
+  assert.equal(effectiveness('flying', pokemonById.get(74)!.types), 0.5);
+  assert.equal(effectiveness('flying', pokemonById.get(1)!.types), 2);
 });
