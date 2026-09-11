@@ -1,5 +1,5 @@
 'use client';
-import { useDeferredValue, useMemo, useState } from 'react';
+import { useDeferredValue, useMemo, useLayoutEffect, useRef } from 'react';
 import { Search, SlidersHorizontal, Sparkles, X, BookOpen } from 'lucide-react';
 import { pokemon } from '@/domain/pokemon';
 import { collectedIds, collectionState } from '@/domain/collection';
@@ -7,14 +7,27 @@ import { TYPE_NAMES, type PokemonType } from '@/domain/types';
 import { useCollection } from './collection-provider';
 import { CollectionMark } from './collection-mark';
 import { PokemonCard } from './pokemon-card';
+import { useDexView, saveDexView } from './dex-memory';
 const filters = [{ id: 'all', label: '全部图鉴' }, { id: 'collected', label: '已收集' }, { id: 'evolvable', label: '可进化' }, { id: 'locked', label: '未发现' }] as const;
 export function Pokedex() {
-  const { snapshot, demo } = useCollection();
-  const [query, setQuery] = useState('');
+  const { snapshot, demo, status } = useCollection();
+  const view = useDexView();
+  const { query, filter, type, sort } = view;
   const search = useDeferredValue(query.trim().toLowerCase());
-  const [filter, setFilter] = useState<string>('all');
-  const [type, setType] = useState('all');
-  const [sort, setSort] = useState('number');
+  const restored = useRef(false);
+  const setQuery = (query: string) => saveDexView({ query, y: 0, anchor: 0 });
+  const setFilter = (filter: string) => saveDexView({ filter, y: 0, anchor: 0 });
+  const setType = (type: string) => saveDexView({ type, y: 0, anchor: 0 });
+  const setSort = (sort: string) => saveDexView({ sort, y: 0, anchor: 0 });
+  useLayoutEffect(() => {
+    if (restored.current || !['ready', 'demo'].includes(status) || search !== query.trim().toLowerCase()) return;
+    const frame = requestAnimationFrame(() => {
+      const card = view.anchor ? document.querySelector(`.pokedex-page a[href="/pokemon/${view.anchor}"]`) : null;
+      window.scrollTo({ top: card ? card.getBoundingClientRect().top + window.scrollY - view.offset : view.y, behavior: 'instant' });
+      restored.current = true;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [status, view, search, query]);
   const ids = useMemo(() => collectedIds(snapshot), [snapshot]);
   const results = useMemo(() => pokemon.filter(p => {
     const state = collectionState(p, snapshot);
@@ -25,7 +38,10 @@ export function Pokedex() {
   }).sort((a, b) => sort === 'recent' ? (snapshot.records.find(r => r.pokemonId === b.id)?.acquiredAt ?? '').localeCompare(snapshot.records.find(r => r.pokemonId === a.id)?.acquiredAt ?? '') || a.id - b.id : a.id - b.id), [snapshot, search, filter, type, sort, ids]);
   const progress = Math.round(ids.size / 151 * 100);
   const reset = () => { setQuery(''); setFilter('all'); setType('all'); setSort('number'); };
-  return <div className="page pokedex-page">
+  return <div className="page pokedex-page" onClickCapture={event => {
+    const link = (event.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="/pokemon/"]');
+    if (link) saveDexView({ y: window.scrollY, anchor: Number(link.getAttribute('href')?.split('/').pop()), offset: link.getBoundingClientRect().top });
+  }}>
     <div className="page-heading"><div><div className="eyebrow"><span /> THE KANTO COLLECTION</div><h1>我的宝可梦图鉴<span className="title-dot">.</span></h1><p>151 次相遇，把成长的故事慢慢装满。</p></div><span className="region-stamp mono">关都地区<small>VOL. 001 — 151</small></span></div>
     <section className="collection-banner" aria-label="收藏进度"><div className="banner-emblem"><BookOpen size={28} strokeWidth={1.5} /></div><div className="banner-copy"><span>冒险，正在一点点变精彩</span><h2><strong>{ids.size}</strong><span> / 151 位伙伴</span></h2></div><div className="banner-progress"><div><span>图鉴完成度</span><b className="mono">{progress}%</b></div><div className="progress-track"><span style={{ width: `${progress}%` }} /></div><p>{demo ? '正在浏览示例收藏，真实的冒险由你来书写。' : '空白的一页，也是一段了不起的开始。'}</p></div><div className="banner-number mono" aria-hidden>151</div></section>
     <section className="pokedex-tools" aria-label="图鉴筛选"><div className="filter-tabs">{filters.map(item => <button key={item.id} onClick={() => setFilter(item.id)} aria-pressed={filter === item.id} className={filter === item.id ? 'selected' : ''}>{item.id === 'evolvable' && <Sparkles size={15} />}{item.label}{item.id === 'collected' && <span>{ids.size}</span>}</button>)}</div><div className="search-row"><label className="search-box"><Search size={19} /><input value={query} onChange={event => setQuery(event.target.value)} placeholder="寻找已发现的伙伴，或输入编号…" aria-label="搜索已发现的宝可梦名称或编号" />{query && <button onClick={() => setQuery('')} aria-label="清空搜索"><X size={17} /></button>}</label><label className="select-wrap"><SlidersHorizontal size={16} /><select aria-label="按属性筛选已发现的宝可梦" value={type} onChange={event => setType(event.target.value)}><option value="all">全部属性</option>{Object.entries(TYPE_NAMES).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label><select className="sort-select" aria-label="排序方式" value={sort} onChange={event => setSort(event.target.value)}><option value="number">按图鉴编号</option><option value="recent">按相遇时间</option></select></div></section>

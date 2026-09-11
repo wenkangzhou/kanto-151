@@ -1,5 +1,8 @@
 'use client';
 import Link from 'next/link';
+import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { companionNeighbors, swipeDirection } from '@/domain/navigation';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight, BookOpen, Sparkles, Heart, ChartNoAxesColumnIncreasing, Ruler, Weight, CalendarDays } from 'lucide-react';
 import type { Pokemon } from '@/domain/types';
@@ -14,12 +17,30 @@ import { PokemonArt } from './pokemon-art';
 import { TypeBadge } from './type-badge';
 export function PokemonDetail({ pokemon: p }: { pokemon: Pokemon }) {
   const { snapshot } = useCollection();
+  const router = useRouter();
+  const gesture = useRef<{ x: number; y: number; pointer: number } | null>(null);
+  const suppressClick = useRef(false);
+  const neighbors = companionNeighbors(p.id, snapshot.records.map(record => record.pokemonId));
   const state = collectionState(p, snapshot);
   const known = collectedIds(snapshot).has(p.id);
   const record = snapshot.records.find(r => r.pokemonId === p.id);
   const family = evolutionFamily(p);
-  return <div className="page detail-page"><div className="detail-navigation"><Link href="/pokedex" className="back-link"><BookOpen size={25} /> 回图鉴</Link><div>{p.id > 1 && <Link href={`/pokemon/${p.id - 1}`} aria-label="上一只宝可梦"><ChevronLeft size={20} /></Link>}<span className="mono">{dexNumber(p.id)}</span>{p.id < 151 && <Link href={`/pokemon/${p.id + 1}`} aria-label="下一只宝可梦"><ChevronRight size={20} /></Link>}</div></div>
-    <section className={`detail-hero detail-${known ? p.types[0] : 'locked'}`}><div className="detail-image"><span className="detail-big-number mono" aria-hidden>{String(p.id).padStart(3, '0')}</span><motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45 }} key={p.id}>{known ? <PartnerGreeting pokemon={p} /> : <PokemonArt pokemon={p} hidden priority />}</motion.div><span className="detail-image-caption mono">KANTO FIELD NOTES / {String(p.id).padStart(3, '0')}</span></div><div className="detail-intro"><span className="eyebrow">{dexNumber(p.id)} · {stateNames[state]}</span><h1>{known ? p.name : '神秘的伙伴'}</h1><div className="detail-english">{known ? p.englishName : 'A FRIEND YET TO MEET'}</div>{known ? <><p className="traditional-name">繁体中文 · {p.traditionalName}</p><div className="detail-types">{p.types.map(type => <TypeBadge type={type} key={type} />)}</div><p className="pokemon-description">{p.description}</p><div className="size-stats"><span><Ruler size={17} /><small>身高</small><b>{p.height} m</b></span><span><Weight size={17} /><small>体重</small><b>{p.weight} kg</b></span></div></> : <div className="locked-description"><CollectionMark state={state} /><p>{unlockHint(p, snapshot)}</p><span>相遇之后，名字和秘密就会出现在这里。</span></div>}</div></section>
+  return <div className="page detail-page"><div className="detail-navigation"><Link href="/pokedex" className="back-link"><BookOpen size={25} /> 回图鉴</Link><div>{neighbors.previous !== null && <Link scroll={false} href={`/pokemon/${neighbors.previous}`} aria-label="上一只宝可梦"><ChevronLeft size={20} /></Link>}<span className="mono">{dexNumber(p.id)}</span>{neighbors.next !== null && <Link scroll={false} href={`/pokemon/${neighbors.next}`} aria-label="下一只宝可梦"><ChevronRight size={20} /></Link>}</div></div>
+    <section className={`detail-hero detail-${known ? p.types[0] : 'locked'}`}><div className="detail-image detail-swipe" onPointerDown={event => {
+      if (!event.isPrimary || event.button !== 0) return;
+      suppressClick.current = false;
+      gesture.current = { x: event.clientX, y: event.clientY, pointer: event.pointerId };
+    }} onPointerUp={event => {
+      const start = gesture.current; gesture.current = null;
+      if (!start || start.pointer !== event.pointerId) return;
+      const direction = swipeDirection(event.clientX - start.x, event.clientY - start.y);
+      if (!direction) return;
+      suppressClick.current = true;
+      const id = neighbors[direction];
+      if (id !== null) router.push(`/pokemon/${id}`, { scroll: false });
+    }} onPointerCancel={() => { gesture.current = null; }} onClickCapture={event => {
+      if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; }
+    }}><span className="detail-big-number mono" aria-hidden>{String(p.id).padStart(3, '0')}</span><motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45 }} key={p.id}>{known ? <PartnerGreeting pokemon={p} /> : <PokemonArt pokemon={p} hidden priority />}</motion.div><span className="detail-image-caption mono">KANTO FIELD NOTES / {String(p.id).padStart(3, '0')}</span></div><div className="detail-intro"><span className="eyebrow">{dexNumber(p.id)} · {stateNames[state]}</span><h1>{known ? p.name : '神秘的伙伴'}</h1><div className="detail-english">{known ? p.englishName : 'A FRIEND YET TO MEET'}</div>{known ? <><p className="traditional-name">繁体中文 · {p.traditionalName}</p><div className="detail-types">{p.types.map(type => <TypeBadge type={type} key={type} />)}</div><p className="pokemon-description">{p.description}</p><div className="size-stats"><span><Ruler size={17} /><small>身高</small><b>{p.height} m</b></span><span><Weight size={17} /><small>体重</small><b>{p.weight} kg</b></span></div></> : <div className="locked-description"><CollectionMark state={state} /><p>{unlockHint(p, snapshot)}</p><span>相遇之后，名字和秘密就会出现在这里。</span></div>}</div></section>
     {known ? <><TypeDiscovery key={p.id} partner={p} discovered={collectedIds(snapshot)} />
     <section className="detail-panel evolution-panel"><div className="section-heading"><h2><Sparkles size={19} /> 成长的不同模样</h2>{family.length > 1 && <span className="muted">原来的伙伴，一直都在</span>}</div>{family.length === 1 ? <p className="strength-summary">在关都 151 图鉴中，它保持自己独一无二的模样。</p> : <><div className={`evolution-chain ${family.some(member => member.id === 133) ? 'eevee-chain' : ''}`}>{family.map((member, index) => {
       const discovered = collectedIds(snapshot).has(member.id);
