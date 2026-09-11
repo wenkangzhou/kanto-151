@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { LoaderCircle, Volume2, VolumeX } from 'lucide-react';
 import { backgroundTrack, createMusicPlayer, supportsBackgroundMusic, type MusicState } from '@/lib/background-music';
 
+import { voiceFocusEvent, voiceSnapshot, stopVoice } from '@/lib/voice-audio';
 import { createCuePlayer, sceneAudioEvent, type SceneAudioRequest } from '@/lib/scene-audio';
 
 const subscribe = (callback: () => void) => {
@@ -17,20 +18,27 @@ function MusicControl({ available }: { available: boolean }) {
   const cue = useRef<ReturnType<typeof createCuePlayer> | null>(null);
   useEffect(() => {
     cue.current = createCuePlayer(source => { const audio = new Audio(source); audio.preload = 'none'; return audio; }, () => player.current?.suspendForCue() ?? (() => {}));
+    let resumeVoice: (() => void) | undefined;
+    const voiceFocus = (event: Event) => {
+      if ((event as CustomEvent<boolean>).detail) { cue.current?.stop(false); resumeVoice = player.current?.suspendForCue(); }
+      else { const resume = resumeVoice; resumeVoice = undefined; resume?.(); }
+    };
+    window.addEventListener(voiceFocusEvent, voiceFocus);
     const scene = (event: Event) => {
       const { owner, sound } = (event as CustomEvent<SceneAudioRequest>).detail;
       if (!sound) cue.current?.stop(true, owner);
-      else if (currentState.current === 'playing' && !document.hidden) cue.current?.play(owner, sound);
+      else if (currentState.current === 'playing' && !document.hidden && !voiceSnapshot().owner) cue.current?.play(owner, sound);
     };
     window.addEventListener(sceneAudioEvent, scene);
     const visibility = () => { if (document.hidden) { cue.current?.stop(false); player.current?.stop(); } };
     const stop = () => { cue.current?.stop(false); player.current?.stop(); };
     document.addEventListener('visibilitychange', visibility); window.addEventListener('pagehide', stop);
-    return () => { window.removeEventListener(sceneAudioEvent, scene); cue.current?.stop(false); cue.current = null; document.removeEventListener('visibilitychange', visibility); window.removeEventListener('pagehide', stop); player.current?.dispose(); player.current = null; };
+    return () => { window.removeEventListener(voiceFocusEvent, voiceFocus); window.removeEventListener(sceneAudioEvent, scene); cue.current?.stop(false); cue.current = null; document.removeEventListener('visibilitychange', visibility); window.removeEventListener('pagehide', stop); player.current?.dispose(); player.current = null; };
   }, []);
   const on = state === 'playing' || state === 'loading';
-  const label = !available ? '尚未添加背景音乐文件' : state === 'error' ? '播放失败，点击重试' : state === 'loading' ? '正在加载音乐，点击取消' : on ? '关闭声音' : '开启声音';
+  const label = !available ? '尚未添加背景音乐文件' : state === 'error' ? '播放失败，点击重试' : state === 'loading' ? '正在加载音乐，点击取消' : on ? '关闭背景音乐' : '开启背景音乐';
   return <div className="background-music"><button type="button" className={`music-switch ${on ? 'music-on' : ''}`} disabled={!available} aria-label={label} aria-pressed={on} title={label} onClick={() => {
+    stopVoice();
     player.current ??= createMusicPlayer(() => { const audio = new Audio(); audio.preload = 'none'; audio.src = backgroundTrack.source; return audio; }, next => { currentState.current = next; setState(next); if (next === 'error' || next === 'off') cue.current?.stop(false); });
     cue.current?.stop(false);
     void player.current.toggle();

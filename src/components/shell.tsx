@@ -6,12 +6,13 @@ import { Compass, BookOpen, Backpack, Footprints, ShieldCheck, UsersRound } from
 import { useCollection } from './collection-provider';
 import { BackgroundMusic } from './background-music';
 import { PwaControls } from './pwa-controls';
+import { VoiceLifecycle } from './voice-lifecycle';
 import { FamilyGate } from './family-access';
 const links = [{ href: '/', name: '去冒险', en: 'ADVENTURE', icon: Compass }, { href: '/pokedex', name: '宝可梦图鉴', en: 'POKÉDEX', icon: BookOpen }, { href: '/team', name: '我的小队', en: 'MY TEAM', icon: UsersRound }, { href: '/bag', name: '我的背包', en: 'BACKPACK', icon: Backpack }, { href: '/history', name: '成长足迹', en: 'MEMORIES', icon: Footprints }];
 export function Shell({ children, musicAvailable = false }: { children: React.ReactNode; musicAvailable?: boolean }) {
   const pathname = usePathname();
   const { snapshot, demo, toggleDemo, live, status } = useCollection();
-  return <div className="app-shell">
+  return <div className="app-shell"><VoiceLifecycle />
     <aside className="sidebar">
       <Link href="/" className="brand"><Image src="/logo-pokeball.png" alt="" width={46} height={46} unoptimized /><span>KANTO <b>151</b><small>我的关都冒险手帐</small></span></Link>
       <nav aria-label="主要导航">{links.map(({ href, name, en, icon: Icon }) => <Link key={href} href={href} className={`nav-link ${pathname === href || (href === '/pokedex' && pathname.startsWith('/pokemon/')) ? 'active' : ''}`}><Icon size={21} strokeWidth={1.7} /><span>{name}<small>{en}</small></span></Link>)}</nav>
