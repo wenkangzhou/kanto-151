@@ -6,7 +6,7 @@ import { TYPE_NAMES } from '@/domain/types';
 import { defaultExampleType, effectiveness, resistances, strengths, weaknesses } from '@/domain/effectiveness';
 import { pokemon } from '@/domain/pokemon';
 import { PokemonArt } from './pokemon-art';
-import { TypeBadge, TypePicture } from './type-badge';
+import { TypeBadge, TypePicture, useTypeVoice } from './type-badge';
 import { ReadAloud } from './read-aloud';
 import { TypeSymbol } from './type-symbol';
 
@@ -15,9 +15,11 @@ function StrongHit({ multiplier }: { multiplier: number }) {
 }
 
 export function TypeDiscovery({ partner, discovered }: { partner: Pokemon; discovered: Set<number> }) {
+  const speakType = useTypeVoice();
   const [choice, setChoice] = useState<PokemonType>(() => defaultExampleType(partner.types));
   const [cast, setCast] = useState(0);
   function castMove(type: PokemonType) {
+    speakType(type);
     setChoice(type);
     setCast(value => value + 1);
   }
@@ -30,7 +32,7 @@ export function TypeDiscovery({ partner, discovered }: { partner: Pokemon; disco
   const examples = pokemon.filter(p => p.id !== partner.id && discovered.has(p.id) && effectiveness(attack, p.types) > 1).slice(0, 3);
   return <section className="detail-panel type-discovery"><div className="section-heading"><h2><Sparkles size={23} /> 看图认识属性</h2></div>
     <div className="type-lessons"><section className="type-lesson outgoing"><h3><Swords size={25} aria-hidden="true" /> 我出招！<ReadAloud text={targets.length ? `现在试试${TYPE_NAMES[attack]}招式！攻击${targets.map(type => TYPE_NAMES[type]).join('、')}属性时，力量会变成两倍。${partner.types.length > 1 ? '点另一个属性，可以换招式。' : ''}` : '一般招式也能攻击，只是没有特别擅长的属性对手。'} /></h3>
-      <div className="lesson-context"><div className="lesson-avatar"><PokemonArt pokemon={partner} /><strong>{partner.name}</strong></div><div className="move-controls"><span className="lesson-label">这次用的招式</span><div className="move-picker" role="group" aria-label="选择出招属性，不改变伙伴自身属性">{partner.types.map(type => <button key={type} type="button" aria-pressed={partner.types.length > 1 ? attack === type : undefined} aria-label={`看看${TYPE_NAMES[type]}属性招式`} onClick={() => castMove(type)}><TypePicture type={type} /></button>)}</div><small className="move-hint">点一点，试试这招</small></div></div>
+      <div className="lesson-context"><div className="lesson-avatar"><PokemonArt pokemon={partner} /><strong>{partner.name}</strong></div><div className="move-controls"><span className="lesson-label">这次用的招式</span><div className="move-picker" role="group" aria-label="选择出招属性，不改变伙伴自身属性">{partner.types.map(type => <button key={type} type="button" aria-pressed={partner.types.length > 1 ? attack === type : undefined} aria-label={`看看${TYPE_NAMES[type]}属性招式`} onClick={() => castMove(type)}><TypePicture type={type} interactive={false} /></button>)}</div><small className="move-hint">点一点，试试这招</small></div></div>
       <div className="lesson-result" aria-live="polite"><span className="lesson-label">{TYPE_NAMES[attack]}招式 → 这些属性</span>{targets.length ? <div key={`${partner.id}-${cast}`} className={`move-demonstration${cast ? ' is-casting' : ''}`}><div className="move-flight" aria-hidden="true"><ArrowRight size={34} /><span className={`move-projectile type-${attack}`}><TypeSymbol type={attack} size={24} /></span></div><div className="compact-effect-row"><div className="attack-targets">{targets.map(type => <span className="move-hit-target" key={type}><TypePicture type={type} /></span>)}</div><StrongHit multiplier={2} /></div></div> : <div key={`${partner.id}-${cast}`} className={`neutral-effect${cast ? ' neutral-cast' : ''}`}><Shield size={28} aria-hidden="true" /><div><strong>没有效果加倍的属性</strong><p>一般招式也能攻击，只是没有属性克制优势。</p></div></div>}</div>
     </section>
     <section className="type-lesson incoming"><h3><ShieldAlert size={25} aria-hidden="true" /> 小心这招！<ReadAloud text={`${partner.name}的属性是${partner.types.map(type => TYPE_NAMES[type]).join('和')}。${incoming.length ? `要小心${incoming.map(item => TYPE_NAMES[item.type]).join('、')}属性的招式！这些招式攻击它时，力量会变大。` : '没有效果加倍的来袭属性。'}${partner.types.length > 1 ? '两种属性要一起看，换招式不会改变自己的属性。' : ''}`} /></h3>

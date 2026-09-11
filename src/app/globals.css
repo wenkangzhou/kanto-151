@@ -107,3 +107,16 @@
 .detail-swipe{touch-action:pan-y;user-select:none}.detail-swipe .partner-greeting{touch-action:pan-y}.detail-navigation>div>a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}.team-drag-handle{touch-action:none;cursor:grab;-webkit-touch-callout:none;user-select:none}.team-drag-handle:disabled{opacity:1!important;cursor:default}.team-dragging{background:#e4eed9!important;outline:2px dashed #8daa76}.team-dragging .team-partner-art{opacity:.2!important}.team-drag-ghost{position:fixed;z-index:80;pointer-events:none;transform:translate(-50%,-65%);width:125px;height:125px;filter:drop-shadow(0 15px 10px #30482944)}.team-drag-ghost .pokemon-art{width:100%;height:100%;object-fit:contain}.team-sort-hint{text-align:center;font-size:12px;color:#7b8e70;margin-top:18px}
 
 .read-aloud{display:inline-flex;vertical-align:middle;margin-left:5px}.read-aloud-button{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:8px;border-radius:50%;color:inherit;opacity:.75;vertical-align:middle}.read-aloud-button:hover,.read-aloud-button[aria-pressed=true]{opacity:1;background:#78916f18}.voice-error{position:fixed;left:50%;bottom:85px;transform:translateX(-50%);z-index:100;background:#fff8ec;border:1px solid #e7d5b8;border-radius:12px;padding:12px 18px;font-size:13px;color:#806c4e;max-width:90vw}
+
+/* Attribute badges speak directly without an extra playback control. */
+.pokemon-card-link{display:block}
+.pokemon-card-link::after{content:"";position:absolute;inset:0;z-index:1}
+.pokemon-card .type-badge{position:relative;z-index:2}
+.pokemon-card:has(.pokemon-card-link:focus-visible){outline:3px solid var(--red);outline-offset:3px}
+.picture-partner-choice{display:block;width:100%}
+button.type-badge,button.type-picture{cursor:pointer;touch-action:manipulation}
+
+button.type-badge{min-height:0;position:relative}
+button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radius:999px}
+.picture-partner-choice::after{content:"";position:absolute;inset:0;border-radius:22px}
+.picture-partner .partner-type-pictures{position:relative}
