@@ -120,3 +120,15 @@ button.type-badge{min-height:0;position:relative}
 button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radius:999px}
 .picture-partner-choice::after{content:"";position:absolute;inset:0;border-radius:22px}
 .picture-partner .partner-type-pictures{position:relative}
+
+.size-comparison{display:flex;align-items:center;gap:14px;margin-top:18px}
+.size-comparison-mini{width:180px;flex:0 0 180px}
+.size-comparison-caption{display:block;text-align:center;font-size:12px;color:var(--muted);line-height:18px}
+.size-comparison-mini>svg{display:block;width:180px;height:105px}
+.size-comparison-numbers{display:grid;gap:7px;margin:0;font-size:12px}
+.size-comparison-numbers>div{display:flex;align-items:baseline;gap:10px}
+.size-comparison-numbers dt{color:var(--muted)}
+.size-comparison-numbers dd{margin:0;font-weight:600;white-space:nowrap}
+.size-comparison-numbers .size-comparison-reference{font-size:10px}
+.size-comparison-reference dd{font-weight:400;color:var(--muted)}
+@media(max-width:380px){.size-comparison{gap:12px}.size-comparison-mini{width:164px;flex-basis:164px}.size-comparison-mini>svg{width:164px;height:96px}}
