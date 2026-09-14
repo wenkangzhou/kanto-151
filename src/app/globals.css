@@ -132,3 +132,44 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .size-comparison-numbers .size-comparison-reference{font-size:10px}
 .size-comparison-reference dd{font-weight:400;color:var(--muted)}
 @media(max-width:380px){.size-comparison{gap:12px}.size-comparison-mini{width:164px;flex-basis:164px}.size-comparison-mini>svg{width:164px;height:96px}}
+
+/* Put the child's next action beside the newly revealed partner. */
+.encounter.encounter-result{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:16px 28px;min-height:0}
+.encounter-result>.encounter-heading{grid-column:1/-1}
+.encounter-result .encounter-stage{width:100%;height:clamp(200px,34vh,320px)}
+.encounter-result .encounter-art .pokemon-art{width:min(100%,280px);height:min(100%,280px)}
+.encounter-result .encounter-copy{gap:10px;min-width:0}
+.encounter-result .success-label{font-size:12px}
+.encounter-result-actions{display:flex;flex-direction:column;gap:12px;width:100%;max-width:330px}
+.encounter-result-actions>.encounter-next{width:100%;min-width:0;min-height:64px;font-size:21px}
+.encounter-result-actions .encounter-team{margin:0;max-width:none}
+.encounter-result-actions .encounter-team>.button{width:100%;justify-content:center}
+.encounter-result-actions .encounter-team>p{margin:6px 0 0;font-size:11px}
+.encounter-result-actions .encounter-team-saved{margin:0;font-size:13px}
+.encounter-result .discovery-stamp{font-size:12px;padding:4px 10px}
+.encounter-result .encounter-reason{font-size:13px;margin:0}
+.encounter-result .original-kept{padding:4px 10px;font-size:12px}
+.encounter-result .original-kept .pokemon-art{width:32px;height:32px}
+.encounter-result>.form-error{grid-column:1/-1;text-align:center}
+.journey-confirm>.transformation{padding:12px;margin-bottom:16px}
+.journey-confirm .transformation .pokemon-art{height:130px}
+.journey-confirm .confirmation-reason{margin:12px 0}
+.journey-confirm .journey-actions{margin-top:16px}
+@media(max-width:640px){
+ .encounter.encounter-result{grid-template-columns:1fr;gap:8px;padding:14px}
+ .encounter-result .encounter-stage{height:150px}
+ .encounter-result .encounter-art .pokemon-art{width:150px;height:150px}
+ .encounter-result .encounter-copy{gap:6px}
+ .encounter-result .encounter-copy h1{font-size:25px}
+ .encounter-result-actions{gap:8px;max-width:350px}
+ .encounter-result-actions>.encounter-next{min-height:56px;font-size:19px}
+ .encounter-result-actions>.encounter-next .pokemon-art{width:40px;height:40px}
+ .encounter-result .revealed-gift-ticket{min-height:140px;gap:5px;padding:10px}
+ .encounter-result .gift-ticket-emblem{width:40px;height:40px}
+ .encounter-result .gift-ticket-emblem>svg{width:32px;height:32px}
+ .encounter-result .gift-ticket-count{font-size:16px;padding-top:5px}
+}
+
+.preview-animation-tabs{display:flex;gap:10px;margin:12px 0}
+.preview-animation-tabs a,.preview-animation-tabs button{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 22px;border-radius:12px;background:#fff;border:1px solid var(--line)}
+.preview-animation-tabs a[aria-current=page]{background:#fceee9;border-color:#e8b8a9;color:var(--red)}

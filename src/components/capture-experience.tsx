@@ -26,8 +26,7 @@ const evolutionStages = [
   ['idle', '伙伴正在准备成长', 0], ['prepare', '奇妙的变化开始了', 400], ['glowing', '光芒一点点亮起来', 1100],
   ['silhouette-changing', '一个新的模样', 2300], ['flash', '成长的光芒', 3900], ['reveal', '你好，新的模样！', 4550], ['completed', '原来的伙伴也会一直在', 5500],
 ] as const;
-function Encounter({ receipt, onReplay }: { receipt: Receipt; onReplay?: () => void }) {
-  const preview = Boolean(onReplay);
+export function Encounter({ receipt, preview = false, onPreviewContinue }: { receipt: Receipt; preview?: boolean; onPreviewContinue?: () => void }) {
   const { refresh } = useCollection(); const router = useRouter(); const reduced = useReducedMotion();
   const evolution = receipt.kind === 'evolution'; const stages = evolution ? evolutionStages : captureStages;
   const [giftOpened, setGiftOpened] = useState(false);
@@ -44,8 +43,8 @@ function Encounter({ receipt, onReplay }: { receipt: Receipt; onReplay?: () => v
   const ticketOnly = receipt.pokemon_id === null;
   const stage = skipped || receipt.acknowledged_at ? 'completed' : ticketOnly ? giftOpened ? 'completed' : 'gift' : !started ? 'ready' : reduced ? 'completed' : stages[phase][0];
   useEffect(() => {
-    if (stage !== 'ready' || evolution) return;
-    const timer = setTimeout(startEncounter, 8000);
+    if (stage !== 'ready') return;
+    const timer = setTimeout(startEncounter, evolution ? 350 : 8000);
     return () => clearTimeout(timer);
   }, [stage, evolution, startEncounter]);
   const revealed = ['reveal', 'completed'].includes(stage);
@@ -58,19 +57,19 @@ function Encounter({ receipt, onReplay }: { receipt: Receipt; onReplay?: () => v
   }, [stages, started, skipped, reduced, receipt.acknowledged_at, ticketOnly]);
   useEffect(() => { if (revealed && !preview) void refresh(); }, [revealed, refresh, preview]);
   async function finish() {
-    if (onReplay) { onReplay(); return; }
+    if (preview) { onPreviewContinue?.(); return; }
     if (busy) return; setBusy(true); setError('');
     try { await api('receipts/acknowledge', { id: receipt.id }); await refresh(); router.replace(target ? `/pokemon/${target.id}` : '/bag'); }
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); setBusy(false); }
   }
   const activeArt = evolution && before && ['idle', 'prepare', 'glowing'].includes(stage) ? before : target;
-  return <section className={`encounter ${skipped || reduced || receipt.acknowledged_at ? 'encounter-quiet' : ''} ${ticketOnly ? 'gift-encounter' : evolution ? 'evolution-encounter' : 'capture-encounter'} ${receipt.kind === 'legendary' || receipt.kind === 'legendary-ticket' ? 'legendary-encounter' : ''} ${receipt.kind === 'mew' ? 'mew-encounter' : ''} phase-${stage}`}>
+  return <section className={`encounter ${revealed ? 'encounter-result' : ''} ${skipped || reduced || receipt.acknowledged_at ? 'encounter-quiet' : ''} ${ticketOnly ? 'gift-encounter' : evolution ? 'evolution-encounter' : 'capture-encounter'} ${receipt.kind === 'legendary' || receipt.kind === 'legendary-ticket' ? 'legendary-encounter' : ''} ${receipt.kind === 'mew' ? 'mew-encounter' : ''} phase-${stage}`}>
     <div className="encounter-heading"><span className="eyebrow">{receipt.kind === 'mew' ? '最后的奇迹' : evolution ? '伙伴长大啦' : ticketOnly ? '一份送给你的鼓励' : '今天的新伙伴'}</span>{!revealed && <button className="skip-animation" onClick={() => { startRequested.current = true; stopSceneSound(receipt.id); setSkipped(true); }} aria-label="跳过动画，直接看奖励"><FastForward size={19} />跳过</button>}</div>
     <div className="encounter-stage">
       {(revealed || stage === 'success') && !reduced && !skipped && !receipt.acknowledged_at && <div className="encounter-confetti" aria-hidden="true">{Array.from({ length: 12 }, (_, index) => <i key={index} style={{ '--piece-angle': `${index * 30}deg`, '--piece-color': ['#dabf72', '#97b596', '#b6a4ce', '#e5a897'][index % 4], '--piece-distance': `${85 + index % 3 * 25}px` } as CSSProperties} />)}</div>}
       {stage === 'ready' ? <button className="start-encounter" aria-label={evolution ? '开始进化' : '点精灵球，开始收服伙伴'} onClick={startEncounter}>{evolution && before ? <><PokemonArt pokemon={before} /><Sparkles className="start-evolution-spark" size={40} /></> : <CollectionMark state="available" />}<span className="start-touch"><Hand size={29} aria-hidden="true" />{evolution ? '变身！' : '点一下！'}</span></button> : ticketOnly ? revealed ? <div className={`revealed-gift-ticket ${receipt.kind === 'evolution-ticket' ? 'evolution' : 'legendary'}`} aria-label={receipt.kind === 'evolution-ticket' ? '一张进化券' : '一张传说券'}><span className="gift-ticket-emblem">{receipt.kind === 'evolution-ticket' ? <Sparkles size={55} /> : <Mountain size={55} />}</span><strong>{receipt.kind === 'evolution-ticket' ? '进化券' : '传说券'}</strong><span className="gift-ticket-count"><Ticket size={22} /> × 1</span></div> : <button className="open-gift" aria-label="打开奖励礼物，奖励已保存" onClick={() => { playSceneSound(receipt.id, 'gift'); setGiftOpened(true); }}><span className="gift-halo" aria-hidden="true" /><span className="gift-box" aria-hidden="true"><Gift size={100} strokeWidth={1.4} /><span className="gift-seal"><Sparkles size={27} /></span></span><span className="gift-touch-prompt">点我打开 <Sparkles size={20} /></span></button> : <div className="encounter-scenery" aria-hidden="true"><div className="encounter-ground" /><div className="evolution-aura" /><div className="encounter-flash" />{activeArt && <motion.div className="encounter-art" animate={revealed ? { scale: 1, opacity: 1 } : { scale: evolution && stage === 'glowing' ? 1.07 : 1, opacity: 1 }}><PokemonArt pokemon={activeArt} hidden={!revealed && (!evolution || ['silhouette-changing', 'flash'].includes(stage))} priority /></motion.div>}{!evolution && <div className="encounter-ball" key={stage}><div className="pokeball"><span className="pokeball-shine" /><span className="pokeball-button" /></div></div>}<Sparkles className="encounter-sparkle left" size={35} /><Sparkles className="encounter-sparkle right" size={25} /></div>}
     </div>
-    <div className="encounter-copy" aria-live="polite">{revealed ? <><span className="success-label"><Check size={16} />{preview ? '动画预览 · 未保存伙伴' : ticketOnly ? '奖励已放入背包' : '相遇已永久保存'}</span><h1>{target ? target.name : receipt.kind === 'evolution-ticket' ? '获得一张进化券' : '获得一张传说券'}<ReadAloud text={target ? target.name : '这张券已经放进背包啦。'} label="听听新伙伴" /></h1>{target && <><p className="mono">{dexNumber(target.id)} · {target.englishName}</p>{!preview && !receipt.acknowledged_at && <span className="discovery-stamp"><Sparkles size={20} /> 新伙伴 +1</span>}</>}{evolution && before && <div className="original-kept"><PokemonArt pokemon={before} /><Check size={19} /><span>{before.name}也会一直陪着你</span></div>}{receipt.completed_chapter && <ChapterDiscovery routeVersion={receipt.route_version} completed={receipt.completed_chapter} quiet={Boolean(skipped || reduced || receipt.acknowledged_at)} />}<p className="encounter-reason">「{receipt.reason || '一次值得记住的努力'}」</p>{!preview && target && stage === 'completed' && <EncounterTeam partner={target} previousId={evolution ? receipt.from_pokemon_id : null} disabled={busy} />}<button className="button encounter-next" disabled={busy} onClick={() => void finish()}>{target ? <PokemonArt pokemon={target} /> : <Backpack size={30} />}{preview ? '再看一次' : busy ? '正在打开…' : target ? '认识它！' : '去背包' }<ArrowRight size={17} /></button></> : <><h2>{stage === 'ready' ? evolution ? '看看伙伴的新模样' : '新伙伴等着你！' : ticketOnly ? '里面藏着什么惊喜呢？' : stages[phase][1]}</h2></>}</div>{error && <p className="form-error" role="alert">{error}</p>}
+    <div className="encounter-copy" aria-live="polite">{revealed ? <><span className="success-label"><Check size={16} />{ticketOnly ? '奖励已放入背包' : '相遇已永久保存'}</span><h1>{target ? target.name : receipt.kind === 'evolution-ticket' ? '获得一张进化券' : '获得一张传说券'}<ReadAloud text={target ? target.name : '这张券已经放进背包啦。'} label="听听新伙伴" /></h1><div className="encounter-result-actions"><button className="button encounter-next" disabled={busy} onClick={() => void finish()}>{target ? <PokemonArt pokemon={target} /> : <Backpack size={30} />}{busy ? '正在打开…' : target ? '看详情' : '去背包' }<ArrowRight size={17} /></button>{target && <EncounterTeam preview={preview} partner={target} previousId={evolution ? receipt.from_pokemon_id : null} disabled={busy} />}</div>{target && <><p className="mono">{dexNumber(target.id)} · {target.englishName}</p>{!receipt.acknowledged_at && <span className="discovery-stamp"><Sparkles size={20} /> 新伙伴 +1</span>}</>}{evolution && before && <div className="original-kept"><PokemonArt pokemon={before} /><Check size={19} /><span>{before.name}也会一直陪着你</span></div>}{receipt.completed_chapter && <ChapterDiscovery routeVersion={receipt.route_version} completed={receipt.completed_chapter} quiet={Boolean(skipped || reduced || receipt.acknowledged_at)} />}<p className="encounter-reason">「{receipt.reason || '一次值得记住的努力'}」</p></> : <><h2>{stage === 'ready' ? evolution ? '看看伙伴的新模样' : '新伙伴等着你！' : ticketOnly ? '里面藏着什么惊喜呢？' : stages[phase][1]}</h2></>}</div>{error && <p className="form-error" role="alert">{error}</p>}
   </section>;
 }
 export function CaptureExperience() {
@@ -101,10 +100,10 @@ export function CaptureExperience() {
 }
 
 /** Local animation playground: no reward redemption, acknowledgement or team writes. */
-export function CapturePreview() {
+export function CapturePreview({ evolution = false }: { evolution?: boolean }) {
   const [take, setTake] = useState(0);
-  const receipt: Receipt = { id: `local-capture-preview-${take}`, kind: 'capture', pokemon_id: 25,
-    from_pokemon_id: null, ticket_id: null, reason: '看看精灵球里会发生什么',
+  const receipt: Receipt = { id: `local-${evolution ? 'evolution' : 'capture'}-preview-${take}`, kind: evolution ? 'evolution' : 'capture', pokemon_id: evolution ? 5 : 25,
+    from_pokemon_id: evolution ? 4 : null, ticket_id: null, reason: evolution ? '看看小火龙的新模样' : '看看精灵球里会发生什么',
     created_at: '2026-01-01T00:00:00.000Z', acknowledged_at: null };
-  return <div className="page"><p className="lesson-note" role="note">本地动画预览 · 不消耗奖励，不增加图鉴伙伴。点击精灵球开始，结束后可以重播。</p><Encounter key={take} receipt={receipt} onReplay={() => setTake(value => value + 1)} /></div>;
+  return <div className="page"><p className="lesson-note" role="note">本地动画预览 · 不消耗奖励或券，不增加图鉴伙伴。结果页按钮仅供查看，点击不执行操作。</p><nav className="preview-animation-tabs" aria-label="选择预览动画"><Link href="/dev/capture" aria-current={!evolution ? 'page' : undefined}>开球</Link><Link href="/dev/capture?mode=evolution" aria-current={evolution ? 'page' : undefined}>进化</Link><Link href="/dev/capture?mode=ticket">领券到进化</Link><button type="button" onClick={() => setTake(value => value + 1)}>重播动画</button></nav><Encounter key={take} receipt={receipt} preview /></div>;
 }

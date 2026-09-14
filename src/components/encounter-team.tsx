@@ -6,13 +6,13 @@ import type { Pokemon } from '@/domain/types';
 import { useCollection } from './collection-provider';
 import { PokemonArt } from './pokemon-art';
 
-export function EncounterTeam({ partner, previousId, disabled }: { partner: Pokemon; previousId?: number | null; disabled: boolean }) {
+export function EncounterTeam({ partner, previousId, disabled, preview = false }: { partner: Pokemon; previousId?: number | null; disabled: boolean; preview?: boolean }) {
   const { snapshot } = useCollection();
   const team = snapshot.team ?? [];
   const [selection, setSelection] = useState<number[] | null>(null);
   const owned = snapshot.records.some(record => record.pokemonId === partner.id);
-  if (team.includes(partner.id)) return <p className="encounter-team-saved" role="status"><Check size={20} />已经在小队里，一起出发吧！</p>;
-  return <div className="encounter-team"><button className="button" disabled={disabled || !owned} onClick={() => setSelection([...team])}><UsersRound size={24} />加入小队<ArrowRight size={20} /></button><p><House size={16} />也可以先留在精灵中心，随时再邀请。</p>{selection && <InviteDialog partner={partner} previousId={previousId} expected={selection} onClose={() => setSelection(null)} />}</div>;
+  if (!preview && team.includes(partner.id)) return <p className="encounter-team-saved" role="status"><Check size={20} />已经在小队里，一起出发吧！</p>;
+  return <div className="encounter-team"><button className="button secondary" disabled={disabled || (!preview && !owned)} onClick={() => { if (!preview) setSelection([...team]); }}><UsersRound size={24} />加入小队<ArrowRight size={20} /></button><p><House size={16} />也可以先留在精灵中心，随时再邀请。</p>{selection && <InviteDialog partner={partner} previousId={previousId} expected={selection} onClose={() => setSelection(null)} />}</div>;
 }
 
 export function InviteDialog({ partner, previousId, expected, onClose, onDone }: { partner: Pokemon; previousId?: number | null; expected: number[]; onClose: () => void; onDone?: () => void }) {
