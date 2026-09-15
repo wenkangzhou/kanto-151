@@ -173,3 +173,23 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .preview-animation-tabs{display:flex;gap:10px;margin:12px 0}
 .preview-animation-tabs a,.preview-animation-tabs button{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 22px;border-radius:12px;background:#fff;border:1px solid var(--line)}
 .preview-animation-tabs a[aria-current=page]{background:#fceee9;border-color:#e8b8a9;color:var(--red)}
+
+/* Keep each bag item recognizable and playable even with no stock. */
+.bag-listen-hint{color:#7d8990;font-size:14px;margin:0 0 16px}
+.bag-items{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.bag-items .inventory-ticket{display:flex;flex-direction:column;align-items:flex-start;padding:24px;min-width:0}
+.bag-item-picture{width:80px;height:80px;display:grid;place-items:center;border:0;border-radius:20px;background:#ffffff8c;color:#89709e;cursor:pointer;flex:none}
+.bag-item-picture .collection-mark{width:58px;height:58px;background:transparent}
+.bag-item-picture .collection-mark svg{width:58px;height:58px}
+.bag-item-picture[aria-pressed=true]{background:#fff;box-shadow:0 0 0 3px #b7c7ad}
+.bag-item-picture:focus-visible{outline:3px solid #3983a5;outline-offset:4px}
+.bag-items .legendary-ticket .bag-item-picture{color:#a4813e}
+.bag-items .ball-ticket{background:#f8f1e8;border-color:#e9ddce}
+.bag-items .ball-ticket h2{color:#947248}
+.bag-items h2{width:100%;margin:18px 0 12px;font-size:21px;flex-wrap:wrap}
+.bag-items h2 strong{white-space:nowrap}
+.bag-items h2 small{font-size:12px}
+.bag-items p{font-size:14px;line-height:1.8;margin:0 0 14px}
+.bag-items .ticket-status{margin-top:auto;line-height:1.7}
+@media(max-width:1100px){.bag-items{grid-template-columns:1fr}.bag-items .inventory-ticket{display:grid;grid-template-columns:80px minmax(0,1fr);column-gap:20px;padding:20px}.bag-items .bag-item-picture{grid-row:1/5}.bag-items h2{margin:0 0 8px}.bag-items p{margin-bottom:8px}.bag-items .ticket-status,.bag-items .text-link{grid-column:2}}
+@media(max-width:400px){.bag-items .inventory-ticket{grid-template-columns:64px minmax(0,1fr);column-gap:14px;padding:16px}.bag-item-picture{width:64px;height:64px}.bag-items h2{font-size:19px}}
