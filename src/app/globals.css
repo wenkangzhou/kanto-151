@@ -124,14 +124,14 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .size-comparison{display:flex;align-items:center;gap:14px;margin-top:18px}
 .size-comparison-mini{width:180px;flex:0 0 180px}
 .size-comparison-caption{display:block;text-align:center;font-size:12px;color:var(--muted);line-height:18px}
-.size-comparison-mini>svg{display:block;width:180px;height:105px}
+.size-comparison-canvas{display:block;width:180px;height:105px}
 .size-comparison-numbers{display:grid;gap:7px;margin:0;font-size:12px}
 .size-comparison-numbers>div{display:flex;align-items:baseline;gap:10px}
 .size-comparison-numbers dt{color:var(--muted)}
 .size-comparison-numbers dd{margin:0;font-weight:600;white-space:nowrap}
 .size-comparison-numbers .size-comparison-reference{font-size:10px}
 .size-comparison-reference dd{font-weight:400;color:var(--muted)}
-@media(max-width:380px){.size-comparison{gap:12px}.size-comparison-mini{width:164px;flex-basis:164px}.size-comparison-mini>svg{width:164px;height:96px}}
+@media(max-width:380px){.size-comparison{gap:12px}.size-comparison-mini{width:164px;flex-basis:164px}.size-comparison-canvas{width:164px;height:96px}}
 
 /* Put the child's next action beside the newly revealed partner. */
 .encounter.encounter-result{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:16px 28px;min-height:0}
@@ -193,3 +193,7 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .bag-items .ticket-status{margin-top:auto;line-height:1.7}
 @media(max-width:1100px){.bag-items{grid-template-columns:1fr}.bag-items .inventory-ticket{display:grid;grid-template-columns:80px minmax(0,1fr);column-gap:20px;padding:20px}.bag-items .bag-item-picture{grid-row:1/5}.bag-items h2{margin:0 0 8px}.bag-items p{margin-bottom:8px}.bag-items .ticket-status,.bag-items .text-link{grid-column:2}}
 @media(max-width:400px){.bag-items .inventory-ticket{grid-template-columns:64px minmax(0,1fr);column-gap:14px;padding:16px}.bag-item-picture{width:64px;height:64px}.bag-items h2{font-size:19px}}
+
+.size-comparison-canvas{position:relative}
+.size-comparison-canvas>img{position:absolute;display:block;max-width:none}
+.size-comparison-ground{position:absolute;left:2.5%;right:2.5%;top:94.285714%;border-top:1px solid #c9d3c7}

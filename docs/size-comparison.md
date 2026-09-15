@@ -4,9 +4,9 @@
 - 对比图常驻在尺寸信息旁，约 180 × 123 px，不再显示大型说明卡。普通伙伴按现有图鉴身高缩放，脚底对齐。两者使用同一个像素/米比例，同时受高度和宽度限制。立绘姿态不同，属于身高示意。
 - 绿毛虫、独角虫使用常规身高比较，与同为 0.3 米的波波、小拉达采用相同比例。移除原先固定大小的姿态插图。蛇形伙伴使用“体长示意”：剪影最长方向按图鉴长度缩放，不表示盘曲时的站立高度；名单是本项目表现约定，不是新增官方字段。
 - 尺寸来源沿用 src/data/pokemon.json。官方大岩蛇图鉴将 8.8 米列在 Height 字段：https://www.pokemon.com/el/pokedex/onix ，因此保留原始数据，不根据盘曲图片推断站立高度。
-- 图片透明边距通过 scripts/measure-artwork.py 测量，结果写入 src/data/artwork-bounds.json。渲染通过 SVG 视口使用可见区域，原图不修改。
+- 图片透明边距通过 scripts/measure-artwork.py 测量，结果写入 src/data/artwork-bounds.json。再运行 scripts/generate-silhouettes.py，按同一边界生成灰色透明 PNG（public/illustrations/silhouettes），原图不修改。页面使用普通 img 和绝对定位，避免 iPad 上动态 SVG 图片与滤镜的重绘风险。
 - 测试覆盖 151 只伙伴的边界、共同缩放比例，以及 20 米和超宽图片。
 
-- 人物素材来源：https://github.com/pret/pokefirered/blob/master/graphics/trainers/front_pics/red_front_pic.png （blob 45bb17f9b68ade667b1326de00f52943d79531e6），原图保存为 public/illustrations/trainer-red.png，运行时使用 SVG 滤镜呈现深灰剪影；宝可梦同样处理。
+- 人物素材来源：https://github.com/pret/pokefirered/blob/master/graphics/trainers/front_pics/red_front_pic.png （blob 45bb17f9b68ade667b1326de00f52943d79531e6），原图保存为 public/illustrations/trainer-red.png，人物与宝可梦均预生成深灰剪影 PNG，运行时不使用滤镜。
 
-- 回归检查比较实际用于 SVG 的伙伴宽高：0.3 米伙伴等高、为小火龙的一半；窄版 164px 画布上至少 18px 高；全部 151 只伙伴保持共同尺度并处于画布范围内。
+- 回归检查比较实际显示的伙伴宽高：0.3 米伙伴等高、为小火龙的一半；窄版 164px 画布上至少 18px 高；全部 151 只伙伴保持共同尺度并处于画布范围内。

@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import pokemon from '../src/data/pokemon.json';
 import bounds from '../src/data/artwork-bounds.json';
 import { ASH_HEIGHT, comparisonLayout, lengthComparisonIds } from '../src/domain/size-comparison';
@@ -40,4 +41,18 @@ test('20-metre and unusually wide partners scale down together', () => {
     assert.ok(layout.partnerHeight <= 126 + 1e-9);
     assert.ok(Math.abs(layout.partnerHeight / layout.ashHeight - height / ASH_HEIGHT) < 1e-9);
   }
+});
+
+test('every comparison has a cropped PNG matching the dimensions used for scaling', () => {
+  for (const p of pokemon) {
+    const image = readFileSync(new URL(`../public/illustrations/silhouettes/${p.id}.png`, import.meta.url));
+    const [, , width, height] = (bounds as Record<string, number[]>)[p.id];
+    assert.equal(image.subarray(1, 4).toString(), 'PNG');
+    assert.equal(image.readUInt32BE(16), width);
+    assert.equal(image.readUInt32BE(20), height);
+    assert.equal(image[25], 6, 'RGBA preserves silhouette transparency');
+  }
+  const trainer = readFileSync(new URL('../public/illustrations/silhouettes/trainer.png', import.meta.url));
+  assert.equal(trainer.readUInt32BE(16), 40);
+  assert.equal(trainer.readUInt32BE(20), 55);
 });
