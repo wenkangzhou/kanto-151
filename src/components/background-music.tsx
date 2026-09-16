@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { LoaderCircle, Volume2, VolumeX } from 'lucide-react';
 import { backgroundTrack, createMusicPlayer, supportsBackgroundMusic, type MusicState } from '@/lib/background-music';
 
+import { battleAudioEvent, createBattleAudio, type BattleAudioRequest } from '@/lib/battle-audio';
 import { voiceFocusEvent, voiceSnapshot, stopVoice } from '@/lib/voice-audio';
 import { createCuePlayer, sceneAudioEvent, type SceneAudioRequest } from '@/lib/scene-audio';
 
@@ -16,10 +17,21 @@ function MusicControl({ available }: { available: boolean }) {
   const player = useRef<ReturnType<typeof createMusicPlayer> | null>(null);
   const currentState = useRef<MusicState>('off');
   const cue = useRef<ReturnType<typeof createCuePlayer> | null>(null);
+  const battle = useRef<ReturnType<typeof createBattleAudio> | null>(null);
   useEffect(() => {
+    battle.current = createBattleAudio(source => { const audio = new Audio(source); audio.preload = 'none'; return audio; }, () => player.current?.suspendForCue() ?? (() => {}));
+    const battleEvent = (event: Event) => {
+      const request = (event as CustomEvent<BattleAudioRequest>).detail;
+      if (request.action === 'enter') cue.current?.stop(true);
+      battle.current?.request(request);
+    };
+    window.addEventListener(battleAudioEvent, battleEvent);
     cue.current = createCuePlayer(source => { const audio = new Audio(source); audio.preload = 'none'; return audio; }, () => player.current?.suspendForCue() ?? (() => {}));
     let resumeVoice: (() => void) | undefined;
     const voiceFocus = (event: Event) => {
+      const active = (event as CustomEvent<boolean>).detail;
+      battle.current?.voice(active);
+      if (battle.current?.active) return;
       if ((event as CustomEvent<boolean>).detail) { cue.current?.stop(false); resumeVoice = player.current?.suspendForCue(); }
       else { const resume = resumeVoice; resumeVoice = undefined; resume?.(); }
     };
@@ -33,13 +45,13 @@ function MusicControl({ available }: { available: boolean }) {
     const visibility = () => { if (document.hidden) { cue.current?.stop(false); player.current?.stop(); } };
     const stop = () => { cue.current?.stop(false); player.current?.stop(); };
     document.addEventListener('visibilitychange', visibility); window.addEventListener('pagehide', stop);
-    return () => { window.removeEventListener(voiceFocusEvent, voiceFocus); window.removeEventListener(sceneAudioEvent, scene); cue.current?.stop(false); cue.current = null; document.removeEventListener('visibilitychange', visibility); window.removeEventListener('pagehide', stop); player.current?.dispose(); player.current = null; };
+    return () => { window.removeEventListener(battleAudioEvent, battleEvent); battle.current?.dispose(); battle.current = null; window.removeEventListener(voiceFocusEvent, voiceFocus); window.removeEventListener(sceneAudioEvent, scene); cue.current?.stop(false); cue.current = null; document.removeEventListener('visibilitychange', visibility); window.removeEventListener('pagehide', stop); player.current?.dispose(); player.current = null; };
   }, []);
   const on = state === 'playing' || state === 'loading';
   const label = !available ? '尚未添加背景音乐文件' : state === 'error' ? '播放失败，点击重试' : state === 'loading' ? '正在加载音乐，点击取消' : on ? '关闭背景音乐' : '开启背景音乐';
   return <div className="background-music"><button type="button" className={`music-switch ${on ? 'music-on' : ''}`} disabled={!available} aria-label={label} aria-pressed={on} title={label} onClick={() => {
     stopVoice();
-    player.current ??= createMusicPlayer(() => { const audio = new Audio(); audio.preload = 'none'; audio.src = backgroundTrack.source; return audio; }, next => { currentState.current = next; setState(next); if (next === 'error' || next === 'off') cue.current?.stop(false); });
+    player.current ??= createMusicPlayer(() => { const audio = new Audio(); audio.preload = 'none'; audio.src = backgroundTrack.source; return audio; }, next => { currentState.current = next; setState(next); battle.current?.setEnabled(next === 'playing'); if (next === 'error' || next === 'off') cue.current?.stop(false); });
     cue.current?.stop(false);
     void player.current.toggle();
   }}>{state === 'playing' ? <Volume2 size={20} aria-hidden="true" /> : state === 'loading' ? <LoaderCircle size={20} className="music-loading" aria-hidden="true" /> : <VolumeX size={20} aria-hidden="true" />}</button><span className="sr-only" role="status">{state === 'error' ? '音乐暂时无法播放，请点击音乐开关重试' : ''}</span></div>;

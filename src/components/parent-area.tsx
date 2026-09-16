@@ -6,6 +6,8 @@ import { ArrowRight, Compass, Copy, KeyRound, Link2, LockKeyhole, Mountain, Smar
 import { useCollection } from './collection-provider';
 import { ParentPreview } from './parent-preview';
 import { api } from '@/lib/api-client';
+import { pokemonById } from '@/domain/pokemon';
+import { PokemonArt } from './pokemon-art';
 import type { ParentReward } from '@/domain/types';
 const rewards = [
   { type: 'capture', Icon: Compass, title: '一次新相遇', subtitle: '当前区域里的一位新伙伴' },
@@ -27,8 +29,8 @@ function PinUnlock() {
   }
   return <div className="page"><section className="access-card"><span className="feature-icon"><KeyRound size={32} /></span><h1>这里留给家长</h1><p>输入六位家长 PIN，解锁 15 分钟。</p><form className="family-form" onSubmit={submit}><label>家长 PIN<input autoFocus type="password" name="pin" required inputMode="numeric" autoComplete="current-password" pattern="[0-9]{6}" maxLength={6} /></label>{error && <p role="alert" className="form-error">{error}</p>}<button className="button" disabled={busy}>{busy ? '正在解锁…' : '打开家长空间'}</button></form><Link href="/setup" className="text-link">忘记 PIN？使用初始化口令恢复</Link><Link href="/" className="back-link">回到孩子的冒险</Link></section></div>;
 }
-function RewardForm() {
-  const [type, setType] = useState('capture'); const [reason, setReason] = useState('');
+function RewardForm({ initialType }: { initialType: ParentReward['type'] }) {
+  const [type, setType] = useState<string>(initialType); const [reason, setReason] = useState('');
   const [result, setResult] = useState<ParentReward | null>(null); const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const [copied, setCopied] = useState(false);
   const [request, setRequest] = useState<{ requestId: string; type: string; reason: string } | null>(null);
   async function submit(event: FormEvent) {
@@ -68,9 +70,22 @@ function RewardHistory() {
   }
   return <section><div className="section-heading"><h2>送出的每一份鼓励</h2><button className="text-link" disabled={busy} onClick={() => void load(0)}>刷新记录</button></div>{error && <p className="form-error" role="alert">{error}</p>}<div className="reward-history">{items.map(item => {
     const expired = new Date(item.expires_at).getTime() <= now;
-    const status = item.redeemed_at ? '已兑换' : item.revoked_at ? '已撤销' : expired ? '已过期' : '等待兑换';
-    return <article key={item.id}><div><span className="mono">{item.code}</span><span className="reward-status">{status}</span></div><h3>{rewardNames[item.type]}</h3><p>{item.reason || '一次值得记住的努力'}</p><small>{new Date(item.created_at).toLocaleString('zh-CN')}</small>{!item.redeemed_at && !item.revoked_at && !expired && <button className="text-link" disabled={busy} onClick={() => void revoke(item.id)}>撤销这份奖励</button>}</article>;
+    const status = item.redeemed_at ? item.outcome?.state === 'used' ? '已使用' : item.outcome?.state === 'stored' ? '已领取 · 待使用' : item.type === 'capture' ? '已相遇' : '已领取' : item.revoked_at ? '已撤销' : expired ? '已过期' : '等待兑换';
+    return <article key={item.id}><div><span className="mono">{item.code}</span><span className="reward-status">{status}</span></div><h3>{rewardNames[item.type]}</h3><RewardOutcome reward={item} /><p>{item.reason || '一次值得记住的努力'}</p><small>{new Date(item.created_at).toLocaleString('zh-CN')}</small>{!item.redeemed_at && !item.revoked_at && !expired && <button className="text-link" disabled={busy} onClick={() => void revoke(item.id)}>撤销这份奖励</button>}</article>;
   })}</div>{!items.length && !busy && <div className="empty-state compact"><h3>第一份鼓励，等你送出</h3><Link href="/parent/reward" className="text-link">生成奖励码 <ArrowRight size={16} /></Link></div>}{busy && <p className="form-note" role="status">正在读取…</p>}{more && <button className="button secondary" disabled={busy} onClick={() => void load(page + 1)}>查看更多记录</button>}</section>;
+}
+function RewardOutcome({ reward }: { reward: ParentReward }) {
+  const outcome=reward.outcome;
+  if(!outcome)return null;
+  const partner=outcome.pokemonId?pokemonById.get(outcome.pokemonId):null;
+  const previous=outcome.fromPokemonId?pokemonById.get(outcome.fromPokemonId):null;
+  return <div className="parent-reward-outcome">
+    {partner?<Link href={`/pokemon/${partner.id}`} className="parent-reward-partner">
+      {previous&&<><PokemonArt pokemon={previous}/><ArrowRight size={18} aria-hidden="true"/></>}
+      <PokemonArt pokemon={partner}/><strong>{previous?`${previous.name} → ${partner.name}`:`遇见了${partner.name}`}</strong>
+    </Link>:<span>{outcome.state==='stored'?'券已放入孩子的背包，尚未使用':outcome.state==='used'?'券已使用，暂无伙伴详情':'已领取，暂无伙伴详情'}</span>}
+    {outcome.usedAt&&<small>使用于 {new Date(outcome.usedAt).toLocaleString('zh-CN')}</small>}
+  </div>;
 }
 function FamilyDevices() {
   const { refresh } = useCollection();
@@ -92,9 +107,9 @@ function FamilyDevices() {
   }
   return <section className="detail-panel"><div className="section-heading"><h2><Smartphone size={20} /> 家庭设备</h2><button className="text-link" disabled={busy} onClick={() => void load()}>刷新</button></div><p className="strength-summary">在孩子的设备上打开本站的「连接设备」，输入下面生成的连接码。</p><button className="button secondary" disabled={busy} onClick={() => void action('parent/pairing')}><Link2 size={17} />生成设备连接码</button>{pairing && <div className="pairing-code"><output className="mono">{pairing.code.match(/.{4}/g)?.join('-')}</output><p>一次有效 · {new Date(pairing.expiresAt).toLocaleTimeString('zh-CN')} 到期</p></div>}<div className="device-list">{devices.map(device => <div key={device.id}><Smartphone size={18} /><span>{device.name}</span>{device.id === currentId ? <button className="text-link" disabled={busy} onClick={() => void action('disconnect')}>当前设备 · 退出连接</button> : <button className="text-link" disabled={busy} onClick={() => void action('parent/devices/revoke', { id: device.id })}>解除连接</button>}</div>)}</div>{error && <p role="alert" className="form-error">{error}</p>}</section>;
 }
-export function ParentArea({ view = 'dashboard' }: { view?: 'dashboard' | 'reward' | 'history' }) {
+export function ParentArea({ view = 'dashboard', initialRewardType = 'capture' }: { view?: 'dashboard' | 'reward' | 'history'; initialRewardType?: ParentReward['type'] }) {
   const { live, parent, refresh, snapshot, childName, familyName } = useCollection(); const router = useRouter(); const [error, setError] = useState('');
   if (!live) return <ParentPreview />;
   if (!parent) return <PinUnlock />;
-  return <div className="page parent-page"><div className="page-heading"><div><div className="eyebrow"><span /> {familyName}</div><h1>看见成长，送出鼓励<span className="title-dot">.</span></h1><p>{childName}已与 {snapshot.records.length} 位伙伴相遇。</p></div><button className="button secondary" onClick={async () => { try { await api('parent/lock', {}); await refresh(); router.replace('/'); } catch { setError('未能锁定，请重试。'); } }}><LockKeyhole size={16} />锁定</button></div><nav className="parent-tabs" aria-label="家长导航"><Link href="/parent/dashboard" className={view === 'dashboard' ? 'selected' : ''}>家庭概览</Link><Link href="/parent/reward" className={view === 'reward' ? 'selected' : ''}>生成奖励</Link><Link href="/parent/history" className={view === 'history' ? 'selected' : ''}>奖励记录</Link></nav>{error && <p className="form-error" role="alert">{error}</p>}{view === 'reward' ? <RewardForm /> : view === 'history' ? <RewardHistory /> : <><div className="parent-rewards">{rewards.map(({ type, Icon, title, subtitle }) => <Link className="parent-action-card" key={type} href="/parent/reward"><Icon size={30} /><h2>{title}</h2><p>{subtitle}</p><span className="text-link">准备一份奖励 <ArrowRight size={16} /></span></Link>)}</div><FamilyDevices /><Link href="/history" className="text-link">看看孩子的成长足迹 <ArrowRight size={17} /></Link></>}</div>;
+  return <div className="page parent-page"><div className="page-heading"><div><div className="eyebrow"><span /> {familyName}</div><h1>看见成长，送出鼓励<span className="title-dot">.</span></h1><p>{childName}已与 {snapshot.records.length} 位伙伴相遇。</p></div><button className="button secondary" onClick={async () => { try { await api('parent/lock', {}); await refresh(); router.replace('/'); } catch { setError('未能锁定，请重试。'); } }}><LockKeyhole size={16} />锁定</button></div><nav className="parent-tabs" aria-label="家长导航"><Link href="/parent/dashboard" className={view === 'dashboard' ? 'selected' : ''}>家庭概览</Link><Link href="/parent/reward" className={view === 'reward' ? 'selected' : ''}>生成奖励</Link><Link href="/parent/history" className={view === 'history' ? 'selected' : ''}>奖励记录</Link></nav>{error && <p className="form-error" role="alert">{error}</p>}{view === 'reward' ? <RewardForm key={initialRewardType} initialType={initialRewardType} /> : view === 'history' ? <RewardHistory /> : <><div className="parent-rewards">{rewards.map(({ type, Icon, title, subtitle }) => <Link className="parent-action-card" key={type} href={`/parent/reward?type=${type}`}><Icon size={30} /><h2>{title}</h2><p>{subtitle}</p><span className="text-link">准备一份奖励 <ArrowRight size={16} /></span></Link>)}</div><FamilyDevices /><Link href="/history" className="text-link">看看孩子的成长足迹 <ArrowRight size={17} /></Link></>}</div>;
 }

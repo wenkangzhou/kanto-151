@@ -1,3 +1,5 @@
+import { rewardOutcomes } from '@/domain/reward-history';
+import type { ParentReward } from '@/domain/types';
 import { randomBytes } from 'node:crypto';
 import { NextRequest } from 'next/server';
 import { getRuntimeConfig } from '@/lib/server/runtime-config';
@@ -39,9 +41,16 @@ export async function GET(request: NextRequest, context: Context) {
       const session = await parentSession(request);
       const page = Number(request.nextUrl.searchParams.get('page') ?? 0);
       if (!Number.isInteger(page) || page < 0 || page > 100000) throw new ApiError(400, 'INPUT', '页码不正确。');
-      const { data, error } = await db().from('kanto_reward_codes').select('id,code,type,reason,created_at,expires_at,redeemed_at,revoked_at').eq('child_id', session.childId).order('created_at', { ascending: false }).order('id', { ascending: false }).range(page * 30, page * 30 + 30);
+      const { data, error } = await db().from('kanto_reward_codes').select('id,code,type,reason,created_at,expires_at,redeemed_at,revoked_at,receipt_id').eq('child_id', session.childId).order('created_at', { ascending: false }).order('id', { ascending: false }).range(page * 30, page * 30 + 30);
       if (error) throw databaseError(error);
-      return reply({ rewards: data.slice(0, 30), hasMore: data.length > 30 });
+      const rewards = data.slice(0,30) as (ParentReward & { receipt_id: string | null })[];
+      if (!rewards.length) return reply({ rewards: [], hasMore: false });
+      const inventory = await db().from('kanto_inventory').select('reward_id,used_at,receipt_id').eq('child_id',session.childId).in('reward_id',rewards.map(r=>r.id));
+      if (inventory.error) throw databaseError(inventory.error);
+      const ids = [...new Set([...rewards.map(r=>r.receipt_id),...inventory.data.map(t=>t.receipt_id)].filter((id): id is string => Boolean(id)))];
+      const receipts = ids.length ? await db().from('kanto_receipts').select('id,pokemon_id,from_pokemon_id').eq('child_id',session.childId).in('id',ids) : {data:[],error:null};
+      if (receipts.error) throw databaseError(receipts.error);
+      return reply({ rewards: rewardOutcomes(rewards,inventory.data,receipts.data), hasMore: data.length > 30 });
     }
     if (path === 'parent/devices') {
       const session = await parentSession(request);

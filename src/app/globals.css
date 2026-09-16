@@ -219,3 +219,15 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 
 .battle-move-effect{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible}
 @media(prefers-reduced-motion:reduce){.battle-move-effect{display:none}}
+
+.battle-choice-health{display:block;width:100%;height:9px;border-radius:8px;background:#dfe5d9;overflow:hidden;margin:5px 0 2px}.battle-choice-health>span{display:block;height:100%;border-radius:inherit;transition:width .35s}
+.battle-choices>button{min-width:108px;padding:12px;gap:7px}.battle-controls .battle-choices>button:disabled{opacity:1}.battle-choices>button.is-resting{background:#f0f1ed;color:#8b9185}.battle-choices .is-resting>.pokemon-art{opacity:.35}.battle-choices>button.is-on-field{background:#eaf0e4;border-color:#c0d1b3}.battle-choices .is-on-field>.battle-choice-status{background:#d4e3c7;border-radius:10px;padding:3px 8px;color:#526c42}.battle-choices .battle-choice-status{min-height:24px;display:flex;align-items:center;justify-content:center}
+.battle-confirm-partner{min-height:64px;gap:10px}.battle-confirm-partner>.pokemon-art{width:44px;height:44px;object-fit:contain;background:#ffffffc9;border-radius:50%;padding:3px}
+@media(max-width:640px){.battle-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.battle-choices>button{min-width:0;width:100%;padding:10px 6px}.battle-choices>button>strong{font-size:14px}.battle-choices .pokemon-art{width:66px;height:66px}.battle-choice-health{width:85%}}
+@media(prefers-reduced-motion:reduce){.battle-choice-health>span{transition:none}}
+
+.reward-history .parent-reward-outcome{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin:12px 0;padding:12px;background:#f3f7ed;border-radius:12px;color:#6b805b;font-size:14px}.parent-reward-partner{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.parent-reward-partner .pokemon-art{width:48px;height:48px;object-fit:contain}.parent-reward-outcome>small{font-size:12px}
+
+.battle-health>.battle-opponent-types{display:flex;gap:5px;flex-wrap:wrap;height:auto;overflow:visible;background:none;margin:7px 0}.battle-opponent-types .type-picture{width:auto;min-height:32px;padding:5px 7px;gap:4px;font-size:11px}.battle-opponent-types .type-picture>svg{width:19px;height:19px}.battle-opponent-types .type-picture>span{background:none!important;width:auto!important;height:auto!important}.battle-health:has(.battle-opponent-types){width:190px}@media(max-width:640px){.battle-health:has(.battle-opponent-types){width:148px}.battle-opponent-types .type-picture{min-height:30px;padding:4px 5px}}
+
+.battle-health>.battle-opponent-types>.type-picture{display:inline-flex;height:auto}

@@ -38,6 +38,7 @@ export interface FamilySession {
   parent?: boolean; parentExpiresAt?: number | null; familyName?: string; childName?: string; snapshot?: LiveSnapshot;
 }
 export interface ParentReward {
+  outcome?: { state: 'met' | 'used' | 'stored' | 'received'; usedAt: string | null; pokemonId: number | null; fromPokemonId: number | null };
   id: string; code: string; type: 'capture' | 'evolution' | 'legendary'; reason: string;
   created_at: string; expires_at: string; redeemed_at: string | null; revoked_at: string | null;
 }
