@@ -1,9 +1,13 @@
 'use client';
+import voiceIndex from '@/data/voice-index.json';
 export const voiceFocusEvent = 'kanto-voice-focus';
 export type VoiceState = { owner: string; error: string };
 const idle: VoiceState = { owner: '', error: '' };
 let state = idle;
 let release: (() => void) | undefined;
+let player: HTMLAudioElement | undefined;
+let generation = 0;
+const clips = voiceIndex as Record<string, (string | number)[]>;
 const listeners = new Set<() => void>();
 export const voiceSnapshot = () => state;
 export const voiceServerSnapshot = () => idle;
@@ -12,24 +16,30 @@ const emit = (next: VoiceState) => { state = next; listeners.forEach(callback =>
 const focus = (active: boolean) => window.dispatchEvent(new CustomEvent(voiceFocusEvent, { detail: active }));
 export function stopVoice(owner?: string) {
   if (owner && owner !== state.owner) return;
+  generation++;
   const cleanup = release; release = undefined; cleanup?.(); emit(idle); focus(false);
 }
 function begin(owner: string) {
   stopVoice(); emit({ owner, error: '' }); focus(true);
-  return (error = '') => { if (state.owner !== owner) return; const cleanup = release; release = undefined; cleanup?.(); emit({ owner: '', error }); focus(false); };
+  const current = generation;
+  return (error = '') => { if (current !== generation || state.owner !== owner) return; generation++; const cleanup = release; release = undefined; cleanup?.(); emit({ owner: '', error }); focus(false); };
 }
 export function speakText(owner: string, text: string) {
   if (state.owner === owner) { stopVoice(owner); return; }
   const done = begin(owner);
-  if (!('speechSynthesis' in window)) { done('这台设备暂不支持朗读。'); return; }
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'zh-CN'; utterance.rate = .85; utterance.volume = .85;
-  const voices = speechSynthesis.getVoices();
-  const voice = voices.find(v => /^zh[-_]CN$/i.test(v.lang)) ?? voices.find(v => /^zh[-_](TW|SG)$/i.test(v.lang));
-  if (voice) utterance.voice = voice;
-  const timer = setTimeout(() => done('朗读暂时没有响应，请再点一次。'), 60000);
-  utterance.onend = () => done();
-  utterance.onerror = () => done('朗读暂时不可用，请再试一次。');
-  release = () => { clearTimeout(timer); utterance.onend = null; utterance.onerror = null; speechSynthesis.cancel(); };
-  try { speechSynthesis.speak(utterance); } catch { done('朗读暂时不可用，请再试一次。'); }
+  const clip = clips[text];
+  if (!clip) { done('这段语音还没有准备好。'); return; }
+  try {
+    // Reuse the element unlocked by the first tap, including subsequent battle turns on iPad.
+    const audio = player ??= new Audio();
+    audio.volume = .85;
+    audio.preload = 'auto';
+    const timer = setTimeout(() => done('语音加载超时，请再点一次。'), Math.max(15000, Number(clip[1]) + 15000));
+    audio.onended = () => done();
+    audio.onerror = () => done('语音暂时不可用，请再试一次。');
+    release = () => { clearTimeout(timer); audio.onended = null; audio.onerror = null; audio.pause(); };
+    audio.src = `/audio/voices/${clip[0]}.mp3`;
+    // No fetch/await before play: preserve the user's playback gesture on Safari.
+    void audio.play().catch(() => done('语音暂时不可用，请再点一次。'));
+  } catch { done('语音暂时不可用，请再试一次。'); }
 }

@@ -1,0 +1,17 @@
+{
+  "id": "beef90028dae838abeddddc5",
+  "status": "complete",
+  "extra_info": {
+    "audio_length": 1440,
+    "audio_sample_rate": 32000,
+    "audio_size": 24756,
+    "bitrate": 128000,
+    "word_count": 2,
+    "invisible_character_ratio": 0,
+    "usage_characters": 4,
+    "audio_format": "mp3",
+    "audio_channel": 1
+  },
+  "sha256": "4520253f39bbdbfb4e66fd64d4b422e0b16433543645395581dd70af686becd7",
+  "trace_id": "06f9865f63f7e4fd3eca18125ef83a73"
+}

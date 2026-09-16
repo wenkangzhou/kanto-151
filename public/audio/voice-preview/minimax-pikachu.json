@@ -1,0 +1,33 @@
+{
+  "request": {
+    "model": "speech-2.8-hd",
+    "text": "就决定是你了，皮卡丘！",
+    "stream": false,
+    "voice_setting": {
+      "voice_id": "hunyin_6",
+      "speed": 1,
+      "vol": 1,
+      "pitch": 0,
+      "emotion": "happy"
+    },
+    "audio_setting": {
+      "sample_rate": 32000,
+      "bitrate": 128000,
+      "format": "mp3",
+      "channel": 1
+    },
+    "subtitle_enable": false
+  },
+  "extra_info": {
+    "audio_length": 2340,
+    "audio_sample_rate": 32000,
+    "audio_size": 39156,
+    "bitrate": 128000,
+    "word_count": 11,
+    "invisible_character_ratio": 0,
+    "usage_characters": 20,
+    "audio_format": "mp3",
+    "audio_channel": 1
+  },
+  "bytes": 39156
+}

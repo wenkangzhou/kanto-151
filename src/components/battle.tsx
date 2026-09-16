@@ -16,12 +16,12 @@ import { speakText, stopVoice, subscribeVoice, voiceSnapshot } from '@/lib/voice
 export function Battle() {
   const { snapshot, status } = useCollection();
   const audioOwner = useId();
-  useEffect(()=>()=>battleSound(audioOwner,'leave'),[audioOwner]);
+  useEffect(()=>()=>{battleSound(audioOwner,'leave');stopVoice(audioOwner);},[audioOwner]);
   const team = (snapshot.team ?? []).filter(id => snapshot.records.some(record => record.pokemonId === id));
   const [match, setMatch] = useState<{team:number[];enemy:number;key:number}|null>(null);
   function start() {
     const pool=opponentPool(snapshot.records.map(r=>r.pokemonId),team);
-    if(team.length&&pool.length){battleSound(audioOwner,'enter');setMatch({team:[...team],enemy:pickOpponent(pool,match?.enemy,crypto.getRandomValues(new Uint32Array(1))[0]/4294967296)!,key:(match?.key??0)+1});}
+    if(team.length&&pool.length){battleSound(audioOwner,'enter');speakText(audioOwner,'选一位伙伴出场吧！');setMatch({team:[...team],enemy:pickOpponent(pool,match?.enemy,crypto.getRandomValues(new Uint32Array(1))[0]/4294967296)!,key:(match?.key??0)+1});}
   }
   return <div className="page battle-page"><Link href="/team" className="back-link"><ArrowLeft size={18}/>回小队</Link>
     {match?<Match audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} again={start} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId),team).some(id=>id!==match.enemy)}/>:<section className="battle-welcome"><Swords size={40}/><h1>来一场友好对战吧！</h1><p>选伙伴、试招式，也可以换伙伴上场。</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>正在找你的小队…</p>:team.length?<button className="button" onClick={start}>去对战 <Swords size={20}/></button>:<><p>先邀请一位伙伴加入小队吧。</p><Link href="/team" className="button">去选伙伴</Link></>}<small>每场结束都会恢复体力，不消耗道具。</small></section>}
