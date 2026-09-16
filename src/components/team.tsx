@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeftRight, ArrowRight, BookOpen, Check, House, Plus, UsersRound, X } from 'lucide-react';
+import { Swords, ArrowLeftRight, ArrowRight, BookOpen, Check, House, Plus, UsersRound, X } from 'lucide-react';
 import { TYPE_NAMES, type PokemonType } from '@/domain/types';
 import { centerPartners, type CenterSort } from '@/domain/center';
 import { TypePicture, useTypeVoice } from './type-badge';
@@ -38,6 +38,7 @@ export function Team() {
     <div className="page-heading"><div><div className="eyebrow">LET’S GO TOGETHER</div><h1>我的小队<span className="title-dot">.</span></h1><p>选六位伙伴，一起出发吧。</p></div><span className="team-count"><UsersRound size={24} />{team.length} / 6</span></div>
     {!live && <p className="team-demo-note">这里是示例伙伴。连接家庭后，就能选择自己的小队。</p>}
     <section className="team-camp" aria-label="六个随行位置"><TeamSlots team={team} disabled={!live || Boolean(editing || inviting)} edit={edit} notify={setNotice} /></section>
+    <div className="team-battle-entry"><Link href="/battle" className="button"><Swords size={24} aria-hidden="true" />去对战</Link><span>和熟悉的伙伴练一练，不消耗道具</span></div>
     <p className="team-notice" role="status">{notice}</p>
     <section className="pokemon-center"><div className="section-heading"><div className="center-heading"><span className="center-sign" aria-hidden="true"><House size={29} /><Plus size={15} /></span><div><h2>精灵中心 <small>{center.length}</small></h2><p>伙伴们在这里休息，随时可以一起出发。</p></div></div></div>
       {snapshot.records.length > 0 && <div className="center-tools"><div className="center-type-filters" role="group" aria-label="按属性找伙伴"><button aria-pressed={filter === 'all'} onClick={() => setFilter('all')}><span className="center-all-types"><House size={23} />全部</span><span>{center.length}</span></button>{types.map(type => { const count = center.filter(record => pokemonById.get(record.pokemonId)?.types.includes(type)).length; return <button key={type} aria-label={`${TYPE_NAMES[type]}属性，${count}位伙伴`} aria-pressed={filter === type} onClick={() => { speakType(type); setFilter(filter === type ? 'all' : type); }}><TypePicture type={type} interactive={false} /><span>{count}</span>{filter === type && <Check className="center-filter-check" size={17} />}</button>; })}</div><div className="center-sort-row"><span role="status">{visible.length} 位伙伴{filter !== 'all' ? ` · ${TYPE_NAMES[filter]}属性` : ''}</span><label>排列<select value={sort} onChange={event => setSort(event.target.value as CenterSort)}><option value="recent">最近相遇</option><option value="number">图鉴编号</option></select></label></div></div>}
