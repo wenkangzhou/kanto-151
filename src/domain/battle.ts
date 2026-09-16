@@ -24,7 +24,7 @@ export function pickOpponent(pool: number[], previous: number | undefined, rando
   const candidates = alternatives.length ? alternatives : pool;
   return candidates[Math.min(candidates.length - 1, Math.floor(Math.max(0, random) * candidates.length))];
 }
-export type BattleState = { team: number[]; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; afterSummon?: 'ready' | 'enemy'; phase: 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
+export type BattleState = { team: number[]; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; phase: 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
 export function createBattle(team: number[], enemy: number): BattleState {
   const ids = [...new Set(team)].filter(id => pokemonById.has(id)).slice(0,6);
   return { team: ids, hp: Object.fromEntries(ids.map(id => [id,100])), enemy, enemyHp:100, active:null, phase:'choose', message:'选一位伙伴出场吧！', move:null, rounds:0 };
@@ -43,15 +43,15 @@ export function feedback(move:BattleMove,target:number) {
 export function battleReducer(s:BattleState,a:BattleAction):BattleState {
   if(s.phase==='finished')return s;
   if(a.type==='choose') {
-    if(!['choose','ready'].includes(s.phase)||!s.team.includes(a.id)||s.hp[a.id]<=0||a.id===s.active)return s;
-    return {...s,active:a.id,phase:'summon',afterSummon:s.phase==='ready'?'enemy':'ready',message:`就决定是你了，${name(a.id)}！`,move:null};
+    if((s.phase!=='choose'||s.active!==null)||!s.team.includes(a.id)||s.hp[a.id]<=0||a.id===s.active)return s;
+    return {...s,active:a.id,phase:'summon',message:`就决定是你了，${name(a.id)}！`,move:null};
   }
   if(a.type==='attack') {
     if(s.phase!=='ready'||s.active===null)return s;
     const move=usableMoves(s.active,s.enemy).find(m=>m.id===a.moveId);
     return move?{...s,phase:'player',move,message:`${name(s.active)}，${move.name}！`}:s;
   }
-  if(s.phase==='summon')return s.afterSummon==='enemy'?enemyTurn(s):{...s,phase:'ready'};
+  if(s.phase==='summon')return {...s,phase:'ready'};
   if(s.phase==='player'&&s.move) {
     const enemyHp=Math.max(0,s.enemyHp-damage(s.move,s.enemy));
     return {...s,enemyHp,phase:'player-feedback',message:feedback(s.move,s.enemy)};
@@ -67,9 +67,9 @@ export function battleReducer(s:BattleState,a:BattleAction):BattleState {
   if(s.phase==='enemy-feedback'&&s.active!==null) {
     const hp=s.hp;
     const rounds=s.rounds+1;
-    if(s.team.every(id=>hp[id]===0))return {...s,hp,rounds,phase:'finished',result:'rest',message:`对战结束，${name(s.enemy)}获胜！我们的伙伴也很努力，一起休息一下吧。`};
+    if(hp[s.active]===0)return {...s,hp,rounds,phase:'finished',result:'rest',message:`对战结束，${name(s.enemy)}获胜！我们的伙伴也很努力，一起休息一下吧。`};
     if(rounds>=24)return {...s,hp,rounds,phase:'finished',result:'draw',message:'双方都很努力！这次握手言和吧。'};
-    return {...s,hp,rounds,phase:hp[s.active]===0?'choose':'ready',message:hp[s.active]===0?`${name(s.active)}休息一下吧，换一位伙伴！`:'轮到你啦！'};
+    return {...s,hp,rounds,phase:'ready',message:'轮到你啦！'};
   }
   return s;
 }

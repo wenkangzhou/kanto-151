@@ -9,9 +9,34 @@ function completeStep(s: BattleState): BattleState {
 }
 test('every partner has one to three locally cached moves',()=>{for(const p of pokemon){const moves=battleMoves(p.id);assert.ok(moves.length>=1&&moves.length<=3);for(const m of moves)assert.ok(m.name&&m.type);}});
 test('dual type weaknesses, neutral fighting and immunity use the existing chart',()=>{assert.equal(multiplier({id:'x',name:'x',type:'electric'},16),2);assert.equal(multiplier({id:'x',name:'x',type:'fighting'},16),1);assert.equal(damage({id:'x',name:'x',type:'ground'},16),0);});
-test('a turn cannot be double-clicked and switching spends a turn',()=>{let s=createBattle([4,7],1);s=battleReducer(s,{type:'choose',id:4});s=completeStep(s);const attack={type:'attack' as const,moveId:battleMoves(4)[0].id};s=battleReducer(s,attack);assert.equal(battleReducer(s,attack),s);assert.equal(battleReducer(s,{type:'choose',id:7}),s);s=completeStep(s);assert.equal(s.phase,'enemy');s=completeStep(s);assert.equal(s.phase,'ready');s=battleReducer(s,{type:'choose',id:7});assert.equal(s.phase,'summon');s=completeStep(s);assert.equal(s.phase,'enemy');assert.equal(s.active,7);});
+test('a turn cannot be double-clicked and the chosen partner is locked for the match',()=>{
+  let s=createBattle([4,7],1);
+  s=completeStep(battleReducer(s,{type:'choose',id:4}));
+  assert.equal(battleReducer(s,{type:'choose',id:7}),s);
+  const attack={type:'attack' as const,moveId:battleMoves(4)[0].id};
+  s=battleReducer(s,attack);
+  assert.equal(battleReducer(s,attack),s);
+  assert.equal(battleReducer(s,{type:'choose',id:7}),s);
+  s=completeStep(s);assert.equal(s.phase,'enemy');
+  s=completeStep(s);assert.equal(s.phase,'ready');
+  assert.equal(battleReducer(s,{type:'choose',id:7}),s);
+  assert.equal(s.active,4);
+});
 test('victory ends the match without an extra enemy attack',()=>{let s=createBattle([4],1);s=battleReducer(s,{type:'choose',id:4});s=completeStep(s);s={...s,enemyHp:1};s=battleReducer(s,{type:'attack',moveId:battleMoves(4)[0].id});s=completeStep(s);assert.equal(s.result,'win');assert.equal(s.hp[4],100);assert.equal(completeStep(s),s);});
-test('fainted partner requires a free replacement; exhausted team ends safely',()=>{let s:BattleState={...createBattle([4,7],1),active:4,phase:'enemy',hp:{4:1,7:100},move:{id:'test',name:'test',type:'normal'}};s=completeStep(s);assert.equal(s.phase,'choose');assert.equal(battleReducer(s,{type:'choose',id:4}),s);s=battleReducer(s,{type:'choose',id:7});assert.equal(s.phase,'summon');s=completeStep(s);assert.equal(s.phase,'ready');assert.equal(s.hp[7],100);s=completeStep({...s,phase:'enemy',hp:{4:0,7:1},move:{id:'test',name:'test',type:'normal'}});assert.equal(s.result,'rest');});
+test('one exhausted partner ends the match even when all five substitutes are healthy',()=>{
+  let s:BattleState={...createBattle([4,7,1,25,16,19],1),active:4,phase:'enemy',move:{id:'test',name:'test',type:'normal'}};
+  s={...s,hp:{...s.hp,4:1}};
+  s=battleReducer(s,{type:'advance'});
+  assert.equal(s.phase,'enemy-feedback');assert.equal(s.hp[4],0);
+  s=battleReducer(s,{type:'advance'});
+  assert.equal(s.phase,'finished');assert.equal(s.result,'rest');
+  for(const id of [7,1,25,16,19]) {assert.equal(s.hp[id],100);assert.equal(battleReducer(s,{type:'choose',id}),s);}
+  assert.equal(completeStep(s),s);
+  let rematch=createBattle(s.team,s.enemy);
+  assert.equal(rematch.enemy,s.enemy);assert.equal(rematch.enemyHp,100);assert.equal(rematch.hp[4],100);
+  rematch=battleReducer(rematch,{type:'choose',id:7});
+  assert.equal(rematch.active,7);assert.equal(rematch.phase,'summon');
+});
 test('all immune matchups have a way forward and long matches end in a draw',()=>{for(const p of pokemon)for(const target of pokemon)assert.ok(usableMoves(p.id,target.id).some(m=>damage(m,target.id)>0));const s=completeStep({...createBattle([4],1),phase:'enemy',active:4,rounds:23,move:{id:'test',name:'test',type:'normal'}});assert.equal(s.result,'draw');});
 test('opponents are known and restarting restores health',()=>{assert.deepEqual(opponentPool([4,4],[4]),[4]);assert.equal(createBattle([4,4],4).team.length,1);assert.equal(createBattle([4],4).hp[4],100);});
 
