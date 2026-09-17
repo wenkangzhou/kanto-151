@@ -9,7 +9,7 @@ import { api } from '@/lib/api-client';
 export function FamilyGate() {
   const { status, error, refresh } = useCollection();
   if (status === 'loading') return <div className="page"><PokeballLoader label="正在打开家庭手帐…" /></div>;
-  return <div className="page"><section className="feature-preview"><BookOpen size={42} /><h1>{status === 'setup-required' ? '为家人翻开第一章' : status === 'error' ? '手帐暂时没有打开' : '连接我们的家庭手帐'}</h1><p>{error || (status === 'setup-required' ? '请家长先设置家庭名称和 PIN，然后就可以开始冒险。' : '输入家长生成的设备连接码，就能打开属于你们的冒险。')}</p><div className="action-row">{status === 'error' ? <button className="button" onClick={() => void refresh()}>重新连接</button> : <Link className="button" href={status === 'setup-required' ? '/setup' : '/connect'}>{status === 'setup-required' ? '家长初始化' : '连接设备'}</Link>}<Link className="text-link" href="/setup">家长初始化 / 恢复</Link></div></section></div>;
+  return <div className="page"><section className="feature-preview"><BookOpen size={42} /><h1>{status === 'setup-required' ? '为家人翻开第一章' : status === 'error' ? '手帐暂时没有打开' : '连接我们的家庭手帐'}</h1><p>{error || (status === 'setup-required' ? '请家长先设置家庭名称和 PIN，然后就可以开始冒险。' : '输入家长生成的设备连接码，就能打开属于你们的冒险。')}</p><div className="action-row">{status === 'error' ? <button className="button" onClick={() => void refresh()}>重新连接</button> : <Link className="button" href={status === 'setup-required' ? '/setup' : '/connect'}>{status === 'setup-required' ? '家长初始化' : '连接设备'}</Link>}<Link className="text-link" href="/setup">家长初始化 / 恢复</Link></div><a className="demo-entry-link" href="/demo">先体验一下演示</a></section></div>;
 }
 export function FamilyAccess({ setup = false }: { setup?: boolean }) {
   const { live, refresh, status } = useCollection();

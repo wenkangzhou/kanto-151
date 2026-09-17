@@ -231,3 +231,12 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .battle-health>.battle-opponent-types{display:flex;gap:5px;flex-wrap:wrap;height:auto;overflow:visible;background:none;margin:7px 0}.battle-opponent-types .type-picture{width:auto;min-height:32px;padding:5px 7px;gap:4px;font-size:11px}.battle-opponent-types .type-picture>svg{width:19px;height:19px}.battle-opponent-types .type-picture>span{background:none!important;width:auto!important;height:auto!important}.battle-health:has(.battle-opponent-types){width:190px}@media(max-width:640px){.battle-health:has(.battle-opponent-types){width:148px}.battle-opponent-types .type-picture{min-height:30px;padding:4px 5px}}
 
 .battle-health>.battle-opponent-types>.type-picture{display:inline-flex;height:auto}
+
+.demo-entry-link { display: inline-block; margin-top: 28px; padding: 8px 12px; color: #7e898f; font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+.demo-toolbar { padding: 10px 24px; background: #f5f3ec; color: #657068; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; }
+.demo-toolbar summary { cursor: pointer; padding: 8px 0; }
+.demo-toolbar-actions { display: flex; gap: 12px; }
+.demo-toolbar button { background: transparent; border: 0; color: inherit; cursor: pointer; padding: 8px 4px; font: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.demo-help { max-width: 660px; padding-bottom: 12px; }
+.demo-help p { margin: 8px 0; }
+.demo-help .action-row { flex-wrap: wrap; gap: 16px; }

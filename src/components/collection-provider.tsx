@@ -3,21 +3,24 @@ import { createContext, useCallback, useContext, useEffect, useState, useRef, us
 import { MotionConfig } from 'framer-motion';
 import { demoSnapshot, emptySnapshot } from '@/data/demo';
 import type { CollectionSnapshot, FamilySession, InventoryTicket, LiveSnapshot, Receipt } from '@/domain/types';
+import { isVisitorDemo } from '@/lib/demo-mode';
 import { api } from '@/lib/api-client';
 interface CollectionContext {
-  snapshot: CollectionSnapshot; demo: boolean; live: boolean; toggleDemo: () => void;
+  snapshot: CollectionSnapshot; visitorDemo: boolean; demo: boolean; live: boolean; toggleDemo: () => void;
   status: FamilySession['status'] | 'loading' | 'error'; error: string; parent: boolean;
   childName: string; familyName: string; tickets: InventoryTicket[]; pendingReceipt: Receipt | null;
   refresh: () => Promise<void>;
   saveTeam: (team: number[], expected: number[]) => Promise<void>;
 }
-const Context = createContext<CollectionContext>({ snapshot: emptySnapshot, demo: false, live: false, toggleDemo() {}, status: 'loading', error: '', parent: false, childName: '', familyName: '', tickets: [], pendingReceipt: null, async refresh() {}, async saveTeam() {} });
+const Context = createContext<CollectionContext>({ snapshot: emptySnapshot, visitorDemo: false, demo: false, live: false, toggleDemo() {}, status: 'loading', error: '', parent: false, childName: '', familyName: '', tickets: [], pendingReceipt: null, async refresh() {}, async saveTeam() {} });
 const subscribe = (callback: () => void) => {
   window.addEventListener('storage', callback); window.addEventListener('kanto-settings', callback);
   return () => { window.removeEventListener('storage', callback); window.removeEventListener('kanto-settings', callback); };
 };
 const getPreference = () => { try { return localStorage.getItem('kanto-preview') !== 'empty'; } catch { return true; } };
-export function CollectionProvider({ children, live = false }: { children: ReactNode; live?: boolean }) {
+export function CollectionProvider({ children, live: configuredLive = false }: { children: ReactNode; live?: boolean }) {
+  const visitorDemo = useSyncExternalStore(subscribe, isVisitorDemo, () => false);
+  const live = configuredLive || visitorDemo;
   const preference = useSyncExternalStore(subscribe, getPreference, () => true);
   const [session, setSession] = useState<FamilySession | null>(null);
   const [error, setError] = useState('');
@@ -61,7 +64,7 @@ export function CollectionProvider({ children, live = false }: { children: React
   }, [session?.parent, session?.parentExpiresAt]);
   const toggleDemo = () => { if (live) return; try { localStorage.setItem('kanto-preview', preference ? 'empty' : 'demo'); window.dispatchEvent(new Event('kanto-settings')); } catch {} };
   const snapshot = live ? session?.snapshot ?? emptySnapshot : preference ? demoSnapshot : emptySnapshot;
-  return <Context.Provider value={{ snapshot, demo: !live && preference, live, toggleDemo,
+  return <Context.Provider value={{ snapshot, visitorDemo, demo: !live && preference, live, toggleDemo,
     status: !live ? 'demo' : error ? 'error' : session?.status ?? 'loading', error,
     parent: session?.parent ?? false, childName: session?.childName ?? '', familyName: session?.familyName ?? '',
     tickets: session?.snapshot?.tickets ?? [], pendingReceipt: session?.snapshot?.pendingReceipt ?? null, refresh, saveTeam,

@@ -21,7 +21,7 @@ export interface CollectionSnapshot {
   team?: number[];
   records: CollectionRecord[];
   inventory: { evolution: number; legendary: number };
-  source: 'demo' | 'empty' | 'supabase';
+  source: 'demo' | 'sandbox' | 'empty' | 'supabase';
 }
 export interface Chapter { id: number; name: string; location: string; description: string; pokemonIds: number[] }
 export interface CollectionRepository { getSnapshot(): Promise<CollectionSnapshot> }

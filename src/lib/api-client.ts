@@ -1,8 +1,14 @@
 'use client';
+import { isVisitorDemo } from './demo-mode';
 export class RequestError extends Error {
   constructor(message: string, public code: string, public status: number) { super(message); }
 }
 export async function api<T>(path: string, body?: Record<string, unknown>, signal?: AbortSignal): Promise<T> {
+  if (isVisitorDemo()) {
+    if (signal?.aborted) throw new RequestError('请求已取消。', 'ABORTED', 0);
+    const { demoApi } = await import('./demo-api');
+    return demoApi(path, body) as T;
+  }
   let response: Response;
   try {
     response = await fetch(`/api/${path}`, { method: body ? 'POST' : 'GET', credentials: 'same-origin', cache: 'no-store', signal,
