@@ -13,3 +13,26 @@ export function reorderTeam(team: number[], id: number, to: number) {
 export function swipeDirection(dx: number, dy: number) {
   return Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5 ? dx < 0 ? 'next' : 'previous' : null;
 }
+
+const detailOrigins: Record<string, { href: string; label: string }> = {
+  home: { href: '/', label: '回冒险首页' },
+  team: { href: '/team', label: '回我的小队' },
+  history: { href: '/history', label: '回成长足迹' },
+  parent: { href: '/parent/history', label: '回奖励记录' },
+};
+export function detailReturn(from: string | null, receipt: string | null) {
+  if (from === 'capture' && receipt && /^[a-zA-Z0-9-]{1,80}$/.test(receipt)) {
+    return { href: `/capture?receipt=${encodeURIComponent(receipt)}`, label: '回新伙伴' };
+  }
+  return (from && Object.hasOwn(detailOrigins, from) && detailOrigins[from]) || { href: '/pokedex', label: '回图鉴' };
+}
+export function detailHref(id: number, from?: string | null, receipt?: string | null) {
+  if (!from || detailReturn(from, receipt ?? null).href === '/pokedex') return `/pokemon/${id}`;
+  const params = new URLSearchParams({ from });
+  if (from === 'capture' && receipt) params.set('receipt', receipt);
+  return `/pokemon/${id}?${params}`;
+}
+export function teamNeighbors(id: number, team: number[]) {
+  const index = team.indexOf(id);
+  return { previous: index > 0 ? team[index - 1] : null, next: index >= 0 ? team[index + 1] ?? null : null };
+}

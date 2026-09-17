@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeftRight, Plus } from 'lucide-react';
@@ -81,7 +82,7 @@ export function TeamSlots({ team, disabled, edit, notify }: { team: number[]; di
         event.preventDefault();
         const to = slot + (event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1);
         void commit(reorderTeam(team, p.id, to), [...team]);
-      }}><PokemonArt pokemon={p} /></button><strong>{p.name}</strong><button className="team-change" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(slot)}><ArrowLeftRight size={18} />换伙伴</button></> : <button className="team-empty" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(team.length)} aria-label={`邀请伙伴，位置${slot + 1}`}><span className="empty-ball"><Plus size={32} /></span><strong>一起出发</strong></button>}
+      }}><PokemonArt pokemon={p} /></button><Link className="team-detail-link" href={`/pokemon/${p.id}?from=team`} aria-label={`查看${p.name}的详情`}><strong>{p.name}</strong></Link><button className="team-change" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(slot)}><ArrowLeftRight size={18} />换伙伴</button></> : <button className="team-empty" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(team.length)} aria-label={`邀请伙伴，位置${slot + 1}`}><span className="empty-ball"><Plus size={32} /></span><strong>一起出发</strong></button>}
     </motion.article>;
   })}</div><p id="team-sort-hint" className="team-sort-hint">长按伙伴，拖动换位置<span className="sr-only">。键盘可聚焦伙伴后用方向键调整顺序，Escape 取消拖动。</span></p>{ghost && <div className="team-drag-ghost" aria-hidden="true" style={{ left: ghost.x, top: ghost.y }}><PokemonArt pokemon={pokemonById.get(ghost.id)!} /></div>}</>;
 }

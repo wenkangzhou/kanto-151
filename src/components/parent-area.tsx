@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight, Compass, Copy, KeyRound, Link2, LockKeyhole, Mountain, Smartphone, Sparkles } from 'lucide-react';
 import { useCollection } from './collection-provider';
 import { ParentPreview } from './parent-preview';
+import { useParentRewardDraft } from './parent-reward-draft';
 import { api } from '@/lib/api-client';
 import { pokemonById } from '@/domain/pokemon';
 import { PokemonArt } from './pokemon-art';
@@ -30,9 +31,14 @@ function PinUnlock() {
   return <div className="page"><section className="access-card"><span className="feature-icon"><KeyRound size={32} /></span><h1>这里留给家长</h1><p>输入六位家长 PIN，解锁 15 分钟。</p><form className="family-form" onSubmit={submit}><label>家长 PIN<input autoFocus type="password" name="pin" required inputMode="numeric" autoComplete="current-password" pattern="[0-9]{6}" maxLength={6} /></label>{error && <p role="alert" className="form-error">{error}</p>}<button className="button" disabled={busy}>{busy ? '正在解锁…' : '打开家长空间'}</button></form><Link href="/setup" className="text-link">忘记 PIN？使用初始化口令恢复</Link><Link href="/" className="back-link">回到孩子的冒险</Link></section></div>;
 }
 function RewardForm({ initialType }: { initialType: ParentReward['type'] }) {
-  const [type, setType] = useState<string>(initialType); const [reason, setReason] = useState('');
-  const [result, setResult] = useState<ParentReward | null>(null); const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const [copied, setCopied] = useState(false);
-  const [request, setRequest] = useState<{ requestId: string; type: string; reason: string } | null>(null);
+  const [{ type, reason, result, busy, error, copied, request }, patch] = useParentRewardDraft(initialType);
+  const setType = (type: string) => patch({ type });
+  const setReason = (reason: string) => patch({ reason });
+  const setResult = (result: ParentReward | null) => patch({ result });
+  const setBusy = (busy: boolean) => patch({ busy });
+  const setError = (error: string) => patch({ error });
+  const setCopied = (copied: boolean) => patch({ copied });
+  const setRequest = (request: { requestId: string; type: string; reason: string } | null) => patch({ request });
   async function submit(event: FormEvent) {
     event.preventDefault(); if (busy) return; setBusy(true); setError('');
     // Keep the same request and content on network retry until success or explicit reset.
@@ -80,7 +86,7 @@ function RewardOutcome({ reward }: { reward: ParentReward }) {
   const partner=outcome.pokemonId?pokemonById.get(outcome.pokemonId):null;
   const previous=outcome.fromPokemonId?pokemonById.get(outcome.fromPokemonId):null;
   return <div className="parent-reward-outcome">
-    {partner?<Link href={`/pokemon/${partner.id}`} className="parent-reward-partner">
+    {partner?<Link href={`/pokemon/${partner.id}?from=parent`} className="parent-reward-partner">
       {previous&&<><PokemonArt pokemon={previous}/><ArrowRight size={18} aria-hidden="true"/></>}
       <PokemonArt pokemon={partner}/><strong>{previous?`${previous.name} → ${partner.name}`:`遇见了${partner.name}`}</strong>
     </Link>:<span>{outcome.state==='stored'?'券已放入孩子的背包，尚未使用':outcome.state==='used'?'券已使用，暂无伙伴详情':'已领取，暂无伙伴详情'}</span>}

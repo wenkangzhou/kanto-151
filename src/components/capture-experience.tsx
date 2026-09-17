@@ -59,7 +59,7 @@ export function Encounter({ receipt, preview = false, onPreviewContinue }: { rec
   async function finish() {
     if (preview) { onPreviewContinue?.(); return; }
     if (busy) return; setBusy(true); setError('');
-    try { await api('receipts/acknowledge', { id: receipt.id }); await refresh(); router.replace(target ? `/pokemon/${target.id}` : '/bag'); }
+    try { await api('receipts/acknowledge', { id: receipt.id }); await refresh(); router.replace(target ? `/pokemon/${target.id}?from=capture&receipt=${encodeURIComponent(receipt.id)}` : '/bag'); }
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); setBusy(false); }
   }
   const activeArt = evolution && before && ['idle', 'prepare', 'glowing'].includes(stage) ? before : target;

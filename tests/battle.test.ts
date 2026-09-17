@@ -1,9 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { battleMoves, battleReducer, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, usableMoves, type BattleState } from '../src/domain/battle';
+import { firstAttacker, battleMoves, battleReducer, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, usableMoves, type BattleState } from '../src/domain/battle';
 import pokemon from '../src/data/pokemon.json';
 function completeStep(s: BattleState): BattleState {
   let next=battleReducer(s,{type:'advance'});
+  if(next.phase==='order')next=battleReducer(next,{type:'advance'});
   if(next.phase==='player-feedback'||next.phase==='enemy-feedback')next=battleReducer(next,{type:'advance'});
   return next;
 }
@@ -61,4 +62,33 @@ test('damage feedback is a separate locked stage before the opponent acts',()=>{
   s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'enemy');
   s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'enemy-feedback');assert.equal(s.rounds,0);
   s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'ready');assert.equal(s.rounds,1);
+});
+
+test('speed sets a fixed order and ties use only the supplied opening draw',()=>{
+ assert.equal(firstAttacker(25,1,.99),'player');assert.equal(firstAttacker(1,25,0),'enemy');
+ assert.equal(firstAttacker(25,25,.1),'player');assert.equal(firstAttacker(25,25,.9),'enemy');
+ let s=battleReducer(createBattle([1],25),{type:'choose',id:1,tieRandom:.1});
+ s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'order');assert.equal(s.hp[1],100);
+ assert.equal(battleReducer(s,{type:'attack',moveId:battleMoves(1)[0].id}),s);
+ s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'enemy');
+ s=completeStep(s);assert.equal(s.phase,'ready');assert.equal(s.rounds,0);assert.ok(s.hp[1]<100);
+ s=battleReducer(s,{type:'attack',moveId:battleMoves(1)[0].id});s=completeStep(s);
+ assert.equal(s.phase,'enemy');assert.equal(s.rounds,1);assert.equal(s.first,'enemy');
+});
+test('enemy-first knockout ends without player retaliation and damage trail uses actual lost HP',()=>{
+ let s=battleReducer(createBattle([1,4],25),{type:'choose',id:1});
+ s=completeStep(s);s={...s,hp:{...s.hp,1:1}};
+ s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'enemy-feedback');
+ assert.deepEqual(s.lastHit,{target:1,before:1,after:0});
+ s=battleReducer(s,{type:'advance'});assert.equal(s.result,'rest');assert.equal(s.enemyHp,100);
+});
+test('recap keeps a real player hit, immunity creates no fake success and enemy-first round cap is respected',()=>{
+ let s:BattleState={...createBattle([4],1),active:4,phase:'player',move:{id:'x',name:'火花',type:'fire'}};
+ s=battleReducer(s,{type:'advance'});assert.equal(s.moment?.multiplier,2);assert.deepEqual(s.lastHit,{target:1,before:100,after:64});
+ const remembered=s.moment;
+ s=battleReducer({...s,phase:'player',move:{id:'y',name:'抓',type:'normal'}},{type:'advance'});assert.equal(s.moment,remembered);
+ const immune=battleReducer({...createBattle([4],92),active:4,phase:'player',move:{id:'y',name:'抓',type:'normal'}},{type:'advance'});
+ assert.equal(immune.moment,undefined);assert.deepEqual(immune.lastHit,{target:92,before:100,after:100});
+ const end=completeStep({...createBattle([1],25),first:'enemy',active:1,phase:'player',rounds:23,move:{id:'y',name:'撞击',type:'normal'}});
+ assert.equal(end.result,'draw');assert.equal(end.rounds,24);
 });
