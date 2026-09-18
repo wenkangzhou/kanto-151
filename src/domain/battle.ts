@@ -11,17 +11,14 @@ export function usableMoves(id: number, target: number) {
   const moves = battleMoves(id);
   return moves.every(move => multiplier(move, target) === 0) ? [...moves, struggle] : moves;
 }
-export function opponentPool(owned: number[], team: number[]) {
-  const average = team.reduce((n, id) => n + Object.values(pokemonById.get(id)!.stats).reduce((a, b) => a + b, 0), 0) / Math.max(1, team.length);
-  return [...new Set(owned)].filter(id => pokemonById.has(id)).sort((a, b) => {
-    const score = (id: number) => Math.abs(Object.values(pokemonById.get(id)!.stats).reduce((x,y) => x+y,0)-average);
-    return score(a)-score(b);
-  }).slice(0, 6);
+export function opponentPool(owned: number[]) {
+  return [...new Set(owned)].filter(id => pokemonById.has(id));
 }
 // The caller supplies randomness at click time, never during React rendering.
-export function pickOpponent(pool: number[], previous: number | undefined, random: number): number | undefined {
+export function pickOpponent(pool: number[], previous: number | undefined, random: number, seen: number[] = []): number | undefined {
   const alternatives = pool.filter(id => id !== previous);
-  const candidates = alternatives.length ? alternatives : pool;
+  const fresh = alternatives.filter(id => !seen.includes(id));
+  const candidates = fresh.length ? fresh : alternatives.length ? alternatives : pool;
   return candidates[Math.min(candidates.length - 1, Math.floor(Math.max(0, random) * candidates.length))];
 }
 export type BattleHit = { target: number; before: number; after: number };

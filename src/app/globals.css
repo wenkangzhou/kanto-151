@@ -268,3 +268,36 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .team-detail-link{display:flex;align-items:center;justify-content:center;min-height:44px;padding:4px 12px;font-size:18px;border-radius:10px}
 .center-partner>a.team-partner-art{display:block;padding:0;margin:0}
 .team-detail-link:focus-visible,.center-partner>a.team-partner-art:focus-visible{outline:3px solid #3b8dab;outline-offset:3px}
+
+/* Battle prioritizes choosing and acting within the first screen. */
+.battle-shell .footer{display:none}
+.battle-shell .battle-page{padding-top:12px;padding-bottom:20px}
+.battle-title{margin:0 0 12px;min-height:44px}
+.battle-title-main{display:flex;align-items:center;gap:20px}
+.battle-title-main .back-link{margin:0;min-height:44px;display:flex;align-items:center}
+.battle-title .button{padding:10px 16px;min-height:44px}
+.battle-arena{height:clamp(200px,32dvh,280px)}
+.battle-arena.battle-arena-choosing{height:160px;margin-bottom:12px}
+.battle-arena-choosing .battle-player{display:none}
+.battle-arena-choosing .battle-opponent{inset:10px 24px 10px auto;align-items:center}
+.battle-arena-choosing .pokemon-art{width:130px;height:130px}
+.battle-message.battle-message-choose{position:absolute;width:1px;height:1px;padding:0;min-height:0;overflow:hidden;clip-path:inset(50%)}
+.battle-controls{padding:14px}
+.battle-controls h2{margin-bottom:10px;font-size:18px}
+.battle-choices{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.battle-choice-card{min-width:0}
+.battle-choices .battle-choice-select{min-width:0;padding:8px 4px;gap:4px}
+.battle-choice-select[aria-pressed=true] .battle-choice-status{color:#486a3d;font-weight:700}
+@media(max-width:767px){
+ .battle-shell .battle-page{padding-left:12px;padding-right:12px}
+ .battle-title-main{gap:10px}.battle-title h1{font-size:19px}
+ .battle-title .button{font-size:13px;padding:8px 10px;gap:6px}
+ .battle-title>span{font-size:11px}
+ .battle-choices{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .battle-arena.battle-arena-choosing{height:130px}
+ .battle-arena-choosing .pokemon-art{width:105px;height:105px}
+ .battle-choices .pokemon-art{width:54px;height:54px}
+ .battle-choices .battle-choice-health,.battle-candidate-speed{display:none}
+ .battle-candidate-types .type-picture{min-height:36px;padding:4px 6px}
+ .battle-choices .battle-choice-status{min-height:20px}
+}

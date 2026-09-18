@@ -13,7 +13,7 @@ const links = [{ href: '/', name: '去冒险', en: 'ADVENTURE', icon: Compass },
 export function Shell({ children, musicAvailable = false }: { children: React.ReactNode; musicAvailable?: boolean }) {
   const pathname = usePathname();
   const { snapshot, demo, toggleDemo, live, status } = useCollection();
-  return <div className="app-shell"><VoiceLifecycle />
+  return <div className={`app-shell ${pathname === '/battle' ? 'battle-shell' : ''}`}><VoiceLifecycle />
     <aside className="sidebar">
       <Link href="/" className="brand"><Image src="/logo-pokeball.png" alt="" width={46} height={46} unoptimized /><span>KANTO <b>151</b><small>我的关都冒险手帐</small></span></Link>
       <nav aria-label="主要导航">{links.map(({ href, name, en, icon: Icon }) => <Link key={href} href={href} className={`nav-link ${pathname === href || (href === '/pokedex' && pathname.startsWith('/pokemon/')) ? 'active' : ''}`}><Icon size={21} strokeWidth={1.7} /><span>{name}<small>{en}</small></span></Link>)}</nav>

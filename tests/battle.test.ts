@@ -39,7 +39,7 @@ test('one exhausted partner ends the match even when all five substitutes are he
   assert.equal(rematch.active,7);assert.equal(rematch.phase,'summon');
 });
 test('all immune matchups have a way forward and long matches end in a draw',()=>{for(const p of pokemon)for(const target of pokemon)assert.ok(usableMoves(p.id,target.id).some(m=>damage(m,target.id)>0));const s=completeStep({...createBattle([4],1),phase:'enemy',active:4,rounds:23,move:{id:'test',name:'test',type:'normal'}});assert.equal(s.result,'draw');});
-test('opponents are known and restarting restores health',()=>{assert.deepEqual(opponentPool([4,4],[4]),[4]);assert.equal(createBattle([4,4],4).team.length,1);assert.equal(createBattle([4],4).hp[4],100);});
+test('opponents are known and restarting restores health',()=>{assert.deepEqual(opponentPool([4,4]),[4]);assert.equal(createBattle([4,4],4).team.length,1);assert.equal(createBattle([4],4).hp[4],100);});
 
 test('entry blocks attacks until the ball opens without spending an opening turn',()=>{let s=createBattle([4,7],1);s=battleReducer(s,{type:'choose',id:4});assert.equal(s.phase,'summon');assert.equal(battleReducer(s,{type:'attack',moveId:battleMoves(4)[0].id}),s);assert.equal(battleReducer(s,{type:'choose',id:7}),s);s=completeStep(s);assert.equal(s.phase,'ready');assert.equal(s.enemyHp,100);assert.equal(s.hp[4],100);});
 test('resisted damage is not described as immunity',()=>{const fire={id:'ember',name:'火花',type:'fire' as const};assert.ok(damage(fire,7)>0);assert.equal(feedback(fire,7),'效果不显著。');const ground={id:'mud-slap',name:'掷泥',type:'ground' as const};assert.equal(damage(ground,16),0);assert.match(feedback(ground,16),/体力没有减少/);});
@@ -91,4 +91,13 @@ test('recap keeps a real player hit, immunity creates no fake success and enemy-
  assert.equal(immune.moment,undefined);assert.deepEqual(immune.lastHit,{target:92,before:100,after:100});
  const end=completeStep({...createBattle([1],25),first:'enemy',active:1,phase:'player',rounds:23,move:{id:'y',name:'撞击',type:'normal'}});
  assert.equal(end.result,'draw');assert.equal(end.rounds,24);
+});
+
+test('opponents cover the entire collection and avoid seen partners until the pool is exhausted', () => {
+  const pool=opponentPool([1,4,7,10,16,19,25,150,150,999]);
+  assert.equal(pool.length,8);
+  assert.ok(pool.includes(150));
+  assert.equal(pickOpponent(pool,25,0,[1,4,7,10,16,19,25]),150);
+  assert.notEqual(pickOpponent(pool,150,0,pool),150);
+  assert.equal(pickOpponent([25],25,.5,[25]),25);
 });
