@@ -23,6 +23,8 @@ test('reordering inserts within the existing team, preserving all members and th
 });
 
 test('detail navigation retains only trusted origins and receipt identifiers', () => {
+  assert.deepEqual(detailReturn('bag', null), {href:'/bag', label:'回背包'});
+  assert.equal(detailHref(144,'bag'), '/pokemon/144?from=bag');
   assert.deepEqual(detailReturn('team', null), {href:'/team', label:'回我的小队'});
   assert.equal(detailHref(25,'capture','receipt-123'), '/pokemon/25?from=capture&receipt=receipt-123');
   assert.equal(detailReturn('capture','receipt-123').href, '/capture?receipt=receipt-123');

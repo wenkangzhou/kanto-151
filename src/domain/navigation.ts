@@ -15,6 +15,7 @@ export function swipeDirection(dx: number, dy: number) {
 }
 
 const detailOrigins: Record<string, { href: string; label: string }> = {
+  bag: { href: '/bag', label: '回背包' },
   home: { href: '/', label: '回冒险首页' },
   team: { href: '/team', label: '回我的小队' },
   history: { href: '/history', label: '回成长足迹' },
