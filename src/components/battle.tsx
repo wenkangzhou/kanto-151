@@ -43,7 +43,7 @@ export function Battle() {
     {match?<Match audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} again={()=>start(false, true)} retry={()=>start(true)} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:<section className="battle-welcome"><Swords size={40}/><h1>来一场友好对战吧！</h1><p>双方各选一位伙伴，体力用完，这场就结束。</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>正在找你的小队…</p>:team.length?<p role="status">正在准备对手…</p>:<><p>先邀请一位伙伴加入小队吧。</p><Link href="/team" className="button">去选伙伴</Link></>}<small>每场结束都会恢复体力，不消耗道具。</small></section>}
   </div>;
 }
-const hitStrength = (effect: number) => effect > 1 ? 12 : effect < 1 ? 4 : 7;
+const hitStrength = (effect: number) => effect > 1 ? 24 : effect < 1 ? 10 : 17;
 const healthColor = (hp: number) => hp > 45 ? '#7f9e6c' : hp > 20 ? '#dbac48' : '#d97765';
 function Health({id,hp,hit,showTypes=false,interactive=true}:{id:number;hp:number;hit?:BattleHit;showTypes?:boolean;interactive?:boolean}) {
   const reduced=useReducedMotion();
@@ -78,12 +78,14 @@ function Match({team,enemy,again,retry,canChange,audioOwner}:{team:number[];enem
     else if(state.phase==='finished')battleSound(audioOwner,state.result==='win'?'win':'rest');
     else if((state.phase==='player-feedback'||state.phase==='enemy-feedback')&&state.move&&multiplier(state.move,state.phase==='player-feedback'?enemy:state.active!)>0)battleSound(audioOwner,'hit');
   },[state.phase,state.result,state.move,state.active,enemy,audioOwner]);
+  const impact=state.phase.endsWith('feedback')&&state.lastHit&&state.lastHit.after<state.lastHit.before;
+  const strongImpact=impact&&state.move&&multiplier(state.move,state.lastHit!.target)>1;
   const choose=state.phase==='choose';
   const active=state.active===null?null:pokemonById.get(state.active)!;
   function pick(id:number){dispatch({type:'choose',id,tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296});setSelected(null);}
   return <>
     <div className="battle-title"><div className="battle-title-main"><Link href="/team" className="back-link"><ArrowLeft size={18}/>回小队</Link></div>{state.active===null&&canChange?<button className="button secondary battle-change-opponent" onClick={again}><Shuffle size={20} aria-hidden="true"/>换个对手</button>:<span>一对一 · 选定后不换伙伴</span>}</div>
-    <section className={`battle-arena ${choose?'battle-arena-choosing':''} ${state.phase==='finished'?'battle-arena-ended':''}`} aria-label={state.phase==='finished'?'对战结果':'对战场地'}>
+    <section className={`battle-arena ${strongImpact&&!reduced?'battle-arena-impact':''} ${choose?'battle-arena-choosing':''} ${state.phase==='finished'?'battle-arena-ended':''}`} aria-label={state.phase==='finished'?'对战结果':'对战场地'}>
       {state.phase==='finished'?<div className={`battle-result-scene ${state.result==='win'?'won':''}`}>
         <span className="battle-result-heading">对战结束</span>
         <div className="battle-winner-art">
@@ -92,8 +94,8 @@ function Match({team,enemy,again,retry,canChange,audioOwner}:{team:number[];enem
         <strong>{state.result==='win'?`${active!.name}赢啦！`:state.result==='rest'?`${pokemonById.get(enemy)!.name}获胜`:'双方打成平手'}</strong>
         <span>{state.result==='win'?'我们的小队获胜！':state.result==='rest'?'对手获胜，我们下次再加油！':'握握手，下次再切磋！'}</span>
       </div>:<>
-      <div className="battle-opponent"><Health id={enemy} hp={state.enemyHp} hit={state.lastHit?.target===enemy&&state.phase==='player-feedback'?state.lastHit:undefined} showTypes interactive={!busy}/><motion.div animate={reduced?{}:state.phase==='player-feedback'&&state.move&&multiplier(state.move,enemy)>0?{x:[0,hitStrength(multiplier(state.move,enemy)),-hitStrength(multiplier(state.move,enemy)),0]}:state.phase==='enemy'?{x:[0,-14,0]}:state.phase==='ready'&&state.rounds?{x:0}: {x:0}} transition={{duration:.5}} key={`enemy-${state.phase}-${state.rounds}`}><PokemonArt pokemon={pokemonById.get(enemy)!}/></motion.div></div>
-      <div className={`battle-player ${summoning?'is-summoning':''}`}>{active?<><motion.div className="battle-player-art" key={`${active.id}-${state.phase}-${state.rounds}`} animate={reduced?{}:state.phase==='player'?{x:[0,18,0]}:state.phase==='enemy-feedback'&&state.move&&multiplier(state.move,active.id)>0?{x:[0,-hitStrength(multiplier(state.move,active.id)),hitStrength(multiplier(state.move,active.id)),0]}:{x:0}} transition={{duration:.5}}><PokemonArt pokemon={active}/></motion.div><Health id={active.id} hp={state.hp[active.id]} hit={state.lastHit?.target===active.id&&state.phase==='enemy-feedback'?state.lastHit:undefined}/></>:<div className="battle-empty">谁来上场？</div>}</div>
+      <div className="battle-opponent"><Health id={enemy} hp={state.enemyHp} hit={state.lastHit?.target===enemy&&state.phase==='player-feedback'?state.lastHit:undefined} showTypes interactive={!busy}/><motion.div animate={reduced?{}:state.phase==='player-feedback'&&state.move&&multiplier(state.move,enemy)>0?{x:[0,hitStrength(multiplier(state.move,enemy)),-7,4,0]}:state.phase==='enemy'?{x:[0,-14,0]}:state.phase==='ready'&&state.rounds?{x:0}: {x:0}} transition={{duration:.22,ease:"easeOut"}} key={`enemy-${state.phase}-${state.rounds}`}><PokemonArt pokemon={pokemonById.get(enemy)!}/></motion.div></div>
+      <div className={`battle-player ${summoning?'is-summoning':''}`}>{active?<><motion.div className="battle-player-art" key={`${active.id}-${state.phase}-${state.rounds}`} animate={reduced?{}:state.phase==='player'?{x:[0,18,0]}:state.phase==='enemy-feedback'&&state.move&&multiplier(state.move,active.id)>0?{x:[0,-hitStrength(multiplier(state.move,active.id)),7,-4,0]}:{x:0}} transition={{duration:.22,ease:"easeOut"}}><PokemonArt pokemon={active}/></motion.div><Health id={active.id} hp={state.hp[active.id]} hit={state.lastHit?.target===active.id&&state.phase==='enemy-feedback'?state.lastHit:undefined}/></>:<div className="battle-empty">谁来上场？</div>}</div>
       {summoning&&<div className="battle-summon" key={`summon-${state.active}`} aria-hidden="true"><span className="battle-thrown-ball"><CollectionMark state="available"/></span><span className="battle-release-light"/></div>}
       {(state.phase==='player'||state.phase==='enemy')&&state.move&&<BattleMoveEffect key={`${state.phase}-${state.rounds}`} move={state.move} side={state.phase} hits={multiplier(state.move,state.phase==='player'?enemy:state.active!)>0}/>}
       </>}
@@ -115,7 +117,7 @@ function Match({team,enemy,again,retry,canChange,audioOwner}:{team:number[];enem
           <span className="battle-choice-health" aria-hidden="true"><span style={{width:`${percent}%`,background:healthColor(percent)}}/></span>
           <small className="battle-choice-status">{selected===id?'再点一下，上场！':status}</small>
         </button><div className="battle-candidate-types" aria-label={`${partner.name}的属性`}>{partner.types.map(type=><TypePicture key={type} type={type}/>)}</div><small className="battle-candidate-speed">速度 {partner.stats.speed}</small></article>;
-      })}</div></>:active?<><div className="battle-moves">{usableMoves(active.id,enemy).map(move=><motion.button key={move.id} disabled={busy} className={state.phase==='player'&&state.move?.id===move.id?'is-casting':''} whileTap={reduced?undefined:{scale:.94,y:2}} animate={reduced?undefined:state.phase==='player'&&state.move?.id===move.id?{scale:[.94,1.035,1],y:[2,-2,0]}:{scale:1,y:0}} transition={{duration:.24}} onClick={()=>{ if(state.phase!=='ready')return; if(!reduced&&typeof navigator.vibrate==='function'){try{navigator.vibrate(18);}catch{ /* Optional hardware feedback must not interrupt a turn. */ }} dispatch({type:'attack',moveId:move.id}); }}><strong>{move.name}</strong>{move.fallback?<small>特别招式</small>:<TypePicture type={move.type} interactive={false}/>}</motion.button>)}</div></>:null}
+      })}</div></>:active?<><div className="battle-moves">{usableMoves(active.id,enemy).map(move=><motion.button key={move.id} disabled={busy} className={state.phase==='player'&&state.move?.id===move.id?'is-casting':''} whileTap={reduced?undefined:{scale:.9,y:6}} animate={reduced?undefined:state.phase==='player'&&state.move?.id===move.id?{scale:[.9,1.055,1],y:[6,-3,0]}:{scale:1,y:0}} transition={{duration:.24}} onClick={()=>{ if(state.phase!=='ready')return; if(!reduced&&typeof navigator.vibrate==='function'){try{navigator.vibrate(18);}catch{ /* Optional hardware feedback must not interrupt a turn. */ }} dispatch({type:'attack',moveId:move.id}); }}><strong>{move.name}</strong>{move.fallback?<small>特别招式</small>:<TypePicture type={move.type} interactive={false}/>}</motion.button>)}</div></>:null}
     </section>
   </>;
 }
