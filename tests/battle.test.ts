@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { firstAttacker, battleMoves, battleReducer, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, usableMoves, type BattleState } from '../src/domain/battle';
+import { maxHp, healthPercent, firstAttacker, battleMoves, battleReducer, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, usableMoves, type BattleState } from '../src/domain/battle';
 import pokemon from '../src/data/pokemon.json';
 function completeStep(s: BattleState): BattleState {
   let next=battleReducer(s,{type:'advance'});
@@ -9,7 +9,7 @@ function completeStep(s: BattleState): BattleState {
   return next;
 }
 test('every partner has one to three locally cached moves',()=>{for(const p of pokemon){const moves=battleMoves(p.id);assert.ok(moves.length>=1&&moves.length<=3);for(const m of moves)assert.ok(m.name&&m.type);}});
-test('dual type weaknesses, neutral fighting and immunity use the existing chart',()=>{assert.equal(multiplier({id:'x',name:'x',type:'electric'},16),2);assert.equal(multiplier({id:'x',name:'x',type:'fighting'},16),1);assert.equal(damage({id:'x',name:'x',type:'ground'},16),0);});
+test('dual type weaknesses, neutral fighting and immunity use the existing chart',()=>{assert.equal(multiplier({id:'x',name:'x',type:'electric',category:'special' as const},16),2);assert.equal(multiplier({id:'x',name:'x',type:'fighting',category:'physical' as const},16),1);assert.equal(damage({id:'x',name:'x',type:'ground',category:'special' as const},4,16),0);});
 test('a turn cannot be double-clicked and the chosen partner is locked for the match',()=>{
   let s=createBattle([4,7],1);
   s=completeStep(battleReducer(s,{type:'choose',id:4}));
@@ -23,26 +23,26 @@ test('a turn cannot be double-clicked and the chosen partner is locked for the m
   assert.equal(battleReducer(s,{type:'choose',id:7}),s);
   assert.equal(s.active,4);
 });
-test('victory ends the match without an extra enemy attack',()=>{let s=createBattle([4],1);s=battleReducer(s,{type:'choose',id:4});s=completeStep(s);s={...s,enemyHp:1};s=battleReducer(s,{type:'attack',moveId:battleMoves(4)[0].id});s=completeStep(s);assert.equal(s.result,'win');assert.equal(s.hp[4],100);assert.equal(completeStep(s),s);});
+test('victory ends the match without an extra enemy attack',()=>{let s=createBattle([4],1);s=battleReducer(s,{type:'choose',id:4});s=completeStep(s);s={...s,enemyHp:1};s=battleReducer(s,{type:'attack',moveId:battleMoves(4)[0].id});s=completeStep(s);assert.equal(s.result,'win');assert.equal(s.hp[4],maxHp(4));assert.equal(completeStep(s),s);});
 test('one exhausted partner ends the match even when all five substitutes are healthy',()=>{
-  let s:BattleState={...createBattle([4,7,1,25,16,19],1),active:4,phase:'enemy',move:{id:'test',name:'test',type:'normal'}};
+  let s:BattleState={...createBattle([4,7,1,25,16,19],1),active:4,phase:'enemy',move:{id:'test',name:'test',type:'normal',category:'physical' as const}};
   s={...s,hp:{...s.hp,4:1}};
   s=battleReducer(s,{type:'advance'});
   assert.equal(s.phase,'enemy-feedback');assert.equal(s.hp[4],0);
   s=battleReducer(s,{type:'advance'});
   assert.equal(s.phase,'finished');assert.equal(s.result,'rest');
-  for(const id of [7,1,25,16,19]) {assert.equal(s.hp[id],100);assert.equal(battleReducer(s,{type:'choose',id}),s);}
+  for(const id of [7,1,25,16,19]) {assert.equal(s.hp[id],maxHp(id));assert.equal(battleReducer(s,{type:'choose',id}),s);}
   assert.equal(completeStep(s),s);
   let rematch=createBattle(s.team,s.enemy);
-  assert.equal(rematch.enemy,s.enemy);assert.equal(rematch.enemyHp,100);assert.equal(rematch.hp[4],100);
+  assert.equal(rematch.enemy,s.enemy);assert.equal(rematch.enemyHp,maxHp(s.enemy));assert.equal(rematch.hp[4],maxHp(4));
   rematch=battleReducer(rematch,{type:'choose',id:7});
   assert.equal(rematch.active,7);assert.equal(rematch.phase,'summon');
 });
-test('all immune matchups have a way forward and long matches end in a draw',()=>{for(const p of pokemon)for(const target of pokemon)assert.ok(usableMoves(p.id,target.id).some(m=>damage(m,target.id)>0));const s=completeStep({...createBattle([4],1),phase:'enemy',active:4,rounds:23,move:{id:'test',name:'test',type:'normal'}});assert.equal(s.result,'draw');});
-test('opponents are known and restarting restores health',()=>{assert.deepEqual(opponentPool([4,4]),[4]);assert.equal(createBattle([4,4],4).team.length,1);assert.equal(createBattle([4],4).hp[4],100);});
+test('all immune matchups have a way forward and long matches end in a draw',()=>{for(const p of pokemon)for(const target of pokemon)assert.ok(usableMoves(p.id,target.id).some(m=>damage(m,p.id,target.id)>0));const s=completeStep({...createBattle([4],1),phase:'enemy',active:4,rounds:23,move:{id:'test',name:'test',type:'normal',category:'physical' as const}});assert.equal(s.result,'draw');});
+test('opponents are known and restarting restores health',()=>{assert.deepEqual(opponentPool([4,4]),[4]);assert.equal(createBattle([4,4],4).team.length,1);assert.equal(createBattle([4],4).hp[4],maxHp(4));});
 
-test('entry blocks attacks until the ball opens without spending an opening turn',()=>{let s=createBattle([4,7],1);s=battleReducer(s,{type:'choose',id:4});assert.equal(s.phase,'summon');assert.equal(battleReducer(s,{type:'attack',moveId:battleMoves(4)[0].id}),s);assert.equal(battleReducer(s,{type:'choose',id:7}),s);s=completeStep(s);assert.equal(s.phase,'ready');assert.equal(s.enemyHp,100);assert.equal(s.hp[4],100);});
-test('resisted damage is not described as immunity',()=>{const fire={id:'ember',name:'火花',type:'fire' as const};assert.ok(damage(fire,7)>0);assert.equal(feedback(fire,7),'效果不显著。');const ground={id:'mud-slap',name:'掷泥',type:'ground' as const};assert.equal(damage(ground,16),0);assert.match(feedback(ground,16),/体力没有减少/);});
+test('entry blocks attacks until the ball opens without spending an opening turn',()=>{let s=createBattle([4,7],1);s=battleReducer(s,{type:'choose',id:4});assert.equal(s.phase,'summon');assert.equal(battleReducer(s,{type:'attack',moveId:battleMoves(4)[0].id}),s);assert.equal(battleReducer(s,{type:'choose',id:7}),s);s=completeStep(s);assert.equal(s.phase,'ready');assert.equal(s.enemyHp,maxHp(s.enemy));assert.equal(s.hp[4],maxHp(4));});
+test('resisted damage is not described as immunity',()=>{const fire={id:'ember',name:'火花',type:'fire' as const,category:'special' as const};assert.ok(damage(fire,4,7)>0);assert.equal(feedback(fire,7),'效果不显著。');const ground={id:'mud-slap',name:'掷泥',type:'ground' as const,category:'special' as const};assert.equal(damage(ground,4,16),0);assert.match(feedback(ground,16),/体力没有减少/);});
 
 test('random opponent varies across the pool and excludes the current opponent',()=>{
   assert.equal(pickOpponent([1,4,7],1,0),4);
@@ -56,7 +56,7 @@ test('damage feedback is a separate locked stage before the opponent acts',()=>{
   let s=completeStep(battleReducer(createBattle([4,7],1),{type:'choose',id:4}));
   s=battleReducer(s,{type:'attack',moveId:battleMoves(4)[0].id});
   s=battleReducer(s,{type:'advance'});
-  assert.equal(s.phase,'player-feedback');assert.ok(s.enemyHp<100);assert.equal(s.hp[4],100);
+  assert.equal(s.phase,'player-feedback');assert.ok(s.enemyHp<maxHp(s.enemy));assert.equal(s.hp[4],maxHp(4));
   assert.equal(battleReducer(s,{type:'attack',moveId:battleMoves(4)[0].id}),s);
   assert.equal(battleReducer(s,{type:'choose',id:7}),s);
   s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'enemy');
@@ -68,10 +68,10 @@ test('speed sets a fixed order and ties use only the supplied opening draw',()=>
  assert.equal(firstAttacker(25,1,.99),'player');assert.equal(firstAttacker(1,25,0),'enemy');
  assert.equal(firstAttacker(25,25,.1),'player');assert.equal(firstAttacker(25,25,.9),'enemy');
  let s=battleReducer(createBattle([1],25),{type:'choose',id:1,tieRandom:.1});
- s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'order');assert.equal(s.hp[1],100);
+ s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'order');assert.equal(s.hp[1],maxHp(1));
  assert.equal(battleReducer(s,{type:'attack',moveId:battleMoves(1)[0].id}),s);
  s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'enemy');
- s=completeStep(s);assert.equal(s.phase,'ready');assert.equal(s.rounds,0);assert.ok(s.hp[1]<100);
+ s=completeStep(s);assert.equal(s.phase,'ready');assert.equal(s.rounds,0);assert.ok(s.hp[1]<maxHp(1));
  s=battleReducer(s,{type:'attack',moveId:battleMoves(1)[0].id});s=completeStep(s);
  assert.equal(s.phase,'enemy');assert.equal(s.rounds,1);assert.equal(s.first,'enemy');
 });
@@ -80,16 +80,16 @@ test('enemy-first knockout ends without player retaliation and damage trail uses
  s=completeStep(s);s={...s,hp:{...s.hp,1:1}};
  s=battleReducer(s,{type:'advance'});assert.equal(s.phase,'enemy-feedback');
  assert.deepEqual(s.lastHit,{target:1,before:1,after:0});
- s=battleReducer(s,{type:'advance'});assert.equal(s.result,'rest');assert.equal(s.enemyHp,100);
+ s=battleReducer(s,{type:'advance'});assert.equal(s.result,'rest');assert.equal(s.enemyHp,maxHp(s.enemy));
 });
 test('recap keeps a real player hit, immunity creates no fake success and enemy-first round cap is respected',()=>{
- let s:BattleState={...createBattle([4],1),active:4,phase:'player',move:{id:'x',name:'火花',type:'fire'}};
- s=battleReducer(s,{type:'advance'});assert.equal(s.moment?.multiplier,2);assert.deepEqual(s.lastHit,{target:1,before:100,after:64});
+ let s:BattleState={...createBattle([4],1),active:4,phase:'player',move:{id:'x',name:'火花',type:'fire',category:'special' as const}};
+ s=battleReducer(s,{type:'advance'});assert.equal(s.moment?.multiplier,2);assert.deepEqual(s.lastHit,{target:1,before:maxHp(1),after:maxHp(1)-damage(s.move!,4,1)});
  const remembered=s.moment;
- s=battleReducer({...s,phase:'player',move:{id:'y',name:'抓',type:'normal'}},{type:'advance'});assert.equal(s.moment,remembered);
- const immune=battleReducer({...createBattle([4],92),active:4,phase:'player',move:{id:'y',name:'抓',type:'normal'}},{type:'advance'});
- assert.equal(immune.moment,undefined);assert.deepEqual(immune.lastHit,{target:92,before:100,after:100});
- const end=completeStep({...createBattle([1],25),first:'enemy',active:1,phase:'player',rounds:23,move:{id:'y',name:'撞击',type:'normal'}});
+ s=battleReducer({...s,phase:'player',move:{id:'y',name:'抓',type:'normal',category:'physical' as const}},{type:'advance'});assert.equal(s.moment,remembered);
+ const immune=battleReducer({...createBattle([4],92),active:4,phase:'player',move:{id:'y',name:'抓',type:'normal',category:'physical' as const}},{type:'advance'});
+ assert.equal(immune.moment,undefined);assert.deepEqual(immune.lastHit,{target:92,before:maxHp(92),after:maxHp(92)});
+ const end=completeStep({...createBattle([1],25),first:'enemy',active:1,phase:'player',rounds:23,move:{id:'y',name:'撞击',type:'normal',category:'physical' as const}});
  assert.equal(end.result,'draw');assert.equal(end.rounds,24);
 });
 
@@ -100,4 +100,41 @@ test('opponents cover the entire collection and avoid seen partners until the po
   assert.equal(pickOpponent(pool,25,0,[1,4,7,10,16,19,25]),150);
   assert.notEqual(pickOpponent(pool,150,0,pool),150);
   assert.equal(pickOpponent([25],25,.5,[25]),25);
+});
+
+test('HP differs by species and bars normalize against the matching maximum', () => {
+  assert.equal(maxHp(4),99);
+  assert.equal(maxHp(6),138);
+  assert.equal(maxHp(113),310);
+  assert.equal(healthPercent(113,155),50);
+  assert.equal(healthPercent(4,99),100);
+  for(const p of pokemon) {
+    assert.equal(createBattle([p.id],p.id).enemyHp,maxHp(p.id));
+    assert.equal(healthPercent(p.id,0),0);
+  }
+});
+test('physical and special moves use independent offensive and defensive stats', () => {
+  const physical={id:'test',name:'测试',type:'normal' as const,category:'physical' as const};
+  const special={...physical,category:'special' as const};
+  // Machamp attacks physically; Alakazam excels at special attacks.
+  assert.ok(damage(physical,68,143)>damage(physical,65,143));
+  assert.ok(damage(special,65,143)>damage(special,68,143));
+  // Onix has high Defense; Chansey has high Special Defense and low Defense.
+  assert.ok(damage(physical,25,95)<damage(special,25,95));
+  assert.ok(damage(physical,25,113)>damage(special,25,113));
+  assert.ok(damage(special,6,143)>damage(special,4,143));
+});
+test('cached move categories follow each move rather than its elemental type', () => {
+  const all=pokemon.flatMap(p=>battleMoves(p.id));
+  assert.equal(all.find(m=>m.id==='quick-attack')?.category,'physical');
+  assert.equal(all.find(m=>m.id==='swift')?.category,'special');
+  assert.equal(all.find(m=>m.id==='vine-whip')?.category,'physical');
+  for(const move of all)assert.ok(['physical','special'].includes(move.category));
+});
+test('stat-based hits are finite, immunity stays zero and surviving damage never rounds to zero', () => {
+  for(const attacker of pokemon)for(const target of pokemon)for(const move of usableMoves(attacker.id,target.id)) {
+    const hit=damage(move,attacker.id,target.id);
+    assert.ok(Number.isInteger(hit));
+    assert.ok(multiplier(move,target.id)===0?hit===0:hit>=1);
+  }
 });

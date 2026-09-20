@@ -258,11 +258,13 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .battle-turn-partner small { display:block; color:#7e896f; font-size:12px; }
 .battle-recap { margin:18px auto; padding:16px; max-width:540px; background:#f5f8ef; border:1px solid #e1e8d6; border-radius:18px; }
 .battle-recap h3 { font-size:17px; margin:0 0 12px; }
-.battle-recap-row { display:flex; align-items:center; justify-content:center; gap:14px; }
+.battle-recap-row { --recap-art-size:70px; display:grid; grid-template-columns:minmax(0,1fr) auto 24px minmax(0,1fr); align-items:start; gap:14px; }
+.battle-recap-move { min-height:var(--recap-art-size); justify-content:center; }
+.battle-recap-arrow { margin-top:calc((var(--recap-art-size) - 24px)/2); }
 .battle-recap-row>span { display:flex; flex-direction:column; align-items:center; gap:6px; }
-.battle-recap .pokemon-art { width:70px; height:70px; object-fit:contain; }
+.battle-recap .pokemon-art { width:var(--recap-art-size); height:var(--recap-art-size); object-fit:contain; flex-shrink:0; }
 .battle-recap p { font-size:13px; margin-bottom:0; }
-@media(max-width:640px) { .battle-choice-card{min-width:0}.battle-turn-order{gap:6px}.battle-turn-partner{gap:4px}.battle-turn-partner b{font-size:12px}.battle-turn-partner>.pokemon-art{width:35px;height:35px}.battle-recap-row{gap:8px}.battle-recap .pokemon-art{width:54px;height:54px} }
+@media(max-width:640px) { .battle-choice-card{min-width:0}.battle-turn-order{gap:6px}.battle-turn-partner{gap:4px}.battle-turn-partner b{font-size:12px}.battle-turn-partner>.pokemon-art{width:35px;height:35px}.battle-recap-row{--recap-art-size:54px;gap:8px} }
 
 /* Keep picture/detail links generous without changing the drag handle. */
 .team-detail-link{display:flex;align-items:center;justify-content:center;min-height:44px;padding:4px 12px;font-size:18px;border-radius:10px}
@@ -301,3 +303,8 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
  .battle-candidate-types .type-picture{min-height:36px;padding:4px 6px}
  .battle-choices .battle-choice-status{min-height:20px}
 }
+
+/* Keep the accepted move readable while the turn is locked. */
+.battle-moves>button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.battle-moves>button.is-casting:disabled{opacity:1;background:#e6f0da;border-color:#759766;box-shadow:0 0 0 3px #75976628}
+.battle-moves>button:focus-visible{outline:3px solid #3984ac;outline-offset:3px}

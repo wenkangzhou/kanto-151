@@ -11,7 +11,7 @@ def rows(name):
 types={r['id']:r['identifier'] for r in rows('types')}
 names={r['move_id']:r['name'] for r in rows('move_names') if r['local_language_id']=='12'}
 preferred='tackle scratch pound quick-attack ember water-gun vine-whip razor-leaf thunder-shock confusion gust peck wing-attack bite bug-bite poison-sting acid rock-throw mud-slap powder-snow ice-shard lick dragon-breath fairy-wind disarming-voice metal-claw karate-chop low-kick swift psychic surf thunderbolt flamethrower absorb struggle'.split()
-moves={r['id']:{'id':r['identifier'],'name':names[r['id']],'type':types[r['type_id']]} for r in rows('moves') if r['identifier'] in preferred}
+moves={r['id']:{'id':r['identifier'],'name':names[r['id']],'type':types[r['type_id']],'category':{'2':'physical','3':'special'}[r['damage_class_id']]} for r in rows('moves') if r['identifier'] in preferred}
 learnable={str(i):{} for i in range(1,152)}
 for r in rows('pokemon_moves'):
     if r['pokemon_id'] in learnable and r['move_id'] in moves:
@@ -25,7 +25,7 @@ for p in json.loads((root/'src/data/pokemon.json').read_text()):
         if moves[n]['type'] not in seen:
             chosen.append({**moves[n],**learnable[str(p['id'])][n]});seen.add(moves[n]['type'])
         if len(chosen)==3:break
-    if not chosen:chosen=[{'id':'struggle','name':'挣扎','type':'normal','fallback':True}]
+    if not chosen:chosen=[{'id':'struggle','name':'挣扎','type':'normal','fallback':True,'category':'physical'}]
     result[str(p['id'])]=chosen
 (root/'src/data/battle-moves.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
 print('Saved',len(result),'species')
