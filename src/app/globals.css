@@ -318,3 +318,22 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .battle-arena-impact{animation:battle-impact-jolt .16s ease-out}
 .battle-moves>button:not(:disabled):active{background:#e6f0da}
 @media(prefers-reduced-motion:reduce){.battle-arena-impact{animation:none}}
+
+/* Let the arena fill the viewport space left by navigation and usable controls. */
+.battle-shell .main-shell{height:100dvh;display:flex;flex-direction:column}
+.battle-shell .main-shell>header,.battle-shell .main-shell>aside{flex-shrink:0}
+.battle-shell #main-content{flex:1;min-height:0;display:flex;flex-direction:column}
+.battle-shell .battle-page{width:100%;height:100%;display:flex;flex-direction:column;max-width:1320px}
+.battle-page> *{flex-shrink:0}
+.battle-page>.battle-arena{flex:1 0 200px;height:auto;min-height:200px;container-type:size}
+.battle-page>.battle-arena-choosing{flex-basis:160px;min-height:160px}
+.battle-page>.battle-arena-ended{flex-basis:240px;min-height:240px}
+.battle-arena .battle-opponent .pokemon-art,.battle-arena .battle-player .pokemon-art{width:clamp(120px,65cqh,260px);height:clamp(120px,65cqh,260px)}
+.battle-arena-choosing .battle-opponent .pokemon-art{width:clamp(130px,80cqh,280px);height:clamp(130px,80cqh,280px)}
+@media(max-width:767px){
+ .battle-page>.battle-arena{flex-basis:200px;min-height:200px}
+ .battle-page>.battle-arena-choosing{flex-basis:130px;min-height:130px}
+ .battle-arena .battle-opponent .pokemon-art,.battle-arena .battle-player .pokemon-art{width:clamp(105px,50cqh,150px);height:clamp(105px,50cqh,150px)}
+ .battle-arena-choosing .battle-opponent .pokemon-art{width:clamp(105px,80cqh,200px);height:clamp(105px,80cqh,200px)}
+}
+@media(max-width:640px){.battle-shell .main-shell{padding-bottom:calc(72px + env(safe-area-inset-bottom))}}
