@@ -8,6 +8,7 @@ const colors: Record<PokemonType,string> = {
 };
 function Particle({move,index}:{move:BattleMove;index:number}) {
   switch(move.type) {
+    case 'electric': return <path d="M5-32-22 5-3 5-9 32 24-9 4-9Z" fill="#ffd43b" stroke="#fff4ae" strokeWidth="3"/>;
     case 'fire': return <><path d="M0 28C-35 12-20-11-4-32C-3-13 14-13 12-26C38 1 27 26 0 28Z" fill="#f48336"/><path d="M0 22C-16 10-8 0 1-12C0 1 16 11 0 22Z" fill="#ffe388"/></>;
     case 'water': return <path d="M-32 0Q0-28 28 0Q0 28-32 0Z" fill="#50b9ef" stroke="#d9f5ff" strokeWidth="3"/>;
     case 'grass': return <><path d="M-28 16Q-22-28 29-17Q22 22-28 16Z" fill="#7db958"/><path d="M-24 14 22-13" stroke="#e5f4ca" strokeWidth="3"/></>;
@@ -25,7 +26,7 @@ function Particle({move,index}:{move:BattleMove;index:number}) {
   }
 }
 /** Decorative SVG only: no remote assets, raster filters or gameplay timers. */
-export function BattleMoveEffect({move,side,hits}:{move:BattleMove;side:'player'|'enemy';hits:boolean}) {
+export function BattleMoveEffect({move,side}:{move:BattleMove;side:'player'|'enemy'}) {
   const reduced=useReducedMotion();
   if(reduced)return null;
   const color=colors[move.type];
@@ -35,9 +36,28 @@ export function BattleMoveEffect({move,side,hits}:{move:BattleMove;side:'player'
         {move.type==='water'&&[0,1,2].map(i=><motion.path key={i} d={`M180 ${220+i*7} Q490 ${85+i*10} 820 ${80+i*6}`} fill="none" stroke={i===1?'#a1e3fb':'#57b2e2'} strokeWidth={i===1?8:5} strokeLinecap="round" initial={{pathLength:0,opacity:0}} animate={{pathLength:[0,1,1],opacity:[0,.85,0]}} transition={{duration:1.35,delay:i*.035}}/>)}
         {[0,1,2].map(i=><motion.g key={i} initial={{x:180,y:220,opacity:0,scale:.5}} animate={{x:[180,510,820],y:[220,125+(i-1)*22,80],opacity:[0,1,0],scale:[.5,1,.75],rotate:move.type==='rock'||move.type==='grass'?[0,100,180]:0}} transition={{duration:1.15,delay:i*.1,times:[0,.55,1]}}><Particle move={move} index={i}/></motion.g>)}
       </>}
-      {hits&&<motion.g initial={{opacity:0}} animate={{opacity:[0,0,1,0]}} transition={{duration:1.5,times:[0,.72,.84,1]}}>
-        {[0,60,120,180,240,300].map(angle=><path key={angle} d="M18 0H35" transform={`translate(820 80) rotate(${angle})`} stroke={color} strokeWidth="5" strokeLinecap="round"/>)}
-      </motion.g>}
+
     </g>
+  </svg>;
+}
+
+/** Anchored to the recipient artwork so impacts follow resizing and recoil. */
+export function BattleHitEffect({move,strong=false}:{move:BattleMove;strong?:boolean}) {
+  const reduced=useReducedMotion();
+  if(reduced)return null;
+  const count=strong?8:6;
+  const distance=strong?76:60;
+  return <svg className="battle-hit-effect" viewBox="-100 -100 200 200" aria-hidden="true" focusable="false">
+    <motion.circle r="30" fill="none" stroke={colors[move.type]} strokeWidth="5"
+      initial={{scale:.3,opacity:.8}} animate={{scale:strong?2.6:2,opacity:0}} transition={{duration:.45}}/>
+    {Array.from({length:count},(_,index)=>{
+      const angle=index/count*Math.PI*2;
+      const falling=move.type==='rock'||move.type==='ground';
+      return <motion.g key={index} initial={{x:0,y:0,scale:.2,opacity:0}}
+        animate={{x:[0,Math.cos(angle)*distance*.7,Math.cos(angle)*distance],y:[0,Math.sin(angle)*distance*.7,Math.sin(angle)*distance+(falling?30:12)],scale:[.2,.55,.3],opacity:[0,1,0],rotate:[0,index%2?65:-65]}}
+        transition={{duration:.65,delay:index*.025,times:[0,.3,1],ease:'easeOut'}}>
+        <Particle move={move} index={index}/>
+      </motion.g>;
+    })}
   </svg>;
 }
