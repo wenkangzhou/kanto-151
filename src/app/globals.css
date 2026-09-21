@@ -305,8 +305,8 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 }
 
 /* Keep the accepted move readable while the turn is locked. */
-.battle-moves>button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.battle-moves>button.is-casting:disabled{opacity:1;background:#e6f0da;border-color:#759766;box-shadow:0 0 0 3px #75976628}
+.battle-moves>button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;box-shadow:none}
+.battle-moves>button.is-casting:disabled{opacity:1;background:#e6f0da;border-color:#759766}
 .battle-moves>button:focus-visible{outline:3px solid #3984ac;outline-offset:3px}
 
 @keyframes battle-impact-jolt {
@@ -316,6 +316,5 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
   70%{transform:translate(-3px,1px)}
 }
 .battle-arena-impact{animation:battle-impact-jolt .16s ease-out}
-.battle-moves>button:not(:disabled){box-shadow:0 5px 0 #dce5d7}
-.battle-moves>button:not(:disabled):active{box-shadow:0 1px 0 #dce5d7;background:#e6f0da}
+.battle-moves>button:not(:disabled):active{background:#e6f0da}
 @media(prefers-reduced-motion:reduce){.battle-arena-impact{animation:none}}
