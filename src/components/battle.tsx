@@ -9,7 +9,7 @@ import { PokemonArt } from './pokemon-art';
 import { BattleMoveEffect, BattleHitEffect } from './battle-move-effect';
 import { TypePicture } from './type-badge';
 import { pokemonById } from '@/domain/pokemon';
-import { battleReducer, maxHp, healthPercent, createBattle, opponentPool, pickOpponent, multiplier, usableMoves, type BattleHit } from '@/domain/battle';
+import { battleReducer, createNextBattle, maxHp, healthPercent, opponentPool, pickOpponent, multiplier, usableMoves, type BattleHit } from '@/domain/battle';
 import { battleSound } from '@/lib/battle-audio';
 import { speakText, stopVoice, subscribeVoice, voiceSnapshot } from '@/lib/voice-audio';
 
@@ -19,8 +19,8 @@ export function Battle() {
   useEffect(()=>()=>{battleSound(audioOwner,'leave');stopVoice(audioOwner);},[audioOwner]);
   const team = useMemo(() => (snapshot.team ?? []).filter(id => snapshot.records.some(record => record.pokemonId === id)), [snapshot]);
   const seen = useRef<number[]>([]);
-  const [match, setMatch] = useState<{team:number[];enemy:number;key:number}|null>(null);
-  const start = useCallback((keepOpponent = false, announceOpponent = false, announce = true) => {
+  const [match, setMatch] = useState<{team:number[];enemy:number;key:number;partner?:number;tieRandom?:number}|null>(null);
+  const start = useCallback((keepOpponent = false, announceOpponent = false, announce = true, partner?:number) => {
     const pool=opponentPool(snapshot.records.map(r=>r.pokemonId));
     if (!team.length || !pool.length) return;
     const enemy = keepOpponent && match ? match.enemy : pickOpponent(pool, match?.enemy, crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296, seen.current)!;
@@ -32,7 +32,7 @@ export function Battle() {
     // Rapid opponent changes replace the previous announcement instead of toggling it off.
     stopVoice(audioOwner);
     if (announce) speakText(audioOwner, announceOpponent ? pokemonById.get(enemy)!.name : '选一位伙伴出场吧！');
-    setMatch({ team: [...team], enemy, key: (match?.key ?? 0) + 1 });
+    setMatch({ team: [...team], enemy, key: (match?.key ?? 0) + 1, partner:team.includes(partner!)?partner:undefined, tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296 });
   }, [snapshot, team, match, audioOwner]);
   useEffect(() => {
     if (match || !team.length || !['ready', 'demo'].includes(status)) return;
@@ -40,7 +40,7 @@ export function Battle() {
     return () => clearTimeout(timer);
   }, [match, team.length, status, start]);
   return <div className="page battle-page">{!match&&<Link href="/team" className="back-link"><ArrowLeft size={18}/>回小队</Link>}
-    {match?<Match audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} again={()=>start(false, true)} retry={()=>start(true)} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:<section className="battle-welcome"><Swords size={40}/><h1>来一场友好对战吧！</h1><p>双方各选一位伙伴，体力用完，这场就结束。</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>正在找你的小队…</p>:team.length?<p role="status">正在准备对手…</p>:<><p>先邀请一位伙伴加入小队吧。</p><Link href="/team" className="button">去选伙伴</Link></>}<small>每场结束都会恢复体力，不消耗道具。</small></section>}
+    {match?<Match audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} initialPartner={match.partner} tieRandom={match.tieRandom} next={id=>start(false,false,false,id)} again={()=>start(false, true)} retry={()=>start(true)} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:<section className="battle-welcome"><Swords size={40}/><h1>来一场友好对战吧！</h1><p>双方各选一位伙伴，体力用完，这场就结束。</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>正在找你的小队…</p>:team.length?<p role="status">正在准备对手…</p>:<><p>先邀请一位伙伴加入小队吧。</p><Link href="/team" className="button">去选伙伴</Link></>}<small>每场结束都会恢复体力，不消耗道具。</small></section>}
   </div>;
 }
 const hitStrength = (effect: number) => effect > 1 ? 24 : effect < 1 ? 10 : 17;
@@ -51,8 +51,8 @@ function Health({id,hp,hit,showTypes=false,interactive=true}:{id:number;hp:numbe
   const percent=healthPercent(id,hp);
   return <div className="battle-health"><strong>{pokemonById.get(id)!.name}</strong>{showTypes&&<div className="battle-opponent-types" aria-label={`${pokemonById.get(id)!.name}的属性`}>{pokemonById.get(id)!.types.map(type=><TypePicture key={type} type={type} interactive={interactive}/>)}</div>}<div className="battle-hp-track" role="progressbar" aria-label={`${pokemonById.get(id)!.name}的体力`} aria-valuemin={0} aria-valuemax={maxHp(id)} aria-valuenow={hp}><span style={{width:`${percent}%`,background:healthColor(percent)}}/>{lost&&!reduced&&<motion.span className="battle-hp-loss" key={`${hit.before}-${hit.after}`} style={{left:`${healthPercent(id,hit.after)}%`}} initial={{width:`${healthPercent(id,hit.before-hit.after)}%`,opacity:1}} animate={{width:0,opacity:0}} transition={{delay:.45,duration:.7}}/>}</div><small>{hp===0?'休息中':'体力'}</small></div>;
 }
-function Match({team,enemy,again,retry,canChange,audioOwner}:{team:number[];enemy:number;again:()=>void;retry:()=>void;canChange:boolean;audioOwner:string}) {
-  const [state,dispatch]=useReducer(battleReducer,undefined,()=>createBattle(team,enemy));
+function Match({team,enemy,again,retry,canChange,audioOwner,initialPartner,tieRandom,next}:{initialPartner?:number;tieRandom?:number;next:(id:number)=>void;team:number[];enemy:number;again:()=>void;retry:()=>void;canChange:boolean;audioOwner:string}) {
+  const [state,dispatch]=useReducer(battleReducer,undefined,()=>createNextBattle(team,enemy,initialPartner,tieRandom));
   const [selected,setSelected]=useState<number|null>(null);
   const reduced=useReducedMotion();
   const voice=useId();
@@ -76,7 +76,7 @@ function Match({team,enemy,again,retry,canChange,audioOwner}:{team:number[];enem
   useEffect(()=>{
     if(state.phase==='summon')battleSound(audioOwner,'throw');
     else if(state.phase==='finished')battleSound(audioOwner,state.result==='win'?'win':'rest');
-    else if((state.phase==='player-feedback'||state.phase==='enemy-feedback')&&state.move&&multiplier(state.move,state.phase==='player-feedback'?enemy:state.active!)>0)battleSound(audioOwner,'hit');
+    else if((state.phase==='player-feedback'||state.phase==='enemy-feedback')&&state.move&&multiplier(state.move,state.phase==='player-feedback'?enemy:state.active!)>0)battleSound(audioOwner,'hit',state.move.type);
   },[state.phase,state.result,state.move,state.active,enemy,audioOwner]);
   const impact=state.phase.endsWith('feedback')&&state.lastHit&&state.lastHit.after<state.lastHit.before;
   const strongImpact=impact&&state.move&&multiplier(state.move,state.lastHit!.target)>1;
@@ -105,7 +105,7 @@ function Match({team,enemy,again,retry,canChange,audioOwner}:{team:number[];enem
     </div>}
     <div className={`battle-message ${choose?'battle-message-choose':''}`} role="status">{state.message}</div>
     <section className="battle-controls" aria-label="对战操作">
-      {state.phase==='finished'?<div className="battle-end"><h2>{state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！'}</h2>{state.moment&&<section className="battle-recap" aria-label="这一场的小发现"><h3>{state.moment.multiplier>1?'刚才这招很有效！':state.moment.multiplier===1?'刚才这一招打中了！':'这一招效果不显著'}</h3><div className="battle-recap-row"><span className="battle-recap-partner"><PokemonArt pokemon={active!}/><b>{active!.name}</b><span className="battle-recap-types">{active!.types.map(type=><TypePicture type={type} key={type}/>)}</span></span><span className="battle-recap-move"><b>{state.moment.move.name}</b>{state.moment.move.fallback?<small>特别招式</small>:<TypePicture type={state.moment.move.type}/>}<ArrowRight className="battle-recap-arrow" size={24} aria-hidden="true"/></span><span className="battle-recap-partner"><PokemonArt pokemon={pokemonById.get(state.moment.target)!}/><b>{pokemonById.get(state.moment.target)!.name}</b><span className="battle-recap-types">{pokemonById.get(state.moment.target)!.types.map(type=><TypePicture type={type} key={type}/>)}</span></span></div><p>{state.moment.move.fallback?'这次使用了不受属性相克影响的特别招式。':<>这次属性效果 ×{state.moment.multiplier}{pokemonById.get(state.moment.target)!.types.length>1?'，对手的两种属性一起计算。':'。'}</>}</p></section>}<p>下一场双方都会恢复体力，可以重新选伙伴。</p><div><button className="button" onClick={retry}><RotateCcw size={19}/>{state.result==='rest'?'换位伙伴再试':'再来一场'}</button><Link href="/team" className="button secondary">回小队</Link></div></div>:choose?<><h2>选一位伙伴，再点一下就上场</h2><div className="battle-choices">{team.map(id=>{
+      {state.phase==='finished'?<div className="battle-end"><h2>{state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！'}</h2>{state.moment&&<section className="battle-recap" aria-label="这一场的小发现"><h3>{state.moment.multiplier>1?'刚才这招很有效！':state.moment.multiplier===1?'刚才这一招打中了！':'这一招效果不显著'}</h3><div className="battle-recap-row"><span className="battle-recap-partner"><PokemonArt pokemon={active!}/><b>{active!.name}</b><span className="battle-recap-types">{active!.types.map(type=><TypePicture type={type} key={type}/>)}</span></span><span className="battle-recap-move"><b>{state.moment.move.name}</b>{state.moment.move.fallback?<small>特别招式</small>:<TypePicture type={state.moment.move.type}/>}<ArrowRight className="battle-recap-arrow" size={24} aria-hidden="true"/></span><span className="battle-recap-partner"><PokemonArt pokemon={pokemonById.get(state.moment.target)!}/><b>{pokemonById.get(state.moment.target)!.name}</b><span className="battle-recap-types">{pokemonById.get(state.moment.target)!.types.map(type=><TypePicture type={type} key={type}/>)}</span></span></div><p>{state.moment.move.fallback?'这次使用了不受属性相克影响的特别招式。':<>这次属性效果 ×{state.moment.multiplier}{pokemonById.get(state.moment.target)!.types.length>1?'，对手的两种属性一起计算。':'。'}</>}</p></section>}<p>下一场双方都会恢复体力，可以重新选伙伴。</p><div><button className="button" onClick={()=>next(active!.id)}><ArrowRight size={19}/>挑战下一位</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>换伙伴</button><Link href="/team" className="button secondary">回小队</Link></div></div>:choose?<><h2>选一位伙伴，再点一下就上场</h2><div className="battle-choices">{team.map(id=>{
         const partner=pokemonById.get(id)!;
         const hp=state.hp[id];
         const percent=healthPercent(id,hp);

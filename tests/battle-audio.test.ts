@@ -28,3 +28,11 @@ test('failed media playback cannot throw into the battle or resume another owner
  const player=createBattleAudio(()=>({loop:false,volume:0,play:async()=>{throw Error('blocked')},pause(){},load(){},removeAttribute(){}}),()=>()=>{});
  player.setEnabled(true);player.request({owner:'a',action:'enter'});player.request({owner:'a',action:'hit'});await Promise.resolve();player.dispose();
 });
+test('typed hit cues duck for narration and are released on the next challenge',()=>{
+ const f=fixture();f.player.setEnabled(true);f.player.request({owner:'a',action:'enter'});
+ f.player.voice(true);f.player.request({owner:'a',action:'hit',moveType:'water'});
+ const water=f.tracks.at(-1)!;assert.equal(water.source,'/audio/battle/types/water.wav');assert.equal(water.volume,.06);
+ f.player.voice(false);assert.equal(water.volume,.18);
+ f.player.request({owner:'a',action:'hit',moveType:'electric'});assert.equal(water.paused,true);assert.match(f.tracks.at(-1)!.source,/electric.wav$/);
+ const electric=f.tracks.at(-1)!;f.player.request({owner:'a',action:'enter'});assert.equal(electric.paused,true);f.player.dispose();
+});

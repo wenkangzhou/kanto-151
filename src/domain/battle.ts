@@ -98,3 +98,11 @@ function finishRound(s: BattleState): BattleState {
   if(next.rounds>=24)return {...next,phase:'finished',result:'draw',message:'双方都很努力！这次握手言和吧。'};
   return next.first==='enemy'?enemyTurn(next):{...next,phase:'ready',message:'轮到你啦！'};
 }
+
+// Each challenge starts with fresh HP and turn order; only the chosen partner carries over.
+export function createNextBattle(team:number[], enemy:number, partner?:number, tieRandom=0):BattleState {
+  const fresh=createBattle(team,enemy);
+  if(partner===undefined)return fresh;
+  const next=battleReducer(fresh,{type:'choose',id:partner,tieRandom});
+  return next.active===null?next:{...next,message:pokemonById.get(enemy)!.name};
+}
