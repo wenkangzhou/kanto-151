@@ -36,3 +36,15 @@ test('typed hit cues duck for narration and are released on the next challenge',
  f.player.request({owner:'a',action:'hit',moveType:'electric'});assert.equal(water.paused,true);assert.match(f.tracks.at(-1)!.source,/electric.wav$/);
  const electric=f.tracks.at(-1)!;f.player.request({owner:'a',action:'enter'});assert.equal(electric.paused,true);f.player.dispose();
 });
+test('slow cues get a loading window then their full playback time; late starts cannot replace newer cues',async(t)=>{
+ t.mock.timers.enable({apis:['setTimeout']});
+ const starts:(()=>void)[]=[];
+ const tracks:{paused:boolean;loop:boolean;volume:number;play:()=>Promise<void>;pause:()=>void;load:()=>void;removeAttribute:()=>void}[]=[];
+ const player=createBattleAudio(()=>{const audio={paused:false,loop:false,volume:0,play:()=>new Promise<void>(resolve=>starts.push(resolve)),pause(){this.paused=true;},load(){},removeAttribute(){}};tracks.push(audio);return audio;},()=>()=>{});
+ player.setEnabled(true);player.request({owner:'a',action:'enter'});player.request({owner:'a',action:'hit',moveType:'water'});
+ t.mock.timers.tick(1000);assert.equal(tracks[1].paused,false);
+ starts[1]();await Promise.resolve();t.mock.timers.tick(699);assert.equal(tracks[1].paused,false);t.mock.timers.tick(1);assert.equal(tracks[1].paused,true);
+ player.request({owner:'a',action:'hit',moveType:'rock'});t.mock.timers.tick(2500);assert.equal(tracks[2].paused,true);
+ player.request({owner:'a',action:'hit',moveType:'electric'});starts[2]();await Promise.resolve();assert.equal(tracks[3].paused,false);
+ player.dispose();assert.equal(tracks[3].paused,true);
+});

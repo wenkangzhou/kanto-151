@@ -1,7 +1,8 @@
 'use client';
+import { preparedAudio } from './battle-assets';
 import voiceIndex from '@/data/voice-index.json';
 export const voiceFocusEvent = 'kanto-voice-focus';
-export type VoiceState = { owner: string; error: string };
+export type VoiceState = { owner: string; error: string; loading?: boolean };
 const idle: VoiceState = { owner: '', error: '' };
 let state = idle;
 let release: (() => void) | undefined;
@@ -24,9 +25,11 @@ function begin(owner: string) {
   const current = generation;
   return (error = '') => { if (current !== generation || state.owner !== owner) return; generation++; const cleanup = release; release = undefined; cleanup?.(); emit({ owner: '', error }); focus(false); };
 }
-export function speakText(owner: string, text: string) {
+export function voiceSource(text:string) { const clip=clips[text]; return clip?`/audio/voices/${clip[0]}.mp3`:undefined; }
+export function speakText(owner: string, text: string, options:{loadTimeoutMs?:number}={}) {
   if (state.owner === owner) { stopVoice(owner); return; }
   const done = begin(owner);
+  const loadingError=options.loadTimeoutMs?'声音暂时没加载好，先继续对战。':'语音加载超时，请再点一次。';
   const clip = clips[text];
   if (!clip) { done('这段语音还没有准备好。'); return; }
   try {
@@ -34,11 +37,15 @@ export function speakText(owner: string, text: string) {
     const audio = player ??= new Audio();
     audio.volume = .85;
     audio.preload = 'auto';
-    const timer = setTimeout(() => done('语音加载超时，请再点一次。'), Math.max(15000, Number(clip[1]) + 15000));
+    let timer = setTimeout(() => done(loadingError), options.loadTimeoutMs ?? 15000);
+    const current=generation;
+    emit({owner,error:'',loading:true});
+    audio.onplaying=()=>{if(current!==generation)return;clearTimeout(timer);emit({owner,error:'',loading:false});timer=setTimeout(()=>done('语音播放超时。'),Number(clip[1])+3000);};
+    audio.onwaiting=()=>{if(current!==generation)return;clearTimeout(timer);emit({owner,error:'',loading:true});timer=setTimeout(()=>done(loadingError),options.loadTimeoutMs??15000);};
     audio.onended = () => done();
     audio.onerror = () => done('语音暂时不可用，请再试一次。');
-    release = () => { clearTimeout(timer); audio.onended = null; audio.onerror = null; audio.pause(); };
-    audio.src = `/audio/voices/${clip[0]}.mp3`;
+    release = () => { clearTimeout(timer); audio.onended = null; audio.onerror = null; audio.onplaying=null; audio.onwaiting=null; audio.pause(); };
+    audio.src = preparedAudio(`/audio/voices/${clip[0]}.mp3`);
     // No fetch/await before play: preserve the user's playback gesture on Safari.
     void audio.play().catch(() => done('语音暂时不可用，请再点一次。'));
   } catch { done('语音暂时不可用，请再试一次。'); }

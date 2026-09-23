@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useCallback, useEffect, useId, useMemo, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useReducer, useRef, useState, useSyncExternalStore } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, RotateCcw, Swords, Trophy, Handshake, Shuffle } from 'lucide-react';
 import { useCollection } from './collection-provider';
@@ -9,9 +9,10 @@ import { PokemonArt } from './pokemon-art';
 import { BattleMoveEffect, BattleHitEffect } from './battle-move-effect';
 import { TypePicture } from './type-badge';
 import { pokemonById } from '@/domain/pokemon';
-import { battleReducer, createNextBattle, maxHp, healthPercent, opponentPool, pickOpponent, multiplier, usableMoves, type BattleHit } from '@/domain/battle';
+import { battleReducer, createNextBattle, battleMoves, maxHp, healthPercent, opponentPool, pickOpponent, multiplier, usableMoves, type BattleHit } from '@/domain/battle';
+import { prepareBattleAudio } from '@/lib/battle-assets';
 import { battleSound } from '@/lib/battle-audio';
-import { speakText, stopVoice, subscribeVoice, voiceSnapshot } from '@/lib/voice-audio';
+import { speakText, stopVoice, subscribeVoice, voiceSnapshot, voiceServerSnapshot, voiceSource } from '@/lib/voice-audio';
 
 export function Battle() {
   const { snapshot, status } = useCollection();
@@ -56,17 +57,30 @@ function Match({team,enemy,again,retry,canChange,audioOwner,initialPartner,tieRa
   const [selected,setSelected]=useState<number|null>(null);
   const reduced=useReducedMotion();
   const voice=useId();
+  const narration=useSyncExternalStore(subscribeVoice,voiceSnapshot,voiceServerSnapshot);
+  const preparingPartner=state.active??selected;
+  useEffect(()=>{
+    const ids=preparingPartner===null?[enemy]:[preparingPartner,enemy];
+    const texts=['打中了！','这招很有效！','效果不显著。','这招没有效果，体力没有减少。'];
+    const effects=['/audio/battle/throw.wav'];
+    for(const id of ids){
+      const name=pokemonById.get(id)!.name;
+      texts.push(name,`就决定是你了，${name}！`);
+      for(const move of battleMoves(id)){texts.push(`${name}，${move.name}！`);effects.push(`/audio/battle/types/${move.type}.wav`);}
+    }
+    return prepareBattleAudio([...texts.map(voiceSource).filter((source):source is string=>!!source),...effects]);
+  },[enemy,preparingPartner]);
   const summoning=state.phase==='summon';
   const busy=state.phase==='order'||summoning||state.phase==='player'||state.phase==='enemy'||state.phase==='player-feedback'||state.phase==='enemy-feedback';
   useEffect(()=>{
     if(state.active===null)return;
     // Speak and observe within one effect so even synchronous speech failures settle.
-    if(state.phase!=='ready')speakText(voice,state.phase==='order'?pokemonById.get(state.first==='enemy'?enemy:state.active)!.name:state.message);
+    if(state.phase!=='ready')speakText(voice,state.phase==='order'?pokemonById.get(state.first==='enemy'?enemy:state.active)!.name:state.message,{loadTimeoutMs:2500});
     if(!busy)return()=>stopVoice(voice);
     let elapsed=false;
     let advanced=false;
     const advance=()=>{if(advanced)return;advanced=true;dispatch({type:'advance'});};
-    const check=()=>{if(elapsed&&!voiceSnapshot().owner)advance();};
+    const check=()=>{if(elapsed&&voiceSnapshot().owner!==voice)advance();};
     const unsubscribe=subscribeVoice(check);
     const minimum=setTimeout(()=>{elapsed=true;check();},state.phase==='order'?2400:summoning?(reduced?350:1800):state.phase.endsWith('feedback')?1300:1500);
     // A device that never completes speech must not freeze the match.
@@ -94,8 +108,8 @@ function Match({team,enemy,again,retry,canChange,audioOwner,initialPartner,tieRa
         <strong>{state.result==='win'?`${active!.name}赢啦！`:state.result==='rest'?`${pokemonById.get(enemy)!.name}获胜`:'双方打成平手'}</strong>
         <span>{state.result==='win'?'我们的小队获胜！':state.result==='rest'?'对手获胜，我们下次再加油！':'握握手，下次再切磋！'}</span>
       </div>:<>
-      <div className="battle-opponent"><Health id={enemy} hp={state.enemyHp} hit={state.lastHit?.target===enemy&&state.phase==='player-feedback'?state.lastHit:undefined} showTypes interactive={!busy}/><motion.div className="battle-opponent-art" animate={reduced?{}:state.phase==='player-feedback'&&state.move&&multiplier(state.move,enemy)>0?{x:[0,hitStrength(multiplier(state.move,enemy)),-7,4,0]}:state.phase==='enemy'?{x:[0,-14,0]}:state.phase==='ready'&&state.rounds?{x:0}: {x:0}} transition={{duration:.22,ease:"easeOut"}} key={`enemy-${state.phase}-${state.rounds}`}><PokemonArt pokemon={pokemonById.get(enemy)!}/>{impact&&state.phase==='player-feedback'&&state.move&&<BattleHitEffect move={state.move} strong={!!strongImpact}/>}</motion.div></div>
-      <div className={`battle-player ${summoning?'is-summoning':''}`}>{active?<><motion.div className="battle-player-art" key={`${active.id}-${state.phase}-${state.rounds}`} animate={reduced?{}:state.phase==='player'?{x:[0,18,0]}:state.phase==='enemy-feedback'&&state.move&&multiplier(state.move,active.id)>0?{x:[0,-hitStrength(multiplier(state.move,active.id)),7,-4,0]}:{x:0}} transition={{duration:.22,ease:"easeOut"}}><PokemonArt pokemon={active}/>{impact&&state.phase==='enemy-feedback'&&state.move&&<BattleHitEffect move={state.move} strong={!!strongImpact}/>}</motion.div><Health id={active.id} hp={state.hp[active.id]} hit={state.lastHit?.target===active.id&&state.phase==='enemy-feedback'?state.lastHit:undefined} showTypes interactive={!busy}/></>:<div className="battle-empty">谁来上场？</div>}</div>
+      <div className="battle-opponent"><Health id={enemy} hp={state.enemyHp} hit={state.lastHit?.target===enemy&&state.phase==='player-feedback'?state.lastHit:undefined} showTypes interactive={!busy}/><motion.div className="battle-opponent-art" animate={reduced?{}:state.phase==='player-feedback'&&state.move&&multiplier(state.move,enemy)>0?{x:[0,hitStrength(multiplier(state.move,enemy)),-7,4,0]}:state.phase==='enemy'?{x:[0,-14,0]}:state.phase==='ready'&&state.rounds?{x:0}: {x:0}} transition={{duration:.22,ease:"easeOut"}} key={`enemy-${enemy}`}><PokemonArt pokemon={pokemonById.get(enemy)!}/>{impact&&state.phase==='player-feedback'&&state.move&&<BattleHitEffect key={state.rounds} move={state.move} strong={!!strongImpact}/>}</motion.div></div>
+      <div className={`battle-player ${summoning?'is-summoning':''}`}>{active?<><motion.div className="battle-player-art" key={active.id} animate={reduced?{}:state.phase==='player'?{x:[0,18,0]}:state.phase==='enemy-feedback'&&state.move&&multiplier(state.move,active.id)>0?{x:[0,-hitStrength(multiplier(state.move,active.id)),7,-4,0]}:{x:0}} transition={{duration:.22,ease:"easeOut"}}><PokemonArt pokemon={active}/>{impact&&state.phase==='enemy-feedback'&&state.move&&<BattleHitEffect move={state.move} strong={!!strongImpact}/>}</motion.div><Health id={active.id} hp={state.hp[active.id]} hit={state.lastHit?.target===active.id&&state.phase==='enemy-feedback'?state.lastHit:undefined} showTypes interactive={!busy}/></>:<div className="battle-empty">谁来上场？</div>}</div>
       {summoning&&<div className="battle-summon" key={`summon-${state.active}`} aria-hidden="true"><span className="battle-thrown-ball"><CollectionMark state="available"/></span><span className="battle-release-light"/></div>}
       {(state.phase==='player'||state.phase==='enemy')&&state.move&&<BattleMoveEffect key={`${state.phase}-${state.rounds}`} move={state.move} side={state.phase}/>}
       </>}
@@ -103,7 +117,7 @@ function Match({team,enemy,again,retry,canChange,audioOwner,initialPartner,tieRa
     {active&&state.phase!=='finished'&&<div className={`battle-turn-order ${state.phase==='order'?'is-announcing':''}`} aria-label="每轮出招顺序">
       {[state.first==='enemy'?enemy:active.id,state.first==='enemy'?active.id:enemy].map((id,index)=><span className="battle-turn-partner" key={index}>{index===1&&<ArrowRight size={20} aria-hidden="true"/>}<PokemonArt pokemon={pokemonById.get(id)!}/><span><b>{index===0?'先出招':'后出招'} · {pokemonById.get(id)!.name}</b><small>速度 {pokemonById.get(id)!.stats.speed}</small></span></span>)}
     </div>}
-    <div className={`battle-message ${choose?'battle-message-choose':''}`} role="status">{state.message}</div>
+    <div className={`battle-message ${choose?'battle-message-choose':''}`} role="status"><span>{state.message}</span>{narration.owner===voice&&narration.loading&&<small className="battle-voice-loading">声音加载中…</small>}</div>
     <section className="battle-controls" aria-label="对战操作">
       {state.phase==='finished'?<div className="battle-end"><h2>{state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！'}</h2>{state.moment&&<section className="battle-recap" aria-label="这一场的小发现"><h3>{state.moment.multiplier>1?'刚才这招很有效！':state.moment.multiplier===1?'刚才这一招打中了！':'这一招效果不显著'}</h3><div className="battle-recap-row"><span className="battle-recap-partner"><PokemonArt pokemon={active!}/><b>{active!.name}</b><span className="battle-recap-types">{active!.types.map(type=><TypePicture type={type} key={type}/>)}</span></span><span className="battle-recap-move"><b>{state.moment.move.name}</b>{state.moment.move.fallback?<small>特别招式</small>:<TypePicture type={state.moment.move.type}/>}<ArrowRight className="battle-recap-arrow" size={24} aria-hidden="true"/></span><span className="battle-recap-partner"><PokemonArt pokemon={pokemonById.get(state.moment.target)!}/><b>{pokemonById.get(state.moment.target)!.name}</b><span className="battle-recap-types">{pokemonById.get(state.moment.target)!.types.map(type=><TypePicture type={type} key={type}/>)}</span></span></div><p>{state.moment.move.fallback?'这次使用了不受属性相克影响的特别招式。':<>这次属性效果 ×{state.moment.multiplier}{pokemonById.get(state.moment.target)!.types.length>1?'，对手的两种属性一起计算。':'。'}</>}</p></section>}<p>下一场双方都会恢复体力，可以重新选伙伴。</p><div><button className="button" onClick={()=>next(active!.id)}><ArrowRight size={19}/>挑战下一位</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>换伙伴</button><Link href="/team" className="button secondary">回小队</Link></div></div>:choose?<><h2>选一位伙伴，再点一下就上场</h2><div className="battle-choices">{team.map(id=>{
         const partner=pokemonById.get(id)!;

@@ -1,3 +1,4 @@
+import { preparedAudio } from './battle-assets';
 import type { PokemonType } from '@/domain/types';
 export const battleAudioEvent = 'kanto-battle-audio';
 export type BattleAudioRequest = { owner: string; action: 'enter' | 'leave' | 'win' | 'rest' | 'throw' | 'hit'; moveType?:PokemonType };
@@ -33,9 +34,10 @@ export function createBattleAudio(create: (source:string)=>BattleAudio, suspend:
       if(request.action==='leave'){owner='';ended=false;stop();const restore=resume;resume=undefined;restore?.();return;}
       if(request.action==='win'||request.action==='rest'){ended=true;stopCue();if(request.action==='win')playTrack(true);else{release(music);music=undefined;}return;}
       if(!enabled||ended)return;
-      stopCue();const next=create(request.action==='hit'&&request.moveType?`/audio/battle/types/${request.moveType}.wav`:`/audio/battle/${request.action}.wav`);cue=next;next.loop=false;next.volume=speaking ? .06 : .18;
-      try{void next.play().catch(()=>{if(cue===next)stopCue();});}catch{stopCue();}
-      cleanupCue=setTimeout(()=>{if(cue===next)stopCue();},700);
+      stopCue();const next=create(preparedAudio(request.action==='hit'&&request.moveType?`/audio/battle/types/${request.moveType}.wav`:`/audio/battle/${request.action}.wav`));cue=next;next.loop=false;next.volume=speaking ? .06 : .18;
+      // Loading and playback have separate deadlines; a cold request must not be cut at 700ms.
+      cleanupCue=setTimeout(()=>{if(cue===next)stopCue();},2500);
+      try{void next.play().then(()=>{if(cue!==next)return;clearTimeout(cleanupCue);cleanupCue=setTimeout(()=>{if(cue===next)stopCue();},700);}).catch(()=>{if(cue===next)stopCue();});}catch{stopCue();}
     },
     dispose(){owner='';stop();const restore=resume;resume=undefined;restore?.();},
   };
