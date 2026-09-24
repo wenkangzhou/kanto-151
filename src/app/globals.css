@@ -396,3 +396,23 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .battle-arena-ended+.battle-message{min-height:52px;padding-top:6px;padding-bottom:6px}
 
 .battle-message{position:relative}.battle-voice-loading{position:absolute;bottom:0;font-size:11px;font-weight:400;color:#7f8e74}
+
+.opponent-dialog{width:min(860px,calc(100vw - 48px));max-height:calc(100dvh - 48px);padding:0;border:1px solid #dce5d7;border-radius:24px;background:#fff;color:var(--ink);margin:auto}
+.opponent-dialog[open]{display:flex;flex-direction:column}
+.opponent-dialog::backdrop{background:#25323b66}
+.opponent-dialog>header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;gap:12px;flex-shrink:0;border-bottom:1px solid #e2e8df}
+.opponent-dialog h2{font-size:23px;margin:0}.opponent-close{display:grid;place-items:center;width:44px;height:44px;border-radius:12px}
+.opponent-picker-tools{padding:14px 24px;display:grid;gap:14px;flex-shrink:0}.opponent-picker-tools>.button{justify-self:start}
+.opponent-filters{display:flex;gap:10px;overflow-x:auto;padding:5px 3px 9px;scrollbar-width:thin}
+.opponent-filters>button{flex-shrink:0;min-height:44px;border-radius:24px;padding:8px 12px;font-size:14px;white-space:nowrap}
+.opponent-filters .type-picture{width:auto;gap:5px;min-height:44px}.opponent-filters .type-picture>svg{width:24px;height:24px}
+.opponent-filters>button[aria-pressed=true]{outline:3px solid #3984ac;outline-offset:-3px}
+.opponent-picker-list{overflow-y:auto;overscroll-behavior:contain;min-height:0;padding:0 24px 24px}
+.opponent-count{font-size:13px;color:#7f8e74;margin:0 0 12px}
+.opponent-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.opponent-grid>button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;min-height:152px;border:2px solid transparent;border-radius:18px;background:#f4f7ee}
+.opponent-grid>button[aria-pressed=true]{border-color:#759766;background:#e9f1df}.opponent-grid .pokemon-art{width:100%;height:100px;object-fit:contain}
+.opponent-grid strong{font-size:16px}.opponent-grid small{font-size:11px;color:#486a3d}
+.opponent-dialog button:focus-visible{outline:3px solid #3984ac;outline-offset:2px}
+.opponent-dialog .opponent-filters>button:focus-visible{outline-offset:-3px}
+@media(max-width:640px){.opponent-dialog{width:calc(100vw - 16px);max-height:calc(100dvh - 16px);border-radius:18px}.opponent-dialog>header{padding:10px 14px}.opponent-dialog h2{font-size:20px}.opponent-picker-tools{padding:12px 14px}.opponent-picker-list{padding:0 14px 18px}.opponent-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.opponent-grid .pokemon-art{height:80px}.opponent-grid>button{min-height:132px}.opponent-grid strong{font-size:14px}}
