@@ -1,3 +1,4 @@
+import { retainedSlots, validSlots } from '@/domain/battle-loadout';
 import { pokemon, pokemonById } from '@/domain/pokemon';
 import { capturePool, evolutionOptions, legendaryEligible, currentChapter } from '@/domain/collection';
 import type { FamilySession, LiveSnapshot, ParentReward, Receipt } from '@/domain/types';
@@ -23,10 +24,19 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
     const previousChapter = currentChapter(s);
     const r:Receipt={id:crypto.randomUUID(),kind,pokemon_id:pokemonId,from_pokemon_id:from,ticket_id:ticketId,reason,created_at:now(),acknowledged_at:null,route_version:'anime-v1'};
     if(pokemonId&&!s.records.some(p=>p.pokemonId===pokemonId))s.records.push({pokemonId,reason,acquiredAt:r.created_at,method:kind==='evolution'?'evolution':kind==='legendary'||kind==='mew'?'legendary':'capture'});
+    if(kind==='evolution'&&pokemonId&&from&&s.movePresets?.[from]&&!s.movePresets[pokemonId])s.movePresets[pokemonId]=retainedSlots(pokemonId,s.movePresets[from]);
     if (previousChapter && currentChapter(s)?.id !== previousChapter.id) r.completed_chapter = previousChapter.id;
     data.receipts.push(r);s.pendingReceipt=r;return r;
   };
   if(route==='session')return {status:'ready',familyName:'演示家庭',childName:'小小冒险家',parent:data.parent,snapshot:s} satisfies FamilySession;
+  if(route==='battle/moves') {
+    const id=Number(body?.pokemonId);
+    if(!s.records.some(r=>r.pokemonId===id)||!validSlots(id,body?.moves))return fail('请选择已收集伙伴的合法招式。');
+    const current=s.movePresets?.[id]??null;
+    if(JSON.stringify(current)===JSON.stringify(body.moves))return s;
+    if(JSON.stringify(current)!==JSON.stringify(body.expected))return fail('招式已变化，请刷新后再试。');
+    s.movePresets={...s.movePresets,[id]:body.moves};return s;
+  }
   if(route==='team') {
     const team=body?.team as number[];const expected=body?.expected;
     if(!Array.isArray(team)||team.length>6||new Set(team).size!==team.length||team.some(id=>!s.records.some(r=>r.pokemonId===id)))fail('请选择最多六位已认识的伙伴。');

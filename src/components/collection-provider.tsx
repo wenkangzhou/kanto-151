@@ -1,4 +1,5 @@
 'use client';
+import type { MoveSlots } from '@/domain/battle-loadout';
 import { createContext, useCallback, useContext, useEffect, useState, useRef, useSyncExternalStore, type ReactNode } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { demoSnapshot, emptySnapshot } from '@/data/demo';
@@ -10,9 +11,10 @@ interface CollectionContext {
   status: FamilySession['status'] | 'loading' | 'error'; error: string; parent: boolean;
   childName: string; familyName: string; tickets: InventoryTicket[]; pendingReceipt: Receipt | null;
   refresh: () => Promise<void>;
+  saveMoves: (id: number, moves: MoveSlots, expected: MoveSlots | null) => Promise<void>;
   saveTeam: (team: number[], expected: number[]) => Promise<void>;
 }
-const Context = createContext<CollectionContext>({ snapshot: emptySnapshot, visitorDemo: false, demo: false, live: false, toggleDemo() {}, status: 'loading', error: '', parent: false, childName: '', familyName: '', tickets: [], pendingReceipt: null, async refresh() {}, async saveTeam() {} });
+const Context = createContext<CollectionContext>({ snapshot: emptySnapshot, visitorDemo: false, demo: false, live: false, toggleDemo() {}, status: 'loading', error: '', parent: false, childName: '', familyName: '', tickets: [], pendingReceipt: null, async refresh() {}, async saveTeam() {}, async saveMoves() {} });
 const subscribe = (callback: () => void) => {
   window.addEventListener('storage', callback); window.addEventListener('kanto-settings', callback);
   return () => { window.removeEventListener('storage', callback); window.removeEventListener('kanto-settings', callback); };
@@ -43,6 +45,15 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
       setError('');
     } finally { savingTeam.current = false; }
   }, [live]);
+  const saveMoves = useCallback(async (id:number, moves:MoveSlots, expected:MoveSlots|null) => {
+    if (!live) throw new Error('请先连接家庭或进入演示模式。');
+    if (savingTeam.current) throw new Error('正在保存，请稍等。');
+    savingTeam.current=true; ++requestVersion.current;
+    try {
+      const next=await api<LiveSnapshot>('battle/moves',{pokemonId:id,moves,expected});
+      setSession(previous=>previous?{...previous,snapshot:next}:previous);setError('');
+    } finally { savingTeam.current=false; }
+  },[live]);
   useEffect(() => {
     if (!live) return;
     const lock = () => setSession(previous => previous ? { ...previous, parent: false } : previous);
@@ -67,7 +78,7 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
   return <Context.Provider value={{ snapshot, visitorDemo, demo: !live && preference, live, toggleDemo,
     status: !live ? 'demo' : error ? 'error' : session?.status ?? 'loading', error,
     parent: session?.parent ?? false, childName: session?.childName ?? '', familyName: session?.familyName ?? '',
-    tickets: session?.snapshot?.tickets ?? [], pendingReceipt: session?.snapshot?.pendingReceipt ?? null, refresh, saveTeam,
+    tickets: session?.snapshot?.tickets ?? [], pendingReceipt: session?.snapshot?.pendingReceipt ?? null, refresh, saveTeam, saveMoves,
   }}><MotionConfig reducedMotion="user">{children}</MotionConfig></Context.Provider>;
 }
 export const useCollection = () => useContext(Context);

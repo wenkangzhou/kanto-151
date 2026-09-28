@@ -12,6 +12,7 @@ import { TYPE_NAMES, type PokemonType } from '@/domain/types';
 import { TypePicture } from './type-badge';
 import { pokemonById } from '@/domain/pokemon';
 import { battleReducer, createNextBattle, battleMoves, maxHp, healthPercent, opponentPool, pickOpponent, multiplier, usableMoves, type BattleHit } from '@/domain/battle';
+import type { MovePresets } from '@/domain/battle-loadout';
 import { prepareBattleAudio } from '@/lib/battle-assets';
 import { battleSound } from '@/lib/battle-audio';
 import { speakText, stopVoice, subscribeVoice, voiceSnapshot, voiceServerSnapshot, voiceSource } from '@/lib/voice-audio';
@@ -23,7 +24,7 @@ export function Battle() {
   const team = useMemo(() => (snapshot.team ?? []).filter(id => snapshot.records.some(record => record.pokemonId === id)), [snapshot]);
   const [choosingOpponent,setChoosingOpponent]=useState(false);
   const seen = useRef<number[]>([]);
-  const [match, setMatch] = useState<{team:number[];enemy:number;key:number;partner?:number;tieRandom?:number}|null>(null);
+  const [match, setMatch] = useState<{team:number[];enemy:number;key:number;partner?:number;tieRandom?:number;presets:MovePresets}|null>(null);
   const start = useCallback((keepOpponent = false, announceOpponent = false, announce = true, partner?:number, chosenEnemy?:number) => {
     const pool=opponentPool(snapshot.records.map(r=>r.pokemonId));
     if (!team.length || !pool.length) return;
@@ -37,7 +38,7 @@ export function Battle() {
     // Rapid opponent changes replace the previous announcement instead of toggling it off.
     stopVoice(audioOwner);
     if (announce) speakText(audioOwner, announceOpponent ? pokemonById.get(enemy)!.name : '选一位伙伴出场吧！');
-    setMatch({ team: [...team], enemy, key: (match?.key ?? 0) + 1, partner:team.includes(partner!)?partner:undefined, tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296 });
+    setMatch({ team: [...team], presets: structuredClone(snapshot.movePresets??{}), enemy, key: (match?.key ?? 0) + 1, partner:team.includes(partner!)?partner:undefined, tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296 });
   }, [snapshot, team, match, audioOwner]);
   useEffect(() => {
     if (match || !team.length || !['ready', 'demo'].includes(status)) return;
@@ -45,7 +46,7 @@ export function Battle() {
     return () => clearTimeout(timer);
   }, [match, team.length, status, start]);
   return <div className="page battle-page">{!match&&<Link href="/team" className="back-link"><ArrowLeft size={18}/>回小队</Link>}
-    {match?<Match audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} initialPartner={match.partner} tieRandom={match.tieRandom} next={id=>start(false,false,false,id)} again={()=>setChoosingOpponent(true)} retry={()=>start(true)} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:<section className="battle-welcome"><Swords size={40}/><h1>来一场友好对战吧！</h1><p>双方各选一位伙伴，体力用完，这场就结束。</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>正在找你的小队…</p>:team.length?<p role="status">正在准备对手…</p>:<><p>先邀请一位伙伴加入小队吧。</p><Link href="/team" className="button">去选伙伴</Link></>}<small>每场结束都会恢复体力，不消耗道具。</small></section>}
+    {match?<Match presets={match.presets} audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} initialPartner={match.partner} tieRandom={match.tieRandom} next={id=>start(false,false,false,id)} again={()=>setChoosingOpponent(true)} retry={()=>start(true)} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:<section className="battle-welcome"><Swords size={40}/><h1>来一场友好对战吧！</h1><p>双方各选一位伙伴，体力用完，这场就结束。</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>正在找你的小队…</p>:team.length?<p role="status">正在准备对手…</p>:<><p>先邀请一位伙伴加入小队吧。</p><Link href="/team" className="button">去选伙伴</Link></>}<small>每场结束都会恢复体力，不消耗道具。</small></section>}
     {choosingOpponent&&match&&<OpponentPicker current={match.enemy} owned={opponentPool(snapshot.records.map(r=>r.pokemonId))} onClose={()=>setChoosingOpponent(false)} onPick={id=>{setChoosingOpponent(false);start(false,true,true,undefined,id);}}/>}
   </div>;
 }
@@ -57,8 +58,8 @@ function Health({id,hp,hit,showTypes=false,interactive=true}:{id:number;hp:numbe
   const percent=healthPercent(id,hp);
   return <div className="battle-health"><strong>{pokemonById.get(id)!.name}</strong>{showTypes&&<div className="battle-opponent-types" aria-label={`${pokemonById.get(id)!.name}的属性`}>{pokemonById.get(id)!.types.map(type=><TypePicture key={type} type={type} interactive={interactive}/>)}</div>}<div className="battle-hp-track" role="progressbar" aria-label={`${pokemonById.get(id)!.name}的体力`} aria-valuemin={0} aria-valuemax={maxHp(id)} aria-valuenow={hp}><span style={{width:`${percent}%`,background:healthColor(percent)}}/>{lost&&!reduced&&<motion.span className="battle-hp-loss" key={`${hit.before}-${hit.after}`} style={{left:`${healthPercent(id,hit.after)}%`}} initial={{width:`${healthPercent(id,hit.before-hit.after)}%`,opacity:1}} animate={{width:0,opacity:0}} transition={{delay:.45,duration:.7}}/>}</div><small>{hp===0?'休息中':'体力'}</small></div>;
 }
-function Match({team,enemy,again,retry,canChange,audioOwner,initialPartner,tieRandom,next}:{initialPartner?:number;tieRandom?:number;next:(id:number)=>void;team:number[];enemy:number;again:()=>void;retry:()=>void;canChange:boolean;audioOwner:string}) {
-  const [state,dispatch]=useReducer(battleReducer,undefined,()=>createNextBattle(team,enemy,initialPartner,tieRandom));
+function Match({presets,team,enemy,again,retry,canChange,audioOwner,initialPartner,tieRandom,next}:{presets:MovePresets;initialPartner?:number;tieRandom?:number;next:(id:number)=>void;team:number[];enemy:number;again:()=>void;retry:()=>void;canChange:boolean;audioOwner:string}) {
+  const [state,dispatch]=useReducer(battleReducer,undefined,()=>createNextBattle(team,enemy,initialPartner,tieRandom,presets));
   const [selected,setSelected]=useState<number|null>(null);
   const reduced=useReducedMotion();
   const voice=useId();
@@ -71,16 +72,19 @@ function Match({team,enemy,again,retry,canChange,audioOwner,initialPartner,tieRa
     for(const id of ids){
       const name=pokemonById.get(id)!.name;
       texts.push(name,`就决定是你了，${name}！`);
-      for(const move of battleMoves(id)){texts.push(`${name}，${move.name}！`);effects.push(`/audio/battle/types/${move.type}.wav`);}
+      for(const move of battleMoves(id,id===preparingPartner?state.presets[id]:undefined)){texts.push(`${name}，${move.name}！`);effects.push(`/audio/battle/types/${move.type}.wav`);}
     }
     return prepareBattleAudio([...texts.map(voiceSource).filter((source):source is string=>!!source),...effects]);
-  },[enemy,preparingPartner]);
+  },[enemy,preparingPartner,state.presets]);
   const summoning=state.phase==='summon';
   const busy=state.phase==='order'||summoning||state.phase==='player'||state.phase==='enemy'||state.phase==='player-feedback'||state.phase==='enemy-feedback';
   useEffect(()=>{
     if(state.active===null)return;
     // Speak and observe within one effect so even synchronous speech failures settle.
-    if(state.phase!=='ready')speakText(voice,state.phase==='order'?pokemonById.get(state.first==='enemy'?enemy:state.active)!.name:state.message,{loadTimeoutMs:2500});
+    const actor=state.phase==='enemy'?enemy:state.active;
+    const narrationText=state.phase==='order'?pokemonById.get(state.first==='enemy'?enemy:state.active)!.name:
+      (state.phase==='player'||state.phase==='enemy')&&!voiceSource(state.message)?pokemonById.get(actor)!.name:state.message;
+    if(state.phase!=='ready')speakText(voice,narrationText,{loadTimeoutMs:2500});
     if(!busy)return()=>stopVoice(voice);
     let elapsed=false;
     let advanced=false;
@@ -136,7 +140,7 @@ function Match({team,enemy,again,retry,canChange,audioOwner,initialPartner,tieRa
           <span className="battle-choice-health" aria-hidden="true"><span style={{width:`${percent}%`,background:healthColor(percent)}}/></span>
           <small className="battle-choice-status">{selected===id?'再点一下，上场！':status}</small>
         </button><div className="battle-candidate-types" aria-label={`${partner.name}的属性`}>{partner.types.map(type=><TypePicture key={type} type={type}/>)}</div><small className="battle-candidate-speed">速度 {partner.stats.speed}</small></article>;
-      })}</div></>:active?<><div className="battle-moves">{usableMoves(active.id,enemy).map(move=><button key={move.id} disabled={busy} className={state.phase==='player'&&state.move?.id===move.id?'is-casting':''} onClick={()=>{ if(state.phase!=='ready')return; if(!reduced&&typeof navigator.vibrate==='function'){try{navigator.vibrate(18);}catch{ /* Optional hardware feedback must not interrupt a turn. */ }} dispatch({type:'attack',moveId:move.id}); }}><strong>{move.name}</strong>{move.fallback?<small>特别招式</small>:<TypePicture type={move.type} interactive={false}/>}</button>)}</div></>:null}
+      })}</div></>:active?<><div className="battle-moves">{usableMoves(active.id,enemy,state.presets[active.id]).map(move=><button key={move.id} disabled={busy} className={state.phase==='player'&&state.move?.id===move.id?'is-casting':''} onClick={()=>{ if(state.phase!=='ready')return; if(!reduced&&typeof navigator.vibrate==='function'){try{navigator.vibrate(18);}catch{ /* Optional hardware feedback must not interrupt a turn. */ }} dispatch({type:'attack',moveId:move.id}); }}><strong>{move.name}</strong>{move.fallback?<small>特别招式</small>:<TypePicture type={move.type} interactive={false}/>}</button>)}</div></>:null}
     </section>
   </>;
 }

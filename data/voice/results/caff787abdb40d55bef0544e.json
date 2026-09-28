@@ -1,0 +1,17 @@
+{
+  "id": "caff787abdb40d55bef0544e",
+  "status": "complete",
+  "extra_info": {
+    "audio_length": 2448,
+    "audio_sample_rate": 32000,
+    "audio_size": 40884,
+    "bitrate": 128000,
+    "word_count": 9,
+    "invisible_character_ratio": 0,
+    "usage_characters": 16,
+    "audio_format": "mp3",
+    "audio_channel": 1
+  },
+  "sha256": "f2fed62e8be837ee6cd1a72cadae54cdeeb79cf2ea4c0d9d2ff2fb42b4f750f4",
+  "trace_id": "07092a1d577cd6591aa56cb0e370c430"
+}

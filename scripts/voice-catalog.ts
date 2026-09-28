@@ -4,7 +4,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { pokemon, chapters } from '../src/domain/pokemon';
 import { TYPE_NAMES } from '../src/domain/types';
 import { strengths, weaknesses } from '../src/domain/effectiveness';
-import { battleMoves, struggle } from '../src/domain/battle';
+import { learnset, struggle } from '../src/domain/battle-loadout';
 
 const settings = {
   model: 'speech-2.8-hd',
@@ -36,7 +36,8 @@ for (const match of bag.matchAll(/<ItemVoice[^>]* text="([^"]+)"/g)) add('items'
 add('items', '这张券已经放进背包啦。');
 for (const p of pokemon) {
   add('battle-summon', `就决定是你了，${p.name}！`);
-  for (const move of [...battleMoves(p.id), struggle]) add('battle-moves', `${p.name}，${move.name}！`);
+  const pool = learnset(p.id);
+  for (const move of [...pool.level, ...pool.machine, struggle]) add('battle-moves', `${p.name}，${move.name}！`);
   add('battle-rest', `${p.name}休息一下吧，换一位伙伴！`);
   add('battle-loss', `对战结束，${p.name}获胜！我们的伙伴也很努力，一起休息一下吧。`);
 }

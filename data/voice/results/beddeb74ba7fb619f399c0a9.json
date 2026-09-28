@@ -1,0 +1,17 @@
+{
+  "id": "beddeb74ba7fb619f399c0a9",
+  "status": "complete",
+  "extra_info": {
+    "audio_length": 2448,
+    "audio_sample_rate": 32000,
+    "audio_size": 40884,
+    "bitrate": 128000,
+    "word_count": 9,
+    "invisible_character_ratio": 0,
+    "usage_characters": 16,
+    "audio_format": "mp3",
+    "audio_channel": 1
+  },
+  "sha256": "fa958494df95393743aac753ffcc7b332d432e197e13c77742db25dd39c9fea0",
+  "trace_id": "07091aa2f1baa4e3f6392212ccd9bf9e"
+}

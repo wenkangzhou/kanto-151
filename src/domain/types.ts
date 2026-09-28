@@ -1,3 +1,4 @@
+import type { MovePresets } from './battle-loadout';
 export const TYPE_NAMES = {
   normal: '一般', fire: '火', water: '水', electric: '电', grass: '草', ice: '冰',
   fighting: '格斗', poison: '毒', ground: '地面', flying: '飞行', psychic: '超能力',
@@ -19,6 +20,7 @@ export interface CollectionRecord {
 }
 export interface CollectionSnapshot {
   team?: number[];
+  movePresets?: MovePresets;
   records: CollectionRecord[];
   inventory: { evolution: number; legendary: number };
   source: 'demo' | 'sandbox' | 'empty' | 'supabase';

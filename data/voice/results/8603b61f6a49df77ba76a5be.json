@@ -1,0 +1,17 @@
+{
+  "id": "8603b61f6a49df77ba76a5be",
+  "status": "complete",
+  "extra_info": {
+    "audio_length": 2664,
+    "audio_sample_rate": 32000,
+    "audio_size": 44340,
+    "bitrate": 128000,
+    "word_count": 8,
+    "invisible_character_ratio": 0,
+    "usage_characters": 14,
+    "audio_format": "mp3",
+    "audio_channel": 1
+  },
+  "sha256": "13ab5ddd8fc42081e6a662987c89d0b620b0e47f63ef3c8e377aabff3848d9ef",
+  "trace_id": "07091e7a153ecfc7c3f75f146d28f12e"
+}

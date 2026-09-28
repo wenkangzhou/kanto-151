@@ -1,10 +1,7 @@
-import moveData from '@/data/battle-moves.json';
+import { battleMoves, struggle, type BattleMove, type MovePresets } from './battle-loadout';
+export { battleMoves, struggle, type BattleMove } from './battle-loadout';
 import { pokemonById } from './pokemon';
 import { effectiveness } from './effectiveness';
-import type { PokemonType } from './types';
-export type BattleMove = { id: string; name: string; type: PokemonType; category: 'physical' | 'special'; fallback?: boolean };
-export const struggle: BattleMove = { id: 'struggle', name: '挣扎', type: 'normal', category: 'physical', fallback: true };
-export function battleMoves(id: number): BattleMove[] { return (moveData as Record<string, BattleMove[]>)[id] ?? [struggle]; }
 export function multiplier(move: BattleMove, target: number) { return move.fallback ? 1 : effectiveness(move.type, pokemonById.get(target)!.types); }
 // Uniform level 50, neutral nature, no IVs/EVs; move power is normalized to 40.
 export function maxHp(id: number) { return pokemonById.get(id)!.stats.hp + 60; }
@@ -17,9 +14,9 @@ export function damage(move: BattleMove, attacker: number, target: number) {
   const defense = pokemonById.get(target)!.stats[physical ? 'defense' : 'special-defense'] + 5;
   return Math.max(1, Math.floor((22 * 40 * attack / defense / 50 + 2) * effect));
 }
-export function usableMoves(id: number, target: number) {
-  const moves = battleMoves(id);
-  return moves.every(move => multiplier(move, target) === 0) ? [...moves, struggle] : moves;
+export function usableMoves(id: number, target: number, saved?: unknown) {
+  const moves = battleMoves(id, saved);
+  return moves.every(move => multiplier(move, target) === 0) ? [struggle] : moves;
 }
 export function opponentPool(owned: number[]) {
   return [...new Set(owned)].filter(id => pokemonById.has(id));
@@ -37,10 +34,10 @@ export function firstAttacker(player: number, enemy: number, tieRandom: number):
   const difference = pokemonById.get(player)!.stats.speed - pokemonById.get(enemy)!.stats.speed;
   return difference > 0 ? 'player' : difference < 0 ? 'enemy' : tieRandom < .5 ? 'player' : 'enemy';
 }
-export type BattleState = { team: number[]; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; first?: 'player' | 'enemy'; lastHit?: BattleHit; moment?: BattleMoment; phase: 'order' | 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
-export function createBattle(team: number[], enemy: number): BattleState {
+export type BattleState = { team: number[]; presets: MovePresets; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; first?: 'player' | 'enemy'; lastHit?: BattleHit; moment?: BattleMoment; phase: 'order' | 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
+export function createBattle(team: number[], enemy: number, presets: MovePresets = {}): BattleState {
   const ids = [...new Set(team)].filter(id => pokemonById.has(id)).slice(0,6);
-  return { team: ids, hp: Object.fromEntries(ids.map(id => [id,maxHp(id)])), enemy, enemyHp:maxHp(enemy), active:null, phase:'choose', message:'选一位伙伴出场吧！', move:null, rounds:0 };
+  return { team: ids, presets: structuredClone(presets), hp: Object.fromEntries(ids.map(id => [id,maxHp(id)])), enemy, enemyHp:maxHp(enemy), active:null, phase:'choose', message:'选一位伙伴出场吧！', move:null, rounds:0 };
 }
 export type BattleAction = { type:'choose'; id:number; tieRandom?:number } | { type:'attack'; moveId:string } | { type:'advance' };
 const name = (id:number) => pokemonById.get(id)!.name;
@@ -61,7 +58,7 @@ export function battleReducer(s:BattleState,a:BattleAction):BattleState {
   }
   if(a.type==='attack') {
     if(s.phase!=='ready'||s.active===null)return s;
-    const move=usableMoves(s.active,s.enemy).find(m=>m.id===a.moveId);
+    const move=usableMoves(s.active,s.enemy,s.presets[s.active]).find(m=>m.id===a.moveId);
     return move?{...s,lastHit:undefined,phase:'player',move,message:`${name(s.active)}，${move.name}！`}:s;
   }
   if(s.phase==='summon') {
@@ -100,8 +97,8 @@ function finishRound(s: BattleState): BattleState {
 }
 
 // Each challenge starts with fresh HP and turn order; only the chosen partner carries over.
-export function createNextBattle(team:number[], enemy:number, partner?:number, tieRandom=0):BattleState {
-  const fresh=createBattle(team,enemy);
+export function createNextBattle(team:number[], enemy:number, partner?:number, tieRandom=0, presets:MovePresets={}):BattleState {
+  const fresh=createBattle(team,enemy,presets);
   if(partner===undefined)return fresh;
   const next=battleReducer(fresh,{type:'choose',id:partner,tieRandom});
   return next.active===null?next:{...next,message:pokemonById.get(enemy)!.name};

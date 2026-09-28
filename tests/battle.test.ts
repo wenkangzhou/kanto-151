@@ -8,7 +8,7 @@ function completeStep(s: BattleState): BattleState {
   if(next.phase==='player-feedback'||next.phase==='enemy-feedback')next=battleReducer(next,{type:'advance'});
   return next;
 }
-test('every partner has one to three locally cached moves',()=>{for(const p of pokemon){const moves=battleMoves(p.id);assert.ok(moves.length>=1&&moves.length<=3);for(const m of moves)assert.ok(m.name&&m.type);}});
+test('every partner has one to four locally cached moves',()=>{for(const p of pokemon){const moves=battleMoves(p.id);assert.ok(moves.length>=1&&moves.length<=4);for(const m of moves)assert.ok(m.name&&m.type);}});
 test('dual type weaknesses, neutral fighting and immunity use the existing chart',()=>{assert.equal(multiplier({id:'x',name:'x',type:'electric',category:'special' as const},16),2);assert.equal(multiplier({id:'x',name:'x',type:'fighting',category:'physical' as const},16),1);assert.equal(damage({id:'x',name:'x',type:'ground',category:'special' as const},4,16),0);});
 test('a turn cannot be double-clicked and the chosen partner is locked for the match',()=>{
   let s=createBattle([4,7],1);

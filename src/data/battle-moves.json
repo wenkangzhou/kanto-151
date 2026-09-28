@@ -1,236 +1,263 @@
 {
   "1": [
     {
+      "id": "seed-bomb",
+      "name": "种子炸弹",
+      "type": "grass",
+      "category": "physical",
+      "level": 37
+    },
+    {
+      "id": "razor-leaf",
+      "name": "飞叶快刀",
+      "type": "grass",
+      "category": "physical",
+      "level": 19
+    },
+    {
       "id": "vine-whip",
       "name": "藤鞭",
       "type": "grass",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 9
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
       "category": "special"
     }
   ],
   "2": [
     {
+      "id": "solar-beam",
+      "name": "日光束",
+      "type": "grass",
+      "category": "special",
+      "level": 44
+    },
+    {
+      "id": "razor-leaf",
+      "name": "飞叶快刀",
+      "type": "grass",
+      "category": "physical",
+      "level": 20
+    },
+    {
       "id": "vine-whip",
       "name": "藤鞭",
       "type": "grass",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 9
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
       "category": "special"
     }
   ],
   "3": [
     {
-      "id": "vine-whip",
-      "name": "藤鞭",
+      "id": "petal-dance",
+      "name": "花瓣舞",
       "type": "grass",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special",
+      "level": 0
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "petal-blizzard",
+      "name": "落英缤纷",
+      "type": "grass",
+      "category": "physical",
+      "level": 50
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "razor-leaf",
+      "name": "飞叶快刀",
+      "type": "grass",
+      "category": "physical",
+      "level": 20
+    },
+    {
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
       "category": "special"
     }
   ],
   "4": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "inferno",
+      "name": "炼狱",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 46
     },
     {
-      "id": "scratch",
-      "name": "抓",
+      "id": "fire-spin",
+      "name": "火焰旋涡",
+      "type": "fire",
+      "category": "special",
+      "level": 43
+    },
+    {
+      "id": "flamethrower",
+      "name": "喷射火焰",
+      "type": "fire",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "echoed-voice",
+      "name": "回声",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "wing-attack",
-      "name": "翅膀攻击",
-      "type": "flying",
-      "versionGroupId": 20,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "5": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "fire-spin",
+      "name": "火焰旋涡",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 50
     },
     {
-      "id": "scratch",
-      "name": "抓",
+      "id": "flamethrower",
+      "name": "喷射火焰",
+      "type": "fire",
+      "category": "special",
+      "level": 43
+    },
+    {
+      "id": "flame-burst",
+      "name": "烈焰溅射",
+      "type": "fire",
+      "category": "special",
+      "level": 32
+    },
+    {
+      "id": "echoed-voice",
+      "name": "回声",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 25,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "6": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "flamethrower",
+      "name": "喷射火焰",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 47
     },
     {
-      "id": "wing-attack",
-      "name": "翅膀攻击",
+      "id": "flame-burst",
+      "name": "烈焰溅射",
+      "type": "fire",
+      "category": "special",
+      "level": 32
+    },
+    {
+      "id": "air-slash",
+      "name": "空气斩",
       "type": "flying",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "scratch",
-      "name": "抓",
+      "id": "echoed-voice",
+      "name": "回声",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "7": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "hydro-pump",
+      "name": "水炮",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 40
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 25
     },
     {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
+      "id": "bubble",
+      "name": "泡沫",
+      "type": "water",
+      "category": "special",
+      "level": 13
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "8": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "hydro-pump",
+      "name": "水炮",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "special",
+      "level": 49
+    },
+    {
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 29
+    },
+    {
+      "id": "bubble",
+      "name": "泡沫",
+      "type": "water",
+      "category": "special",
+      "level": 13
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
     }
   ],
   "9": [
     {
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 29
+    },
+    {
+      "id": "bubble",
+      "name": "泡沫",
+      "type": "water",
+      "category": "special",
+      "level": 13
+    },
+    {
       "id": "water-gun",
       "name": "水枪",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
     }
   ],
   "10": [
@@ -238,53 +265,53 @@
       "id": "bug-bite",
       "name": "虫咬",
       "type": "bug",
-      "versionGroupId": 9,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 9
     },
     {
       "id": "tackle",
       "name": "撞击",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     }
   ],
   "11": [
     {
-      "id": "bug-bite",
-      "name": "虫咬",
-      "type": "bug",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
+      "id": "struggle",
+      "name": "挣扎",
+      "type": "normal",
+      "category": "physical",
+      "fallback": true
     }
   ],
   "12": [
     {
-      "id": "gust",
-      "name": "起风",
+      "id": "air-slash",
+      "name": "空气斩",
       "type": "flying",
-      "versionGroupId": 2,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 43
     },
     {
-      "id": "bug-bite",
-      "name": "虫咬",
+      "id": "bug-buzz",
+      "name": "虫鸣",
       "type": "bug",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
+      "category": "special",
+      "level": 31
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "silver-wind",
+      "name": "银色旋风",
+      "type": "bug",
+      "category": "special",
+      "level": 19
+    },
+    {
+      "id": "dream-eater",
+      "name": "食梦",
+      "type": "psychic",
+      "category": "special"
     }
   ],
   "13": [
@@ -292,261 +319,285 @@
       "id": "bug-bite",
       "name": "虫咬",
       "type": "bug",
-      "versionGroupId": 9,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 9
     },
     {
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     }
   ],
   "14": [
     {
-      "id": "bug-bite",
-      "name": "虫咬",
-      "type": "bug",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
+      "id": "struggle",
+      "name": "挣扎",
+      "type": "normal",
+      "category": "physical",
+      "fallback": true
     }
   ],
   "15": [
     {
-      "id": "bug-bite",
-      "name": "虫咬",
+      "id": "fell-stinger",
+      "name": "致命针刺",
       "type": "bug",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
+      "category": "physical",
+      "level": 44
     },
     {
-      "id": "poison-sting",
-      "name": "毒针",
+      "id": "poison-jab",
+      "name": "毒击",
       "type": "poison",
-      "versionGroupId": 23,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 35
     },
     {
-      "id": "peck",
-      "name": "啄",
+      "id": "pin-missile",
+      "name": "飞弹针",
+      "type": "bug",
+      "category": "physical",
+      "level": 32
+    },
+    {
+      "id": "acrobatics",
+      "name": "杂技",
       "type": "flying",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "16": [
     {
+      "id": "wing-attack",
+      "name": "翅膀攻击",
+      "type": "flying",
+      "category": "physical",
+      "level": 33
+    },
+    {
+      "id": "quick-attack",
+      "name": "电光一闪",
+      "type": "normal",
+      "category": "physical",
+      "level": 13
+    },
+    {
       "id": "tackle",
       "name": "撞击",
       "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "steel-wing",
+      "name": "钢翼",
+      "type": "steel",
       "category": "physical"
-    },
-    {
-      "id": "gust",
-      "name": "起风",
-      "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "17": [
     {
+      "id": "wing-attack",
+      "name": "翅膀攻击",
+      "type": "flying",
+      "category": "physical",
+      "level": 37
+    },
+    {
+      "id": "quick-attack",
+      "name": "电光一闪",
+      "type": "normal",
+      "category": "physical",
+      "level": 13
+    },
+    {
       "id": "tackle",
       "name": "撞击",
       "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "steel-wing",
+      "name": "钢翼",
+      "type": "steel",
       "category": "physical"
-    },
-    {
-      "id": "gust",
-      "name": "起风",
-      "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "18": [
     {
+      "id": "wing-attack",
+      "name": "翅膀攻击",
+      "type": "flying",
+      "category": "physical",
+      "level": 38
+    },
+    {
+      "id": "quick-attack",
+      "name": "电光一闪",
+      "type": "normal",
+      "category": "physical",
+      "level": 1
+    },
+    {
       "id": "tackle",
       "name": "撞击",
       "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "steel-wing",
+      "name": "钢翼",
+      "type": "steel",
       "category": "physical"
-    },
-    {
-      "id": "gust",
-      "name": "起风",
-      "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "19": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "double-edge",
+      "name": "舍身冲撞",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 31
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "hyper-fang",
+      "name": "必杀门牙",
+      "type": "normal",
+      "category": "physical",
+      "level": 16
     },
     {
-      "id": "bite",
-      "name": "咬住",
+      "id": "quick-attack",
+      "name": "电光一闪",
+      "type": "normal",
+      "category": "physical",
+      "level": 4
+    },
+    {
+      "id": "thief",
+      "name": "小偷",
       "type": "dark",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
       "category": "physical"
     }
   ],
   "20": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "double-edge",
+      "name": "舍身冲撞",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 39
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "hyper-fang",
+      "name": "必杀门牙",
+      "type": "normal",
+      "category": "physical",
+      "level": 16
     },
     {
-      "id": "bite",
-      "name": "咬住",
+      "id": "quick-attack",
+      "name": "电光一闪",
+      "type": "normal",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "thief",
+      "name": "小偷",
       "type": "dark",
-      "versionGroupId": 8,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "21": [
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
-      "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "physical"
-    },
-    {
-      "id": "peck",
-      "name": "啄",
+      "id": "drill-peck",
+      "name": "啄钻",
       "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 36
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical",
+      "level": 15
+    },
+    {
+      "id": "fury-attack",
+      "name": "乱击",
+      "type": "normal",
+      "category": "physical",
+      "level": 11
+    },
+    {
+      "id": "steel-wing",
+      "name": "钢翼",
+      "type": "steel",
+      "category": "physical"
     }
   ],
   "22": [
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
-      "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "peck",
-      "name": "啄",
+      "id": "drill-peck",
+      "name": "啄钻",
       "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 41
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical",
+      "level": 15
+    },
+    {
+      "id": "fury-attack",
+      "name": "乱击",
+      "type": "normal",
+      "category": "physical",
+      "level": 11
+    },
+    {
+      "id": "steel-wing",
+      "name": "钢翼",
+      "type": "steel",
+      "category": "physical"
     }
   ],
   "23": [
     {
+      "id": "gunk-shot",
+      "name": "垃圾射击",
+      "type": "poison",
+      "category": "physical",
+      "level": 49
+    },
+    {
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 4
     },
     {
-      "id": "bite",
-      "name": "咬住",
+      "id": "belch",
+      "name": "打嗝",
+      "type": "poison",
+      "category": "special",
+      "level": 38
+    },
+    {
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
       "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 25,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "24": [
@@ -554,51 +605,57 @@
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "bite",
-      "name": "咬住",
+      "id": "belch",
+      "name": "打嗝",
+      "type": "poison",
+      "category": "special",
+      "level": 48
+    },
+    {
+      "id": "acid-spray",
+      "name": "酸液炸弹",
+      "type": "poison",
+      "category": "special",
+      "level": 32
+    },
+    {
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
       "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 25,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "25": [
     {
-      "id": "thunder-shock",
-      "name": "电击",
+      "id": "wild-charge",
+      "name": "疯狂伏特",
       "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "physical",
+      "level": 50
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "nuzzle",
+      "name": "蹭蹭脸颊",
+      "type": "electric",
+      "category": "physical",
+      "level": 29
+    },
+    {
+      "id": "spark",
+      "name": "电光",
+      "type": "electric",
+      "category": "physical",
+      "level": 26
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "26": [
@@ -606,102 +663,114 @@
       "id": "thunder-shock",
       "name": "电击",
       "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "thunderbolt",
+      "name": "十万伏特",
+      "type": "electric",
+      "category": "special",
+      "level": 1
     },
     {
       "id": "quick-attack",
       "name": "电光一闪",
       "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
+      "category": "physical"
     }
   ],
   "27": [
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "earthquake",
+      "name": "地震",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 46
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "dig",
+      "name": "挖洞",
+      "type": "ground",
+      "category": "physical",
+      "level": 30
     },
     {
-      "id": "poison-sting",
-      "name": "毒针",
-      "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "sand-tomb",
+      "name": "流沙地狱",
+      "type": "ground",
+      "category": "physical",
+      "level": 23
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "28": [
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "dig",
+      "name": "挖洞",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 33
     },
     {
-      "id": "scratch",
-      "name": "抓",
+      "id": "sand-tomb",
+      "name": "流沙地狱",
+      "type": "ground",
+      "category": "physical",
+      "level": 24
+    },
+    {
+      "id": "slash",
+      "name": "劈开",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 28
     },
     {
-      "id": "poison-sting",
-      "name": "毒针",
-      "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "29": [
     {
+      "id": "poison-fang",
+      "name": "剧毒牙",
+      "type": "poison",
+      "category": "physical",
+      "level": 45
+    },
+    {
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 13
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
+      "id": "crunch",
+      "name": "咬碎",
       "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 37
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
@@ -710,25 +779,28 @@
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 13
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "crunch",
+      "name": "咬碎",
+      "type": "dark",
+      "category": "physical",
+      "level": 43
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "bite",
+      "name": "咬住",
+      "type": "dark",
+      "category": "physical",
+      "level": 23
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     }
   ],
   "31": [
@@ -736,77 +808,86 @@
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "earth-power",
+      "name": "大地之力",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "special",
+      "level": 43
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "body-slam",
+      "name": "泰山压顶",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 35
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "32": [
     {
+      "id": "poison-jab",
+      "name": "毒击",
+      "type": "poison",
+      "category": "physical",
+      "level": 37
+    },
+    {
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 13
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "horn-attack",
+      "name": "角撞",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 21
     },
     {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "special"
+      "id": "shadow-claw",
+      "name": "暗影爪",
+      "type": "ghost",
+      "category": "physical"
     }
   ],
   "33": [
     {
+      "id": "poison-jab",
+      "name": "毒击",
+      "type": "poison",
+      "category": "physical",
+      "level": 43
+    },
+    {
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 13
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "horn-attack",
+      "name": "角撞",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 23
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "shadow-claw",
+      "name": "暗影爪",
+      "type": "ghost",
+      "category": "physical"
     }
   ],
   "34": [
@@ -814,2325 +895,2712 @@
       "id": "poison-sting",
       "name": "毒针",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "earth-power",
+      "name": "大地之力",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "special",
+      "level": 43
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "thrash",
+      "name": "大闹一番",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 35
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
     }
   ],
   "35": [
     {
-      "id": "fairy-wind",
-      "name": "妖精之风",
+      "id": "moonblast",
+      "name": "月亮之力",
       "type": "fairy",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 46
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "disarming-voice",
+      "name": "魅惑之声",
+      "type": "fairy",
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "stored-power",
+      "name": "辅助力量",
+      "type": "psychic",
+      "category": "special",
+      "level": 28
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "36": [
     {
-      "id": "fairy-wind",
-      "name": "妖精之风",
+      "id": "disarming-voice",
+      "name": "魅惑之声",
       "type": "fairy",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "double-slap",
+      "name": "连环巴掌",
       "type": "normal",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "37": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "inferno",
+      "name": "炼狱",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 50
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "fire-blast",
+      "name": "大字爆炎",
+      "type": "fire",
+      "category": "special",
+      "level": 42
+    },
+    {
+      "id": "flamethrower",
+      "name": "喷射火焰",
+      "type": "fire",
+      "category": "special",
+      "level": 36
+    },
+    {
+      "id": "dark-pulse",
+      "name": "恶之波动",
+      "type": "dark",
+      "category": "special"
     }
   ],
   "38": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "flamethrower",
+      "name": "喷射火焰",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "quick-attack",
+      "name": "电光一闪",
       "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "dark-pulse",
+      "name": "恶之波动",
+      "type": "dark",
+      "category": "special"
     }
   ],
   "39": [
     {
-      "id": "pound",
-      "name": "拍击",
+      "id": "double-edge",
+      "name": "舍身冲撞",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 45
     },
     {
-      "id": "disarming-voice",
-      "name": "魅惑之声",
+      "id": "hyper-voice",
+      "name": "巨声",
+      "type": "normal",
+      "category": "special",
+      "level": 41
+    },
+    {
+      "id": "body-slam",
+      "name": "泰山压顶",
+      "type": "normal",
+      "category": "physical",
+      "level": 32
+    },
+    {
+      "id": "dazzling-gleam",
+      "name": "魔法闪耀",
       "type": "fairy",
-      "versionGroupId": 15,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
       "category": "special"
     }
   ],
   "40": [
     {
-      "id": "pound",
-      "name": "拍击",
+      "id": "double-edge",
+      "name": "舍身冲撞",
       "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "disarming-voice",
-      "name": "魅惑之声",
+      "id": "double-slap",
+      "name": "连环巴掌",
+      "type": "normal",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "play-rough",
+      "name": "嬉闹",
       "type": "fairy",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "41": [
     {
-      "id": "gust",
-      "name": "起风",
+      "id": "poison-fang",
+      "name": "剧毒牙",
+      "type": "poison",
+      "category": "physical",
+      "level": 25
+    },
+    {
+      "id": "wing-attack",
+      "name": "翅膀攻击",
       "type": "flying",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "special"
+      "category": "physical",
+      "level": 13
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
+      "id": "air-slash",
+      "name": "空气斩",
+      "type": "flying",
+      "category": "special",
+      "level": 41
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "42": [
     {
-      "id": "gust",
-      "name": "起风",
+      "id": "poison-fang",
+      "name": "剧毒牙",
+      "type": "poison",
+      "category": "physical",
+      "level": 27
+    },
+    {
+      "id": "wing-attack",
+      "name": "翅膀攻击",
       "type": "flying",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "physical",
+      "level": 13
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
+      "id": "air-slash",
+      "name": "空气斩",
+      "type": "flying",
+      "category": "special",
+      "level": 48
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "43": [
     {
-      "id": "razor-leaf",
-      "name": "飞叶快刀",
+      "id": "giga-drain",
+      "name": "终极吸取",
       "type": "grass",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "special",
+      "level": 31
+    },
+    {
+      "id": "mega-drain",
+      "name": "超级吸取",
+      "type": "grass",
+      "category": "special",
+      "level": 19
     },
     {
       "id": "acid",
       "name": "溶解液",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "special",
+      "level": 9
+    },
+    {
+      "id": "dazzling-gleam",
+      "name": "魔法闪耀",
+      "type": "fairy",
       "category": "special"
     }
   ],
   "44": [
     {
-      "id": "razor-leaf",
-      "name": "飞叶快刀",
+      "id": "giga-drain",
+      "name": "终极吸取",
       "type": "grass",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special",
+      "level": 34
     },
     {
-      "id": "acid",
-      "name": "溶解液",
+      "id": "mega-drain",
+      "name": "超级吸取",
+      "type": "grass",
+      "category": "special",
+      "level": 19
+    },
+    {
+      "id": "absorb",
+      "name": "吸取",
+      "type": "grass",
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "special"
     }
   ],
   "45": [
     {
-      "id": "razor-leaf",
-      "name": "飞叶快刀",
+      "id": "mega-drain",
+      "name": "超级吸取",
       "type": "grass",
-      "versionGroupId": 25,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "acid",
-      "name": "溶解液",
+      "id": "petal-blizzard",
+      "name": "落英缤纷",
+      "type": "grass",
+      "category": "physical",
+      "level": 49
+    },
+    {
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "special"
     }
   ],
   "46": [
     {
-      "id": "bug-bite",
-      "name": "虫咬",
+      "id": "fury-cutter",
+      "name": "连斩",
       "type": "bug",
-      "versionGroupId": 8,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "physical",
+      "level": 17
+    },
+    {
+      "id": "giga-drain",
+      "name": "终极吸取",
+      "type": "grass",
+      "category": "special",
+      "level": 38
     },
     {
       "id": "absorb",
       "name": "吸取",
       "type": "grass",
-      "versionGroupId": 17,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 11
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "47": [
     {
-      "id": "bug-bite",
-      "name": "虫咬",
+      "id": "fury-cutter",
+      "name": "连斩",
       "type": "bug",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
+      "category": "physical",
+      "level": 17
+    },
+    {
+      "id": "giga-drain",
+      "name": "终极吸取",
+      "type": "grass",
+      "category": "special",
+      "level": 44
     },
     {
       "id": "absorb",
       "name": "吸取",
       "type": "grass",
-      "versionGroupId": 17,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "48": [
     {
-      "id": "bug-bite",
-      "name": "虫咬",
+      "id": "poison-fang",
+      "name": "剧毒牙",
+      "type": "poison",
+      "category": "physical",
+      "level": 41
+    },
+    {
+      "id": "leech-life",
+      "name": "吸血",
       "type": "bug",
-      "versionGroupId": 8,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "physical",
+      "level": 35
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "signal-beam",
+      "name": "信号光束",
+      "type": "bug",
+      "category": "special",
+      "level": 25
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
-    },
-    {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 2,
-      "learnMethodId": 1,
-      "category": "special"
     }
   ],
   "49": [
     {
-      "id": "bug-bite",
-      "name": "虫咬",
+      "id": "signal-beam",
+      "name": "信号光束",
       "type": "bug",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
+      "category": "special",
+      "level": 25
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "bug-buzz",
+      "name": "虫鸣",
+      "type": "bug",
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 2,
-      "learnMethodId": 1,
+      "id": "silver-wind",
+      "name": "银色旋风",
+      "type": "bug",
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
       "category": "special"
     }
   ],
   "50": [
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "earthquake",
+      "name": "地震",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 39
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "dig",
+      "name": "挖洞",
+      "type": "ground",
+      "category": "physical",
+      "level": 31
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical",
+      "level": 18
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "51": [
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "earthquake",
+      "name": "地震",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 47
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "dig",
+      "name": "挖洞",
+      "type": "ground",
+      "category": "physical",
+      "level": 35
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical",
+      "level": 18
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "52": [
     {
-      "id": "scratch",
-      "name": "抓",
+      "id": "feint",
+      "name": "佯攻",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 50
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "slash",
+      "name": "劈开",
+      "type": "normal",
+      "category": "physical",
+      "level": 33
     },
     {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "pay-day",
+      "name": "聚宝功",
+      "type": "normal",
+      "category": "physical",
+      "level": 30
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "53": [
     {
-      "id": "scratch",
-      "name": "抓",
+      "id": "slash",
+      "name": "劈开",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 37
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "fury-swipes",
+      "name": "乱抓",
+      "type": "normal",
+      "category": "physical",
+      "level": 14
     },
     {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "fake-out",
+      "name": "击掌奇袭",
+      "type": "normal",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "54": [
     {
+      "id": "hydro-pump",
+      "name": "水炮",
+      "type": "water",
+      "category": "special",
+      "level": 40
+    },
+    {
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 16
+    },
+    {
       "id": "water-gun",
       "name": "水枪",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "special",
+      "level": 7
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "55": [
     {
+      "id": "hydro-pump",
+      "name": "水炮",
+      "type": "water",
+      "category": "special",
+      "level": 46
+    },
+    {
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 16
+    },
+    {
       "id": "water-gun",
       "name": "水枪",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "56": [
     {
+      "id": "close-combat",
+      "name": "近身战",
+      "type": "fighting",
+      "category": "physical",
+      "level": 36
+    },
+    {
+      "id": "cross-chop",
+      "name": "十字劈",
+      "type": "fighting",
+      "category": "physical",
+      "level": 22
+    },
+    {
       "id": "karate-chop",
       "name": "空手劈",
       "type": "fighting",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 8
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "acrobatics",
+      "name": "杂技",
+      "type": "flying",
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "57": [
     {
+      "id": "close-combat",
+      "name": "近身战",
+      "type": "fighting",
+      "category": "physical",
+      "level": 39
+    },
+    {
+      "id": "cross-chop",
+      "name": "十字劈",
+      "type": "fighting",
+      "category": "physical",
+      "level": 22
+    },
+    {
       "id": "karate-chop",
       "name": "空手劈",
       "type": "fighting",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 8
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "acrobatics",
+      "name": "杂技",
+      "type": "flying",
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "58": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "flare-blitz",
+      "name": "闪焰冲锋",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "physical",
+      "level": 45
     },
     {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "heat-wave",
+      "name": "热风",
+      "type": "fire",
+      "category": "special",
+      "level": 41
+    },
+    {
+      "id": "flamethrower",
+      "name": "喷射火焰",
+      "type": "fire",
+      "category": "special",
+      "level": 34
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 9,
-      "learnMethodId": 3,
-      "category": "special"
     }
   ],
   "59": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "fire-fang",
+      "name": "火焰牙",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "extreme-speed",
+      "name": "神速",
+      "type": "normal",
+      "category": "physical",
+      "level": 34
     },
     {
       "id": "bite",
       "name": "咬住",
       "type": "dark",
-      "versionGroupId": 5,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 9,
-      "learnMethodId": 3,
-      "category": "special"
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     }
   ],
   "60": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "hydro-pump",
+      "name": "水炮",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 38
     },
     {
-      "id": "pound",
-      "name": "拍击",
+      "id": "bubble-beam",
+      "name": "泡沫光线",
+      "type": "water",
+      "category": "special",
+      "level": 25
+    },
+    {
+      "id": "bubble",
+      "name": "泡沫",
+      "type": "water",
+      "category": "special",
+      "level": 11
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 25,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "61": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "hydro-pump",
+      "name": "水炮",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 48
     },
     {
-      "id": "pound",
-      "name": "拍击",
-      "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
+      "id": "bubble-beam",
+      "name": "泡沫光线",
+      "type": "water",
+      "category": "special",
+      "level": 27
+    },
+    {
+      "id": "bubble",
+      "name": "泡沫",
+      "type": "water",
+      "category": "special",
+      "level": 11
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "62": [
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "low-kick",
-      "name": "踢倒",
+      "id": "dynamic-punch",
+      "name": "爆裂拳",
       "type": "fighting",
-      "versionGroupId": 25,
-      "learnMethodId": 4,
-      "category": "physical"
+      "category": "physical",
+      "level": 32
     },
     {
-      "id": "pound",
-      "name": "拍击",
-      "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
+      "id": "circle-throw",
+      "name": "巴投",
+      "type": "fighting",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "submission",
+      "name": "地狱翻滚",
+      "type": "fighting",
+      "category": "physical",
+      "level": 0
+    },
+    {
+      "id": "waterfall",
+      "name": "攀瀑",
+      "type": "water",
       "category": "physical"
     }
   ],
   "63": [
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "versionGroupId": 20,
-      "learnMethodId": 2,
-      "category": "special"
-    },
-    {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 4,
       "category": "special"
     }
   ],
   "64": [
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "future-sight",
+      "name": "预知未来",
       "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 43
     },
     {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 4,
+      "id": "psychic",
+      "name": "精神强念",
+      "type": "psychic",
+      "category": "special",
+      "level": 38
+    },
+    {
+      "id": "psybeam",
+      "name": "幻象光线",
+      "type": "psychic",
+      "category": "special",
+      "level": 21
+    },
+    {
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
       "category": "special"
     }
   ],
   "65": [
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "future-sight",
+      "name": "预知未来",
       "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 43
     },
     {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 4,
+      "id": "psychic",
+      "name": "精神强念",
+      "type": "psychic",
+      "category": "special",
+      "level": 38
+    },
+    {
+      "id": "psybeam",
+      "name": "幻象光线",
+      "type": "psychic",
+      "category": "special",
+      "level": 21
+    },
+    {
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
       "category": "special"
     }
   ],
   "66": [
     {
-      "id": "karate-chop",
-      "name": "空手劈",
+      "id": "dynamic-punch",
+      "name": "爆裂拳",
       "type": "fighting",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 45
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "cross-chop",
+      "name": "十字劈",
+      "type": "fighting",
+      "category": "physical",
+      "level": 39
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "submission",
+      "name": "地狱翻滚",
+      "type": "fighting",
+      "category": "physical",
+      "level": 33
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical"
     }
   ],
   "67": [
     {
-      "id": "karate-chop",
-      "name": "空手劈",
+      "id": "cross-chop",
+      "name": "十字劈",
       "type": "fighting",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 47
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "submission",
+      "name": "地狱翻滚",
+      "type": "fighting",
+      "category": "physical",
+      "level": 37
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "wake-up-slap",
+      "name": "唤醒巴掌",
+      "type": "fighting",
+      "category": "physical",
+      "level": 27
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical"
     }
   ],
   "68": [
     {
-      "id": "karate-chop",
-      "name": "空手劈",
+      "id": "cross-chop",
+      "name": "十字劈",
       "type": "fighting",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 47
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "submission",
+      "name": "地狱翻滚",
+      "type": "fighting",
+      "category": "physical",
+      "level": 37
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "wake-up-slap",
+      "name": "唤醒巴掌",
+      "type": "fighting",
+      "category": "physical",
+      "level": 27
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical"
     }
   ],
   "69": [
     {
-      "id": "vine-whip",
-      "name": "藤鞭",
-      "type": "grass",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "acid",
-      "name": "溶解液",
+      "id": "poison-jab",
+      "name": "毒击",
       "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    }
-  ],
-  "70": [
-    {
-      "id": "vine-whip",
-      "name": "藤鞭",
-      "type": "grass",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "acid",
-      "name": "溶解液",
-      "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "bug-bite",
-      "name": "虫咬",
-      "type": "bug",
-      "versionGroupId": 14,
-      "learnMethodId": 3,
-      "category": "physical"
-    }
-  ],
-  "71": [
-    {
-      "id": "vine-whip",
-      "name": "藤鞭",
-      "type": "grass",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "acid",
-      "name": "溶解液",
-      "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "bug-bite",
-      "name": "虫咬",
-      "type": "bug",
-      "versionGroupId": 14,
-      "learnMethodId": 3,
-      "category": "physical"
-    }
-  ],
-  "72": [
-    {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "poison-sting",
-      "name": "毒针",
-      "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 25,
-      "learnMethodId": 4,
-      "category": "special"
-    }
-  ],
-  "73": [
-    {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "poison-sting",
-      "name": "毒针",
-      "type": "poison",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 25,
-      "learnMethodId": 4,
-      "category": "special"
-    }
-  ],
-  "74": [
-    {
-      "id": "rock-throw",
-      "name": "落石",
-      "type": "rock",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    }
-  ],
-  "75": [
-    {
-      "id": "rock-throw",
-      "name": "落石",
-      "type": "rock",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    }
-  ],
-  "76": [
-    {
-      "id": "rock-throw",
-      "name": "落石",
-      "type": "rock",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    }
-  ],
-  "77": [
-    {
-      "id": "ember",
-      "name": "火花",
-      "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "low-kick",
-      "name": "踢倒",
-      "type": "fighting",
-      "versionGroupId": 11,
-      "learnMethodId": 2,
-      "category": "physical"
-    }
-  ],
-  "78": [
-    {
-      "id": "ember",
-      "name": "火花",
-      "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "low-kick",
-      "name": "踢倒",
-      "type": "fighting",
-      "versionGroupId": 14,
-      "learnMethodId": 3,
-      "category": "physical"
-    }
-  ],
-  "79": [
-    {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
-    }
-  ],
-  "80": [
-    {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
-    }
-  ],
-  "81": [
-    {
-      "id": "thunder-shock",
-      "name": "电击",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    }
-  ],
-  "82": [
-    {
-      "id": "thunder-shock",
-      "name": "电击",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    }
-  ],
-  "83": [
-    {
-      "id": "quick-attack",
-      "name": "电光一闪",
-      "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "physical"
-    },
-    {
-      "id": "gust",
-      "name": "起风",
-      "type": "flying",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "special"
+      "category": "physical",
+      "level": 41
     },
     {
       "id": "razor-leaf",
       "name": "飞叶快刀",
       "type": "grass",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 39
+    },
+    {
+      "id": "vine-whip",
+      "name": "藤鞭",
+      "type": "grass",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
+      "category": "physical"
+    }
+  ],
+  "70": [
+    {
+      "id": "poison-jab",
+      "name": "毒击",
+      "type": "poison",
+      "category": "physical",
+      "level": 47
+    },
+    {
+      "id": "razor-leaf",
+      "name": "飞叶快刀",
+      "type": "grass",
+      "category": "physical",
+      "level": 44
+    },
+    {
+      "id": "vine-whip",
+      "name": "藤鞭",
+      "type": "grass",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
+      "category": "physical"
+    }
+  ],
+  "71": [
+    {
+      "id": "leaf-blade",
+      "name": "叶刃",
+      "type": "grass",
+      "category": "physical",
+      "level": 44
+    },
+    {
+      "id": "razor-leaf",
+      "name": "飞叶快刀",
+      "type": "grass",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "vine-whip",
+      "name": "藤鞭",
+      "type": "grass",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "poison-jab",
+      "name": "毒击",
+      "type": "poison",
+      "category": "physical"
+    }
+  ],
+  "72": [
+    {
+      "id": "hydro-pump",
+      "name": "水炮",
+      "type": "water",
+      "category": "special",
+      "level": 46
+    },
+    {
+      "id": "sludge-wave",
+      "name": "污泥波",
+      "type": "poison",
+      "category": "special",
+      "level": 43
+    },
+    {
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 34
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
+      "category": "special"
+    }
+  ],
+  "73": [
+    {
+      "id": "sludge-wave",
+      "name": "污泥波",
+      "type": "poison",
+      "category": "special",
+      "level": 48
+    },
+    {
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 36
+    },
+    {
+      "id": "bubble-beam",
+      "name": "泡沫光线",
+      "type": "water",
+      "category": "special",
+      "level": 25
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
+      "category": "special"
+    }
+  ],
+  "74": [
+    {
+      "id": "stone-edge",
+      "name": "尖石攻击",
+      "type": "rock",
+      "category": "physical",
+      "level": 42
+    },
+    {
+      "id": "earthquake",
+      "name": "地震",
+      "type": "ground",
+      "category": "physical",
+      "level": 34
+    },
+    {
+      "id": "rock-blast",
+      "name": "岩石爆击",
+      "type": "rock",
+      "category": "physical",
+      "level": 30
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
+      "category": "physical"
+    }
+  ],
+  "75": [
+    {
+      "id": "earthquake",
+      "name": "地震",
+      "type": "ground",
+      "category": "physical",
+      "level": 40
+    },
+    {
+      "id": "rock-blast",
+      "name": "岩石爆击",
+      "type": "rock",
+      "category": "physical",
+      "level": 34
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical",
+      "level": 22
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
+      "category": "physical"
+    }
+  ],
+  "76": [
+    {
+      "id": "earthquake",
+      "name": "地震",
+      "type": "ground",
+      "category": "physical",
+      "level": 40
+    },
+    {
+      "id": "rock-blast",
+      "name": "岩石爆击",
+      "type": "rock",
+      "category": "physical",
+      "level": 34
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical",
+      "level": 22
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
+      "category": "physical"
+    }
+  ],
+  "77": [
+    {
+      "id": "flare-blitz",
+      "name": "闪焰冲锋",
+      "type": "fire",
+      "category": "physical",
+      "level": 49
+    },
+    {
+      "id": "flame-charge",
+      "name": "蓄能焰袭",
+      "type": "fire",
+      "category": "physical",
+      "level": 21
+    },
+    {
+      "id": "flame-wheel",
+      "name": "火焰轮",
+      "type": "fire",
+      "category": "physical",
+      "level": 13
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
+      "category": "physical"
+    }
+  ],
+  "78": [
+    {
+      "id": "flare-blitz",
+      "name": "闪焰冲锋",
+      "type": "fire",
+      "category": "physical",
+      "level": 49
+    },
+    {
+      "id": "flame-charge",
+      "name": "蓄能焰袭",
+      "type": "fire",
+      "category": "physical",
+      "level": 21
+    },
+    {
+      "id": "flame-wheel",
+      "name": "火焰轮",
+      "type": "fire",
+      "category": "physical",
+      "level": 13
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
+      "category": "physical"
+    }
+  ],
+  "79": [
+    {
+      "id": "zen-headbutt",
+      "name": "意念头锤",
+      "type": "psychic",
+      "category": "physical",
+      "level": 32
+    },
+    {
+      "id": "psychic",
+      "name": "精神强念",
+      "type": "psychic",
+      "category": "special",
+      "level": 45
+    },
+    {
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 28
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical"
+    }
+  ],
+  "80": [
+    {
+      "id": "psychic",
+      "name": "精神强念",
+      "type": "psychic",
+      "category": "special",
+      "level": 49
+    },
+    {
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 28
+    },
+    {
+      "id": "confusion",
+      "name": "念力",
+      "type": "psychic",
+      "category": "special",
+      "level": 14
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
+      "category": "special"
+    }
+  ],
+  "81": [
+    {
+      "id": "zap-cannon",
+      "name": "电磁炮",
+      "type": "electric",
+      "category": "special",
+      "level": 49
+    },
+    {
+      "id": "discharge",
+      "name": "放电",
+      "type": "electric",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "flash-cannon",
+      "name": "加农光炮",
+      "type": "steel",
+      "category": "special",
+      "level": 31
+    },
+    {
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
+      "category": "special"
+    }
+  ],
+  "82": [
+    {
+      "id": "discharge",
+      "name": "放电",
+      "type": "electric",
+      "category": "special",
+      "level": 43
+    },
+    {
+      "id": "flash-cannon",
+      "name": "加农光炮",
+      "type": "steel",
+      "category": "special",
+      "level": 33
+    },
+    {
+      "id": "mirror-shot",
+      "name": "镜光射击",
+      "type": "steel",
+      "category": "special",
+      "level": 23
+    },
+    {
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
+      "category": "special"
+    }
+  ],
+  "83": [
+    {
+      "id": "false-swipe",
+      "name": "点到为止",
+      "type": "normal",
+      "category": "physical",
+      "level": 45
+    },
+    {
+      "id": "feint",
+      "name": "佯攻",
+      "type": "normal",
+      "category": "physical",
+      "level": 43
+    },
+    {
+      "id": "acrobatics",
+      "name": "杂技",
+      "type": "flying",
+      "category": "physical",
+      "level": 37
+    },
+    {
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
+      "type": "dark",
       "category": "physical"
     }
   ],
   "84": [
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
+      "id": "thrash",
+      "name": "大闹一番",
       "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "physical",
+      "level": 50
     },
     {
-      "id": "peck",
-      "name": "啄",
+      "id": "drill-peck",
+      "name": "啄钻",
       "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 43
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "double-hit",
+      "name": "二连击",
+      "type": "normal",
+      "category": "physical",
+      "level": 22
+    },
+    {
+      "id": "steel-wing",
+      "name": "钢翼",
+      "type": "steel",
+      "category": "physical"
     }
   ],
   "85": [
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
-      "type": "normal",
-      "versionGroupId": 8,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "peck",
-      "name": "啄",
+      "id": "drill-peck",
+      "name": "啄钻",
       "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 47
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "double-hit",
+      "name": "二连击",
+      "type": "normal",
+      "category": "physical",
+      "level": 22
+    },
+    {
+      "id": "pluck",
+      "name": "啄食",
+      "type": "flying",
+      "category": "physical",
+      "level": 19
+    },
+    {
+      "id": "payback",
+      "name": "以牙还牙",
+      "type": "dark",
+      "category": "physical"
     }
   ],
   "86": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "aqua-tail",
+      "name": "水流尾",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 43
     },
     {
-      "id": "peck",
-      "name": "啄",
-      "type": "flying",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
-      "category": "physical"
+      "id": "dive",
+      "name": "潜水",
+      "type": "water",
+      "category": "physical",
+      "level": 41
     },
     {
-      "id": "ice-shard",
-      "name": "冰砾",
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 33
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
       "type": "ice",
-      "versionGroupId": 8,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "87": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "aqua-tail",
+      "name": "水流尾",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 49
     },
     {
-      "id": "ice-shard",
-      "name": "冰砾",
+      "id": "dive",
+      "name": "潜水",
+      "type": "water",
+      "category": "physical",
+      "level": 45
+    },
+    {
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 33
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
       "type": "ice",
-      "versionGroupId": 8,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "lick",
-      "name": "舌舔",
-      "type": "ghost",
-      "versionGroupId": 25,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "88": [
     {
-      "id": "pound",
-      "name": "拍击",
+      "id": "gunk-shot",
+      "name": "垃圾射击",
+      "type": "poison",
+      "category": "physical",
+      "level": 40
+    },
+    {
+      "id": "belch",
+      "name": "打嗝",
+      "type": "poison",
+      "category": "special",
+      "level": 46
+    },
+    {
+      "id": "sludge-wave",
+      "name": "污泥波",
+      "type": "poison",
+      "category": "special",
+      "level": 32
+    },
+    {
+      "id": "explosion",
+      "name": "大爆炸",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "lick",
-      "name": "舌舔",
-      "type": "ghost",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
       "category": "physical"
     }
   ],
   "89": [
     {
-      "id": "pound",
-      "name": "拍击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "gunk-shot",
+      "name": "垃圾射击",
+      "type": "poison",
+      "category": "physical",
+      "level": 40
+    },
+    {
+      "id": "sludge-wave",
+      "name": "污泥波",
+      "type": "poison",
+      "category": "special",
+      "level": 32
+    },
+    {
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
+      "category": "special",
+      "level": 29
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "thunderbolt",
-      "name": "十万伏特",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "90": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "razor-shell",
+      "name": "贝壳刃",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 32
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "clamp",
+      "name": "贝壳夹击",
+      "type": "water",
+      "category": "physical",
+      "level": 25
+    },
+    {
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 44
+    },
+    {
+      "id": "explosion",
+      "name": "大爆炸",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "ice-shard",
-      "name": "冰砾",
-      "type": "ice",
-      "versionGroupId": 8,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "91": [
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "ice-shard",
-      "name": "冰砾",
+      "id": "icicle-crash",
+      "name": "冰柱坠击",
       "type": "ice",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 50
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "aurora-beam",
+      "name": "极光束",
+      "type": "ice",
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "hydro-pump",
+      "name": "水炮",
+      "type": "water",
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "explosion",
+      "name": "大爆炸",
       "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "92": [
     {
+      "id": "hex",
+      "name": "祸不单行",
+      "type": "ghost",
+      "category": "special",
+      "level": 43
+    },
+    {
+      "id": "shadow-ball",
+      "name": "暗影球",
+      "type": "ghost",
+      "category": "special",
+      "level": 29
+    },
+    {
       "id": "lick",
       "name": "舌舔",
       "type": "ghost",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "psychic",
-      "name": "精神强念",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "thunderbolt",
-      "name": "十万伏特",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
       "category": "special"
     }
   ],
   "93": [
     {
+      "id": "shadow-ball",
+      "name": "暗影球",
+      "type": "ghost",
+      "category": "special",
+      "level": 33
+    },
+    {
       "id": "lick",
       "name": "舌舔",
       "type": "ghost",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "psychic",
-      "name": "精神强念",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "shadow-punch",
+      "name": "暗影拳",
+      "type": "ghost",
+      "category": "physical",
+      "level": 0
     },
     {
-      "id": "thunderbolt",
-      "name": "十万伏特",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
       "category": "special"
     }
   ],
   "94": [
     {
+      "id": "shadow-ball",
+      "name": "暗影球",
+      "type": "ghost",
+      "category": "special",
+      "level": 33
+    },
+    {
       "id": "lick",
       "name": "舌舔",
       "type": "ghost",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "psychic",
-      "name": "精神强念",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "shadow-punch",
+      "name": "暗影拳",
+      "type": "ghost",
+      "category": "physical",
+      "level": 0
     },
     {
-      "id": "thunderbolt",
-      "name": "十万伏特",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
       "category": "special"
     }
   ],
   "95": [
     {
-      "id": "rock-throw",
-      "name": "落石",
+      "id": "stone-edge",
+      "name": "尖石攻击",
       "type": "rock",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 46
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "dig",
+      "name": "挖洞",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 43
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "sand-tomb",
+      "name": "流沙地狱",
+      "type": "ground",
+      "category": "physical",
+      "level": 37
+    },
+    {
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
+      "type": "dark",
       "category": "physical"
     }
   ],
   "96": [
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "zen-headbutt",
+      "name": "意念头锤",
       "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "physical",
+      "level": 41
     },
     {
-      "id": "pound",
-      "name": "拍击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "psychic",
+      "name": "精神强念",
+      "type": "psychic",
+      "category": "special",
+      "level": 49
     },
     {
-      "id": "low-kick",
-      "name": "踢倒",
+      "id": "synchronoise",
+      "name": "同步干扰",
+      "type": "psychic",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
       "category": "physical"
     }
   ],
   "97": [
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "psychic",
+      "name": "精神强念",
       "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 49
     },
     {
-      "id": "pound",
-      "name": "拍击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "zen-headbutt",
+      "name": "意念头锤",
+      "type": "psychic",
+      "category": "physical",
+      "level": 41
     },
     {
-      "id": "low-kick",
-      "name": "踢倒",
+      "id": "synchronoise",
+      "name": "同步干扰",
+      "type": "psychic",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
       "category": "physical"
     }
   ],
   "98": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "crabhammer",
+      "name": "蟹钳锤",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 41
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 39
     },
     {
-      "id": "metal-claw",
-      "name": "金属爪",
-      "type": "steel",
-      "versionGroupId": 8,
-      "learnMethodId": 1,
+      "id": "bubble-beam",
+      "name": "泡沫光线",
+      "type": "water",
+      "category": "special",
+      "level": 15
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
     }
   ],
   "99": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "bubble-beam",
+      "name": "泡沫光线",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "special",
+      "level": 15
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "bubble",
+      "name": "泡沫",
+      "type": "water",
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "metal-claw",
-      "name": "金属爪",
-      "type": "steel",
-      "versionGroupId": 7,
-      "learnMethodId": 1,
+      "id": "slam",
+      "name": "摔打",
+      "type": "normal",
+      "category": "physical",
+      "level": 44
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
     }
   ],
   "100": [
     {
-      "id": "thunder-shock",
-      "name": "电击",
+      "id": "discharge",
+      "name": "放电",
       "type": "electric",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 37
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
+      "category": "special",
+      "level": 16
+    },
+    {
+      "id": "spark",
+      "name": "电光",
+      "type": "electric",
+      "category": "physical",
+      "level": 9
+    },
+    {
+      "id": "hidden-power",
+      "name": "觉醒力量",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "101": [
     {
-      "id": "thunder-shock",
-      "name": "电击",
+      "id": "discharge",
+      "name": "放电",
       "type": "electric",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 41
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
+      "category": "special",
+      "level": 16
+    },
+    {
+      "id": "spark",
+      "name": "电光",
+      "type": "electric",
+      "category": "physical",
+      "level": 9
+    },
+    {
+      "id": "hidden-power",
+      "name": "觉醒力量",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "102": [
     {
+      "id": "extrasensory",
+      "name": "神通力",
+      "type": "psychic",
+      "category": "special",
+      "level": 47
+    },
+    {
+      "id": "solar-beam",
+      "name": "日光束",
+      "type": "grass",
+      "category": "special",
+      "level": 43
+    },
+    {
       "id": "confusion",
       "name": "念力",
       "type": "psychic",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 27
     },
     {
-      "id": "absorb",
-      "name": "吸取",
-      "type": "grass",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
       "category": "special"
     }
   ],
   "103": [
     {
+      "id": "leaf-storm",
+      "name": "飞叶风暴",
+      "type": "grass",
+      "category": "special",
+      "level": 47
+    },
+    {
+      "id": "psyshock",
+      "name": "精神冲击",
+      "type": "psychic",
+      "category": "special",
+      "level": 17
+    },
+    {
       "id": "confusion",
       "name": "念力",
       "type": "psychic",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "absorb",
-      "name": "吸取",
-      "type": "grass",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
       "category": "special"
-    },
-    {
-      "id": "low-kick",
-      "name": "踢倒",
-      "type": "fighting",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
     }
   ],
   "104": [
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "stomping-tantrum",
+      "name": "跺脚",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 37
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "bonemerang",
+      "name": "骨头回力镖",
+      "type": "ground",
+      "category": "physical",
+      "level": 21
     },
     {
-      "id": "low-kick",
-      "name": "踢倒",
-      "type": "fighting",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
+      "id": "bone-club",
+      "name": "骨棒",
+      "type": "ground",
+      "category": "physical",
+      "level": 7
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "105": [
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "stomping-tantrum",
+      "name": "跺脚",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 43
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "bonemerang",
+      "name": "骨头回力镖",
+      "type": "ground",
+      "category": "physical",
+      "level": 21
     },
     {
-      "id": "low-kick",
-      "name": "踢倒",
-      "type": "fighting",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
+      "id": "bone-club",
+      "name": "骨棒",
+      "type": "ground",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "106": [
     {
-      "id": "low-kick",
-      "name": "踢倒",
+      "id": "high-jump-kick",
+      "name": "飞膝踢",
       "type": "fighting",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
+      "category": "physical",
+      "level": 29
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
+      "category": "physical",
+      "level": 17
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "close-combat",
+      "name": "近身战",
+      "type": "fighting",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical"
     }
   ],
   "107": [
     {
-      "id": "low-kick",
-      "name": "踢倒",
+      "id": "sky-uppercut",
+      "name": "冲天拳",
       "type": "fighting",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
+      "category": "physical",
+      "level": 41
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "close-combat",
+      "name": "近身战",
+      "type": "fighting",
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "focus-punch",
+      "name": "真气拳",
+      "type": "fighting",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical"
     }
   ],
   "108": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "chip-away",
+      "name": "逐步击破",
       "type": "normal",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 37
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "slam",
+      "name": "摔打",
+      "type": "normal",
+      "category": "physical",
+      "level": 29
     },
     {
-      "id": "acid",
-      "name": "溶解液",
-      "type": "poison",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
+      "id": "stomp",
+      "name": "踩踏",
+      "type": "normal",
+      "category": "physical",
+      "level": 21
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "109": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "belch",
+      "name": "打嗝",
+      "type": "poison",
+      "category": "special",
+      "level": 42
+    },
+    {
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
+      "category": "special",
+      "level": 34
+    },
+    {
+      "id": "sludge",
+      "name": "污泥攻击",
+      "type": "poison",
+      "category": "special",
+      "level": 18
+    },
+    {
+      "id": "explosion",
+      "name": "大爆炸",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
-    },
-    {
-      "id": "thunderbolt",
-      "name": "十万伏特",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "flamethrower",
-      "name": "喷射火焰",
-      "type": "fire",
-      "versionGroupId": 4,
-      "learnMethodId": 3,
-      "category": "special"
     }
   ],
   "110": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
+      "category": "special",
+      "level": 34
+    },
+    {
+      "id": "sludge",
+      "name": "污泥攻击",
+      "type": "poison",
+      "category": "special",
+      "level": 18
+    },
+    {
+      "id": "clear-smog",
+      "name": "清除之烟",
+      "type": "poison",
+      "category": "special",
+      "level": 15
+    },
+    {
+      "id": "explosion",
+      "name": "大爆炸",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
-    },
-    {
-      "id": "thunderbolt",
-      "name": "十万伏特",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "flamethrower",
-      "name": "喷射火焰",
-      "type": "fire",
-      "versionGroupId": 4,
-      "learnMethodId": 3,
-      "category": "special"
     }
   ],
   "111": [
     {
-      "id": "rock-throw",
-      "name": "落石",
-      "type": "rock",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "earthquake",
+      "name": "地震",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 45
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "stone-edge",
+      "name": "尖石攻击",
+      "type": "rock",
+      "category": "physical",
+      "level": 41
+    },
+    {
+      "id": "drill-run",
+      "name": "直冲钻",
+      "type": "ground",
+      "category": "physical",
+      "level": 33
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "112": [
     {
-      "id": "rock-throw",
-      "name": "落石",
-      "type": "rock",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
+      "id": "earthquake",
+      "name": "地震",
       "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 48
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
+      "id": "stone-edge",
+      "name": "尖石攻击",
+      "type": "rock",
+      "category": "physical",
+      "level": 41
+    },
+    {
+      "id": "drill-run",
+      "name": "直冲钻",
+      "type": "ground",
+      "category": "physical",
+      "level": 33
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
     }
   ],
   "113": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "egg-bomb",
+      "name": "炸蛋",
       "type": "normal",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 44
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "take-down",
+      "name": "猛撞",
+      "type": "normal",
+      "category": "physical",
+      "level": 27
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "double-slap",
+      "name": "连环巴掌",
+      "type": "normal",
+      "category": "physical",
+      "level": 12
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "114": [
     {
-      "id": "vine-whip",
-      "name": "藤鞭",
+      "id": "giga-drain",
+      "name": "终极吸取",
       "type": "grass",
-      "versionGroupId": 2,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special",
+      "level": 36
     },
     {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 3,
-      "learnMethodId": 2,
+      "id": "mega-drain",
+      "name": "超级吸取",
+      "type": "grass",
+      "category": "special",
+      "level": 23
+    },
+    {
+      "id": "absorb",
+      "name": "吸取",
+      "type": "grass",
+      "category": "special",
+      "level": 10
+    },
+    {
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
       "category": "special"
     }
   ],
   "115": [
     {
-      "id": "pound",
-      "name": "拍击",
+      "id": "dizzy-punch",
+      "name": "迷昏拳",
       "type": "normal",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 34
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "chip-away",
+      "name": "逐步击破",
+      "type": "normal",
+      "category": "physical",
+      "level": 31
     },
     {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "mega-punch",
+      "name": "百万吨重拳",
+      "type": "normal",
+      "category": "physical",
+      "level": 25
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "116": [
     {
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 31
+    },
+    {
+      "id": "bubble-beam",
+      "name": "泡沫光线",
+      "type": "water",
+      "category": "special",
+      "level": 21
+    },
+    {
       "id": "water-gun",
       "name": "水枪",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 13
     },
     {
-      "id": "dragon-breath",
-      "name": "龙息",
-      "type": "dragon",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "117": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "brine",
+      "name": "盐水",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 31
     },
     {
-      "id": "dragon-breath",
-      "name": "龙息",
-      "type": "dragon",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "bubble-beam",
+      "name": "泡沫光线",
+      "type": "water",
+      "category": "special",
+      "level": 21
     },
     {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "bubble",
+      "name": "泡沫",
+      "type": "water",
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "118": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "waterfall",
+      "name": "攀瀑",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 32
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 16
+    },
+    {
+      "id": "megahorn",
+      "name": "超级角击",
+      "type": "bug",
+      "category": "physical",
+      "level": 45
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "peck",
-      "name": "啄",
-      "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "119": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "waterfall",
+      "name": "攀瀑",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 32
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 16
+    },
+    {
+      "id": "fury-attack",
+      "name": "乱击",
       "type": "normal",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 24
     },
     {
-      "id": "peck",
-      "name": "啄",
-      "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "poison-jab",
+      "name": "毒击",
+      "type": "poison",
       "category": "physical"
     }
   ],
   "120": [
     {
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 28
+    },
+    {
+      "id": "bubble-beam",
+      "name": "泡沫光线",
+      "type": "water",
+      "category": "special",
+      "level": 18
+    },
+    {
       "id": "water-gun",
       "name": "水枪",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 4
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "psychic",
-      "name": "精神强念",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "121": [
     {
+      "id": "hydro-pump",
+      "name": "水炮",
+      "type": "water",
+      "category": "special",
+      "level": 1
+    },
+    {
       "id": "water-gun",
       "name": "水枪",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "psychic",
-      "name": "精神强念",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "swift",
+      "name": "高速星星",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "dream-eater",
+      "name": "食梦",
+      "type": "psychic",
+      "category": "special"
     }
   ],
   "122": [
     {
+      "id": "psychic",
+      "name": "精神强念",
+      "type": "psychic",
+      "category": "special",
+      "level": 39
+    },
+    {
+      "id": "psybeam",
+      "name": "幻象光线",
+      "type": "psychic",
+      "category": "special",
+      "level": 25
+    },
+    {
       "id": "confusion",
       "name": "念力",
       "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "pound",
-      "name": "拍击",
-      "type": "normal",
-      "versionGroupId": 18,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "dazzling-gleam",
+      "name": "魔法闪耀",
+      "type": "fairy",
       "category": "special"
     }
   ],
   "123": [
     {
+      "id": "x-scissor",
+      "name": "十字剪",
+      "type": "bug",
+      "category": "physical",
+      "level": 41
+    },
+    {
+      "id": "fury-cutter",
+      "name": "连斩",
+      "type": "bug",
+      "category": "physical",
+      "level": 25
+    },
+    {
       "id": "wing-attack",
       "name": "翅膀攻击",
       "type": "flying",
-      "versionGroupId": 2,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 21
     },
     {
-      "id": "bug-bite",
-      "name": "虫咬",
-      "type": "bug",
-      "versionGroupId": 10,
-      "learnMethodId": 3,
-      "category": "physical"
-    },
-    {
-      "id": "quick-attack",
-      "name": "电光一闪",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
     }
   ],
   "124": [
     {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
       "id": "powder-snow",
       "name": "细雪",
       "type": "ice",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "pound",
-      "name": "拍击",
+      "id": "avalanche",
+      "name": "雪崩",
+      "type": "ice",
+      "category": "physical",
+      "level": 39
+    },
+    {
+      "id": "heart-stamp",
+      "name": "爱心印章",
+      "type": "psychic",
+      "category": "physical",
+      "level": 21
+    },
+    {
+      "id": "echoed-voice",
+      "name": "回声",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "125": [
     {
-      "id": "thunder-shock",
-      "name": "电击",
+      "id": "thunderbolt",
+      "name": "十万伏特",
       "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 49
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "discharge",
+      "name": "放电",
+      "type": "electric",
+      "category": "special",
+      "level": 36
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "shock-wave",
+      "name": "电击波",
+      "type": "electric",
+      "category": "special",
+      "level": 15
+    },
+    {
+      "id": "focus-blast",
+      "name": "真气弹",
+      "type": "fighting",
       "category": "special"
     }
   ],
   "126": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "flamethrower",
+      "name": "喷射火焰",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 49
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 24,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "lava-plume",
+      "name": "喷烟",
+      "type": "fire",
+      "category": "special",
+      "level": 36
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "flame-burst",
+      "name": "烈焰溅射",
+      "type": "fire",
+      "category": "special",
+      "level": 22
+    },
+    {
+      "id": "focus-blast",
+      "name": "真气弹",
+      "type": "fighting",
       "category": "special"
     }
   ],
   "127": [
     {
-      "id": "bug-bite",
-      "name": "虫咬",
+      "id": "x-scissor",
+      "name": "十字剪",
       "type": "bug",
-      "versionGroupId": 11,
-      "learnMethodId": 2,
-      "category": "physical"
+      "category": "physical",
+      "level": 29
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
+      "id": "superpower",
+      "name": "蛮力",
+      "type": "fighting",
+      "category": "physical",
+      "level": 47
+    },
+    {
+      "id": "thrash",
+      "name": "大闹一番",
       "type": "normal",
-      "versionGroupId": 8,
-      "learnMethodId": 2,
+      "category": "physical",
+      "level": 43
+    },
+    {
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
+      "type": "dark",
       "category": "physical"
     }
   ],
   "128": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "take-down",
+      "name": "猛撞",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 35
+    },
+    {
+      "id": "horn-attack",
+      "name": "角撞",
+      "type": "normal",
+      "category": "physical",
+      "level": 8
+    },
+    {
+      "id": "rage",
+      "name": "愤怒",
+      "type": "normal",
+      "category": "physical",
+      "level": 5
+    },
+    {
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
       "category": "physical"
-    },
-    {
-      "id": "surf",
-      "name": "冲浪",
-      "type": "water",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "thunderbolt",
-      "name": "十万伏特",
-      "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "129": [
@@ -3140,61 +3608,66 @@
       "id": "tackle",
       "name": "撞击",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 15
     }
   ],
   "130": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "aqua-tail",
+      "name": "水流尾",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 30
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 2,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "hurricane",
+      "name": "暴风",
+      "type": "flying",
+      "category": "special",
+      "level": 48
     },
     {
-      "id": "bite",
-      "name": "咬住",
+      "id": "hydro-pump",
+      "name": "水炮",
+      "type": "water",
+      "category": "special",
+      "level": 42
+    },
+    {
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
       "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "131": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "hydro-pump",
+      "name": "水炮",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 47
     },
     {
-      "id": "ice-shard",
-      "name": "冰砾",
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "ice-beam",
+      "name": "冰冻光束",
       "type": "ice",
-      "versionGroupId": 8,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special",
+      "level": 32
     },
     {
-      "id": "dragon-breath",
-      "name": "龙息",
-      "type": "dragon",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical"
     }
   ],
   "132": [
@@ -3202,502 +3675,559 @@
       "id": "struggle",
       "name": "挣扎",
       "type": "normal",
-      "fallback": true,
-      "category": "physical"
+      "category": "physical",
+      "fallback": true
     }
   ],
   "133": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "last-resort",
+      "name": "珍藏",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 41
     },
     {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "id": "double-edge",
+      "name": "舍身冲撞",
+      "type": "normal",
+      "category": "physical",
+      "level": 37
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "take-down",
+      "name": "猛撞",
+      "type": "normal",
+      "category": "physical",
+      "level": 25
+    },
+    {
+      "id": "shadow-ball",
+      "name": "暗影球",
+      "type": "ghost",
       "category": "special"
     }
   ],
   "134": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "hydro-pump",
+      "name": "水炮",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "special",
+      "level": 45
+    },
+    {
+      "id": "muddy-water",
+      "name": "浊流",
+      "type": "water",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "water-pulse",
+      "name": "水之波动",
+      "type": "water",
+      "category": "special",
+      "level": 17
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
-    },
-    {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
     }
   ],
   "135": [
     {
+      "id": "thunder",
+      "name": "打雷",
+      "type": "electric",
+      "category": "special",
+      "level": 45
+    },
+    {
+      "id": "discharge",
+      "name": "放电",
+      "type": "electric",
+      "category": "special",
+      "level": 37
+    },
+    {
       "id": "thunder-shock",
       "name": "电击",
       "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 0
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "echoed-voice",
+      "name": "回声",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special"
     }
   ],
   "136": [
     {
-      "id": "ember",
-      "name": "火花",
+      "id": "flare-blitz",
+      "name": "闪焰冲锋",
       "type": "fire",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "physical",
+      "level": 45
     },
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "fire-fang",
+      "name": "火焰牙",
+      "type": "fire",
+      "category": "physical",
+      "level": 20
+    },
+    {
+      "id": "lava-plume",
+      "name": "喷烟",
+      "type": "fire",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "137": [
     {
+      "id": "tri-attack",
+      "name": "三重攻击",
+      "type": "normal",
+      "category": "special",
+      "level": 50
+    },
+    {
       "id": "tackle",
       "name": "撞击",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "thunder-shock",
-      "name": "电击",
+      "id": "discharge",
+      "name": "放电",
       "type": "electric",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 40
     },
     {
-      "id": "psychic",
-      "name": "精神强念",
-      "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "138": [
     {
+      "id": "ancient-power",
+      "name": "原始之力",
+      "type": "rock",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 28
+    },
+    {
       "id": "water-gun",
       "name": "水枪",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "special",
+      "level": 10
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
-    },
-    {
-      "id": "rock-throw",
-      "name": "落石",
-      "type": "rock",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
     }
   ],
   "139": [
     {
+      "id": "ancient-power",
+      "name": "原始之力",
+      "type": "rock",
+      "category": "special",
+      "level": 37
+    },
+    {
+      "id": "brine",
+      "name": "盐水",
+      "type": "water",
+      "category": "special",
+      "level": 28
+    },
+    {
       "id": "water-gun",
       "name": "水枪",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "special",
+      "level": 10
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
-    },
-    {
-      "id": "rock-throw",
-      "name": "落石",
-      "type": "rock",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
     }
   ],
   "140": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "aqua-jet",
+      "name": "水流喷射",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 31
     },
     {
-      "id": "rock-throw",
-      "name": "落石",
+      "id": "ancient-power",
+      "name": "原始之力",
       "type": "rock",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special",
+      "level": 46
     },
     {
       "id": "scratch",
       "name": "抓",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
   "141": [
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "aqua-jet",
+      "name": "水流喷射",
       "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 31
     },
     {
-      "id": "rock-throw",
-      "name": "落石",
-      "type": "rock",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
-    },
-    {
-      "id": "scratch",
-      "name": "抓",
+      "id": "feint",
+      "name": "佯攻",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "night-slash",
+      "name": "暗袭要害",
+      "type": "dark",
+      "category": "physical",
+      "level": 1
+    },
+    {
+      "id": "rock-slide",
+      "name": "岩崩",
+      "type": "rock",
       "category": "physical"
     }
   ],
   "142": [
     {
+      "id": "sky-drop",
+      "name": "自由落体",
+      "type": "flying",
+      "category": "physical",
+      "level": 49
+    },
+    {
       "id": "wing-attack",
       "name": "翅膀攻击",
       "type": "flying",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 1
     },
     {
-      "id": "rock-throw",
-      "name": "落石",
+      "id": "ancient-power",
+      "name": "原始之力",
       "type": "rock",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "special",
+      "level": 25
     },
     {
-      "id": "bite",
-      "name": "咬住",
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
       "type": "dark",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
       "category": "physical"
     }
   ],
   "143": [
     {
-      "id": "tackle",
-      "name": "撞击",
+      "id": "giga-impact",
+      "name": "终极冲击",
       "type": "normal",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 35
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "body-slam",
+      "name": "泰山压顶",
+      "type": "normal",
+      "category": "physical",
+      "level": 25
     },
     {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
+      "id": "chip-away",
+      "name": "逐步击破",
+      "type": "normal",
+      "category": "physical",
+      "level": 17
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
     }
   ],
   "144": [
     {
+      "id": "freeze-dry",
+      "name": "冷冻干燥",
+      "type": "ice",
+      "category": "special",
+      "level": 43
+    },
+    {
       "id": "gust",
       "name": "起风",
       "type": "flying",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
       "id": "powder-snow",
       "name": "细雪",
       "type": "ice",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
       "category": "special"
     }
   ],
   "145": [
     {
+      "id": "discharge",
+      "name": "放电",
+      "type": "electric",
+      "category": "special",
+      "level": 50
+    },
+    {
       "id": "thunder-shock",
       "name": "电击",
       "type": "electric",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "peck",
-      "name": "啄",
+      "id": "pluck",
+      "name": "啄食",
       "type": "flying",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 22
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
       "category": "special"
     }
   ],
   "146": [
     {
-      "id": "ember",
-      "name": "火花",
-      "type": "fire",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
-      "category": "special"
-    },
-    {
-      "id": "gust",
-      "name": "起风",
+      "id": "air-slash",
+      "name": "空气斩",
       "type": "flying",
-      "versionGroupId": 20,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 50
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "flamethrower",
+      "name": "喷射火焰",
+      "type": "fire",
+      "category": "special",
+      "level": 36
+    },
+    {
+      "id": "fire-spin",
+      "name": "火焰旋涡",
+      "type": "fire",
+      "category": "special",
+      "level": 8
+    },
+    {
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
       "category": "special"
     }
   ],
   "147": [
     {
-      "id": "dragon-breath",
-      "name": "龙息",
+      "id": "dragon-rush",
+      "name": "龙之俯冲",
       "type": "dragon",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 41
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "dragon-tail",
+      "name": "龙尾",
+      "type": "dragon",
+      "category": "physical",
+      "level": 31
     },
     {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "twister",
+      "name": "龙卷风",
+      "type": "dragon",
+      "category": "special",
+      "level": 11
+    },
+    {
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
+      "type": "dark",
+      "category": "physical"
     }
   ],
   "148": [
     {
-      "id": "dragon-breath",
-      "name": "龙息",
+      "id": "dragon-rush",
+      "name": "龙之俯冲",
       "type": "dragon",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
+      "category": "physical",
+      "level": 47
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "dragon-tail",
+      "name": "龙尾",
+      "type": "dragon",
+      "category": "physical",
+      "level": 33
     },
     {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "twister",
+      "name": "龙卷风",
+      "type": "dragon",
+      "category": "special",
+      "level": 1
+    },
+    {
+      "id": "brutal-swing",
+      "name": "狂舞挥打",
+      "type": "dark",
+      "category": "physical"
     }
   ],
   "149": [
     {
+      "id": "dragon-rush",
+      "name": "龙之俯冲",
+      "type": "dragon",
+      "category": "physical",
+      "level": 47
+    },
+    {
+      "id": "dragon-tail",
+      "name": "龙尾",
+      "type": "dragon",
+      "category": "physical",
+      "level": 33
+    },
+    {
       "id": "wing-attack",
       "name": "翅膀攻击",
       "type": "flying",
-      "versionGroupId": 3,
-      "learnMethodId": 1,
+      "category": "physical",
+      "level": 0
+    },
+    {
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
       "category": "physical"
-    },
-    {
-      "id": "dragon-breath",
-      "name": "龙息",
-      "type": "dragon",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
-      "category": "special"
-    },
-    {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
     }
   ],
   "150": [
     {
+      "id": "future-sight",
+      "name": "预知未来",
+      "type": "psychic",
+      "category": "special",
+      "level": 15
+    },
+    {
       "id": "confusion",
       "name": "念力",
       "type": "psychic",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 1
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "psycho-cut",
+      "name": "精神利刃",
+      "type": "psychic",
+      "category": "physical",
+      "level": 36
     },
     {
-      "id": "mud-slap",
-      "name": "掷泥",
-      "type": "ground",
-      "versionGroupId": 3,
-      "learnMethodId": 4,
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
   "151": [
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "psychic",
+      "name": "精神强念",
       "type": "psychic",
-      "versionGroupId": 19,
-      "learnMethodId": 1,
-      "category": "special"
+      "category": "special",
+      "level": 30
     },
     {
-      "id": "pound",
-      "name": "拍击",
+      "id": "ancient-power",
+      "name": "原始之力",
+      "type": "rock",
+      "category": "special",
+      "level": 50
+    },
+    {
+      "id": "mega-punch",
+      "name": "百万吨重拳",
       "type": "normal",
-      "versionGroupId": 1,
-      "learnMethodId": 1,
-      "category": "physical"
+      "category": "physical",
+      "level": 10
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
-      "type": "water",
-      "versionGroupId": 1,
-      "learnMethodId": 4,
-      "category": "special"
+      "id": "acrobatics",
+      "name": "杂技",
+      "type": "flying",
+      "category": "physical"
     }
   ]
 }

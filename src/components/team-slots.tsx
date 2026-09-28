@@ -1,16 +1,20 @@
 'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { saveTeamView } from './team-memory';
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowLeftRight, Plus } from 'lucide-react';
+import { ArrowLeftRight, Plus, SlidersHorizontal } from 'lucide-react';
 import { pokemonById } from '@/domain/pokemon';
 import { reorderTeam } from '@/domain/navigation';
 import { PokemonArt } from './pokemon-art';
 import { useCollection } from './collection-provider';
 
-type Drag = { id: number; pointer: number; x: number; y: number; active: boolean; expected: number[]; order: number[]; boxes: DOMRect[]; inside: boolean };
-export function TeamSlots({ team, disabled, edit, notify }: { team: number[]; disabled: boolean; edit: (slot: number) => void; notify: (message: string) => void }) {
+type Drag = { id: number; pointer: number; x: number; y: number; active: boolean; expected: number[]; order: number[]; boxes: DOMRect[]; inside: boolean; mouse: boolean };
+export function TeamSlots({ team, disabled, edit, configureMoves, notify }: { team: number[]; disabled: boolean; edit: (slot: number) => void; configureMoves: (id:number)=>void; notify: (message: string) => void }) {
   const { saveTeam, refresh } = useCollection();
+  const router = useRouter();
+  const suppressClick = useRef(false);
   const root = useRef<HTMLDivElement>(null);
   const gesture = useRef<Drag | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -36,26 +40,28 @@ export function TeamSlots({ team, disabled, edit, notify }: { team: number[]; di
     catch (error) { notify(error instanceof Error ? error.message : '顺序没有保存，请再试一次。'); await refresh(); }
     finally { saving.current = false; setBusy(false); setDraft(null); }
   }
+  function activate(drag: Drag) {
+    drag.active = true; suppressClick.current = true;
+    root.current?.setPointerCapture(drag.pointer);
+    setDraft(drag.order); setGhost({ id: drag.id, x: drag.x, y: drag.y });
+    notify(`正在移动${pokemonById.get(drag.id)!.name}，松手放好。`);
+  }
   function start(event: PointerEvent<HTMLButtonElement>, id: number) {
+    suppressClick.current = false;
     if (disabled || saving.current || team.length < 2 || !event.isPrimary || event.button !== 0) return;
     clearTimer();
     const boxes = Array.from(root.current!.querySelectorAll<HTMLElement>('[data-team-id]')).map(el => el.getBoundingClientRect());
-    const drag: Drag = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, active: false, expected: [...team], order: [...team], boxes, inside: true };
+    const drag: Drag = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, active: false, expected: [...team], order: [...team], boxes, inside: true, mouse: event.pointerType === 'mouse' };
     gesture.current = drag;
-    root.current!.setPointerCapture(event.pointerId);
-    const activate = () => {
-      drag.active = true; setDraft(drag.order); setGhost({ id, x: drag.x, y: drag.y });
-      notify(`正在移动${pokemonById.get(id)!.name}，松手放好。`);
-    };
-    if (event.pointerType === 'mouse') activate();
-    else timer.current = setTimeout(activate, 350);
+    if (!drag.mouse) timer.current = setTimeout(() => activate(drag), 350);
   }
   function move(event: PointerEvent<HTMLDivElement>) {
     const drag = gesture.current;
     if (!drag || drag.pointer !== event.pointerId) return;
     if (!drag.active) {
-      if (Math.hypot(event.clientX - drag.x, event.clientY - drag.y) > 10) cancel();
-      return;
+      const distance=Math.hypot(event.clientX - drag.x, event.clientY - drag.y);
+      if (drag.mouse && distance > 8) activate(drag);
+      else { if (distance > 10) { suppressClick.current=true; cancel(); } return; }
     }
     setGhost({ id: drag.id, x: event.clientX, y: event.clientY });
     const bounds = root.current!.getBoundingClientRect();
@@ -73,16 +79,17 @@ export function TeamSlots({ team, disabled, edit, notify }: { team: number[]; di
     if (drag.active && drag.inside) void commit(drag.order, drag.expected);
     else { setDraft(null); if (drag.active) notify('已取消移动。'); }
   }
-  return <><div className="team-slots" ref={root} aria-busy={busy} onPointerMove={move} onPointerUp={end} onPointerCancel={cancel} onLostPointerCapture={() => { if (gesture.current) cancel(); }}>{Array.from({ length: 6 }, (_, slot) => {
+  return <><div className="team-slots" ref={root} aria-busy={busy} onPointerMove={move} onPointerUp={end} onPointerLeave={() => { if (gesture.current && !gesture.current.active && gesture.current.mouse) cancel(); }} onPointerCancel={cancel} onLostPointerCapture={() => { if (gesture.current) cancel(); }}>{Array.from({ length: 6 }, (_, slot) => {
     const p = pokemonById.get(order[slot]);
     return <motion.article layout={reduced ? false : 'position'} transition={{ duration: .18 }} data-team-id={p?.id} className={`team-slot ${p ? 'occupied' : ''} ${ghost?.id === p?.id && p ? 'team-dragging' : ''}`} key={p?.id ?? `empty-${slot}`}>
       <span className="team-slot-number">{String(slot + 1).padStart(2, '0')}</span>
-      {p ? <><button className="team-partner-art team-drag-handle" disabled={disabled || busy || team.length < 2} aria-label={`移动${p.name}，当前位置${slot + 1}`} aria-describedby="team-sort-hint" onPointerDown={event => start(event, p.id)} onContextMenu={event => event.preventDefault()} onKeyDown={event => {
-        if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key) || saving.current || gesture.current) return;
+      {p ? <><button className="team-partner-art team-drag-handle" disabled={busy} aria-label={`查看${p.name}，长按可换位置`} aria-describedby="team-sort-hint" onPointerDown={event => start(event, p.id)} onClick={() => { if (suppressClick.current) return; saveTeamView({y:window.scrollY}); router.push(`/pokemon/${p.id}?from=team`); }} onContextMenu={event => event.preventDefault()} onKeyDown={event => {
+        if (event.key === 'Enter' || event.key === ' ') suppressClick.current=false;
+        if (disabled || !['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key) || saving.current || gesture.current) return;
         event.preventDefault();
         const to = slot + (event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1);
         void commit(reorderTeam(team, p.id, to), [...team]);
-      }}><PokemonArt pokemon={p} /></button><Link className="team-detail-link" href={`/pokemon/${p.id}?from=team`} aria-label={`查看${p.name}的详情`}><strong>{p.name}</strong></Link><button className="team-change" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(slot)}><ArrowLeftRight size={18} />换伙伴</button></> : <button className="team-empty" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(team.length)} aria-label={`邀请伙伴，位置${slot + 1}`}><span className="empty-ball"><Plus size={32} /></span><strong>一起出发</strong></button>}
+      }}><PokemonArt pokemon={p} /></button><Link className="team-detail-link" href={`/pokemon/${p.id}?from=team`} aria-label={`查看${p.name}的详情`}><strong>{p.name}</strong></Link><div className="team-slot-actions"><button className="team-change" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(slot)}><ArrowLeftRight size={18} />换伙伴</button><button className="team-configure-moves" disabled={disabled || busy || Boolean(ghost)} onClick={()=>configureMoves(p.id)} aria-label={`设置${p.name}的招式`}><SlidersHorizontal size={17}/>招式</button></div></> : <button className="team-empty" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(team.length)} aria-label={`邀请伙伴，位置${slot + 1}`}><span className="empty-ball"><Plus size={32} /></span><strong>一起出发</strong></button>}
     </motion.article>;
   })}</div><p id="team-sort-hint" className="team-sort-hint">长按伙伴，拖动换位置<span className="sr-only">。键盘可聚焦伙伴后用方向键调整顺序，Escape 取消拖动。</span></p>{ghost && <div className="team-drag-ghost" aria-hidden="true" style={{ left: ghost.x, top: ghost.y }}><PokemonArt pokemon={pokemonById.get(ghost.id)!} /></div>}</>;
 }

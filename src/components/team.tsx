@@ -9,6 +9,7 @@ import { InviteDialog } from './encounter-team';
 import { pokemonById } from '@/domain/pokemon';
 import { useCollection } from './collection-provider';
 import { PokemonArt } from './pokemon-art';
+import { MovePicker } from './move-picker';
 import { TeamSlots } from './team-slots';
 import { useTeamView, saveTeamView } from './team-memory';
 
@@ -29,6 +30,7 @@ export function Team() {
   const center = snapshot.records.filter(record => !team.includes(record.pokemonId));
   const [editing, setEditing] = useState<{ slot: number; expected: number[] } | null>(null);
   const [notice, setNotice] = useState('');
+  const [movePartner,setMovePartner]=useState<number|null>(null);
   const view = useTeamView();
   const { filter, sort } = view;
   const setFilter = (filter: PokemonType | 'all') => saveTeamView({ filter });
@@ -46,12 +48,13 @@ export function Team() {
   return <div className="page team-page" onClickCapture={event => { if ((event.target as HTMLElement).closest('a[href^="/pokemon/"]')) saveTeamView({ y: window.scrollY }); }}>
     <div className="page-heading team-heading"><div><div className="eyebrow">LET’S GO TOGETHER</div><div className="team-title-row"><h1>我的小队<span className="title-dot">.</span></h1><span className="team-count" aria-label={`小队人数 ${team.length} / 6`}><UsersRound size={24} />{team.length} / 6</span></div><p>选六位伙伴，一起出发吧。</p></div><Link href="/battle" className="button team-battle-button"><Swords size={24} aria-hidden="true" />去对战</Link></div>
     {!live && <p className="team-demo-note">这里是示例伙伴。连接家庭后，就能选择自己的小队。</p>}
-    <section className="team-camp" aria-label="六个随行位置"><TeamSlots team={team} disabled={!live || Boolean(editing || inviting)} edit={edit} notify={setNotice} /></section>
+    <section className="team-camp" aria-label="六个随行位置"><TeamSlots team={team} disabled={!live || Boolean(editing || inviting || movePartner)} edit={edit} configureMoves={setMovePartner} notify={setNotice} /></section>
     <p className="team-notice" role="status">{notice}</p>
     <section className="pokemon-center"><div className="section-heading"><div className="center-heading"><span className="center-sign" aria-hidden="true"><House size={29} /><Plus size={15} /></span><div><h2>精灵中心 <small>{center.length}</small></h2><p>伙伴们在这里休息，随时可以一起出发。</p></div></div></div>
       {snapshot.records.length > 0 && <div className="center-tools"><div className="center-type-filters" role="group" aria-label="按属性找伙伴"><button aria-pressed={filter === 'all'} onClick={() => setFilter('all')}><span className="center-all-types"><House size={23} />全部</span><span>{center.length}</span></button>{types.map(type => { const count = center.filter(record => pokemonById.get(record.pokemonId)?.types.includes(type)).length; return <button key={type} aria-label={`${TYPE_NAMES[type]}属性，${count}位伙伴`} aria-pressed={filter === type} onClick={() => { speakType(type); setFilter(filter === type ? 'all' : type); }}><TypePicture type={type} interactive={false} /><span>{count}</span>{filter === type && <Check className="center-filter-check" size={17} />}</button>; })}</div><div className="center-sort-row"><span role="status">{visible.length} 位伙伴{filter !== 'all' ? ` · ${TYPE_NAMES[filter]}属性` : ''}</span><label>排列<select value={sort} onChange={event => setSort(event.target.value as CenterSort)}><option value="recent">最近相遇</option><option value="number">图鉴编号</option></select></label></div></div>}
       {visible.length ? <div className="center-grid">{visible.map(({ pokemonId }) => { const p = pokemonById.get(pokemonId)!; return <article key={p.id} className={`center-partner card-${p.types[0]}`}><Link href={`/pokemon/${p.id}?from=team`} className="team-partner-art" aria-label={`看看${p.name}`}><PokemonArt pokemon={p} /></Link><strong>{p.name}</strong><button className="center-invite" disabled={!live} aria-label={`邀请${p.name}加入小队`} onClick={() => { setNotice(''); setInviting({ id: p.id, expected: [...team] }); }}><UsersRound size={18} />加入小队</button></article>; })}</div> : <div className="empty-state compact"><House size={34} /><h3>{center.length ? '这里暂时没有这种属性的伙伴' : team.length ? '伙伴们都在小队里' : '伙伴们还在路上'}</h3>{filter !== 'all' && <button className="button secondary" onClick={() => setFilter('all')}>看看全部伙伴</button>}{!snapshot.records.length && <Link href="/capture" className="button">打开奖励 <ArrowRight size={20} /></Link>}</div>}
     </section>
+    {movePartner!==null&&<MovePicker id={movePartner} onClose={()=>setMovePartner(null)}/>}
     {inviting && <InviteDialog partner={pokemonById.get(inviting.id)!} expected={inviting.expected} onClose={() => setInviting(null)} onDone={() => setNotice(`${pokemonById.get(inviting.id)!.name}加入小队啦！`)} />}
     {editing && <TeamPicker slot={editing.slot} expected={editing.expected} onClose={() => setEditing(null)} onDone={message => { setNotice(message); setEditing(null); }} />}
   </div>;

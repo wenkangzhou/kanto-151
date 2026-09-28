@@ -2,6 +2,8 @@
 
 一本属于家庭的关都冒险手帐。把真实生活中的成长，珍藏为与最初 151 只宝可梦的相遇。
 
+后续想法见 [产品待办](docs/todo.md)。
+
 ## 体验与功能
 
 面向孩子与家长共同使用：孩子在 iPad 上探索、收集与对战，家长在手机上记录成长、发放奖励。一个部署对应一个家庭、一个孩子，多设备共享。
@@ -55,7 +57,7 @@ npm start
 
 完整操作见 [部署说明](docs/deployment.md)。
 
-1. 在 Supabase SQL Editor 执行一次 [`supabase/migrations/202609080001_family_rewards.sql`](supabase/migrations/202609080001_family_rewards.sql)。再执行 [`202609080002_chapter_discoveries.sql`](supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](supabase/migrations/202609090003_anime_route.sql)。最后执行 [`202609090004_team.sql`](supabase/migrations/202609090004_team.sql)。已执行 `001`—`003` 的家庭只执行 `004`，然后部署对应代码。迁移不导入示例收藏。
+1. 在 Supabase SQL Editor 执行一次 [`supabase/migrations/202609080001_family_rewards.sql`](supabase/migrations/202609080001_family_rewards.sql)。再执行 [`202609080002_chapter_discoveries.sql`](supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](supabase/migrations/202609090003_anime_route.sql)。再执行 [`202609090004_team.sql`](supabase/migrations/202609090004_team.sql) 和 [`202609240005_battle_loadouts.sql`](supabase/migrations/202609240005_battle_loadouts.sql)。已执行 `001`—`004` 的家庭只执行 `005`，然后部署对应代码。迁移不导入示例收藏。
 2. 本地 `.env` 或 `.env.local` 填入 `SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`、`SUPABASE_SECRET_KEY`，使用新版 publishable / secret keys。
 3. 运行 `npm run setup:secrets`，在被 Git 忽略的 `.env.local` 生成 `APP_SESSION_SECRET`、`APP_SETUP_TOKEN`。密钥只生成缺失项，不输出值。
 4. 上传仓库到 GitHub，Vercel 导入仓库，使用项目根目录和仓库中的 `vercel.json`。把上述**五项变量**逐一添加到 Vercel Production，名称均不带 `NEXT_PUBLIC_`。本地真实配置不会随 Git 上传。
@@ -89,7 +91,7 @@ scripts/                  数据同步、配置与构建检查、SQL 规则生�
 
 ## 声音资源
 
-**语音已随仓库提供，无需配置语音 API Key 即可运行或部署。**当前音色为 MiniMax `hunyin_6`，模型为 `speech-2.8-hd`。已制作 1,546 条音频，约 104 分钟、103 MB，按需加载；未使用浏览器系统朗读作为备用音色。试听地址：[/audio/voices/preview.html](http://localhost:42751/audio/voices/preview.html)。
+**语音已随仓库提供，无需配置语音 API Key 即可运行或部署。**当前音色为 MiniMax `hunyin_6`，模型为 `speech-2.8-hd`。当前清单包含 4,366 条音频，约 216 分钟、215 MB，按需加载；未使用浏览器系统朗读作为备用音色。试听地址：[/audio/voices/preview.html](http://localhost:42751/audio/voices/preview.html)。
 
 只有补充或修改配音时，才需要在本地 `.env.local` 配置 `MINIMAX_AUDIO_TTS_API_KEY`，并安装 Python 3 与 FFmpeg。不要提交密钥，也不需要把这个 Key 配置到 Vercel。
 
@@ -140,3 +142,5 @@ SQL 测试在本地 PGlite PostgreSQL 执行整份迁移及奖励生命周期，
 普通捕捉奖励按无印篇主要故事顺序获得，首次从皮卡丘开始，自动跳过已有收藏。图鉴编号不变，进化与传说券机制保留。详见 [动画路线与升级说明](docs/anime-route.md)。
 
 更多资料：[设计原则](docs/design-principles.md)、[体型对比](docs/size-comparison.md)、[语音制作](docs/voices.md)、[一对一对战](docs/battle.md)。
+
+配招：小队伙伴卡片 → 招式。统一 50 级，三个升级位＋一个学习器位，两个来源不能混用。同一版本的合法池与例外见 [招式覆盖统计](docs/battle-learnsets.md)。四招以两行两列显示；预设与家庭共享，演示模式独立保存。全部可选招式的完整出招语音已补齐，沿用统一模型与音色。

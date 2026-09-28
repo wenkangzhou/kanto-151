@@ -1,3 +1,4 @@
+import { validSlots } from '@/domain/battle-loadout';
 import { rewardOutcomes } from '@/domain/reward-history';
 import type { ParentReward } from '@/domain/types';
 import { randomBytes } from 'node:crypto';
@@ -95,6 +96,14 @@ export async function POST(request: NextRequest, context: Context) {
       response.cookies.set('kanto_device', token, { ...cookieOptions, maxAge: 180 * 24 * 3600 });
       response.cookies.set('kanto_parent', '', { ...cookieOptions, maxAge: 0 });
       return response;
+    }
+    if (path === 'battle/moves') {
+      const session = await deviceSession(request);
+      const id = input.pokemonId;
+      if (typeof id !== 'number' || !Number.isInteger(id) || !validSlots(id,input.moves)
+        || !(input.expected === null || validSlots(id,input.expected))) throw new ApiError(400,'INPUT','请选择合法的三个升级招式和一个学习器招式。');
+      await limit(`moves:${session.childId}`,120,60);
+      return reply(await rpc('kanto_set_moves',{p_child_id:session.childId,p_pokemon_id:id,p_expected:input.expected,p_moves:input.moves}));
     }
     if (path === 'team') {
       const session = await deviceSession(request);
