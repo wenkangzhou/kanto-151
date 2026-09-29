@@ -47,6 +47,7 @@ export function pin(input: Record<string, unknown>) {
   return value;
 }
 const messages: Record<string, string> = {
+  PLAY_TIME_CHANGED: '另一台设备已调整使用时间，请刷新后再操作。',
   MOVES_CHANGED: '另一台设备调整了招式，已为你刷新，请重新选择。',
   TEAM_CHANGED: '另一台设备调整了小队，已为你刷新，请重新选择。', TEAM_NOT_COLLECTED: '只能邀请已经收集的伙伴加入小队。',
   ALREADY_SETUP: '家庭已初始化，请连接设备或使用恢复入口。', INVALID_PAIRING: '连接码不正确、已使用或已过期。',

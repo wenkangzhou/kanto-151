@@ -1,10 +1,11 @@
+import { dailyDeadline, usageDay, playTimeLocked, validMinutes, type PlayTime } from '@/domain/play-time';
 import { retainedSlots, validSlots } from '@/domain/battle-loadout';
 import { pokemon, pokemonById } from '@/domain/pokemon';
 import { capturePool, evolutionOptions, legendaryEligible, currentChapter } from '@/domain/collection';
 import type { FamilySession, LiveSnapshot, ParentReward, Receipt } from '@/domain/types';
 
 type Reward = ParentReward & { requestId?: string; receiptId?: string };
-export type DemoData = { version: 1; snapshot: LiveSnapshot; parent: boolean; rewards: Reward[]; receipts: Receipt[]; used: Record<string, string>; devices: { id: string; name: string }[] };
+export type DemoData = { version: 1; playTime?: PlayTime; playTimeRequest?: string; snapshot: LiveSnapshot; parent: boolean; rewards: Reward[]; receipts: Receipt[]; used: Record<string, string>; devices: { id: string; name: string }[] };
 const now = () => new Date().toISOString();
 const reasons = ['独立整理好书包', '认真读完一本书', '帮助家人收拾餐桌', '遇到困难又试了一次'];
 export function createDemoData(finale = false): DemoData {
@@ -28,6 +29,17 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
     if (previousChapter && currentChapter(s)?.id !== previousChapter.id) r.completed_chapter = previousChapter.id;
     data.receipts.push(r);s.pendingReceipt=r;return r;
   };
+  const time = ():PlayTime => {
+    const current = {enabled:false,minutes:20,expiresAt:null,revision:0,...data.playTime,serverNow:now()};
+    const today = usageDay(Date.parse(current.serverNow));
+    if (current.enabled && current.usageDay && current.usageDay < today) {
+      data.playTime = {...current, usageDay:today, expiresAt:dailyDeadline(Date.parse(current.serverNow),current.minutes),revision:current.revision+1};
+      return data.playTime;
+    }
+    return current;
+  };
+  if(route==='play-time')return time();
+  if(['battle/moves','team','redeem','tickets/use','mew'].includes(route)&&playTimeLocked(time()))fail('伙伴们要休息啦，请家长重新开启。');
   if(route==='session')return {status:'ready',familyName:'演示家庭',childName:'小小冒险家',parent:data.parent,snapshot:s} satisfies FamilySession;
   if(route==='battle/moves') {
     const id=Number(body?.pokemonId);
@@ -46,6 +58,15 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
   if(route==='parent/unlock'){if(body?.pin!=='123456')fail('演示 PIN 是 123456。');data.parent=true;return {};}
   if(route==='parent/lock'){data.parent=false;return {};}
   if(route.startsWith('parent/')&&!data.parent)fail('请用演示 PIN 123456 打开家长空间。');
+  if(route==='parent/play-time'){
+    const current=time();
+    if(!validMinutes(body?.minutes)||!['start','lock','disable','configure'].includes(String(body?.action))||typeof body?.requestId!=='string')fail('请选择 1 至 120 分钟。');
+    if(data.playTimeRequest===body!.requestId)return current;
+    if(body!.expected!==current.revision)fail('另一台设备已调整使用时间，请刷新后再操作。');
+    const action=body!.action;
+    data.playTime={...current,usageDay:usageDay(Date.now()),minutes:body!.minutes as number,revision:current.revision+1,enabled:action==='start'||action==='lock'?true:action==='disable'?false:current.enabled,expiresAt:action==='start'?dailyDeadline(Date.now(),Number(body!.minutes)):action==='lock'||action==='disable'?null:current.expiresAt};
+    data.playTimeRequest=body!.requestId as string;return time();
+  }
   if(route==='parent/rewards'&&!body){const page=Number(new URLSearchParams(query).get('page')||0);const all=[...data.rewards].reverse();return {rewards:all.slice(page*30,page*30+30),hasMore:all.length>(page+1)*30};}
   if(route==='parent/rewards'&&body){
     const existing=data.rewards.find(r=>r.requestId===body.requestId);if(existing)return existing;

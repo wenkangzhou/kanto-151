@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { usePlayTimeAnimation } from './play-time';
 import { useCallback, useEffect, useRef, useState, type FormEvent, type CSSProperties } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -42,6 +43,7 @@ export function Encounter({ receipt, preview = false, onPreviewContinue }: { rec
   const [phase, setPhase] = useState(0); const [skipped, setSkipped] = useState(false); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   const ticketOnly = receipt.pokemon_id === null;
   const stage = skipped || receipt.acknowledged_at ? 'completed' : ticketOnly ? giftOpened ? 'completed' : 'gift' : !started ? 'ready' : reduced ? 'completed' : stages[phase][0];
+  usePlayTimeAnimation(started && !['ready','completed','reveal'].includes(stage) ? `encounter:${receipt.id}` : null);
   useEffect(() => {
     if (stage !== 'ready') return;
     const timer = setTimeout(startEncounter, evolution ? 350 : 8000);

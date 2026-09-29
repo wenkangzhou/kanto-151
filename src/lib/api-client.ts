@@ -17,6 +17,7 @@ export async function api<T>(path: string, body?: Record<string, unknown>, signa
   let result;
   try { result = await response.json(); } catch { throw new RequestError('暂时无法读取手帐，请稍后重试。', 'RESPONSE', response.status); }
   if (!response.ok) {
+    if (result.code === 'PLAY_TIME_LOCKED') window.dispatchEvent(new Event('kanto-play-time-refresh'));
     if (result.code === 'PIN_REQUIRED') window.dispatchEvent(new Event('kanto-parent-locked'));
     if (result.code === 'DEVICE_REQUIRED') window.dispatchEvent(new Event('kanto-device-lost'));
     throw new RequestError(result.error ?? '操作没有完成，请重试。', result.code ?? 'UNKNOWN', response.status);

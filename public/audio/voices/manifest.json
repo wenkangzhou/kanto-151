@@ -30577,6 +30577,13 @@
       "category": "battle-fixed",
       "url": "/audio/voices/3848407470e206f7adb5fed0.mp3",
       "durationMs": 1656
+    },
+    {
+      "id": "473c7387639b9c60557c15e1",
+      "text": "快到休息时间啦，我们准备休息吧。",
+      "category": "play-time",
+      "url": "/audio/voices/473c7387639b9c60557c15e1.mp3",
+      "durationMs": 3024
     }
   ]
 }

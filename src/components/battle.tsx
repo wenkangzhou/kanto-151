@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { usePlayTimeAnimation } from './play-time';
 import { useCallback, useEffect, useId, useMemo, useReducer, useRef, useState, useSyncExternalStore } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, RotateCcw, Swords, Trophy, Handshake, Shuffle, X } from 'lucide-react';
@@ -76,6 +77,7 @@ function Match({presets,team,enemy,again,retry,canChange,audioOwner,initialPartn
     }
     return prepareBattleAudio([...texts.map(voiceSource).filter((source):source is string=>!!source),...effects]);
   },[enemy,preparingPartner,state.presets]);
+  usePlayTimeAnimation(['summon','player','enemy','player-feedback','enemy-feedback'].includes(state.phase) ? `battle:${state.phase}:${state.rounds}` : null);
   const summoning=state.phase==='summon';
   const busy=state.phase==='order'||summoning||state.phase==='player'||state.phase==='enemy'||state.phase==='player-feedback'||state.phase==='enemy-feedback';
   useEffect(()=>{

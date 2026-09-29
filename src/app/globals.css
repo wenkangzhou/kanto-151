@@ -462,3 +462,33 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .loadout-dialog-partner{margin-bottom:12px}
 .loadout-dialog-partner .pokemon-art{width:90px;height:90px}
 @media(max-width:640px){.team-slot-actions .team-change,.team-slot-actions .team-configure-moves{font-size:12px;gap:4px}}
+
+/* Family play sessions: compact countdown, calm rest screen, parent controls. */
+.play-time-content { display: contents; }
+.play-time-badge { display: inline-flex; align-items: center; gap: 6px; color: var(--sage, #7f9b70); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.play-time-badge.ending { color: #9a7431; }
+.play-time-notice { position: fixed; z-index: 35; bottom: 24px; left: 50%; transform: translateX(-50%); padding: 10px 18px; border: 1px solid #e5d7ae; border-radius: 20px; background: #fff9e7; color: #80652f; font-size: 14px; pointer-events: none; max-width: calc(100vw - 32px); width: max-content; }
+.play-time-rest { min-height: 65dvh; padding: 40px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 18px; }
+.play-time-rest h1 { font-size: clamp(26px, 4vw, 40px); margin: 0; }
+.play-time-rest p { color: #7c897d; margin: 0; }
+.play-time-rest > .text-link { margin-top: 20px; }
+.rest-partner { width: clamp(170px, 27vw, 280px); position: relative; }
+.rest-partner .pokemon-art { width: 100%; }
+.rest-partner > svg { position: absolute; right: 0; top: 5%; width: 40px; height: 40px; color: #b49f66; }
+.parent-play-time { margin-bottom: 28px; }
+.parent-play-time h2 { display: flex; align-items: center; gap: 8px; }
+.play-time-state { font-variant-numeric: tabular-nums; color: #708960; }
+.play-time-settings { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin: 20px 0; }
+.time-presets { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.time-presets button { min-height: 44px; padding: 8px 14px; border: 1px solid #dce3d5; border-radius: 12px; }
+.time-presets button[aria-pressed=true] { background: #eaf0df; border-color: #819d70; }
+.custom-minutes { display: flex; align-items: center; gap: 8px; }
+.custom-minutes input { width: 78px; min-height: 44px; background: white; border: 1px solid #dce3d5; padding: 8px; border-radius: 12px; }
+.parent-play-time > .text-link { margin-top: 20px; }
+@media (max-width: 700px) {
+  .play-time-notice { bottom: calc(84px + env(safe-area-inset-bottom)); font-size: 12px; }
+  .parent-play-time .section-heading { align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .parent-play-time .action-row { flex-wrap: wrap; }
+}
+
+.pokedex-type-filters { margin-top: 16px; }

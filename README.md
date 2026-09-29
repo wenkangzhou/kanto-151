@@ -17,6 +17,7 @@
 - **家长奖励草稿**：已解锁家长空间内切换页面时保留奖励理由、提交状态和生成结果；锁定、刷新或离开家长空间后清除临时草稿，已生成奖励仍可在记录中查看。
 - **统一语音**：名字、介绍、属性说明、道具说明与对战台词采用 MiniMax 预生成配音；点文字旁播放按钮或属性／道具图片即可听取。使用完整句子，不运行时拼接；播放无需调用模型。
 - **音乐与动画**：大屏背景乐、开球／进化／礼物音乐，以及对战与胜利音乐；音乐默认关闭。动画支持跳过和减少动态效果，开球等待点击超过 8 秒自动继续。
+- **使用时间控制**：家长配置每日时长（默认 20 分钟），北京时间自然日重置、首次打开开始连续倒计时、多设备共享；到时进入休息页，家长可重新开启或立即锁定，详见 [使用时间说明](docs/play-time.md)。
 - **家庭与设备**：家庭初始化、设备配对、服务端家长 PIN 校验、短期家长会话和访问恢复。奖励通过数据库原子操作兑换，防止重复领取和刷新重选。
 - **PWA**：可添加到主屏幕，桌面侧栏与手机底部导航适配；缓存公开静态资源，家庭数据与页面不做离线缓存。
 
@@ -57,7 +58,7 @@ npm start
 
 完整操作见 [部署说明](docs/deployment.md)。
 
-1. 在 Supabase SQL Editor 执行一次 [`supabase/migrations/202609080001_family_rewards.sql`](supabase/migrations/202609080001_family_rewards.sql)。再执行 [`202609080002_chapter_discoveries.sql`](supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](supabase/migrations/202609090003_anime_route.sql)。再执行 [`202609090004_team.sql`](supabase/migrations/202609090004_team.sql) 和 [`202609240005_battle_loadouts.sql`](supabase/migrations/202609240005_battle_loadouts.sql)。已执行 `001`—`004` 的家庭只执行 `005`，然后部署对应代码。迁移不导入示例收藏。
+1. 在 Supabase SQL Editor 执行一次 [`supabase/migrations/202609080001_family_rewards.sql`](supabase/migrations/202609080001_family_rewards.sql)。再执行 [`202609080002_chapter_discoveries.sql`](supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](supabase/migrations/202609090003_anime_route.sql)。再执行 [`202609090004_team.sql`](supabase/migrations/202609090004_team.sql) 和 [`202609240005_battle_loadouts.sql`](supabase/migrations/202609240005_battle_loadouts.sql)。再执行 [`202609280006_play_time.sql`](supabase/migrations/202609280006_play_time.sql)。再执行 [`202609290007_daily_play_time.sql`](supabase/migrations/202609290007_daily_play_time.sql)。已执行 `001`—`005` 的家庭执行 `006`、`007`；已执行 `006` 只需追加 `007`，然后部署对应代码。迁移不导入示例收藏。
 2. 本地 `.env` 或 `.env.local` 填入 `SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`、`SUPABASE_SECRET_KEY`，使用新版 publishable / secret keys。
 3. 运行 `npm run setup:secrets`，在被 Git 忽略的 `.env.local` 生成 `APP_SESSION_SECRET`、`APP_SETUP_TOKEN`。密钥只生成缺失项，不输出值。
 4. 上传仓库到 GitHub，Vercel 导入仓库，使用项目根目录和仓库中的 `vercel.json`。把上述**五项变量**逐一添加到 Vercel Production，名称均不带 `NEXT_PUBLIC_`。本地真实配置不会随 Git 上传。
@@ -91,7 +92,7 @@ scripts/                  数据同步、配置与构建检查、SQL 规则生�
 
 ## 声音资源
 
-**语音已随仓库提供，无需配置语音 API Key 即可运行或部署。**当前音色为 MiniMax `hunyin_6`，模型为 `speech-2.8-hd`。当前清单包含 4,366 条音频，约 216 分钟、215 MB，按需加载；未使用浏览器系统朗读作为备用音色。试听地址：[/audio/voices/preview.html](http://localhost:42751/audio/voices/preview.html)。
+**语音已随仓库提供，无需配置语音 API Key 即可运行或部署。**当前音色为 MiniMax `hunyin_6`，模型为 `speech-2.8-hd`。当前清单包含 4,367 条音频，约 216 分钟、215 MB，按需加载；未使用浏览器系统朗读作为备用音色。试听地址：[/audio/voices/preview.html](http://localhost:42751/audio/voices/preview.html)。
 
 只有补充或修改配音时，才需要在本地 `.env.local` 配置 `MINIMAX_AUDIO_TTS_API_KEY`，并安装 Python 3 与 FFmpeg。不要提交密钥，也不需要把这个 Key 配置到 Vercel。
 

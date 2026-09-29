@@ -42,6 +42,7 @@ for (const p of pokemon) {
   add('battle-loss', `对战结束，${p.name}获胜！我们的伙伴也很努力，一起休息一下吧。`);
 }
 for (const text of ['选一位伙伴出场吧！', '这招没有效果，体力没有减少。', '这招很有效！', '效果不显著。', '打中了！', '配合得真棒！这场友好对战获胜啦！', '双方都很努力！这次握手言和吧。', '轮到你啦！']) add('battle-fixed', text);
+add('play-time', '快到休息时间啦，我们准备休息吧。');
 mkdirSync('data/voice', { recursive: true });
 const clips = [...entries.values()];
 writeFileSync('data/voice/catalog.json', JSON.stringify({ settings, clips }, null, 2) + '\n');
