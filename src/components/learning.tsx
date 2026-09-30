@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import {useCallback,useEffect,useRef,useState} from 'react';
-import {ArrowLeft,BookOpen,Check,ChevronRight,GraduationCap,Lightbulb,RotateCcw,Star,Volume2,X} from 'lucide-react';
+import {ArrowLeft,BookOpen,Check,ChevronRight,GraduationCap,Lightbulb,RotateCcw,Star,Volume2,VolumeX,X} from 'lucide-react';
 import {api} from '@/lib/api-client';
 import {MACHINE_STAR_COST,stages,type LearningState,type Question} from '@/domain/learning';
 import {usageDay} from '@/domain/play-time';
@@ -12,12 +12,13 @@ export function Learning(){
  const [data,setData]=useState<LearningState|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[practicing,setPracticing]=useState(false),[answer,setAnswer]=useState(''),[feedback,setFeedback]=useState(''),[muted,setMuted]=useState(false);
  const [pending,setPending]=useState<Record<string,unknown>|null>(null);
  const [today,setToday]=useState(()=>usageDay(Date.now()));
+ const mutedRef=useRef(false);
  const sending=useRef(false),elapsed=useRef(0),ticking=useRef(0);
  const load=useCallback(async()=>{try{setData(await api<LearningState>('learning'));setError('');}catch(e){setError(e instanceof Error?e.message:'请重新连接。');}},[]);
  useEffect(()=>{let mounted=true;api<LearningState>('learning').then(d=>{if(mounted)setData(d);}).catch(e=>{if(mounted)setError(e.message);});const tick=setInterval(()=>setToday(usageDay(Date.now())),15000);return()=>{mounted=false;clearInterval(tick);stopLearningSpeech();};},[]);
  const lesson=data?.active;const question=lesson?.questions.find(q=>!q.done);
  const questionId=question?.id,a=question?.a,b=question?.b;
- const say=useCallback((text:string)=>{if(!muted)speakLearning(text);},[muted]);
+ const say=useCallback((text:string)=>{if(!mutedRef.current)speakLearning(text);},[]);
  useEffect(()=>{
    if(!practicing||!questionId)return;
    say(`${a}减${b}等于几？`);
@@ -42,13 +43,13 @@ export function Learning(){
    finally{sending.current=false;setBusy(false);}
  }
  const rewardAvailable=!!data&&(data.day!==today||data.rounds<data.dailyRounds);
- return <div className="page learning-page"><div className="section-heading"><h1><GraduationCap/>去学习</h1><div className="action-row"><strong className="learning-balance"><Star/> {data?.balance??0}</strong><button className="icon-button" aria-label={muted?'开启学习语音':'关闭学习语音'} aria-pressed={!muted} onClick={()=>{setMuted(!muted);stopLearningSpeech();}}><Volume2 size={22}/>{muted?'静音':'语音'}</button></div></div>
+ return <div className="page learning-page"><div className="section-heading"><h1><GraduationCap/>去学习</h1><div className="action-row"><strong className="learning-balance"><Star/> {data?.balance??0}</strong><button className="icon-button" aria-label={muted?'开启学习语音':'关闭学习语音'} aria-pressed={!muted} onClick={()=>{mutedRef.current=!mutedRef.current;setMuted(mutedRef.current);stopLearningSpeech();}}>{muted?<VolumeX size={22}/>:<Volume2 size={22}/>}<span>{muted?'声音关':'声音开'}</span></button></div></div>
  {error&&<div role="alert" className="form-error">{error}<button className="button secondary" disabled={busy} onClick={()=>pending?void act(pending):void load()}>重试</button>{pending&&<button className="text-link" onClick={()=>{setPending(null);void load();}}>重新读取</button>}</div>}
  {!data?<p role="status">正在打开学习手帐…</p>:practicing&&lesson&&!lesson.finishedAt&&question?<>
    <div className="learning-progress"><button className="back-link" disabled={busy} onClick={()=>{setPracticing(false);stopLearningSpeech();}}> <ArrowLeft/>稍后继续</button><div className="lesson-dots" aria-label={`第 ${lesson.questions.filter(q=>q.done).length+1} 题，共 5 题`}>{lesson.questions.map((q,i)=><span key={q.id} className={q.done?'done':q.id===question.id?'active':''}>{q.done?<Check size={18}/>:i+1}</span>)}</div>{!lesson.rewarded&&<small>自由练习 · 不增加星星</small>}</div>
-   <div className="math-practice"><section className="math-question"><button className="math-read" aria-label="再听一次题目" onClick={()=>speakLearning(`${question.a}减${question.b}等于几？`)}><Volume2/></button><div className="math-equation">{question.a} − {question.b} = <output aria-label="你的答案">{answer||'?'}</output></div>
+   <div className="math-practice"><section className="math-question"><button className="math-read" aria-label="再听一次题目" disabled={muted} onClick={()=>say(`${question.a}减${question.b}等于几？`)}>{muted?<VolumeX/>:<Volume2/>}</button><div className="math-equation">{question.a} − {question.b} = <output aria-label="你的答案">{answer||'?'}</output></div>
    <button className="button secondary" disabled={busy||!!pending} onClick={()=>void act({action:'hint',lessonId:lesson.id,questionId:question.id,seconds:elapsed.current})}><Lightbulb/>帮帮我</button>
-   {(question.hint||question.attempts>=2)&&<TenFrame key={question.id} question={question} say={say}/>}
+   {(question.hint||question.attempts>=2)&&<TenFrame key={question.id} question={question} say={say} muted={muted}/>}
    <p className="math-feedback" role="status">{feedback}</p></section>
    <form className="math-keyboard" onSubmit={e=>{e.preventDefault();if(answer)void act({action:'answer',lessonId:lesson.id,questionId:question.id,answer:Number(answer),seconds:elapsed.current});}}>
    <div className="math-digits">{[1,2,3,4,5,6,7,8,9].map(n=><button type="button" key={n} disabled={busy||!!pending} onClick={()=>setAnswer(v=>(v+n).slice(-2))}>{n}</button>)}<button type="button" disabled={busy||!!pending} aria-label="清除答案" onClick={()=>setAnswer('')}><RotateCcw/></button><button type="button" disabled={busy||!!pending} onClick={()=>setAnswer(v=>(v+'0').slice(-2))}>0</button><button type="button" disabled={busy||!!pending} aria-label="删除一位" onClick={()=>setAnswer(v=>v.slice(0,-1))}><X/></button></div><button className="button math-submit" disabled={!answer||Number(answer)>20||busy||!!pending}><Check/>{busy?'保存中…':'答好了'}</button></form></div>
@@ -57,12 +58,12 @@ export function Learning(){
  <div className="learning-path">{stages.map((s,i)=><div key={s.name} className={i===(data.fixedStage??data.stage)?'current':''}><span>{s.icon}</span><strong>{s.name}</strong><small>{s.example}</small></div>)}</div><Link href="/team" className="text-link"><BookOpen size={18}/>到小队兑换招式</Link>
  </>}</div>;
 }
-function TenFrame({question:q,say}:{question:Question;say:(text:string)=>void}){
+function TenFrame({question:q,say,muted}:{question:Question;say:(text:string)=>void;muted:boolean}){
  const [step,setStep]=useState(0);
  const steps=subtractionHelp(q.a,q.b),current=steps[step];
  function go(next:number){setStep(next);say(steps[next].speech);}
  return <div className="subtraction-help">
-   <div className="help-heading"><strong>{current.title}</strong><button aria-label="读出这一步" onClick={()=>say(current.speech)}><Volume2 size={20}/></button></div>
+   <div className="help-heading"><strong>{current.title}</strong><button aria-label="读出这一步" disabled={muted} onClick={()=>say(current.speech)}>{muted?<VolumeX size={20}/>:<Volume2 size={20}/>}</button></div>
    <div className="help-equation" key={`equation-${step}`}>{current.equation.split('；').map(line=><div key={line}>{line}</div>)}</div>
    <div className="help-groups">{current.groups.map((group,i)=><div className="help-group" key={i}><div className="help-counters">{Array.from({length:group.total},(_,n)=><span key={n} className={n>=group.total-group.removed?'removed':''}>{n>=group.total-group.removed?<X size={14}/>:null}</span>)}</div><strong>{group.label}</strong></div>)}</div>
    <div className="help-controls"><button disabled={step===0} onClick={()=>go(step-1)}><ArrowLeft size={16}/>上一步</button><span>{step+1} / {steps.length}</span>{step<steps.length-1?<button className="button secondary" onClick={()=>go(step+1)}>下一步<ChevronRight size={18}/></button>:<button onClick={()=>go(0)}><RotateCcw size={16}/>再看一次</button>}</div>
