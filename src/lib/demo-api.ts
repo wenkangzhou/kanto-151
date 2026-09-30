@@ -1,11 +1,12 @@
 import { dailyDeadline, usageDay, playTimeLocked, validMinutes, type PlayTime } from '@/domain/play-time';
-import { retainedSlots, validSlots } from '@/domain/battle-loadout';
+import { retainedSlots, validSlots, machineAvailable } from '@/domain/battle-loadout';
+import { changeLearning, learningState, type LearningState } from '@/domain/learning';
 import { pokemon, pokemonById } from '@/domain/pokemon';
 import { capturePool, evolutionOptions, legendaryEligible, currentChapter } from '@/domain/collection';
 import type { FamilySession, LiveSnapshot, ParentReward, Receipt } from '@/domain/types';
 
 type Reward = ParentReward & { requestId?: string; receiptId?: string };
-export type DemoData = { version: 1; playTime?: PlayTime; playTimeRequest?: string; snapshot: LiveSnapshot; parent: boolean; rewards: Reward[]; receipts: Receipt[]; used: Record<string, string>; devices: { id: string; name: string }[] };
+export type DemoData = { version: 1; learning?:LearningState; moveLayout?:2; playTime?: PlayTime; playTimeRequest?: string; snapshot: LiveSnapshot; parent: boolean; rewards: Reward[]; receipts: Receipt[]; used: Record<string, string>; devices: { id: string; name: string }[] };
 const now = () => new Date().toISOString();
 const reasons = ['独立整理好书包', '认真读完一本书', '帮助家人收拾餐桌', '遇到困难又试了一次'];
 export function createDemoData(finale = false): DemoData {
@@ -13,11 +14,19 @@ export function createDemoData(finale = false): DemoData {
   const records = pokemon.filter(p => finale ? p.id < 151 : p.id <= 120 && !omitted.has(p.id)).map((p,i) => ({pokemonId:p.id,acquiredAt:new Date(Date.UTC(2026,8,1+i%15,8)).toISOString(),reason:reasons[i%reasons.length],method:'capture' as const}));
   const tickets = [{id:'demo-evolution',type:'evolution' as const,reason:'坚持练习，迎接新的成长',createdAt:now()},{id:'demo-legendary',type:'legendary' as const,reason:'勇敢尝试一次特别的冒险',createdAt:now()}];
   const rewards: Reward[] = (['capture','evolution','legendary'] as const).map((type,i)=>({id:`demo-reward-${i}`,code:['111111','222222','333333'][i],type,reason:reasons[i],created_at:now(),expires_at:new Date(Date.now()+86400000*30).toISOString(),redeemed_at:null,revoked_at:null}));
-  return {version:1,snapshot:{source:'sandbox',records,team:[25,4,7,1,16,19],inventory:{evolution:1,legendary:1},tickets,pendingReceipt:null},parent:false,rewards,receipts:[],used:{},devices:[{id:'demo-this',name:'演示平板'},{id:'demo-phone',name:'演示家长手机'}]};
+  return {version:1,moveLayout:2,snapshot:{source:'sandbox',records,team:[25,4,7,1,16,19],inventory:{evolution:1,legendary:1},tickets,pendingReceipt:null},parent:false,rewards,receipts:[],used:{},devices:[{id:'demo-this',name:'演示平板'},{id:'demo-phone',name:'演示家长手机'}]};
 }
 export function handleDemo(data: DemoData, path: string, body?: Record<string, unknown>): unknown {
   const [route,query] = path.split('?');
   const s=data.snapshot;
+  if(data.moveLayout!==2){
+    const state=learningState(data.learning??null);
+    for(const [id,moves] of Object.entries(s.movePresets??{})){
+      if(moves[3]&&!state.unlocked.includes(moves[3]))state.unlocked.push(moves[3]);
+      s.movePresets![id]=[moves[0],moves[1],moves[3],null];
+    }
+    data.learning=state;s.unlockedMoves=state.unlocked;data.moveLayout=2;
+  }
   const fail=(message:string):never=>{throw new Error(message);};
   const receipt=(id:unknown)=>data.receipts.find(r=>r.id===id) ?? fail('没有找到这次演示相遇。');
   const recount=()=>{s.inventory={evolution:s.tickets.filter(t=>t.type==='evolution').length,legendary:s.tickets.filter(t=>t.type==='legendary').length};};
@@ -25,7 +34,7 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
     const previousChapter = currentChapter(s);
     const r:Receipt={id:crypto.randomUUID(),kind,pokemon_id:pokemonId,from_pokemon_id:from,ticket_id:ticketId,reason,created_at:now(),acknowledged_at:null,route_version:'anime-v1'};
     if(pokemonId&&!s.records.some(p=>p.pokemonId===pokemonId))s.records.push({pokemonId,reason,acquiredAt:r.created_at,method:kind==='evolution'?'evolution':kind==='legendary'||kind==='mew'?'legendary':'capture'});
-    if(kind==='evolution'&&pokemonId&&from&&s.movePresets?.[from]&&!s.movePresets[pokemonId])s.movePresets[pokemonId]=retainedSlots(pokemonId,s.movePresets[from]);
+    if(kind==='evolution'&&pokemonId&&from&&s.movePresets?.[from]&&!s.movePresets[pokemonId])s.movePresets[pokemonId]=retainedSlots(pokemonId,s.movePresets[from]).map((m,i)=>i>=2&&m&&!machineAvailable(pokemonId,m,s.unlockedMoves)?null:m) as import('@/domain/battle-loadout').MoveSlots;
     if (previousChapter && currentChapter(s)?.id !== previousChapter.id) r.completed_chapter = previousChapter.id;
     data.receipts.push(r);s.pendingReceipt=r;return r;
   };
@@ -39,11 +48,22 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
     return current;
   };
   if(route==='play-time')return time();
+  if(route==='learning'||route==='parent/learning'){
+    const parent=route.startsWith('parent/');
+    if(parent&&!data.parent)fail('请先打开家长空间。');
+    if(!body)return learningState(data.learning??null);
+    if(parent!==(body.action==='settings'))fail('操作不正确。');
+    if(!parent&&playTimeLocked(time()))fail('伙伴们要休息啦，请家长重新开启。');
+    data.learning=changeLearning(learningState(data.learning??null),body,s.records.map(r=>r.pokemonId),parent);
+    s.unlockedMoves=data.learning.unlocked;
+    return data.learning;
+  }
   if(['battle/moves','team','redeem','tickets/use','mew'].includes(route)&&playTimeLocked(time()))fail('伙伴们要休息啦，请家长重新开启。');
   if(route==='session')return {status:'ready',familyName:'演示家庭',childName:'小小冒险家',parent:data.parent,snapshot:s} satisfies FamilySession;
   if(route==='battle/moves') {
     const id=Number(body?.pokemonId);
     if(!s.records.some(r=>r.pokemonId===id)||!validSlots(id,body?.moves))return fail('请选择已收集伙伴的合法招式。');
+    if(body.moves.some((m,i)=>i>=2&&m&&!machineAvailable(id,m,s.unlockedMoves)))return fail('先用学习星解锁这个技能机招式。');
     const current=s.movePresets?.[id]??null;
     if(JSON.stringify(current)===JSON.stringify(body.moves))return s;
     if(JSON.stringify(current)!==JSON.stringify(body.expected))return fail('招式已变化，请刷新后再试。');

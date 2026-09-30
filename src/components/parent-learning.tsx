@@ -1,0 +1,16 @@
+'use client';
+import {useEffect,useState} from 'react';
+import {api} from '@/lib/api-client';
+import {stages,type LearningState} from '@/domain/learning';
+import {usageDay} from '@/domain/play-time';
+export function ParentLearning(){
+ const [data,setData]=useState<LearningState|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[stage,setStage]=useState(0),[fixed,setFixed]=useState(false),[rounds,setRounds]=useState(2),[notice,setNotice]=useState('');
+ async function load(){try{const d=await api<LearningState>('parent/learning');setData(d);setStage(d.fixedStage??d.stage);setFixed(d.fixedStage!==null);setRounds(d.dailyRounds);setError('');}catch(e){setError(e instanceof Error?e.message:'读取失败。');}}
+ useEffect(()=>{let mounted=true;api<LearningState>('parent/learning').then(d=>{if(mounted){setData(d);setStage(d.fixedStage??d.stage);setFixed(d.fixedStage!==null);setRounds(d.dailyRounds);}}).catch(e=>{if(mounted)setError(e.message);});return()=>{mounted=false;};},[]);
+ async function save(){setBusy(true);setError('');try{const d=await api<LearningState>('parent/learning',{action:'settings',stage,fixed,dailyRounds:rounds,requestId:crypto.randomUUID()});setData(d);setNotice('已保存，下一轮生效');}catch(e){setError(e instanceof Error?e.message:'保存失败。');}finally{setBusy(false);}}
+ const [today]=useState(()=>usageDay(Date.now()));const lessons=data?[...data.history.filter(l=>l.finishedAt),...(data.active&&!data.active.finishedAt?[data.active]:[])].filter(l=>l.day===today):[];
+ const questions=lessons.flatMap(l=>l.questions).filter(q=>q.done);
+ return <section className="detail-panel parent-learning"><h2>学习手帐</h2>{error&&<p role="alert" className="form-error">{error}<button onClick={()=>void load()}>重新读取</button></p>}{data?<><div className="learning-stats"><span>今日完成 <b>{questions.length} 题</b></span><span>独立答对 <b>{questions.filter(q=>q.first).length} 题</b></span><span>提示后完成 <b>{questions.filter(q=>q.hint).length} 题</b></span><span>练习约 <b>{Math.ceil(lessons.reduce((n,l)=>n+l.activeSeconds,0)/60)} 分钟</b></span><span>可用学习星 <b>{data.balance} ⭐</b></span><span>已解锁 <b>{data.unlocked.length} 招</b></span></div>
+ <div className="learning-settings"><label>减法阶段<select value={stage} onChange={e=>setStage(Number(e.target.value))}>{stages.map((s,i)=><option key={s.name} value={i}>{s.name}</option>)}</select></label><label><input type="checkbox" checked={fixed} onChange={e=>setFixed(e.target.checked)}/>固定此阶段</label><label>每日奖励轮数<select value={rounds} onChange={e=>setRounds(Number(e.target.value))}>{[0,1,2,3,4,5].map(n=><option key={n} value={n}>{n} 轮</option>)}</select></label><button className="button secondary" disabled={busy} onClick={()=>void save()}>保存</button></div><p className="form-note">每轮五题；每日轮次按北京时间计算。学习与娱乐共用使用时长。{notice}</p>
+ <details><summary>练习记录</summary>{[...data.history].reverse().slice(0,20).map(l=><p key={l.id}>{l.day} · {stages[l.stage].name} · 独立 {l.questions.filter(q=>q.first).length}/5 · 提示 {l.questions.filter(q=>q.hint).length} 次</p>)}{data.history.length===0&&<p>还没有完成的练习。</p>}</details><details><summary>学习星收支</summary>{[...data.ledger].reverse().slice(0,30).map((r,i)=><p key={`${r.id}-${i}`}>{new Date(r.at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'})} · {r.reason} · {r.amount>0?'+':''}{r.amount} ⭐</p>)}</details></>:<p>正在读取…</p>}</section>;
+}

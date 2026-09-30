@@ -1,4 +1,4 @@
-"""Generate USUM level-50 3+1 learnsets from cached PokeAPI CSVs.
+"""Generate USUM level-50 2+2 learnsets from cached PokeAPI CSVs.
 
 Only direct attacks with positive fixed base power are supported. The practice
 engine normalizes these to one power-40 hit, without move-specific effects.
@@ -43,11 +43,17 @@ def rank(p, m):
 defaults = {}
 for p in pokemon:
     pools = learnsets[str(p['id'])]
-    level = sorted(pools['level'], key=lambda m: rank(p, m))[:3]
-    machine = sorted((m for m in pools['machine'] if m['id'] not in {x['id'] for x in level}), key=lambda m: (m['type'] in {x['type'] for x in level}, *rank(p, m)))[:1]
+    level = sorted(pools['level'], key=lambda m: rank(p, m))[:2]
+    def machine_score(m):
+        preferred = 'physical' if p['stats']['attack'] >= p['stats']['special-attack'] else 'special'
+        return (4 if m['type'] in p['types'] else 0) + (2 if m['category'] == preferred else 0)
+    candidates = sorted((m for m in pools['machine'] if m['id'] not in {x['id'] for x in level}), key=lambda m: (-machine_score(m), m['id']))
+    machine = candidates[:1]
+    covered = {x['type'] for x in level + machine}
+    machine += sorted(candidates[1:], key=lambda m: (m['type'] in covered, -machine_score(m), m['id']))[:1]
     defaults[str(p['id'])] = level + machine or [{'id':'struggle','name':'挣扎','type':'normal','category':'physical','fallback':True}]
 (root/'src/data/battle-moves.json').write_text(json.dumps(defaults, ensure_ascii=False, indent=2)+'\n')
-exceptions = [f"| {p['id']:03} {p['name']} | {len(learnsets[str(p['id'])]['level'])} | {len(learnsets[str(p['id'])]['machine'])} |" for p in pokemon if len(learnsets[str(p['id'])]['level']) < 3]
-report = '# 50 级招式覆盖统计\n\n固定版本：究极之日／究极之月（version_group_id=18）。来源和文件校验值见 battle-learnsets.json。\n\n范围：升级方式 1 且等级 ≤50（含初始／进化时等级 0），学习器方式 4；不含教学、遗传及跨版本记录。只收录正数固定基础威力的物理／特殊攻击，不收录变化、固定伤害、反击及不定威力招式。练习模式统一为一次威力 40 的攻击，不模拟命中、PP、连击、反伤等附加机制。\n\n默认升级招式按本系优先、适合自身攻击能力优先、学习等级较高优先，最后按招式 ID 稳定排序，取最多三个；学习器位优先增加一种尚未覆盖的属性，其余同上。不要求升级招式属性互不相同；相同招式不重复装备。双方使用相同合法池，敌方使用默认配置。\n\n## 升级攻击招式不足三个的伙伴\n\n| 伙伴 | 升级攻击数 | 学习器攻击数 |\n|---|---:|---:|\n'+'\n'.join(exceptions)+'\n\n铁甲蛹、铁壳蛹、百变怪使用挣扎兜底。凯西虽然没有升级攻击招式，但可以使用一个学习器攻击招式。槽位不足不跨来源补齐，不继承其他形态的招式池。\n'
+exceptions = [f"| {p['id']:03} {p['name']} | {len(learnsets[str(p['id'])]['level'])} | {len(learnsets[str(p['id'])]['machine'])} |" for p in pokemon if len(learnsets[str(p['id'])]['level']) < 2]
+report = '# 50 级招式覆盖统计\n\n固定版本：究极之日／究极之月（version_group_id=18）。来源和文件校验值见 battle-learnsets.json。\n\n范围：升级方式 1 且等级 ≤50（含初始／进化时等级 0），学习器方式 4；不含教学、遗传及跨版本记录。只收录正数固定基础威力的物理／特殊攻击，不收录变化、固定伤害、反击及不定威力招式。练习模式统一为一次威力 40 的攻击，不模拟命中、PP、连击、反伤等附加机制。\n\n默认升级招式按本系优先、适合自身攻击能力优先、学习等级较高优先，最后按招式 ID 稳定排序，取最多两个；技能机默认两个，优先本系及擅长类别，第二个优先补充未覆盖属性。其余技能机用学习星永久兑换，详见 [学习规则](learning.md)。不要求升级招式属性互不相同；相同招式不重复装备。双方使用相同合法池，敌方使用默认配置。\n\n## 升级攻击招式不足两个的伙伴\n\n| 伙伴 | 升级攻击数 | 学习器攻击数 |\n|---|---:|---:|\n'+'\n'.join(exceptions)+'\n\n铁甲蛹、铁壳蛹、百变怪使用挣扎兜底。凯西虽然没有升级攻击招式，但可以使用两个技能机攻击招式。槽位不足不跨来源补齐，不继承其他形态的招式池。\n'
 (root/'docs/battle-learnsets.md').write_text(report)
 print('Generated 151 species; exceptions:', len(exceptions), 'unique moves:',len({m['id'] for pools in learnsets.values() for pool in pools.values() for m in pool}))

@@ -21,6 +21,7 @@ export interface CollectionRecord {
 export interface CollectionSnapshot {
   team?: number[];
   movePresets?: MovePresets;
+  unlockedMoves?: string[];
   records: CollectionRecord[];
   inventory: { evolution: number; legendary: number };
   source: 'demo' | 'sandbox' | 'empty' | 'supabase';

@@ -47,6 +47,8 @@ export function pin(input: Record<string, unknown>) {
   return value;
 }
 const messages: Record<string, string> = {
+  MOVE_LOCKED: '先用学习星解锁这个技能机招式。',
+  PLAY_TIME_LOCKED: '伙伴们要休息啦，请家长重新开启。',
   PLAY_TIME_CHANGED: '另一台设备已调整使用时间，请刷新后再操作。',
   MOVES_CHANGED: '另一台设备调整了招式，已为你刷新，请重新选择。',
   TEAM_CHANGED: '另一台设备调整了小队，已为你刷新，请重新选择。', TEAM_NOT_COLLECTED: '只能邀请已经收集的伙伴加入小队。',

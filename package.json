@@ -14,8 +14,8 @@
     "postbuild": "node --import tsx scripts/check-client-bundle.ts",
     "verify": "npm run lint && npm run sql:check && npm test",
     "setup:secrets": "node --import tsx scripts/setup-secrets.ts",
-    "sql:rules": "node --import tsx scripts/generate-sql-rules.ts && node --import tsx scripts/generate-move-rules.ts",
-    "sql:check": "node --import tsx scripts/generate-sql-rules.ts --check && node --import tsx scripts/generate-move-rules.ts --check",
+    "sql:rules": "node --import tsx scripts/generate-sql-rules.ts && node --import tsx scripts/generate-move-rules.ts && node --import tsx scripts/generate-learning-rules.ts",
+    "sql:check": "node --import tsx scripts/generate-sql-rules.ts --check && node --import tsx scripts/generate-move-rules.ts --check && node --import tsx scripts/generate-learning-rules.ts --check",
     "check:env": "node --import tsx scripts/check-env.ts",
     "check:supabase": "node --import tsx scripts/check-env.ts --connect"
   },

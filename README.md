@@ -58,7 +58,7 @@ npm start
 
 完整操作见 [部署说明](docs/deployment.md)。
 
-1. 在 Supabase SQL Editor 执行一次 [`supabase/migrations/202609080001_family_rewards.sql`](supabase/migrations/202609080001_family_rewards.sql)。再执行 [`202609080002_chapter_discoveries.sql`](supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](supabase/migrations/202609090003_anime_route.sql)。再执行 [`202609090004_team.sql`](supabase/migrations/202609090004_team.sql) 和 [`202609240005_battle_loadouts.sql`](supabase/migrations/202609240005_battle_loadouts.sql)。再执行 [`202609280006_play_time.sql`](supabase/migrations/202609280006_play_time.sql)。再执行 [`202609290007_daily_play_time.sql`](supabase/migrations/202609290007_daily_play_time.sql)。已执行 `001`—`005` 的家庭执行 `006`、`007`；已执行 `006` 只需追加 `007`，然后部署对应代码。迁移不导入示例收藏。
+1. 在 Supabase SQL Editor 执行一次 [`supabase/migrations/202609080001_family_rewards.sql`](supabase/migrations/202609080001_family_rewards.sql)。再执行 [`202609080002_chapter_discoveries.sql`](supabase/migrations/202609080002_chapter_discoveries.sql)。再执行 [`202609090003_anime_route.sql`](supabase/migrations/202609090003_anime_route.sql)。再执行 [`202609090004_team.sql`](supabase/migrations/202609090004_team.sql) 和 [`202609240005_battle_loadouts.sql`](supabase/migrations/202609240005_battle_loadouts.sql)。再执行 [`202609280006_play_time.sql`](supabase/migrations/202609280006_play_time.sql)。再执行 [`202609290007_daily_play_time.sql`](supabase/migrations/202609290007_daily_play_time.sql)。已执行 `001`—`005` 的家庭执行 `006`、`007`、`008`；已执行 `006` 需追加 `007`、[`008 学习迁移`](supabase/migrations/202609290008_learning.sql)；已执行 `007` 只需追加 `008`，然后部署对应代码。迁移不导入示例收藏。
 2. 本地 `.env` 或 `.env.local` 填入 `SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`、`SUPABASE_SECRET_KEY`，使用新版 publishable / secret keys。
 3. 运行 `npm run setup:secrets`，在被 Git 忽略的 `.env.local` 生成 `APP_SESSION_SECRET`、`APP_SETUP_TOKEN`。密钥只生成缺失项，不输出值。
 4. 上传仓库到 GitHub，Vercel 导入仓库，使用项目根目录和仓库中的 `vercel.json`。把上述**五项变量**逐一添加到 Vercel Production，名称均不带 `NEXT_PUBLIC_`。本地真实配置不会随 Git 上传。
@@ -144,4 +144,4 @@ SQL 测试在本地 PGlite PostgreSQL 执行整份迁移及奖励生命周期，
 
 更多资料：[设计原则](docs/design-principles.md)、[体型对比](docs/size-comparison.md)、[语音制作](docs/voices.md)、[一对一对战](docs/battle.md)。
 
-配招：小队伙伴卡片 → 招式。统一 50 级，三个升级位＋一个学习器位，两个来源不能混用。同一版本的合法池与例外见 [招式覆盖统计](docs/battle-learnsets.md)。四招以两行两列显示；预设与家庭共享，演示模式独立保存。全部可选招式的完整出招语音已补齐，沿用统一模型与音色。
+配招：小队伙伴卡片 → 招式。统一 50 级，两个升级位＋两个技能机位，两个来源不能混用。同一版本的合法池与例外见 [招式覆盖统计](docs/battle-learnsets.md)。四招以两行两列显示；预设与家庭共享，演示模式独立保存。全部可选招式的完整出招语音已补齐，沿用统一模型与音色。每只伙伴默认开放两个技能机招式，其余用 30 颗通用学习星永久兑换。数学学习使用系统语音，详见 [学习与技能机](docs/learning.md)。

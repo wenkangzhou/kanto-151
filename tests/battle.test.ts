@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { maxHp, healthPercent, firstAttacker, battleMoves, battleReducer, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, usableMoves, type BattleState } from '../src/domain/battle';
 import pokemon from '../src/data/pokemon.json';
+import {learnset} from '../src/domain/battle-loadout';
 function completeStep(s: BattleState): BattleState {
   let next=battleReducer(s,{type:'advance'});
   if(next.phase==='order')next=battleReducer(next,{type:'advance'});
@@ -125,7 +126,7 @@ test('physical and special moves use independent offensive and defensive stats',
   assert.ok(damage(special,6,143)>damage(special,4,143));
 });
 test('cached move categories follow each move rather than its elemental type', () => {
-  const all=pokemon.flatMap(p=>battleMoves(p.id));
+  const all=pokemon.flatMap(p=>[...learnset(p.id).level,...learnset(p.id).machine]);
   assert.equal(all.find(m=>m.id==='quick-attack')?.category,'physical');
   assert.equal(all.find(m=>m.id==='swift')?.category,'special');
   assert.equal(all.find(m=>m.id==='vine-whip')?.category,'physical');

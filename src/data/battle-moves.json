@@ -15,11 +15,10 @@
       "level": 19
     },
     {
-      "id": "vine-whip",
-      "name": "藤鞭",
+      "id": "energy-ball",
+      "name": "能量球",
       "type": "grass",
-      "category": "physical",
-      "level": 9
+      "category": "special"
     },
     {
       "id": "sludge-bomb",
@@ -44,11 +43,10 @@
       "level": 20
     },
     {
-      "id": "vine-whip",
-      "name": "藤鞭",
+      "id": "energy-ball",
+      "name": "能量球",
       "type": "grass",
-      "category": "physical",
-      "level": 9
+      "category": "special"
     },
     {
       "id": "sludge-bomb",
@@ -73,11 +71,10 @@
       "level": 50
     },
     {
-      "id": "razor-leaf",
-      "name": "飞叶快刀",
+      "id": "energy-ball",
+      "name": "能量球",
       "type": "grass",
-      "category": "physical",
-      "level": 20
+      "category": "special"
     },
     {
       "id": "sludge-bomb",
@@ -102,11 +99,10 @@
       "level": 43
     },
     {
-      "id": "flamethrower",
-      "name": "喷射火焰",
+      "id": "fire-blast",
+      "name": "大字爆炎",
       "type": "fire",
-      "category": "special",
-      "level": 37
+      "category": "special"
     },
     {
       "id": "echoed-voice",
@@ -131,11 +127,10 @@
       "level": 43
     },
     {
-      "id": "flame-burst",
-      "name": "烈焰溅射",
+      "id": "fire-blast",
+      "name": "大字爆炎",
       "type": "fire",
-      "category": "special",
-      "level": 32
+      "category": "special"
     },
     {
       "id": "echoed-voice",
@@ -160,17 +155,16 @@
       "level": 32
     },
     {
-      "id": "air-slash",
-      "name": "空气斩",
-      "type": "flying",
-      "category": "special",
-      "level": 1
+      "id": "fire-blast",
+      "name": "大字爆炎",
+      "type": "fire",
+      "category": "special"
     },
     {
-      "id": "echoed-voice",
-      "name": "回声",
-      "type": "normal",
-      "category": "special"
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     }
   ],
   "7": [
@@ -189,11 +183,10 @@
       "level": 25
     },
     {
-      "id": "bubble",
-      "name": "泡沫",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 13
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -218,11 +211,10 @@
       "level": 29
     },
     {
-      "id": "bubble",
-      "name": "泡沫",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 13
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -247,11 +239,10 @@
       "level": 13
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -301,11 +292,10 @@
       "level": 31
     },
     {
-      "id": "silver-wind",
-      "name": "银色旋风",
+      "id": "infestation",
+      "name": "死缠烂打",
       "type": "bug",
-      "category": "special",
-      "level": 19
+      "category": "special"
     },
     {
       "id": "dream-eater",
@@ -355,11 +345,10 @@
       "level": 35
     },
     {
-      "id": "pin-missile",
-      "name": "飞弹针",
+      "id": "u-turn",
+      "name": "急速折返",
       "type": "bug",
-      "category": "physical",
-      "level": 32
+      "category": "physical"
     },
     {
       "id": "acrobatics",
@@ -384,11 +373,10 @@
       "level": 13
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "category": "physical",
-      "level": 1
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     },
     {
       "id": "steel-wing",
@@ -413,11 +401,10 @@
       "level": 13
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "category": "physical",
-      "level": 1
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     },
     {
       "id": "steel-wing",
@@ -442,11 +429,10 @@
       "level": 1
     },
     {
-      "id": "tackle",
-      "name": "撞击",
-      "type": "normal",
-      "category": "physical",
-      "level": 1
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     },
     {
       "id": "steel-wing",
@@ -471,11 +457,10 @@
       "level": 16
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 4
+      "category": "physical"
     },
     {
       "id": "thief",
@@ -500,11 +485,10 @@
       "level": 16
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 1
+      "category": "physical"
     },
     {
       "id": "thief",
@@ -529,11 +513,10 @@
       "level": 15
     },
     {
-      "id": "fury-attack",
-      "name": "乱击",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 11
+      "category": "physical"
     },
     {
       "id": "steel-wing",
@@ -558,11 +541,10 @@
       "level": 15
     },
     {
-      "id": "fury-attack",
-      "name": "乱击",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 11
+      "category": "physical"
     },
     {
       "id": "steel-wing",
@@ -587,11 +569,10 @@
       "level": 4
     },
     {
-      "id": "belch",
-      "name": "打嗝",
+      "id": "poison-jab",
+      "name": "毒击",
       "type": "poison",
-      "category": "special",
-      "level": 38
+      "category": "physical"
     },
     {
       "id": "brutal-swing",
@@ -616,11 +597,10 @@
       "level": 48
     },
     {
-      "id": "acid-spray",
-      "name": "酸液炸弹",
+      "id": "poison-jab",
+      "name": "毒击",
       "type": "poison",
-      "category": "special",
-      "level": 32
+      "category": "physical"
     },
     {
       "id": "brutal-swing",
@@ -645,11 +625,10 @@
       "level": 29
     },
     {
-      "id": "spark",
-      "name": "电光",
+      "id": "charge-beam",
+      "name": "充电光束",
       "type": "electric",
-      "category": "physical",
-      "level": 26
+      "category": "special"
     },
     {
       "id": "brick-break",
@@ -674,11 +653,10 @@
       "level": 1
     },
     {
-      "id": "quick-attack",
-      "name": "电光一闪",
-      "type": "normal",
-      "category": "physical",
-      "level": 1
+      "id": "wild-charge",
+      "name": "疯狂伏特",
+      "type": "electric",
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -703,11 +681,10 @@
       "level": 30
     },
     {
-      "id": "sand-tomb",
-      "name": "流沙地狱",
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 23
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -732,11 +709,10 @@
       "level": 24
     },
     {
-      "id": "slash",
-      "name": "劈开",
-      "type": "normal",
-      "category": "physical",
-      "level": 28
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -761,11 +737,10 @@
       "level": 13
     },
     {
-      "id": "crunch",
-      "name": "咬碎",
-      "type": "dark",
-      "category": "physical",
-      "level": 37
+      "id": "poison-jab",
+      "name": "毒击",
+      "type": "poison",
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -790,11 +765,10 @@
       "level": 43
     },
     {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "category": "physical",
-      "level": 23
+      "id": "poison-jab",
+      "name": "毒击",
+      "type": "poison",
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -819,11 +793,10 @@
       "level": 43
     },
     {
-      "id": "body-slam",
-      "name": "泰山压顶",
-      "type": "normal",
-      "category": "physical",
-      "level": 35
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -848,16 +821,15 @@
       "level": 13
     },
     {
-      "id": "horn-attack",
-      "name": "角撞",
-      "type": "normal",
-      "category": "physical",
-      "level": 21
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
+      "category": "special"
     },
     {
-      "id": "shadow-claw",
-      "name": "暗影爪",
-      "type": "ghost",
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
       "category": "physical"
     }
   ],
@@ -877,16 +849,15 @@
       "level": 13
     },
     {
-      "id": "horn-attack",
-      "name": "角撞",
-      "type": "normal",
-      "category": "physical",
-      "level": 23
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
+      "category": "special"
     },
     {
-      "id": "shadow-claw",
-      "name": "暗影爪",
-      "type": "ghost",
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
       "category": "physical"
     }
   ],
@@ -906,11 +877,10 @@
       "level": 43
     },
     {
-      "id": "thrash",
-      "name": "大闹一番",
-      "type": "normal",
-      "category": "physical",
-      "level": 35
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -935,11 +905,10 @@
       "level": 1
     },
     {
-      "id": "stored-power",
-      "name": "辅助力量",
-      "type": "psychic",
-      "category": "special",
-      "level": 28
+      "id": "dazzling-gleam",
+      "name": "魔法闪耀",
+      "type": "fairy",
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -962,6 +931,12 @@
       "type": "normal",
       "category": "physical",
       "level": 1
+    },
+    {
+      "id": "dazzling-gleam",
+      "name": "魔法闪耀",
+      "type": "fairy",
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -989,8 +964,7 @@
       "id": "flamethrower",
       "name": "喷射火焰",
       "type": "fire",
-      "category": "special",
-      "level": 36
+      "category": "special"
     },
     {
       "id": "dark-pulse",
@@ -1015,6 +989,12 @@
       "level": 1
     },
     {
+      "id": "fire-blast",
+      "name": "大字爆炎",
+      "type": "fire",
+      "category": "special"
+    },
+    {
       "id": "dark-pulse",
       "name": "恶之波动",
       "type": "dark",
@@ -1037,11 +1017,10 @@
       "level": 41
     },
     {
-      "id": "body-slam",
-      "name": "泰山压顶",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 32
+      "category": "physical"
     },
     {
       "id": "dazzling-gleam",
@@ -1066,11 +1045,10 @@
       "level": 1
     },
     {
-      "id": "play-rough",
-      "name": "嬉闹",
+      "id": "dazzling-gleam",
+      "name": "魔法闪耀",
       "type": "fairy",
-      "category": "physical",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -1095,11 +1073,10 @@
       "level": 13
     },
     {
-      "id": "air-slash",
-      "name": "空气斩",
+      "id": "acrobatics",
+      "name": "杂技",
       "type": "flying",
-      "category": "special",
-      "level": 41
+      "category": "physical"
     },
     {
       "id": "facade",
@@ -1124,11 +1101,10 @@
       "level": 13
     },
     {
-      "id": "air-slash",
-      "name": "空气斩",
+      "id": "acrobatics",
+      "name": "杂技",
       "type": "flying",
-      "category": "special",
-      "level": 48
+      "category": "physical"
     },
     {
       "id": "facade",
@@ -1153,16 +1129,15 @@
       "level": 19
     },
     {
-      "id": "acid",
-      "name": "溶解液",
-      "type": "poison",
-      "category": "special",
-      "level": 9
+      "id": "energy-ball",
+      "name": "能量球",
+      "type": "grass",
+      "category": "special"
     },
     {
-      "id": "dazzling-gleam",
-      "name": "魔法闪耀",
-      "type": "fairy",
+      "id": "sludge-bomb",
+      "name": "污泥炸弹",
+      "type": "poison",
       "category": "special"
     }
   ],
@@ -1182,11 +1157,10 @@
       "level": 19
     },
     {
-      "id": "absorb",
-      "name": "吸取",
+      "id": "energy-ball",
+      "name": "能量球",
       "type": "grass",
-      "category": "special",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "sludge-bomb",
@@ -1211,6 +1185,12 @@
       "level": 49
     },
     {
+      "id": "energy-ball",
+      "name": "能量球",
+      "type": "grass",
+      "category": "special"
+    },
+    {
       "id": "sludge-bomb",
       "name": "污泥炸弹",
       "type": "poison",
@@ -1233,11 +1213,10 @@
       "level": 38
     },
     {
-      "id": "absorb",
-      "name": "吸取",
-      "type": "grass",
-      "category": "special",
-      "level": 11
+      "id": "leech-life",
+      "name": "吸血",
+      "type": "bug",
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -1262,11 +1241,10 @@
       "level": 44
     },
     {
-      "id": "absorb",
-      "name": "吸取",
-      "type": "grass",
-      "category": "special",
-      "level": 1
+      "id": "leech-life",
+      "name": "吸血",
+      "type": "bug",
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -1291,11 +1269,10 @@
       "level": 35
     },
     {
-      "id": "signal-beam",
-      "name": "信号光束",
+      "id": "infestation",
+      "name": "死缠烂打",
       "type": "bug",
-      "category": "special",
-      "level": 25
+      "category": "special"
     },
     {
       "id": "facade",
@@ -1320,11 +1297,10 @@
       "level": 1
     },
     {
-      "id": "silver-wind",
-      "name": "银色旋风",
+      "id": "infestation",
+      "name": "死缠烂打",
       "type": "bug",
-      "category": "special",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "sludge-bomb",
@@ -1352,8 +1328,7 @@
       "id": "bulldoze",
       "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 18
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -1381,8 +1356,7 @@
       "id": "bulldoze",
       "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 18
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -1407,11 +1381,10 @@
       "level": 33
     },
     {
-      "id": "pay-day",
-      "name": "聚宝功",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 30
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -1436,11 +1409,10 @@
       "level": 14
     },
     {
-      "id": "fake-out",
-      "name": "击掌奇袭",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 1
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -1465,11 +1437,10 @@
       "level": 16
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 7
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -1494,11 +1465,10 @@
       "level": 16
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -1523,11 +1493,10 @@
       "level": 22
     },
     {
-      "id": "karate-chop",
-      "name": "空手劈",
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "category": "physical",
-      "level": 8
+      "category": "physical"
     },
     {
       "id": "acrobatics",
@@ -1552,11 +1521,10 @@
       "level": 22
     },
     {
-      "id": "karate-chop",
-      "name": "空手劈",
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "category": "physical",
-      "level": 8
+      "category": "physical"
     },
     {
       "id": "acrobatics",
@@ -1581,11 +1549,10 @@
       "level": 41
     },
     {
-      "id": "flamethrower",
-      "name": "喷射火焰",
+      "id": "flame-charge",
+      "name": "蓄能焰袭",
       "type": "fire",
-      "category": "special",
-      "level": 34
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -1610,11 +1577,10 @@
       "level": 34
     },
     {
-      "id": "bite",
-      "name": "咬住",
-      "type": "dark",
-      "category": "physical",
-      "level": 1
+      "id": "flame-charge",
+      "name": "蓄能焰袭",
+      "type": "fire",
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -1639,11 +1605,10 @@
       "level": 25
     },
     {
-      "id": "bubble",
-      "name": "泡沫",
+      "id": "waterfall",
+      "name": "攀瀑",
       "type": "water",
-      "category": "special",
-      "level": 11
+      "category": "physical"
     },
     {
       "id": "facade",
@@ -1668,11 +1633,10 @@
       "level": 27
     },
     {
-      "id": "bubble",
-      "name": "泡沫",
+      "id": "waterfall",
+      "name": "攀瀑",
       "type": "water",
-      "category": "special",
-      "level": 11
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -1697,11 +1661,10 @@
       "level": 1
     },
     {
-      "id": "submission",
-      "name": "地狱翻滚",
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "category": "physical",
-      "level": 0
+      "category": "physical"
     },
     {
       "id": "waterfall",
@@ -1715,6 +1678,12 @@
       "id": "dream-eater",
       "name": "食梦",
       "type": "psychic",
+      "category": "special"
+    },
+    {
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
       "category": "special"
     }
   ],
@@ -1734,11 +1703,10 @@
       "level": 38
     },
     {
-      "id": "psybeam",
-      "name": "幻象光线",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "category": "special",
-      "level": 21
+      "category": "special"
     },
     {
       "id": "charge-beam",
@@ -1763,11 +1731,10 @@
       "level": 38
     },
     {
-      "id": "psybeam",
-      "name": "幻象光线",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "category": "special",
-      "level": 21
+      "category": "special"
     },
     {
       "id": "charge-beam",
@@ -1792,11 +1759,10 @@
       "level": 39
     },
     {
-      "id": "submission",
-      "name": "地狱翻滚",
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "category": "physical",
-      "level": 33
+      "category": "physical"
     },
     {
       "id": "bulldoze",
@@ -1821,11 +1787,10 @@
       "level": 37
     },
     {
-      "id": "wake-up-slap",
-      "name": "唤醒巴掌",
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "category": "physical",
-      "level": 27
+      "category": "physical"
     },
     {
       "id": "bulldoze",
@@ -1850,11 +1815,10 @@
       "level": 37
     },
     {
-      "id": "wake-up-slap",
-      "name": "唤醒巴掌",
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "category": "physical",
-      "level": 27
+      "category": "physical"
     },
     {
       "id": "bulldoze",
@@ -1879,11 +1843,10 @@
       "level": 39
     },
     {
-      "id": "vine-whip",
-      "name": "藤鞭",
+      "id": "energy-ball",
+      "name": "能量球",
       "type": "grass",
-      "category": "physical",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "facade",
@@ -1908,11 +1871,10 @@
       "level": 44
     },
     {
-      "id": "vine-whip",
-      "name": "藤鞭",
+      "id": "energy-ball",
+      "name": "能量球",
       "type": "grass",
-      "category": "physical",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "facade",
@@ -1937,16 +1899,15 @@
       "level": 1
     },
     {
-      "id": "vine-whip",
-      "name": "藤鞭",
-      "type": "grass",
-      "category": "physical",
-      "level": 1
-    },
-    {
       "id": "poison-jab",
       "name": "毒击",
       "type": "poison",
+      "category": "physical"
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
       "category": "physical"
     }
   ],
@@ -1966,11 +1927,10 @@
       "level": 43
     },
     {
-      "id": "brine",
-      "name": "盐水",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 34
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -1995,11 +1955,10 @@
       "level": 36
     },
     {
-      "id": "bubble-beam",
-      "name": "泡沫光线",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 25
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -2024,11 +1983,10 @@
       "level": 34
     },
     {
-      "id": "rock-blast",
-      "name": "岩石爆击",
-      "type": "rock",
-      "category": "physical",
-      "level": 30
+      "id": "bulldoze",
+      "name": "重踏",
+      "type": "ground",
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -2056,8 +2014,7 @@
       "id": "bulldoze",
       "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 22
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -2085,8 +2042,7 @@
       "id": "bulldoze",
       "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 22
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -2111,11 +2067,10 @@
       "level": 21
     },
     {
-      "id": "flame-wheel",
-      "name": "火焰轮",
+      "id": "fire-blast",
+      "name": "大字爆炎",
       "type": "fire",
-      "category": "physical",
-      "level": 13
+      "category": "special"
     },
     {
       "id": "facade",
@@ -2140,11 +2095,10 @@
       "level": 21
     },
     {
-      "id": "flame-wheel",
-      "name": "火焰轮",
+      "id": "fire-blast",
+      "name": "大字爆炎",
       "type": "fire",
-      "category": "physical",
-      "level": 13
+      "category": "special"
     },
     {
       "id": "facade",
@@ -2169,17 +2123,16 @@
       "level": 45
     },
     {
-      "id": "water-pulse",
-      "name": "水之波动",
-      "type": "water",
-      "category": "special",
-      "level": 28
+      "id": "dream-eater",
+      "name": "食梦",
+      "type": "psychic",
+      "category": "special"
     },
     {
-      "id": "bulldoze",
-      "name": "重踏",
-      "type": "ground",
-      "category": "physical"
+      "id": "scald",
+      "name": "热水",
+      "type": "water",
+      "category": "special"
     }
   ],
   "80": [
@@ -2198,11 +2151,10 @@
       "level": 28
     },
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "category": "special",
-      "level": 14
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -2227,16 +2179,15 @@
       "level": 37
     },
     {
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
+      "category": "special"
+    },
+    {
       "id": "flash-cannon",
       "name": "加农光炮",
       "type": "steel",
-      "category": "special",
-      "level": 31
-    },
-    {
-      "id": "hidden-power",
-      "name": "觉醒力量",
-      "type": "normal",
       "category": "special"
     }
   ],
@@ -2256,11 +2207,10 @@
       "level": 33
     },
     {
-      "id": "mirror-shot",
-      "name": "镜光射击",
-      "type": "steel",
-      "category": "special",
-      "level": 23
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
+      "category": "special"
     },
     {
       "id": "hidden-power",
@@ -2288,8 +2238,7 @@
       "id": "acrobatics",
       "name": "杂技",
       "type": "flying",
-      "category": "physical",
-      "level": 37
+      "category": "physical"
     },
     {
       "id": "brutal-swing",
@@ -2314,11 +2263,10 @@
       "level": 43
     },
     {
-      "id": "double-hit",
-      "name": "二连击",
-      "type": "normal",
-      "category": "physical",
-      "level": 22
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     },
     {
       "id": "steel-wing",
@@ -2343,11 +2291,10 @@
       "level": 22
     },
     {
-      "id": "pluck",
-      "name": "啄食",
+      "id": "aerial-ace",
+      "name": "燕返",
       "type": "flying",
-      "category": "physical",
-      "level": 19
+      "category": "physical"
     },
     {
       "id": "payback",
@@ -2372,17 +2319,16 @@
       "level": 41
     },
     {
-      "id": "brine",
-      "name": "盐水",
+      "id": "waterfall",
+      "name": "攀瀑",
       "type": "water",
-      "category": "special",
-      "level": 33
+      "category": "physical"
     },
     {
-      "id": "blizzard",
-      "name": "暴风雪",
-      "type": "ice",
-      "category": "special"
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
+      "category": "physical"
     }
   ],
   "87": [
@@ -2401,11 +2347,10 @@
       "level": 45
     },
     {
-      "id": "brine",
-      "name": "盐水",
+      "id": "waterfall",
+      "name": "攀瀑",
       "type": "water",
-      "category": "special",
-      "level": 33
+      "category": "physical"
     },
     {
       "id": "blizzard",
@@ -2430,11 +2375,10 @@
       "level": 46
     },
     {
-      "id": "sludge-wave",
-      "name": "污泥波",
+      "id": "poison-jab",
+      "name": "毒击",
       "type": "poison",
-      "category": "special",
-      "level": 32
+      "category": "physical"
     },
     {
       "id": "explosion",
@@ -2459,11 +2403,10 @@
       "level": 32
     },
     {
-      "id": "sludge-bomb",
-      "name": "污泥炸弹",
+      "id": "poison-jab",
+      "name": "毒击",
       "type": "poison",
-      "category": "special",
-      "level": 29
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -2488,11 +2431,10 @@
       "level": 25
     },
     {
-      "id": "brine",
-      "name": "盐水",
+      "id": "surf",
+      "name": "冲浪",
       "type": "water",
-      "category": "special",
-      "level": 44
+      "category": "special"
     },
     {
       "id": "explosion",
@@ -2517,17 +2459,16 @@
       "level": 1
     },
     {
-      "id": "hydro-pump",
-      "name": "水炮",
-      "type": "water",
-      "category": "special",
-      "level": 1
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
+      "category": "special"
     },
     {
-      "id": "explosion",
-      "name": "大爆炸",
-      "type": "normal",
-      "category": "physical"
+      "id": "surf",
+      "name": "冲浪",
+      "type": "water",
+      "category": "special"
     }
   ],
   "92": [
@@ -2546,16 +2487,15 @@
       "level": 29
     },
     {
-      "id": "lick",
-      "name": "舌舔",
-      "type": "ghost",
-      "category": "physical",
-      "level": 1
-    },
-    {
       "id": "sludge-bomb",
       "name": "污泥炸弹",
       "type": "poison",
+      "category": "special"
+    },
+    {
+      "id": "dark-pulse",
+      "name": "恶之波动",
+      "type": "dark",
       "category": "special"
     }
   ],
@@ -2575,16 +2515,15 @@
       "level": 1
     },
     {
-      "id": "shadow-punch",
-      "name": "暗影拳",
-      "type": "ghost",
-      "category": "physical",
-      "level": 0
-    },
-    {
       "id": "sludge-bomb",
       "name": "污泥炸弹",
       "type": "poison",
+      "category": "special"
+    },
+    {
+      "id": "dark-pulse",
+      "name": "恶之波动",
+      "type": "dark",
       "category": "special"
     }
   ],
@@ -2604,16 +2543,15 @@
       "level": 1
     },
     {
-      "id": "shadow-punch",
-      "name": "暗影拳",
-      "type": "ghost",
-      "category": "physical",
-      "level": 0
-    },
-    {
       "id": "sludge-bomb",
       "name": "污泥炸弹",
       "type": "poison",
+      "category": "special"
+    },
+    {
+      "id": "dark-pulse",
+      "name": "恶之波动",
+      "type": "dark",
       "category": "special"
     }
   ],
@@ -2633,11 +2571,10 @@
       "level": 43
     },
     {
-      "id": "sand-tomb",
-      "name": "流沙地狱",
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 37
+      "category": "physical"
     },
     {
       "id": "brutal-swing",
@@ -2662,11 +2599,10 @@
       "level": 49
     },
     {
-      "id": "synchronoise",
-      "name": "同步干扰",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "category": "special",
-      "level": 37
+      "category": "special"
     },
     {
       "id": "brick-break",
@@ -2691,11 +2627,10 @@
       "level": 41
     },
     {
-      "id": "synchronoise",
-      "name": "同步干扰",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "category": "special",
-      "level": 37
+      "category": "special"
     },
     {
       "id": "brick-break",
@@ -2720,11 +2655,10 @@
       "level": 39
     },
     {
-      "id": "bubble-beam",
-      "name": "泡沫光线",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 15
+      "category": "special"
     },
     {
       "id": "brick-break",
@@ -2749,11 +2683,10 @@
       "level": 1
     },
     {
-      "id": "slam",
-      "name": "摔打",
-      "type": "normal",
-      "category": "physical",
-      "level": 44
+      "id": "scald",
+      "name": "热水",
+      "type": "water",
+      "category": "special"
     },
     {
       "id": "brick-break",
@@ -2778,11 +2711,10 @@
       "level": 16
     },
     {
-      "id": "spark",
-      "name": "电光",
+      "id": "thunder",
+      "name": "打雷",
       "type": "electric",
-      "category": "physical",
-      "level": 9
+      "category": "special"
     },
     {
       "id": "hidden-power",
@@ -2807,11 +2739,10 @@
       "level": 16
     },
     {
-      "id": "spark",
-      "name": "电光",
+      "id": "thunder",
+      "name": "打雷",
       "type": "electric",
-      "category": "physical",
-      "level": 9
+      "category": "special"
     },
     {
       "id": "hidden-power",
@@ -2836,11 +2767,10 @@
       "level": 43
     },
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "category": "special",
-      "level": 27
+      "category": "special"
     },
     {
       "id": "hidden-power",
@@ -2865,11 +2795,10 @@
       "level": 17
     },
     {
-      "id": "confusion",
-      "name": "念力",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "category": "special",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "hidden-power",
@@ -2894,11 +2823,10 @@
       "level": 21
     },
     {
-      "id": "bone-club",
-      "name": "骨棒",
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 7
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -2923,11 +2851,10 @@
       "level": 21
     },
     {
-      "id": "bone-club",
-      "name": "骨棒",
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 1
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -2952,11 +2879,10 @@
       "level": 17
     },
     {
-      "id": "close-combat",
-      "name": "近身战",
+      "id": "low-sweep",
+      "name": "下盘踢",
       "type": "fighting",
-      "category": "physical",
-      "level": 1
+      "category": "physical"
     },
     {
       "id": "bulldoze",
@@ -2981,11 +2907,10 @@
       "level": 1
     },
     {
-      "id": "focus-punch",
-      "name": "真气拳",
+      "id": "brick-break",
+      "name": "劈瓦",
       "type": "fighting",
-      "category": "physical",
-      "level": 1
+      "category": "physical"
     },
     {
       "id": "bulldoze",
@@ -3010,11 +2935,10 @@
       "level": 29
     },
     {
-      "id": "stomp",
-      "name": "踩踏",
+      "id": "hidden-power",
+      "name": "觉醒力量",
       "type": "normal",
-      "category": "physical",
-      "level": 21
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3039,11 +2963,10 @@
       "level": 34
     },
     {
-      "id": "sludge",
-      "name": "污泥攻击",
+      "id": "venoshock",
+      "name": "毒液冲击",
       "type": "poison",
-      "category": "special",
-      "level": 18
+      "category": "special"
     },
     {
       "id": "explosion",
@@ -3068,11 +2991,10 @@
       "level": 18
     },
     {
-      "id": "clear-smog",
-      "name": "清除之烟",
+      "id": "venoshock",
+      "name": "毒液冲击",
       "type": "poison",
-      "category": "special",
-      "level": 15
+      "category": "special"
     },
     {
       "id": "explosion",
@@ -3097,11 +3019,10 @@
       "level": 41
     },
     {
-      "id": "drill-run",
-      "name": "直冲钻",
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 33
+      "category": "physical"
     },
     {
       "id": "facade",
@@ -3126,11 +3047,10 @@
       "level": 41
     },
     {
-      "id": "drill-run",
-      "name": "直冲钻",
+      "id": "bulldoze",
+      "name": "重踏",
       "type": "ground",
-      "category": "physical",
-      "level": 33
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -3155,11 +3075,10 @@
       "level": 27
     },
     {
-      "id": "double-slap",
-      "name": "连环巴掌",
+      "id": "echoed-voice",
+      "name": "回声",
       "type": "normal",
-      "category": "physical",
-      "level": 12
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3184,11 +3103,10 @@
       "level": 23
     },
     {
-      "id": "absorb",
-      "name": "吸取",
+      "id": "energy-ball",
+      "name": "能量球",
       "type": "grass",
-      "category": "special",
-      "level": 10
+      "category": "special"
     },
     {
       "id": "hidden-power",
@@ -3213,11 +3131,10 @@
       "level": 31
     },
     {
-      "id": "mega-punch",
-      "name": "百万吨重拳",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 25
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -3242,11 +3159,10 @@
       "level": 21
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 13
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3271,11 +3187,10 @@
       "level": 21
     },
     {
-      "id": "bubble",
-      "name": "泡沫",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3300,11 +3215,10 @@
       "level": 16
     },
     {
-      "id": "megahorn",
-      "name": "超级角击",
-      "type": "bug",
-      "category": "physical",
-      "level": 45
+      "id": "scald",
+      "name": "热水",
+      "type": "water",
+      "category": "special"
     },
     {
       "id": "facade",
@@ -3329,16 +3243,15 @@
       "level": 16
     },
     {
-      "id": "fury-attack",
-      "name": "乱击",
-      "type": "normal",
-      "category": "physical",
-      "level": 24
+      "id": "scald",
+      "name": "热水",
+      "type": "water",
+      "category": "special"
     },
     {
-      "id": "poison-jab",
-      "name": "毒击",
-      "type": "poison",
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
       "category": "physical"
     }
   ],
@@ -3358,11 +3271,10 @@
       "level": 18
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 4
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3387,16 +3299,15 @@
       "level": 1
     },
     {
-      "id": "swift",
-      "name": "高速星星",
-      "type": "normal",
-      "category": "special",
-      "level": 1
-    },
-    {
       "id": "dream-eater",
       "name": "食梦",
       "type": "psychic",
+      "category": "special"
+    },
+    {
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
       "category": "special"
     }
   ],
@@ -3416,16 +3327,15 @@
       "level": 25
     },
     {
-      "id": "confusion",
-      "name": "念力",
-      "type": "psychic",
-      "category": "special",
-      "level": 1
-    },
-    {
       "id": "dazzling-gleam",
       "name": "魔法闪耀",
       "type": "fairy",
+      "category": "special"
+    },
+    {
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
       "category": "special"
     }
   ],
@@ -3445,11 +3355,10 @@
       "level": 25
     },
     {
-      "id": "wing-attack",
-      "name": "翅膀攻击",
+      "id": "aerial-ace",
+      "name": "燕返",
       "type": "flying",
-      "category": "physical",
-      "level": 21
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -3474,16 +3383,15 @@
       "level": 39
     },
     {
-      "id": "heart-stamp",
-      "name": "爱心印章",
-      "type": "psychic",
-      "category": "physical",
-      "level": 21
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
+      "category": "special"
     },
     {
-      "id": "echoed-voice",
-      "name": "回声",
-      "type": "normal",
+      "id": "dream-eater",
+      "name": "食梦",
+      "type": "psychic",
       "category": "special"
     }
   ],
@@ -3503,11 +3411,10 @@
       "level": 36
     },
     {
-      "id": "shock-wave",
-      "name": "电击波",
+      "id": "charge-beam",
+      "name": "充电光束",
       "type": "electric",
-      "category": "special",
-      "level": 15
+      "category": "special"
     },
     {
       "id": "focus-blast",
@@ -3532,11 +3439,10 @@
       "level": 36
     },
     {
-      "id": "flame-burst",
-      "name": "烈焰溅射",
+      "id": "fire-blast",
+      "name": "大字爆炎",
       "type": "fire",
-      "category": "special",
-      "level": 22
+      "category": "special"
     },
     {
       "id": "focus-blast",
@@ -3561,11 +3467,10 @@
       "level": 47
     },
     {
-      "id": "thrash",
-      "name": "大闹一番",
-      "type": "normal",
-      "category": "physical",
-      "level": 43
+      "id": "brick-break",
+      "name": "劈瓦",
+      "type": "fighting",
+      "category": "physical"
     },
     {
       "id": "brutal-swing",
@@ -3590,11 +3495,10 @@
       "level": 8
     },
     {
-      "id": "rage",
-      "name": "愤怒",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 5
+      "category": "physical"
     },
     {
       "id": "bulldoze",
@@ -3628,11 +3532,10 @@
       "level": 48
     },
     {
-      "id": "hydro-pump",
-      "name": "水炮",
+      "id": "waterfall",
+      "name": "攀瀑",
       "type": "water",
-      "category": "special",
-      "level": 42
+      "category": "physical"
     },
     {
       "id": "brutal-swing",
@@ -3657,17 +3560,16 @@
       "level": 37
     },
     {
-      "id": "ice-beam",
-      "name": "冰冻光束",
-      "type": "ice",
-      "category": "special",
-      "level": 32
+      "id": "waterfall",
+      "name": "攀瀑",
+      "type": "water",
+      "category": "physical"
     },
     {
-      "id": "bulldoze",
-      "name": "重踏",
-      "type": "ground",
-      "category": "physical"
+      "id": "blizzard",
+      "name": "暴风雪",
+      "type": "ice",
+      "category": "special"
     }
   ],
   "132": [
@@ -3695,11 +3597,10 @@
       "level": 37
     },
     {
-      "id": "take-down",
-      "name": "猛撞",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 25
+      "category": "physical"
     },
     {
       "id": "shadow-ball",
@@ -3724,11 +3625,10 @@
       "level": 37
     },
     {
-      "id": "water-pulse",
-      "name": "水之波动",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 17
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3753,11 +3653,10 @@
       "level": 37
     },
     {
-      "id": "thunder-shock",
-      "name": "电击",
+      "id": "charge-beam",
+      "name": "充电光束",
       "type": "electric",
-      "category": "special",
-      "level": 0
+      "category": "special"
     },
     {
       "id": "echoed-voice",
@@ -3782,11 +3681,10 @@
       "level": 20
     },
     {
-      "id": "lava-plume",
-      "name": "喷烟",
+      "id": "flame-charge",
+      "name": "蓄能焰袭",
       "type": "fire",
-      "category": "special",
-      "level": 37
+      "category": "physical"
     },
     {
       "id": "facade",
@@ -3811,11 +3709,10 @@
       "level": 1
     },
     {
-      "id": "discharge",
-      "name": "放电",
-      "type": "electric",
-      "category": "special",
-      "level": 40
+      "id": "hidden-power",
+      "name": "觉醒力量",
+      "type": "normal",
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3840,11 +3737,10 @@
       "level": 28
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 10
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3869,11 +3765,10 @@
       "level": 28
     },
     {
-      "id": "water-gun",
-      "name": "水枪",
+      "id": "scald",
+      "name": "热水",
       "type": "water",
-      "category": "special",
-      "level": 10
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -3898,11 +3793,10 @@
       "level": 46
     },
     {
-      "id": "scratch",
-      "name": "抓",
-      "type": "normal",
-      "category": "physical",
-      "level": 1
+      "id": "rock-slide",
+      "name": "岩崩",
+      "type": "rock",
+      "category": "physical"
     },
     {
       "id": "aerial-ace",
@@ -3927,16 +3821,15 @@
       "level": 1
     },
     {
-      "id": "night-slash",
-      "name": "暗袭要害",
-      "type": "dark",
-      "category": "physical",
-      "level": 1
-    },
-    {
       "id": "rock-slide",
       "name": "岩崩",
       "type": "rock",
+      "category": "physical"
+    },
+    {
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
       "category": "physical"
     }
   ],
@@ -3956,16 +3849,15 @@
       "level": 1
     },
     {
-      "id": "ancient-power",
-      "name": "原始之力",
-      "type": "rock",
-      "category": "special",
-      "level": 25
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     },
     {
-      "id": "brutal-swing",
-      "name": "狂舞挥打",
-      "type": "dark",
+      "id": "rock-slide",
+      "name": "岩崩",
+      "type": "rock",
       "category": "physical"
     }
   ],
@@ -3985,11 +3877,10 @@
       "level": 25
     },
     {
-      "id": "chip-away",
-      "name": "逐步击破",
+      "id": "facade",
+      "name": "硬撑",
       "type": "normal",
-      "category": "physical",
-      "level": 17
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -4014,11 +3905,10 @@
       "level": 1
     },
     {
-      "id": "powder-snow",
-      "name": "细雪",
+      "id": "blizzard",
+      "name": "暴风雪",
       "type": "ice",
-      "category": "special",
-      "level": 1
+      "category": "special"
     },
     {
       "id": "hidden-power",
@@ -4043,17 +3933,16 @@
       "level": 1
     },
     {
-      "id": "pluck",
-      "name": "啄食",
-      "type": "flying",
-      "category": "physical",
-      "level": 22
+      "id": "charge-beam",
+      "name": "充电光束",
+      "type": "electric",
+      "category": "special"
     },
     {
-      "id": "hidden-power",
-      "name": "觉醒力量",
-      "type": "normal",
-      "category": "special"
+      "id": "aerial-ace",
+      "name": "燕返",
+      "type": "flying",
+      "category": "physical"
     }
   ],
   "146": [
@@ -4072,11 +3961,10 @@
       "level": 36
     },
     {
-      "id": "fire-spin",
-      "name": "火焰旋涡",
+      "id": "fire-blast",
+      "name": "大字爆炎",
       "type": "fire",
-      "category": "special",
-      "level": 8
+      "category": "special"
     },
     {
       "id": "hidden-power",
@@ -4101,16 +3989,15 @@
       "level": 31
     },
     {
-      "id": "twister",
-      "name": "龙卷风",
-      "type": "dragon",
-      "category": "special",
-      "level": 11
-    },
-    {
       "id": "brutal-swing",
       "name": "狂舞挥打",
       "type": "dark",
+      "category": "physical"
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
       "category": "physical"
     }
   ],
@@ -4130,16 +4017,15 @@
       "level": 33
     },
     {
-      "id": "twister",
-      "name": "龙卷风",
-      "type": "dragon",
-      "category": "special",
-      "level": 1
-    },
-    {
       "id": "brutal-swing",
       "name": "狂舞挥打",
       "type": "dark",
+      "category": "physical"
+    },
+    {
+      "id": "facade",
+      "name": "硬撑",
+      "type": "normal",
       "category": "physical"
     }
   ],
@@ -4159,11 +4045,10 @@
       "level": 33
     },
     {
-      "id": "wing-attack",
-      "name": "翅膀攻击",
+      "id": "aerial-ace",
+      "name": "燕返",
       "type": "flying",
-      "category": "physical",
-      "level": 0
+      "category": "physical"
     },
     {
       "id": "brick-break",
@@ -4188,11 +4073,10 @@
       "level": 1
     },
     {
-      "id": "psycho-cut",
-      "name": "精神利刃",
+      "id": "dream-eater",
+      "name": "食梦",
       "type": "psychic",
-      "category": "physical",
-      "level": 36
+      "category": "special"
     },
     {
       "id": "blizzard",
@@ -4217,11 +4101,10 @@
       "level": 50
     },
     {
-      "id": "mega-punch",
-      "name": "百万吨重拳",
-      "type": "normal",
-      "category": "physical",
-      "level": 10
+      "id": "dream-eater",
+      "name": "食梦",
+      "type": "psychic",
+      "category": "special"
     },
     {
       "id": "acrobatics",

@@ -4,7 +4,7 @@ import { battleRules, battleMoves, defaultSlots, learnset, resolvedSlots, validS
 import { battleReducer, createBattle, createNextBattle } from '../src/domain/battle';
 import { createDemoData, handleDemo } from '../src/lib/demo-api';
 
-test('all 151 default presets respect USUM level-50 3+1 slots and contain no duplicates',()=>{
+test('all 151 default presets respect USUM level-50 2+2 slots and contain no duplicates',()=>{
   assert.equal(battleRules.versionGroupId,18);assert.equal(battleRules.level,50);
   for(let id=1;id<=151;id++){
     assert.ok(validSlots(id,defaultSlots(id)),String(id));
@@ -16,7 +16,7 @@ test('all 151 default presets respect USUM level-50 3+1 slots and contain no dup
   assert.ok(!learnset(104).machine.some(m=>m.id==='water-gun'));
   assert.deepEqual(defaultSlots(11),[null,null,null,null]);
   assert.equal(battleMoves(11)[0].id,'struggle');
-  assert.equal(battleMoves(63).length,1);
+  assert.equal(battleMoves(63).length,2);
 });
 test('cross-source moves, repeated moves, foreign moves and malformed presets are rejected',()=>{
   const slots=defaultSlots(104);

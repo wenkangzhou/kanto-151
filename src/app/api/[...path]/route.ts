@@ -1,5 +1,6 @@
 import { playTimeLocked, validMinutes, type PlayTime } from '@/domain/play-time';
 import { validSlots } from '@/domain/battle-loadout';
+import { readLearning, updateLearning } from '@/lib/server/learning';
 import { rewardOutcomes } from '@/domain/reward-history';
 import type { ParentReward } from '@/domain/types';
 import { randomBytes } from 'node:crypto';
@@ -30,6 +31,10 @@ export async function GET(request: NextRequest, context: Context) {
         if (dbError) throw databaseError(dbError);
         return reply({ status: data.length ? 'unpaired' : 'setup-required' });
       }
+    }
+    if (path === 'learning' || path === 'parent/learning') {
+      const session = path.startsWith('parent/') ? await parentSession(request) : await deviceSession(request);
+      return reply(await readLearning(session.childId));
     }
     if (path === 'play-time') {
       const session = await deviceSession(request);
@@ -102,6 +107,14 @@ export async function POST(request: NextRequest, context: Context) {
       response.cookies.set('kanto_parent', '', { ...cookieOptions, maxAge: 0 });
       return response;
     }
+    if (path === 'learning' || path === 'parent/learning') {
+      const parent = path.startsWith('parent/');
+      const session = parent ? await parentSession(request) : await deviceSession(request);
+      if (parent !== (input.action === 'settings')) throw new ApiError(400,'INPUT','操作不正确。');
+      uuid(input.requestId);
+      await limit(`learning:${session.childId}`,180,60);
+      return reply(await updateLearning(session.childId,input,parent));
+    }
     if (path === 'parent/play-time') {
       const session = await parentSession(request);
       if (!['start','lock','disable','configure'].includes(String(input.action)) || !validMinutes(input.minutes) || !Number.isInteger(input.expected) || Number(input.expected) < 0) throw new ApiError(400,'INPUT','请选择 1 至 120 分钟的使用时长。');
@@ -117,7 +130,7 @@ export async function POST(request: NextRequest, context: Context) {
       const session = await deviceSession(request);
       const id = input.pokemonId;
       if (typeof id !== 'number' || !Number.isInteger(id) || !validSlots(id,input.moves)
-        || !(input.expected === null || validSlots(id,input.expected))) throw new ApiError(400,'INPUT','请选择合法的三个升级招式和一个学习器招式。');
+        || !(input.expected === null || validSlots(id,input.expected))) throw new ApiError(400,'INPUT','请选择两个升级招式和两个已解锁的技能机招式。');
       await limit(`moves:${session.childId}`,120,60);
       return reply(await rpc('kanto_set_moves',{p_child_id:session.childId,p_pokemon_id:id,p_expected:input.expected,p_moves:input.moves}));
     }
