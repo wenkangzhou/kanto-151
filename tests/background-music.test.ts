@@ -56,3 +56,23 @@ test('scene interruption preserves the music position and never resumes after mu
   player.stop(); mutedResume(); await Promise.resolve();
   assert.equal(plays, 2); assert.equal(states.at(-1), 'off'); player.dispose();
 });
+test('a cue can interrupt music while its first play is still loading', async () => {
+  let rejectFirst!: (error: Error) => void;
+  let plays = 0;
+  const audio = fakeAudio(() => {
+    plays++;
+    return plays === 1 ? new Promise<void>((_, reject) => { rejectFirst = reject; }) : Promise.resolve();
+  });
+  const states: MusicState[] = [];
+  const player = createMusicPlayer(() => audio, state => states.push(state));
+  const firstPlay = player.toggle();
+  const resume = player.suspendForCue();
+  rejectFirst(new Error('play interrupted by pause'));
+  await firstPlay;
+  assert.equal(states.at(-1), 'loading', 'the interrupted music request must not disable the scene');
+  resume();
+  await Promise.resolve();
+  assert.equal(plays, 2);
+  assert.equal(states.at(-1), 'playing');
+  player.dispose();
+});

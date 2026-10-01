@@ -14,9 +14,9 @@ const subscribe = (callback: () => void) => {
 const isLargeDevice = () => supportsBackgroundMusic({ width: window.innerWidth, screenWidth: screen.width, screenHeight: screen.height, coarse: window.matchMedia('(pointer: coarse)').matches, userAgent: navigator.userAgent });
 function MusicControl({ available }: { available: boolean }) {
   const [soundEnabled,setSoundEnabled]=useState(false);
+  const soundEnabledRef = useRef(false);
   const [state, setState] = useState<MusicState>('off');
   const player = useRef<ReturnType<typeof createMusicPlayer> | null>(null);
-  const currentState = useRef<MusicState>('off');
   const cue = useRef<ReturnType<typeof createCuePlayer> | null>(null);
   const battle = useRef<ReturnType<typeof createBattleAudio> | null>(null);
   useEffect(() => {
@@ -40,11 +40,11 @@ function MusicControl({ available }: { available: boolean }) {
     const scene = (event: Event) => {
       const { owner, sound } = (event as CustomEvent<SceneAudioRequest>).detail;
       if (!sound) cue.current?.stop(true, owner);
-      else if (currentState.current === 'playing' && !document.hidden && !voiceSnapshot().owner) cue.current?.play(owner, sound);
+      else if (soundEnabledRef.current && !document.hidden && !voiceSnapshot().owner) cue.current?.play(owner, sound);
     };
     window.addEventListener(sceneAudioEvent, scene);
-    const visibility = () => { if (document.hidden) { cue.current?.stop(false); player.current?.stop(); battle.current?.setEnabled(false);setSoundEnabled(false); } };
-    const stop = () => { cue.current?.stop(false); player.current?.stop();battle.current?.setEnabled(false);setSoundEnabled(false); };
+    const visibility = () => { if (document.hidden) { soundEnabledRef.current = false; cue.current?.stop(false); player.current?.stop(); battle.current?.setEnabled(false);setSoundEnabled(false); } };
+    const stop = () => { soundEnabledRef.current = false; cue.current?.stop(false); player.current?.stop();battle.current?.setEnabled(false);setSoundEnabled(false); };
     document.addEventListener('visibilitychange', visibility); window.addEventListener('pagehide', stop);
     return () => { window.removeEventListener(battleAudioEvent, battleEvent); battle.current?.dispose(); battle.current = null; window.removeEventListener(voiceFocusEvent, voiceFocus); window.removeEventListener(sceneAudioEvent, scene); cue.current?.stop(false); cue.current = null; document.removeEventListener('visibilitychange', visibility); window.removeEventListener('pagehide', stop); player.current?.dispose(); player.current = null; };
   }, []);
@@ -52,8 +52,9 @@ function MusicControl({ available }: { available: boolean }) {
   const label = !available ? '尚未添加背景音乐文件' : on ? '关闭声音' : '开启声音';
   return <div className="background-music"><button type="button" className={`music-switch ${on ? 'music-on' : ''}`} disabled={!available} aria-label={label} aria-pressed={on} title={label} onClick={() => {
     stopVoice();
-    player.current ??= createMusicPlayer(() => { const audio = new Audio(); audio.preload = 'none'; audio.src = backgroundTrack.source; return audio; }, next => { currentState.current = next; setState(next);  if (next === 'error' || next === 'off') cue.current?.stop(false); });
+    player.current ??= createMusicPlayer(() => { const audio = new Audio(); audio.preload = 'none'; audio.src = backgroundTrack.source; return audio; }, next => { setState(next); if (next === 'off') cue.current?.stop(false); });
     cue.current?.stop(false);
+    soundEnabledRef.current = !on;
     setSoundEnabled(!on);
     if(on){battle.current?.setEnabled(false);player.current.stop();}
     else {void player.current.toggle();battle.current?.setEnabled(true);}

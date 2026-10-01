@@ -42,7 +42,8 @@ export function createMusicPlayer(createAudio: () => MusicAudio, notify: (state:
         timeout = setTimeout(() => { if (attempt === revision && wanted) fail(); }, 15_000);
         await audio.play();
         if (attempt === revision && wanted && !disposed) playing();
-      } catch { if (attempt === revision && !disposed) fail(); }
+        // Pausing an in-flight play for a scene can reject it; resume handles the next play.
+      } catch { if (attempt === revision && !disposed && !suspended) fail(); }
     },
     stop,
     suspendForCue() {
