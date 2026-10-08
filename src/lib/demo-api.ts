@@ -6,7 +6,7 @@ import { capturePool, evolutionOptions, legendaryEligible, currentChapter } from
 import type { FamilySession, LiveSnapshot, ParentReward, Receipt } from '@/domain/types';
 
 type Reward = ParentReward & { requestId?: string; receiptId?: string };
-export type DemoData = { version: 1; learning?:LearningState; moveLayout?:2; playTime?: PlayTime; playTimeRequest?: string; snapshot: LiveSnapshot; parent: boolean; rewards: Reward[]; receipts: Receipt[]; used: Record<string, string>; devices: { id: string; name: string }[] };
+export type DemoData = { version: 1; learning?:LearningState; moveLayout?:2; deviceTimes?: Record<string,PlayTime>; deviceTimeRequests?: Record<string,string>; playTime?: PlayTime; playTimeRequest?: string; snapshot: LiveSnapshot; parent: boolean; rewards: Reward[]; receipts: Receipt[]; used: Record<string, string>; devices: { id: string; name: string }[] };
 const now = () => new Date().toISOString();
 const reasons = ['独立整理好书包', '认真读完一本书', '帮助家人收拾餐桌', '遇到困难又试了一次'];
 export function createDemoData(finale = false): DemoData {
@@ -38,14 +38,16 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
     if (previousChapter && currentChapter(s)?.id !== previousChapter.id) r.completed_chapter = previousChapter.id;
     data.receipts.push(r);s.pendingReceipt=r;return r;
   };
-  const time = ():PlayTime => {
-    const current = {enabled:false,minutes:20,expiresAt:null,revision:0,...data.playTime,serverNow:now()};
+  const time = (deviceId = 'demo-this', activate = true):PlayTime => {
+    if(!data.devices.some(d=>d.id===deviceId))fail('没有找到这台设备。');
+    data.deviceTimes??=Object.fromEntries(data.devices.map(d=>[d.id,{enabled:false,minutes:20,expiresAt:null,revision:0,...data.playTime,deviceId:d.id,serverNow:now()}]));
+    const current:PlayTime = {...(data.deviceTimes[deviceId]??{enabled:false,minutes:20,expiresAt:null,revision:0}),deviceId,serverNow:now()};
     const today = usageDay(Date.parse(current.serverNow));
-    if (current.enabled && current.usageDay && current.usageDay < today) {
-      data.playTime = {...current, usageDay:today, expiresAt:dailyDeadline(Date.parse(current.serverNow),current.minutes),revision:current.revision+1};
-      return data.playTime;
+    if (activate && current.enabled && current.usageDay && current.usageDay < today) {
+      data.deviceTimes[deviceId] = {...current, usageDay:today, expiresAt:dailyDeadline(Date.parse(current.serverNow),current.minutes),revision:current.revision+1};
+      return data.deviceTimes[deviceId];
     }
-    return current;
+    return {...current,pendingDay:!!(current.enabled&&current.usageDay&&current.usageDay<today)};
   };
   if(route==='play-time')return time();
   if(route==='learning'||route==='parent/learning'){
@@ -79,13 +81,16 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
   if(route==='parent/lock'){data.parent=false;return {};}
   if(route.startsWith('parent/')&&!data.parent)fail('请用演示 PIN 123456 打开家长空间。');
   if(route==='parent/play-time'){
-    const current=time();
+    if(!body)return {devices:data.devices.map(d=>({...d,time:time(d.id,false)})),currentId:'demo-this'};
+    const deviceId=typeof body.deviceId==='string'?body.deviceId:'demo-this';
+    const current=time(deviceId,false);
+    data.deviceTimeRequests??={};
     if(!validMinutes(body?.minutes)||!['start','lock','disable','configure'].includes(String(body?.action))||typeof body?.requestId!=='string')fail('请选择 1 至 120 分钟。');
-    if(data.playTimeRequest===body!.requestId)return current;
+    if(data.deviceTimeRequests[deviceId]===body!.requestId)return current;
     if(body!.expected!==current.revision)fail('另一台设备已调整使用时间，请刷新后再操作。');
     const action=body!.action;
-    data.playTime={...current,usageDay:usageDay(Date.now()),minutes:body!.minutes as number,revision:current.revision+1,enabled:action==='start'||action==='lock'?true:action==='disable'?false:current.enabled,expiresAt:action==='start'?dailyDeadline(Date.now(),Number(body!.minutes)):action==='lock'||action==='disable'?null:current.expiresAt};
-    data.playTimeRequest=body!.requestId as string;return time();
+    data.deviceTimes![deviceId]={...current,usageDay:body!.action==='configure'?current.usageDay:usageDay(Date.now()),minutes:body!.minutes as number,revision:current.revision+1,enabled:action==='start'||action==='lock'?true:action==='disable'?false:current.enabled,expiresAt:action==='start'?dailyDeadline(Date.now(),Number(body!.minutes)):action==='lock'||action==='disable'?null:current.expiresAt};
+    data.deviceTimeRequests[deviceId]=body!.requestId as string;return time(deviceId,false);
   }
   if(route==='parent/rewards'&&!body){const page=Number(new URLSearchParams(query).get('page')||0);const all=[...data.rewards].reverse();return {rewards:all.slice(page*30,page*30+30),hasMore:all.length>(page+1)*30};}
   if(route==='parent/rewards'&&body){

@@ -36,9 +36,16 @@ export async function GET(request: NextRequest, context: Context) {
       const session = path.startsWith('parent/') ? await parentSession(request) : await deviceSession(request);
       return reply(await readLearning(session.childId));
     }
+    if (path === 'parent/play-time') {
+      const session = await parentSession(request);
+      const result = await db().from('kanto_devices').select('id,name').eq('child_id',session.childId).is('revoked_at',null).gt('expires_at',new Date().toISOString()).order('created_at');
+      if(result.error) throw databaseError(result.error);
+      const devices = await Promise.all(result.data.map(async device => ({...device,time:await rpc<PlayTime>('kanto_device_play_time_state',{p_child_id:session.childId,p_device_id:device.id,p_activate:false})})));
+      return reply({devices,currentId:session.deviceId});
+    }
     if (path === 'play-time') {
       const session = await deviceSession(request);
-      return reply(await rpc('kanto_play_time_state', { p_child_id: session.childId }));
+      return reply(await rpc('kanto_device_play_time_state', { p_child_id: session.childId, p_device_id: session.deviceId }));
     }
     if (path.startsWith('receipts/')) {
       const session = await deviceSession(request);
@@ -113,17 +120,17 @@ export async function POST(request: NextRequest, context: Context) {
       if (parent !== (input.action === 'settings')) throw new ApiError(400,'INPUT','操作不正确。');
       uuid(input.requestId);
       await limit(`learning:${session.childId}`,180,60);
-      return reply(await updateLearning(session.childId,input,parent));
+      return reply(await updateLearning(session.childId,session.deviceId,input,parent));
     }
     if (path === 'parent/play-time') {
       const session = await parentSession(request);
       if (!['start','lock','disable','configure'].includes(String(input.action)) || !validMinutes(input.minutes) || !Number.isInteger(input.expected) || Number(input.expected) < 0) throw new ApiError(400,'INPUT','请选择 1 至 120 分钟的使用时长。');
       await limit(`play-time:${session.childId}`,60,60);
-      return reply(await rpc('kanto_control_play_time',{p_child_id:session.childId,p_action:input.action,p_minutes:input.minutes,p_expected:input.expected,p_request_id:uuid(input.requestId)}));
+      return reply(await rpc('kanto_control_device_play_time',{p_child_id:session.childId,p_device_id:uuid(input.deviceId),p_action:input.action,p_minutes:input.minutes,p_expected:input.expected,p_request_id:uuid(input.requestId)}));
     }
     if (['battle/moves','team','redeem','tickets/use','mew'].includes(path)) {
       const session = await deviceSession(request);
-      const time = await rpc<PlayTime>('kanto_play_time_state',{p_child_id:session.childId});
+      const time = await rpc<PlayTime>('kanto_device_play_time_state',{p_child_id:session.childId,p_device_id:session.deviceId});
       if (playTimeLocked(time)) throw new ApiError(423,'PLAY_TIME_LOCKED','伙伴们要休息啦，请家长重新开启。');
     }
     if (path === 'battle/moves') {

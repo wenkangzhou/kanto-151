@@ -1,4 +1,6 @@
 export interface PlayTime {
+  deviceId?: string;
+  pendingDay?: boolean;
   enabled: boolean;
   minutes: number;
   expiresAt: string | null;
@@ -26,3 +28,5 @@ export function remainingSeconds(time: PlayTime, now: number) {
 export function timeLabel(seconds: number) {
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 }
+
+export type DeviceTimes = {devices: {id:string;name:string;time:PlayTime}[];currentId:string};
