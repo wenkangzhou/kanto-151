@@ -26,12 +26,26 @@ function begin(owner: string) {
   return (error = '') => { if (current !== generation || state.owner !== owner) return; generation++; const cleanup = release; release = undefined; cleanup?.(); emit({ owner: '', error }); focus(false); };
 }
 export function voiceSource(text:string) { const clip=clips[text]; return clip?`/audio/voices/${clip[0]}.mp3`:undefined; }
-export function speakText(owner: string, text: string, options:{loadTimeoutMs?:number}={}) {
+export function speakText(owner: string, text: string, options:{loadTimeoutMs?:number;systemFallback?:boolean}={}) {
   if (state.owner === owner) { stopVoice(owner); return; }
   const done = begin(owner);
   const loadingError=options.loadTimeoutMs?'声音暂时没加载好，先继续对战。':'语音加载超时，请再点一次。';
   const clip = clips[text];
-  if (!clip) { done('这段语音还没有准备好。'); return; }
+  if (!clip) {
+    if (!options.systemFallback || !window.speechSynthesis) { done('这段语音还没有准备好。'); return; }
+    try {
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.lang = 'zh-CN'; speech.rate = .85;
+      const voice = window.speechSynthesis.getVoices().find(v => v.lang === 'zh-CN');
+      if (voice) speech.voice = voice;
+      const timer = setTimeout(() => done('语音暂时不可用，请再试一次。'), 15000);
+      speech.onend = () => done();
+      speech.onerror = () => done('语音暂时不可用，请再试一次。');
+      release = () => { clearTimeout(timer); speech.onend = null; speech.onerror = null; window.speechSynthesis.cancel(); };
+      window.speechSynthesis.speak(speech);
+    } catch { done('语音暂时不可用，请再试一次。'); }
+    return;
+  }
   try {
     // Reuse the element unlocked by the first tap, including subsequent battle turns on iPad.
     const audio = player ??= new Audio();

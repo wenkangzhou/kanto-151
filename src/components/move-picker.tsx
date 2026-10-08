@@ -9,6 +9,7 @@ import { pokemonById } from '@/domain/pokemon';
 import { useCollection } from './collection-provider';
 import { PokemonArt } from './pokemon-art';
 import { TypePicture } from './type-badge';
+import { ReadAloud } from './read-aloud';
 
 export function MovePicker({ id, onClose }: { id: number; onClose: () => void }) {
   const { snapshot, saveMoves, refresh } = useCollection();
@@ -70,9 +71,9 @@ export function MovePicker({ id, onClose }: { id: number; onClose: () => void })
         <div className="move-slot-grid">{saved.map((moveId,index)=>{
           const move=slotMoves(id,index).find(m=>m.id===moveId);
           const available=slotMoves(id,index).length>0;
-          return <button key={index} ref={element=>{slotButtons.current[index]=element;}} aria-label={`更换${index>=2?'技能机':`第${index+1}个升级`}招式${move?`，${move.name}`:''}`} disabled={!available||busy} onClick={()=>chooseSlot(index)}>
+          return <div key={index} className="move-audio-card"><button ref={element=>{slotButtons.current[index]=element;}} aria-label={`更换${index>=2?'技能机':`第${index+1}个升级`}招式${move?`，${move.name}`:''}`} disabled={!available||busy} onClick={()=>chooseSlot(index)}>
             <small>{index>=2?`技能机 ${index-1}`:`升级 ${index+1}`}</small><div><strong>{move?.name??'空位'}</strong>{move&&<TypePicture type={move.type} interactive={false}/>}</div>
-          </button>;
+          </button>{move&&<ReadAloud systemFallback text={move.name} label={`朗读${move.name}`}/>}</div>;
         })}</div>
         {!saved.some(Boolean)&&<p className="loadout-dialog-hint">对战时使用「挣扎」</p>}
 
@@ -83,10 +84,10 @@ export function MovePicker({ id, onClose }: { id: number; onClose: () => void })
           const current=saved[slot]===move.id;
           const occupied=!current&&saved.includes(move.id);
           const locked=slot>=2&&!current&&!machineAvailable(id,move.id,learning?.unlocked??snapshot.unlockedMoves);
-          return <button key={move.id} disabled={busy||failed||occupied} aria-pressed={current} onClick={()=>{if(locked){setLockedMove(move.id);}else void replace(move.id);}}>
+          return <div key={move.id} className="move-audio-card"><button disabled={busy||failed||occupied} aria-pressed={current} onClick={()=>{if(locked){setLockedMove(move.id);}else void replace(move.id);}}>
             <div><strong>{move.name}</strong><TypePicture type={move.type} interactive={false}/></div>
             <small>{current?<><Check size={14}/>正在使用</>:occupied?'已装备':locked?<><LockKeyhole size={14}/>{MACHINE_STAR_COST} ⭐</>:slot>=2?'已开放':move.level===0?'进化':`Lv.${move.level}`}</small>
-          </button>;
+          </button><ReadAloud systemFallback text={move.name} label={`朗读${move.name}`}/></div>;
         })}</div>
       </>}
     </div>
