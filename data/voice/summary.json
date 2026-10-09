@@ -1,9 +1,9 @@
 {
-  "expected": 4367,
-  "complete": 4367,
+  "expected": 4372,
+  "complete": 4372,
   "missing": [],
-  "usageCharacters": 89511,
-  "durationSeconds": 12954.95,
-  "bytes": 214773132,
+  "usageCharacters": 89999,
+  "durationSeconds": 13010.82,
+  "bytes": 215675664,
   "includesPreviouslyGeneratedPreview": true
 }

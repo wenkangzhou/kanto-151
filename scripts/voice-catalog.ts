@@ -6,6 +6,8 @@ import { TYPE_NAMES } from '../src/domain/types';
 import { strengths, weaknesses } from '../src/domain/effectiveness';
 import { learnset, struggle } from '../src/domain/battle-loadout';
 
+import { encyclopediaBalls, ballNarration } from '../src/domain/encyclopedia';
+
 const settings = {
   model: 'speech-2.8-hd',
   voice_setting: { voice_id: 'hunyin_6', speed: 1, vol: 1, pitch: 0, emotion: 'happy' },
@@ -43,6 +45,7 @@ for (const p of pokemon) {
 }
 for (const text of ['选一位伙伴出场吧！', '这招没有效果，体力没有减少。', '这招很有效！', '效果不显著。', '打中了！', '配合得真棒！这场友好对战获胜啦！', '双方都很努力！这次握手言和吧。', '轮到你啦！']) add('battle-fixed', text);
 add('play-time', '快到休息时间啦，我们准备休息吧。');
+for (const ball of encyclopediaBalls) add('encyclopedia', ballNarration(ball));
 mkdirSync('data/voice', { recursive: true });
 const clips = [...entries.values()];
 writeFileSync('data/voice/catalog.json', JSON.stringify({ settings, clips }, null, 2) + '\n');

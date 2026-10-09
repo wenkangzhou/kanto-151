@@ -38,10 +38,17 @@ export function speakText(owner: string, text: string, options:{loadTimeoutMs?:n
       speech.lang = 'zh-CN'; speech.rate = .85;
       const voice = window.speechSynthesis.getVoices().find(v => v.lang === 'zh-CN');
       if (voice) speech.voice = voice;
-      const timer = setTimeout(() => done('语音暂时不可用，请再试一次。'), 15000);
+      let timer = setTimeout(() => done('语音暂时不可用，请再试一次。'), 15000);
+      const current = generation;
+      speech.onstart = () => {
+        if (current !== generation) return;
+        clearTimeout(timer);
+        // Long encyclopedia narration needs more time than a move name.
+        timer = setTimeout(() => done('语音播放超时。'), Math.max(30000, text.length * 650 + 5000));
+      };
       speech.onend = () => done();
       speech.onerror = () => done('语音暂时不可用，请再试一次。');
-      release = () => { clearTimeout(timer); speech.onend = null; speech.onerror = null; window.speechSynthesis.cancel(); };
+      release = () => { clearTimeout(timer); speech.onstart = null; speech.onend = null; speech.onerror = null; window.speechSynthesis.cancel(); };
       window.speechSynthesis.speak(speech);
     } catch { done('语音暂时不可用，请再试一次。'); }
     return;
