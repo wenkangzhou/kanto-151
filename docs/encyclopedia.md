@@ -39,3 +39,23 @@
 - https://bulbapedia.bulbagarden.net/wiki/Cinnabar_Gym
 - https://bulbapedia.bulbagarden.net/wiki/Viridian_Gym
 - https://www.pokemon.com/us/animation/seasons/1/episode-14-electric-shock-showdown （官方动画梗概）
+
+## 进化石
+
+路由：`/pokedex/encyclopedia/evolution-stones`，数据：`src/domain/evolution-stones.ts`。
+
+范围为《火红／叶绿》的关都 001—151：五种进化石，共16组关系。
+- 火之石：六尾→九尾、卡蒂狗→风速狗、伊布→火伊布。
+- 水之石：蚊香君→蚊香泳士、大舌贝→刺甲贝、海星星→宝石海星、伊布→水伊布。
+- 雷之石：皮卡丘→雷丘、伊布→雷伊布。
+- 叶之石：臭臭花→霸王花、口呆花→大食花、蛋蛋→椰蛋树。
+- 月之石：尼多娜→尼多后、尼多力诺→尼多王、皮皮→皮可西、胖丁→胖可丁。
+
+不把“关都151的五种”说成整个游戏或系列只有五种；不含太阳之石的非关都进化、后世代进化或地区形态。动画参考无印篇 EP006、EP040、EP043，故事和游戏规则分别展示。进化石使用本地矢量示意，进化前后伙伴均为剪影，展示名称但不跳转图鉴、不设单独伙伴语音。点石头播放该石头说明与全部对应关系，可重复播放；已沿用 MiniMax speech-2.8-hd / hunyin_6 制作5段语音：文本474字符，接口实际用量890计费字符，按 ¥3.50/万字符计算为 ¥0.3115，总时长100.476秒。已通过解码、校验和检查并接入语音索引，重复播放不调用生成接口；新文案仍可回退系统朗读。无奖励或数据库变更。
+
+核对来源：
+- https://pokemondb.net/evolution/stone
+- https://www.serebii.net/fireredleafgreen/items.shtml
+- https://bulbapedia.bulbagarden.net/wiki/EP006
+- https://bulbapedia.bulbagarden.net/wiki/EP040
+- https://bulbapedia.bulbagarden.net/wiki/EP043

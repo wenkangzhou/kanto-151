@@ -8,6 +8,7 @@ import { learnset, struggle } from '../src/domain/battle-loadout';
 
 import { encyclopediaBalls, ballNarration } from '../src/domain/encyclopedia';
 import { kantoGyms, gymNarration } from '../src/domain/gyms';
+import { evolutionStones, stoneNarration } from '../src/domain/evolution-stones';
 
 const settings = {
   model: 'speech-2.8-hd',
@@ -47,6 +48,7 @@ for (const p of pokemon) {
 for (const text of ['选一位伙伴出场吧！', '这招没有效果，体力没有减少。', '这招很有效！', '效果不显著。', '打中了！', '配合得真棒！这场友好对战获胜啦！', '双方都很努力！这次握手言和吧。', '轮到你啦！']) add('battle-fixed', text);
 add('play-time', '快到休息时间啦，我们准备休息吧。');
 for (const ball of encyclopediaBalls) add('encyclopedia', ballNarration(ball));
+for (const stone of evolutionStones) add('encyclopedia-stones', stoneNarration(stone));
 for (const gym of kantoGyms) {
   add('encyclopedia-gyms', gymNarration(gym, 'anime'));
   add('encyclopedia-gyms', gymNarration(gym, 'game'));
