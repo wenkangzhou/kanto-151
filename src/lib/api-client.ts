@@ -22,5 +22,6 @@ export async function api<T>(path: string, body?: Record<string, unknown>, signa
     if (result.code === 'DEVICE_REQUIRED') window.dispatchEvent(new Event('kanto-device-lost'));
     throw new RequestError(result.error ?? '操作没有完成，请重试。', result.code ?? 'UNKNOWN', response.status);
   }
+  if(body&&['pair','recover','setup','disconnect'].includes(path))window.dispatchEvent(new Event('kanto-learning-reset'));
   return result as T;
 }

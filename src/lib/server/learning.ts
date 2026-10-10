@@ -7,12 +7,16 @@ export async function readLearning(childId:string) {
   return learningState(row.state);
 }
 export async function updateLearning(childId:string,deviceId:string,input:Record<string,unknown>,parent:boolean) {
-  const {data,error}=await db().from('kanto_pokemon_collection').select('pokemon_id').eq('child_id',childId);
-  if(error)throw new ApiError(503,'DATABASE','暂时无法读取伙伴。');
+  let collected:number[]=[];
+  if(input.action==='unlock'){
+    const {data,error}=await db().from('kanto_pokemon_collection').select('pokemon_id').eq('child_id',childId);
+    if(error)throw new ApiError(503,'DATABASE','暂时无法读取伙伴。');
+    collected=data.map(p=>p.pokemon_id);
+  }
   for(let attempt=0;attempt<4;attempt++){
     const row=await rpc<Stored>('kanto_learning_read',{p_child_id:childId});
     let state:LearningState;
-    try{state=changeLearning(learningState(row.state),input,data.map(p=>p.pokemon_id),parent,Date.parse(row.serverNow));}
+    try{state=changeLearning(learningState(row.state),input,collected,parent,Date.parse(row.serverNow));}
     catch(error){throw new ApiError(409,'LEARNING',error instanceof Error?error.message:'请重试。');}
     if(await rpc<boolean>('kanto_device_learning_save',{p_child_id:childId,p_device_id:deviceId,p_expected:row.revision,p_state:state,p_parent:parent}))return state;
   }

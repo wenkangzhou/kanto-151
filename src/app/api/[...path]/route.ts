@@ -34,7 +34,7 @@ export async function GET(request: NextRequest, context: Context) {
     }
     if (path === 'learning' || path === 'parent/learning') {
       const session = path.startsWith('parent/') ? await parentSession(request) : await deviceSession(request);
-      return reply(await readLearning(session.childId));
+      return reply({...await readLearning(session.childId),syncScope:`${session.childId}:${session.deviceId}`});
     }
     if (path === 'parent/play-time') {
       const session = await parentSession(request);
@@ -119,6 +119,7 @@ export async function POST(request: NextRequest, context: Context) {
       const session = parent ? await parentSession(request) : await deviceSession(request);
       if (parent !== (input.action === 'settings')) throw new ApiError(400,'INPUT','操作不正确。');
       uuid(input.requestId);
+      if(input.action==='batch'&&input.syncScope!==`${session.childId}:${session.deviceId}`)throw new ApiError(409,'LEARNING_SCOPE','设备已变化，请重新打开学习手帐。');
       await limit(`learning:${session.childId}`,180,60);
       return reply(await updateLearning(session.childId,session.deviceId,input,parent));
     }

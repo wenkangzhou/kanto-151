@@ -7,6 +7,7 @@ import {MACHINE_STAR_COST,type LearningState} from '@/domain/learning';
 import {pokemonById} from '@/domain/pokemon';
 import {TYPE_NAMES,type PokemonType} from '@/domain/types';
 import {api} from '@/lib/api-client';
+import {learningClient} from '@/lib/learning-client';
 import {useCollection} from './collection-provider';
 import {PokemonArt} from './pokemon-art';
 import {TypePicture} from './type-badge';
@@ -18,8 +19,8 @@ export function MoveShop(){
  const [learning,setLearning]=useState<LearningState|null>(null),[error,setError]=useState('');
  const [search,setSearch]=useState(''),[type,setType]=useState<PokemonType|null>(null),[filter,setFilter]=useState<'all'|'locked'|'owned'>('all');
  const [selected,setSelected]=useState<Offer|null>(null);
- const load=useCallback(async()=>{try{setLearning(await api<LearningState>('learning'));setError('');}catch(e){setError(e instanceof Error?e.message:'学习星暂时无法读取。');}},[]);
- useEffect(()=>{const controller=new AbortController();api<LearningState>('learning',undefined,controller.signal).then(setLearning).catch(e=>{if(!controller.signal.aborted)setError(e.message);});return()=>controller.abort();},[]);
+ const load=useCallback(async()=>{try{await learningClient().flush();setLearning(await api<LearningState>('learning'));setError('');}catch(e){setError(e instanceof Error?e.message:'学习星暂时无法读取。');}},[]);
+ useEffect(()=>{const controller=new AbortController();learningClient().flush().then(()=>api<LearningState>('learning',undefined,controller.signal)).then(setLearning).catch(e=>{if(!controller.signal.aborted)setError(e.message);});return()=>controller.abort();},[]);
  const catalog=useMemo(()=>{
   const offers=new Map<string,Offer>();
   for(const {pokemonId} of snapshot.records)for(const move of learnset(pokemonId).machine){
@@ -51,7 +52,7 @@ function ShopMove({offer,learning,onLearning,onClose,refresh}:{offer:Offer;learn
  function choose(id:number){setPartner(id);setPreset({saved:resolvedSlots(id,snapshot.movePresets?.[id]),expected:snapshot.movePresets?.[id]??null});setError('');setNotice('');}
  async function unlock(){
   if(partner===null||saving.current)return;saving.current=true;setBusy(true);setError('');
-  try{const next=await api<LearningState>('learning',{action:'unlock',pokemonId:partner,moveId:move.id,requestId:crypto.randomUUID()});onLearning(next);setNotice('已兑换！选一个技能机位置装备。');await refresh();}
+  try{await learningClient().flush();if(learningClient().getSnapshot().pending)throw Error('学习记录还在同步，星星同步后就能兑换。');const next=await api<LearningState>('learning',{action:'unlock',pokemonId:partner,moveId:move.id,requestId:crypto.randomUUID()});onLearning(next);setNotice('已兑换！选一个技能机位置装备。');await refresh();}
   catch(e){setError(e instanceof Error?e.message:'兑换失败，请重试。');}finally{saving.current=false;setBusy(false);}
  }
  async function equip(slot:number){

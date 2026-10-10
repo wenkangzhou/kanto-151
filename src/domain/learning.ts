@@ -27,6 +27,13 @@ export function questionPool(stage:number) {
 }
 function requireInput(ok:unknown,message='操作已变化，请刷新后再试。'):asserts ok {if(!ok)throw new Error(message);}
 export function changeLearning(previous:LearningState,input:Record<string,unknown>,collected:number[],parent=false,now=Date.now(),random=Math.random):LearningState {
+  if(input.action==='batch'){
+    requireInput(!parent&&Array.isArray(input.events)&&input.events.length>0&&input.events.length<=20,'学习记录格式不正确。');
+    return input.events.reduce((state,event)=>{
+      requireInput(event&&typeof event==='object'&&(event.action==='answer'||event.action==='hint'),'只能同步答题和提示记录。');
+      return changeLearning(state,event,collected,false,now,random);
+    },previous);
+  }
   const s=structuredClone(previous); const at=new Date(now).toISOString();const day=usageDay(now);
   requireInput(typeof input.requestId==='string'&&input.requestId.length<=64,'请求编号不正确。');
   if(s.requests.includes(input.requestId))return s;

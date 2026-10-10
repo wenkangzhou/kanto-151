@@ -53,7 +53,7 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
   if(route==='learning'||route==='parent/learning'){
     const parent=route.startsWith('parent/');
     if(parent&&!data.parent)fail('请先打开家长空间。');
-    if(!body)return learningState(data.learning??null);
+    if(!body)return {...learningState(data.learning??null),syncScope:'demo'};
     if(parent!==(body.action==='settings'))fail('操作不正确。');
     if(!parent&&playTimeLocked(time()))fail('伙伴们要休息啦，请家长重新开启。');
     data.learning=changeLearning(learningState(data.learning??null),body,s.records.map(r=>r.pokemonId),parent);
@@ -128,7 +128,7 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
   return fail('这个操作暂不在演示范围内，不会发送到真实家庭。');
 }
 const storageKey='kanto-visitor-data-v1';
-export function resetDemoData(finale=false){sessionStorage.setItem(storageKey,JSON.stringify(createDemoData(finale)));}
+export function resetDemoData(finale=false){for(const key of Object.keys(sessionStorage))if(key.startsWith('kanto-learning-events-v1:demo:'))sessionStorage.removeItem(key);window.dispatchEvent(new Event('kanto-learning-reset'));sessionStorage.setItem(storageKey,JSON.stringify(createDemoData(finale)));}
 export function demoApi(path:string,body?:Record<string,unknown>){
   const raw=sessionStorage.getItem(storageKey);
   const data:DemoData=raw?JSON.parse(raw):createDemoData();

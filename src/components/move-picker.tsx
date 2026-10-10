@@ -3,6 +3,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { ArrowLeft, Check, X, LockKeyhole } from 'lucide-react';
 import Link from 'next/link';
 import {api} from '@/lib/api-client';
+import {learningClient} from '@/lib/learning-client';
 import {MACHINE_STAR_COST,type LearningState} from '@/domain/learning';
 import { machineAvailable, resolvedSlots, slotMoves, type MoveSlots } from '@/domain/battle-loadout';
 import { pokemonById } from '@/domain/pokemon';
@@ -32,7 +33,7 @@ export function MovePicker({ id, onClose, discovery }: { id: number; onClose: ()
   const slotButtons = useRef<(HTMLButtonElement | null)[]>([]);
   useEffect(() => {
     let mounted=true;
-    api<LearningState>('learning').then(value=>{if(mounted)setLearning(value);}).catch(()=>{if(mounted)setError('学习星暂时无法读取，已开放招式仍可使用。');});
+    learningClient().flush().then(()=>api<LearningState>('learning')).then(value=>{if(mounted)setLearning(value);}).catch(()=>{if(mounted)setError('学习星暂时无法读取，已开放招式仍可使用。');});
     const element = dialog.current;
     const overflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden'; element?.showModal();
@@ -41,7 +42,7 @@ export function MovePicker({ id, onClose, discovery }: { id: number; onClose: ()
   function chooseSlot(index: number) { setSlot(index);setLockedMove(null); setNotice(''); setError(''); }
   async function unlockMove(){
     if(!lockedMove||saving.current)return;saving.current=true;setBusy(true);setError('');
-    try{const next=await api<LearningState>('learning',{action:'unlock',pokemonId:id,moveId:lockedMove,requestId:crypto.randomUUID()});setLearning(next);await refresh();setLockedMove(null);setNotice('已兑换，点一下即可装备');}
+    try{await learningClient().flush();if(learningClient().getSnapshot().pending)throw Error('学习记录还在同步，星星同步后就能兑换。');const next=await api<LearningState>('learning',{action:'unlock',pokemonId:id,moveId:lockedMove,requestId:crypto.randomUUID()});setLearning(next);await refresh();setLockedMove(null);setNotice('已兑换，点一下即可装备');}
     catch(e){setError(e instanceof Error?e.message:'请重试。');}finally{saving.current=false;setBusy(false);}
   }
   useEffect(() => { if (slot !== null) back.current?.focus(); }, [slot]);
