@@ -5,12 +5,13 @@ import {ArrowLeft,ArrowRight,Hand,Volume2} from 'lucide-react';
 import {encyclopediaBalls,ballNarration} from '@/domain/encyclopedia';
 import {pokemonById} from '@/domain/pokemon';
 import {speakText,stopVoice} from '@/lib/voice-audio';
+import {GymTopicCard} from './gym-encyclopedia';
 import {BallArt} from './ball-art';
 import {KnowledgeTabs} from './knowledge-tabs';
 import {ReadAloud} from './read-aloud';
 import {PokemonArt} from './pokemon-art';
 export function Encyclopedia(){
- return <div className="page encyclopedia-page"><KnowledgeTabs encyclopedia/><div className="page-heading"><div><div className="eyebrow">KANTO · 小小发现</div><h1>宝可梦百科<span className="title-dot">.</span></h1></div></div><article className="encyclopedia-topic"><Link href="/pokedex/encyclopedia/poke-balls" className="ball-topic-link" aria-label="看看五种精灵球"><div className="ball-topic-art">{encyclopediaBalls.map(ball=><BallArt key={ball.id} ball={ball}/>)}</div><div className="ball-topic-caption"><div><span>认识精灵球</span><h2>哪颗球，你见过？</h2></div><span className="topic-enter"><Hand size={24}/><ArrowRight size={26}/></span></div></Link></article></div>;
+ return <div className="page encyclopedia-page"><KnowledgeTabs encyclopedia/><div className="page-heading"><div><div className="eyebrow">KANTO · 小小发现</div><h1>宝可梦百科<span className="title-dot">.</span></h1></div></div><div className="encyclopedia-topics"><GymTopicCard/><article className="encyclopedia-topic"><Link href="/pokedex/encyclopedia/poke-balls" className="ball-topic-link" aria-label="看看五种精灵球"><div className="ball-topic-art">{encyclopediaBalls.map(ball=><BallArt key={ball.id} ball={ball}/>)}</div><div className="ball-topic-caption"><div><span>认识精灵球</span><h2>哪颗球，你见过？</h2></div><span className="topic-enter"><Hand size={24}/><ArrowRight size={26}/></span></div></Link></article></div></div>;
 }
 export function PokeBallArticle(){
  const [selected,setSelected]=useState(0);const owner=useId();

@@ -13,3 +13,29 @@
 - https://www.pokemon.com/uk/pokemon-news/celebrate-25-years-of-pokemon-with-memorable-moments-from-the-kanto-region
 
 数据位于 `src/domain/encyclopedia.ts`；资料说明在页面底部折叠展示。无需数据库迁移。
+
+## 道馆和徽章
+
+路由：`/pokedex/encyclopedia/gyms`。首页以八枚徽章大图进入，自由点选或上一站／下一站浏览。
+
+- 默认动画模式：小智拿徽章的顺序为深灰、华蓝、枯叶、金黄、玉虹、浅红、红莲、常青。
+- 游戏模式：按徽章常用排列深灰、华蓝、枯叶、玉虹、浅红、金黄、红莲、常青；不是强制挑战顺序。
+- 游戏馆主及徽章沿用《红／绿／蓝》，出战队伍明确采用《火红／叶绿》首次道馆战。保留阿桔的两只瓦斯弹与坂木的两只独角犀牛，不混入初代坂木的钻角犀兽或《皮卡丘》版队伍。
+- 动画以无印关都道馆故事为范围，不将馆主所有时期的持有宝可梦混在一起。毛球→摩鲁蛾、凯西→勇基拉注明为进化过程，常青注明火箭队代管及借用队伍。
+- Pokémon 以剪影展示，名称仅展示，不跳图鉴、不解锁收藏。馆主使用本地《火红／叶绿》像素图，页面资料说明明确不是动画造型。徽章采用用户提供的八张高清透明 PNG，原图存于 public/encyclopedia/badges，通过 Next Image 按展示尺寸加载，保持完整比例，不再裁切截图。
+- 道馆语音已沿用 MiniMax speech-2.8-hd / hunyin_6 预生成：16 段道馆讲解（两种模式各8段），另8段仅朗读徽章四字名称；宝可梦卡片没有语音按钮。24 段文本共 1,821 字符，接口返回实际用量 3,434 计费字符，按 ¥3.50/万字符约 ¥1.20。音频已通过解码和校验和检查并接入语音索引，重复播放不调用生成 API；未来未录制的新文案仍可回退系统语音。
+- 保持百科纯浏览，不提供徽章收集奖励、答题或兑换，不新增 SQL。
+
+数据：`src/domain/gyms.ts`；每条数据保存对应道馆的来源 slug。来源（2026-10-09 核对）：
+- https://pokemondb.net/firered-leafgreen/gymleaders-elitefour
+- https://www.serebii.net/fireredleafgreen/gyms.shtml （八位馆主图片位于该页链接的 `/pokearth/trainers/frlg/30.png` 至 `37.png`，为游戏素材，权利归原权利人）
+- https://wiki.52poke.com/wiki/徽章 （中文名称）
+- https://bulbapedia.bulbagarden.net/wiki/Pewter_Gym
+- https://bulbapedia.bulbagarden.net/wiki/Cerulean_Gym
+- https://bulbapedia.bulbagarden.net/wiki/Vermilion_Gym
+- https://bulbapedia.bulbagarden.net/wiki/Celadon_Gym
+- https://bulbapedia.bulbagarden.net/wiki/Fuchsia_Gym
+- https://bulbapedia.bulbagarden.net/wiki/Saffron_Gym
+- https://bulbapedia.bulbagarden.net/wiki/Cinnabar_Gym
+- https://bulbapedia.bulbagarden.net/wiki/Viridian_Gym
+- https://www.pokemon.com/us/animation/seasons/1/episode-14-electric-shock-showdown （官方动画梗概）
