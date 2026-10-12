@@ -40,7 +40,7 @@ export class LearningSession {
   const next=changeLearning(this.view.data,event,[]);
   // Persist before showing success, so a refresh cannot lose an acknowledged answer.
   this.journal.put(this.scope,event);this.events.push(event);this.publish();
-  if(next.active?.finishedAt)void this.flush();else this.schedule();
+  if((event.subject==='pinyin'?next.pinyin?.active:next.active)?.finishedAt)void this.flush();else this.schedule();
   return next;
  }
  private schedule(){if(!this.timer)this.timer=setTimeout(()=>{this.timer=undefined;void this.flush();},8000);}
@@ -66,7 +66,8 @@ export class LearningSession {
  }
  async start(event:Action){
   if(this.disposed)throw Error('设备已变化，请重新打开学习手帐。');
-  if(this.view.data?.active&&!this.view.data.active.finishedAt){this.schedule();return this.view.data;}
+  const active=event.subject==='pinyin'?this.view.data?.pinyin?.active:this.view.data?.active;
+  if(this.view.data&&active&&!active.finishedAt){this.schedule();return this.view.data;}
   await this.flush();
   if(this.events.length)throw Error('上一轮记录已保存在本机，请先同步后再开始新一轮。');
   const result=await this.request(event);this.base=result;this.publish();return result;

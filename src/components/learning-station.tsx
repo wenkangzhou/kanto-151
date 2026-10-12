@@ -54,10 +54,11 @@ export function LearningStation({data,rewardAvailable,busy,onStart}:{data:Learni
     <Link href="/learn/moves" className={styles.shopLink}>看看招式<ArrowRight size={17}/></Link>
    </aside>
   </div>
+  <Link href="/learn/pinyin" className={styles.pinyinCard} aria-label="去语文学拼音"><div className={styles.pinyinLetters} aria-hidden="true"><span>m</span><span>ā</span></div><div><small>语文 · 拼音初体验</small><h2>听一听，拼出小小声音</h2><p>{data.pinyin?.active&&!data.pinyin.active.finishedAt?`继续拼音 · 已完成 ${data.pinyin.active.questions.filter(q=>q.done).length} / 5`:'妈妈、米、木……声音藏在生活里'}</p></div><ArrowRight size={25}/></Link>
   <section className={styles.route} aria-label="减法学习进度">
    <div className={styles.routeHeading}><span><BookOpen size={17}/>我们的学习路线</span><small>现在学：{stages[stage].name}</small></div>
    <div className={styles.routeSteps}>{stages.map((s,i)=><div key={s.name} className={`${styles.step} ${i===stage?styles.current:''}`} aria-current={i===stage?'step':undefined}><span className={styles.stepNumber}>{i<stage?<Check size={15}/>:String(i+1).padStart(2,'0')}</span><div><strong>{s.name}</strong><small>{s.example}</small></div>{i===stage&&<span className={styles.currentDot} aria-label="当前阶段"/>}</div>)}</div>
   </section>
-  <section className={styles.coming} aria-label="更多学习内容，建设中"><span className={styles.comingHeading}><Plus size={16}/>更多小发现</span><div>{[{Icon:BookOpen,name:'语文'},{Icon:Puzzle,name:'思维'},{Icon:Languages,name:'英语'}].map(({Icon,name})=><div className={styles.comingItem} key={name}><Icon size={22} strokeWidth={1.5}/><strong>{name}</strong><small><LockKeyhole size={12}/>建设中</small></div>)}</div></section>
+  <section className={styles.coming} aria-label="更多学习内容，建设中"><span className={styles.comingHeading}><Plus size={16}/>更多小发现</span><div>{[{Icon:Puzzle,name:'思维'},{Icon:Languages,name:'英语'}].map(({Icon,name})=><div className={styles.comingItem} key={name}><Icon size={22} strokeWidth={1.5}/><strong>{name}</strong><small><LockKeyhole size={12}/>建设中</small></div>)}</div></section>
  </div>;
 }

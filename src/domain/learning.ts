@@ -1,3 +1,4 @@
+import {newPinyin,pinyinQuestions,type PinyinState} from './pinyin';
 import { learnset } from './battle-loadout';
 import { usageDay } from './play-time';
 
@@ -11,7 +12,7 @@ export const stages = [
 export type Question = {id:string;a:number;b:number;attempts:number;hint:boolean;done:boolean;first:boolean;stars:number};
 export type Lesson = {id:string;day:string;stage:number;rewarded:boolean;startedAt:string;finishedAt:string|null;questions:Question[];activeSeconds:number};
 export type LearningState = {
-  balance:number;unlocked:string[];stage:number;fixedStage:number|null;dailyRounds:number;
+  pinyin?:PinyinState;balance:number;unlocked:string[];stage:number;fixedStage:number|null;dailyRounds:number;
   day:string;rounds:number;active:Lesson|null;history:Lesson[];
   ledger:{id:string;at:string;amount:number;reason:string}[];requests:string[];
 };
@@ -34,12 +35,42 @@ export function changeLearning(previous:LearningState,input:Record<string,unknow
       return changeLearning(state,event,collected,false,now,random);
     },previous);
   }
+  requireInput(input.subject===undefined||input.subject==='math'||input.subject==='pinyin','没有找到这个学习科目。');
   const s=structuredClone(previous); const at=new Date(now).toISOString();const day=usageDay(now);
   requireInput(typeof input.requestId==='string'&&input.requestId.length<=64,'请求编号不正确。');
   if(s.requests.includes(input.requestId))return s;
   if(s.day!==day){s.day=day;s.rounds=0;}
   const grant=(amount:number,reason:string)=>{s.balance+=amount;s.ledger.push({id:input.requestId as string,at,amount,reason});};
-  if(input.action==='start'){
+  if(input.subject==='pinyin'&&(input.action==='start'||input.action==='answer'||input.action==='hint')){
+    const p=s.pinyin??=newPinyin();
+    if(input.action==='start'){
+      if(!p.active||p.active.finishedAt){
+        const stage=p.fixedStage??p.stage,rewarded=s.rounds<s.dailyRounds;
+        if(rewarded)s.rounds++;
+        p.active={id:input.requestId,day,stage,rewarded,startedAt:at,finishedAt:null,activeSeconds:0,questions:pinyinQuestions(stage,input.requestId,random)};
+      }
+    }else{
+      const l=p.active;requireInput(l&&l.id===input.lessonId&&!l.finishedAt);
+      const q=l.questions.find(q=>!q.done);requireInput(q&&q.id===input.questionId);
+      l.activeSeconds+=Math.min(120,Math.max(0,Number.isFinite(input.seconds)?Math.floor(Number(input.seconds)):0));
+      if(input.action==='hint')q.hint=true;
+      else{
+        requireInput(typeof input.answer==='string'&&q.options.includes(input.answer as typeof q.target),'请选择这一题里的拼音。');
+        q.attempts++;
+        if(q.attempts>=2&&input.answer!==q.target)q.hint=true;
+        if(input.answer===q.target){q.done=true;q.first=q.attempts===1&&!q.hint;q.stars=l.rewarded?(q.first?2:1):0;if(q.stars)grant(q.stars,q.first?'拼音 · 独立答对':'拼音 · 坚持完成');}
+        if(l.questions.every(q=>q.done)){
+          l.finishedAt=at;p.history.push(structuredClone(l));
+          const recent=p.history.filter(h=>h.stage===l.stage).slice(-2);
+          if(p.fixedStage===null&&recent.length===2&&recent.every(h=>h.questions.filter(q=>q.first).length>=4))p.stage=Math.min(2,p.stage+1);
+        }
+      }
+    }
+  }else if(input.subject==='pinyin'&&input.action==='settings'){
+    requireInput(parent,'请先打开家长空间。');
+    requireInput(Number.isInteger(input.stage)&&Number(input.stage)>=0&&Number(input.stage)<=2);
+    const p=s.pinyin??=newPinyin();p.stage=Number(input.stage);p.fixedStage=input.fixed===true?p.stage:null;
+  }else if(input.action==='start'){
     if(!s.active||s.active.finishedAt){
       const stage=s.fixedStage??s.stage;const pool=questionPool(stage);
       // Revisit an independently missed example, then vary the remaining problems.
@@ -77,9 +108,15 @@ export function changeLearning(previous:LearningState,input:Record<string,unknow
     }
   }else if(input.action==='settings'){
     requireInput(parent,'请先打开家长空间。');
-    requireInput(Number.isInteger(input.stage)&&Number(input.stage)>=0&&Number(input.stage)<=3);
-    requireInput(Number.isInteger(input.dailyRounds)&&Number(input.dailyRounds)>=0&&Number(input.dailyRounds)<=5);
-    s.stage=Number(input.stage);s.fixedStage=input.fixed===true?s.stage:null;s.dailyRounds=Number(input.dailyRounds);
+    requireInput(input.scope===undefined||input.scope==='math'||input.scope==='rewards');
+    if(input.scope!=='rewards'){
+      requireInput(Number.isInteger(input.stage)&&Number(input.stage)>=0&&Number(input.stage)<=3);
+      s.stage=Number(input.stage);s.fixedStage=input.fixed===true?s.stage:null;
+    }
+    if(input.scope!=='math'){
+      requireInput(Number.isInteger(input.dailyRounds)&&Number(input.dailyRounds)>=0&&Number(input.dailyRounds)<=5);
+      s.dailyRounds=Number(input.dailyRounds);
+    }
   }else throw new Error('没有找到这个学习操作。');
   s.requests=[...s.requests,input.requestId].slice(-200);
   return s;
