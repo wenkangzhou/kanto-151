@@ -1,3 +1,4 @@
+import {newThinking,thinkingQuestions,type ThinkingState} from './thinking';
 import {newPinyin,pinyinQuestions,type PinyinState} from './pinyin';
 import { learnset } from './battle-loadout';
 import { usageDay } from './play-time';
@@ -12,7 +13,7 @@ export const stages = [
 export type Question = {id:string;a:number;b:number;attempts:number;hint:boolean;done:boolean;first:boolean;stars:number};
 export type Lesson = {id:string;day:string;stage:number;rewarded:boolean;startedAt:string;finishedAt:string|null;questions:Question[];activeSeconds:number};
 export type LearningState = {
-  pinyin?:PinyinState;balance:number;unlocked:string[];stage:number;fixedStage:number|null;dailyRounds:number;
+  thinking?:ThinkingState;pinyin?:PinyinState;balance:number;unlocked:string[];stage:number;fixedStage:number|null;dailyRounds:number;
   day:string;rounds:number;active:Lesson|null;history:Lesson[];
   ledger:{id:string;at:string;amount:number;reason:string}[];requests:string[];
 };
@@ -35,13 +36,33 @@ export function changeLearning(previous:LearningState,input:Record<string,unknow
       return changeLearning(state,event,collected,false,now,random);
     },previous);
   }
-  requireInput(input.subject===undefined||input.subject==='math'||input.subject==='pinyin','没有找到这个学习科目。');
+  requireInput(input.subject===undefined||input.subject==='math'||input.subject==='pinyin'||input.subject==='thinking','没有找到这个学习科目。');
   const s=structuredClone(previous); const at=new Date(now).toISOString();const day=usageDay(now);
   requireInput(typeof input.requestId==='string'&&input.requestId.length<=64,'请求编号不正确。');
   if(s.requests.includes(input.requestId))return s;
   if(s.day!==day){s.day=day;s.rounds=0;}
   const grant=(amount:number,reason:string)=>{s.balance+=amount;s.ledger.push({id:input.requestId as string,at,amount,reason});};
-  if(input.subject==='pinyin'&&(input.action==='start'||input.action==='answer'||input.action==='hint')){
+  if(input.subject==='thinking'){
+    requireInput(['start','answer','hint'].includes(String(input.action)));
+    const p=s.thinking??=newThinking();
+    if(input.action==='start'){
+      if(!p.active||p.active.finishedAt){
+        const rewarded=s.rounds<s.dailyRounds;if(rewarded)s.rounds++;
+        p.active={id:input.requestId,day,stage:0,rewarded,startedAt:at,finishedAt:null,activeSeconds:0,questions:thinkingQuestions(input.requestId,collected,random)};
+      }
+    }else{
+      const l=p.active;requireInput(l&&l.id===input.lessonId&&!l.finishedAt);
+      const q=l.questions.find(q=>!q.done);requireInput(q&&q.id===input.questionId);
+      l.activeSeconds+=Math.min(120,Math.max(0,Number.isFinite(input.seconds)?Math.floor(Number(input.seconds)):0));
+      if(input.action==='hint')q.hint=true;
+      else{
+        requireInput(typeof input.answer==='string'&&q.options.some((_,i)=>String(i)===input.answer),'请选择这一题里的图片。');
+        q.attempts++;if(q.attempts>=2&&input.answer!==q.target)q.hint=true;
+        if(input.answer===q.target){q.done=true;q.first=q.attempts===1&&!q.hint;q.stars=l.rewarded?(q.first?2:1):0;if(q.stars)grant(q.stars,q.first?'思维 · 独立答对':'思维 · 坚持完成');}
+        if(l.questions.every(q=>q.done)){l.finishedAt=at;p.history.push(structuredClone(l));}
+      }
+    }
+  }else if(input.subject==='pinyin'&&(input.action==='start'||input.action==='answer'||input.action==='hint')){
     const p=s.pinyin??=newPinyin();
     if(input.action==='start'){
       if(!p.active||p.active.finishedAt){
