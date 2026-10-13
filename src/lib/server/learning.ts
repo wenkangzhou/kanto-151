@@ -8,7 +8,7 @@ export async function readLearning(childId:string) {
 }
 export async function updateLearning(childId:string,deviceId:string,input:Record<string,unknown>,parent:boolean) {
   let collected:number[]=[];
-  if(input.action==='unlock'){
+  if(input.action==='unlock'||(input.action==='start'&&input.subject==='thinking')){
     const {data,error}=await db().from('kanto_pokemon_collection').select('pokemon_id').eq('child_id',childId);
     if(error)throw new ApiError(503,'DATABASE','暂时无法读取伙伴。');
     collected=data.map(p=>p.pokemon_id);

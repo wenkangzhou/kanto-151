@@ -43,12 +43,16 @@ export function changeLearning(previous:LearningState,input:Record<string,unknow
   if(s.day!==day){s.day=day;s.rounds=0;}
   const grant=(amount:number,reason:string)=>{s.balance+=amount;s.ledger.push({id:input.requestId as string,at,amount,reason});};
   if(input.subject==='thinking'){
-    requireInput(['start','answer','hint'].includes(String(input.action)));
+    requireInput(['start','answer','hint','settings'].includes(String(input.action)));
     const p=s.thinking??=newThinking();
-    if(input.action==='start'){
+    if(input.action==='settings'){
+      requireInput(parent,'请先打开家长空间。');requireInput(Number.isInteger(input.stage)&&Number(input.stage)>=0&&Number(input.stage)<=2);
+      p.stage=Number(input.stage);p.fixedStage=input.fixed===true?p.stage:null;
+    }else if(input.action==='start'){
       if(!p.active||p.active.finishedAt){
         const rewarded=s.rounds<s.dailyRounds;if(rewarded)s.rounds++;
-        p.active={id:input.requestId,day,stage:0,rewarded,startedAt:at,finishedAt:null,activeSeconds:0,questions:thinkingQuestions(input.requestId,collected,random)};
+        const stage=p.fixedStage??p.stage??0;
+        p.active={id:input.requestId,day,stage,rewarded,startedAt:at,finishedAt:null,activeSeconds:0,questions:thinkingQuestions(input.requestId,collected,random,stage)};
       }
     }else{
       const l=p.active;requireInput(l&&l.id===input.lessonId&&!l.finishedAt);
@@ -59,7 +63,11 @@ export function changeLearning(previous:LearningState,input:Record<string,unknow
         requireInput(typeof input.answer==='string'&&q.options.some((_,i)=>String(i)===input.answer),'请选择这一题里的图片。');
         q.attempts++;if(q.attempts>=2&&input.answer!==q.target)q.hint=true;
         if(input.answer===q.target){q.done=true;q.first=q.attempts===1&&!q.hint;q.stars=l.rewarded?(q.first?2:1):0;if(q.stars)grant(q.stars,q.first?'思维 · 独立答对':'思维 · 坚持完成');}
-        if(l.questions.every(q=>q.done)){l.finishedAt=at;p.history.push(structuredClone(l));}
+        if(l.questions.every(q=>q.done)){
+          l.finishedAt=at;p.history.push(structuredClone(l));
+          const recent=p.history.filter(h=>h.stage===l.stage).slice(-2);
+          if(p.fixedStage==null&&recent.length===2&&recent.every(h=>h.questions.filter(q=>q.first).length>=4))p.stage=Math.min(2,l.stage+1);
+        }
       }
     }
   }else if(input.subject==='pinyin'&&(input.action==='start'||input.action==='answer'||input.action==='hint')){
