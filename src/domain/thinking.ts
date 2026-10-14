@@ -1,5 +1,5 @@
-export const thinkingStages=['发现规律','三位伙伴排排队','补空与细节观察'];
-export type ThinkingQuestion={id:string;kind:'pattern'|'different';sequence:number[];options:number[];target:string;groupSize:number;blankIndex?:number;marks?:string[];attempts:number;hint:boolean;done:boolean;first:boolean;stars:number};
+export const thinkingStages=['发现规律','三位伙伴排排队','补空与细节观察','双重规律','二维找规律'];
+export type ThinkingQuestion={id:string;kind:'pattern'|'different'|'dual'|'matrix';sequence:number[];options:number[];target:string;groupSize:number;blankIndex?:number;marks?:string[];sequenceMarks?:string[];columns?:number;attempts:number;hint:boolean;done:boolean;first:boolean;stars:number};
 export type ThinkingLesson={id:string;day:string;stage:number;rewarded:boolean;startedAt:string;finishedAt:string|null;questions:ThinkingQuestion[];activeSeconds:number};
 export type ThinkingState={stage?:number;fixedStage?:number|null;active:ThinkingLesson|null;history:ThinkingLesson[]};
 export const newThinking=():ThinkingState=>({stage:0,fixedStage:null,active:null,history:[]});
@@ -14,6 +14,23 @@ export function thinkingQuestions(id:string,collected:number[],random:()=>number
  const themes=shuffle([true,true,true,false,false],random);
  return Array.from({length:5},(_,i)=>{
   const [a,b,c]=shuffle(themes[i]?themed:[-1,-2,-3],random);const kind=i%2===0?'pattern':'different';
+  if(stage>=3){
+   const base={id:`${id}:${i}`,attempts:0,hint:false,done:false,first:false,stars:0};
+   if(stage===4&&i%2===0){
+    // Each row shifts by one place; both completed rows establish the rule.
+    const direction=random()<.5?1:2,items=[a,b,c];
+    const full=Array.from({length:9},(_,n)=>items[(n%3+Math.floor(n/3)*direction)%3]);
+    const blankIndex=6+Math.floor(random()*3),target=full[blankIndex],options=shuffle(items,random);
+    return {...base,kind:'matrix',sequence:full.map((id,n)=>n===blankIndex?0:id),blankIndex,columns:3,options,target:String(options.indexOf(target)),groupSize:3};
+   }
+   // Independent cycles: picture AB and mark star/star/circle (or its inverse).
+   const marks=random()<.5?['star','star','circle']:['circle','circle','star'];
+   const full=Array.from({length:9},(_,n)=>[a,b][n%2]);
+   const sequenceMarks=full.map((_,n)=>marks[n%3]);
+   const blankIndex=6+Math.floor(random()*3),target=full[blankIndex],targetMark=sequenceMarks[blankIndex];
+   const choices=shuffle([a,b].flatMap(id=>['star','circle'].map(mark=>({id,mark}))),random);
+   return {...base,kind:'dual',sequence:full.map((id,n)=>n===blankIndex?0:id),sequenceMarks:sequenceMarks.map((mark,n)=>n===blankIndex?'':mark),blankIndex,options:choices.map(x=>x.id),marks:choices.map(x=>x.mark),target:String(choices.findIndex(x=>x.id===target&&x.mark===targetMark)),groupSize:3};
+  }
   if(kind==='different'){
    const count=stage===0?4:6,odd=Math.floor(random()*count),detail=stage===2;
    const options=Array.from({length:count},(_,n)=>detail?a:n===odd?b:a);

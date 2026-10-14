@@ -1,4 +1,4 @@
-import {newThinking,thinkingQuestions,type ThinkingState} from './thinking';
+import {newThinking,thinkingQuestions,thinkingStages,type ThinkingState} from './thinking';
 import {newPinyin,pinyinQuestions,type PinyinState} from './pinyin';
 import { learnset } from './battle-loadout';
 import { usageDay } from './play-time';
@@ -46,7 +46,7 @@ export function changeLearning(previous:LearningState,input:Record<string,unknow
     requireInput(['start','answer','hint','settings'].includes(String(input.action)));
     const p=s.thinking??=newThinking();
     if(input.action==='settings'){
-      requireInput(parent,'请先打开家长空间。');requireInput(Number.isInteger(input.stage)&&Number(input.stage)>=0&&Number(input.stage)<=2);
+      requireInput(parent,'请先打开家长空间。');requireInput(Number.isInteger(input.stage)&&Number(input.stage)>=0&&Number(input.stage)<thinkingStages.length);
       p.stage=Number(input.stage);p.fixedStage=input.fixed===true?p.stage:null;
     }else if(input.action==='start'){
       if(!p.active||p.active.finishedAt){
@@ -66,7 +66,7 @@ export function changeLearning(previous:LearningState,input:Record<string,unknow
         if(l.questions.every(q=>q.done)){
           l.finishedAt=at;p.history.push(structuredClone(l));
           const recent=p.history.filter(h=>h.stage===l.stage).slice(-2);
-          if(p.fixedStage==null&&recent.length===2&&recent.every(h=>h.questions.filter(q=>q.first).length>=4))p.stage=Math.min(2,l.stage+1);
+          if(p.fixedStage==null&&recent.length===2&&recent.every(h=>h.questions.filter(q=>q.first).length>=4))p.stage=Math.min(thinkingStages.length-1,l.stage+1);
         }
       }
     }

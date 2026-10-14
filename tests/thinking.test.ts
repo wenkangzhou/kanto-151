@@ -65,3 +65,35 @@ test('each round mixes three themed questions with two shape questions, even wit
  assert.deepEqual(thinkingThemePool([]),[-4,-5,-6]);
  assert.deepEqual(thinkingThemePool([25]),[25,-4,-5]);
 });
+
+test('dual rules require both picture and mark, matrix rows establish a unique shift',()=>{
+ for(const stage of [3,4])for(let n=0;n<100;n++){
+  const qs=thinkingQuestions('hard',[1,7,25],Math.random,stage);
+  assert.equal(qs.filter(q=>q.options.every(id=>id>0||id<=-4)).length,3);
+  for(const q of qs){
+   const ix=Number(q.target),blank=q.blankIndex!;
+   assert.equal(q.sequence.filter(x=>x===0).length,1);assert.ok(blank>=6);
+   const full=q.sequence.map((id,i)=>i===blank?q.options[ix]:id);
+   if(q.kind==='dual'){
+    assert.equal(q.options.length,4);assert.equal(new Set(q.options.map((id,i)=>`${id}:${q.marks![i]}`)).size,4);
+    const marks=q.sequenceMarks!.map((m,i)=>i===blank?q.marks![ix]:m);
+    for(let i=2;i<9;i++)assert.equal(full[i],full[i-2]);
+    for(let i=3;i<9;i++)assert.equal(marks[i],marks[i-3]);
+    assert.equal(q.options.filter(id=>id===q.options[ix]).length,2);
+   }else{
+    assert.equal(q.kind,'matrix');assert.equal(q.columns,3);
+    const row=full.slice(0,3),shift=row.indexOf(full[3]);assert.ok(shift===1||shift===2);
+    for(let i=0;i<9;i++)assert.equal(full[i],row[(i%3+Math.floor(i/3)*shift)%3]);
+   }
+  }
+ }
+});
+test('new difficulty settings preserve active rounds and progress beyond stage three',()=>{
+ let s=act(newLearning(),{action:'start'});const current=structuredClone(s.thinking!.active);
+ s=changeLearning(s,{action:'settings',subject:'thinking',stage:3,fixed:false,requestId:crypto.randomUUID()},[],true,now);
+ assert.deepEqual(s.thinking!.active,current);
+ while(!s.thinking!.active!.finishedAt)s=act(s,answer(s));
+ for(let r=0;r<2;r++){s=act(s,{action:'start'});while(!s.thinking!.active!.finishedAt)s=act(s,answer(s));}
+ assert.equal(s.thinking!.stage,4);
+ assert.throws(()=>changeLearning(s,{action:'settings',subject:'thinking',stage:5,requestId:crypto.randomUUID()},[],true,now));
+});
