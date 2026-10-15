@@ -1,0 +1,8 @@
+# Generated deliverables stay local; keep editable sources and input assets.
+/0*.png
+/preview.png
+/*.mp4
+/*.zip
+/video/snapshots/
+/video/output/
+/video/*.mp4
