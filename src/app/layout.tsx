@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { backgroundTrack } from '@/lib/background-music';
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { CollectionProvider } from '@/components/collection-provider';
 import { Shell } from '@/components/shell';
 import './globals.css';
@@ -16,5 +17,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#e54a3c' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const live = Boolean(getRuntimeConfig());
-  return <html lang="zh-CN"><body><a href="#main-content" className="skip-link">跳到主要内容</a><CollectionProvider live={live}><Shell musicAvailable={existsSync(join(process.cwd(), 'public', backgroundTrack.source))}>{children}</Shell></CollectionProvider></body></html>;
+  return <html lang="zh-CN"><body><a href="#main-content" className="skip-link">跳到主要内容</a><CollectionProvider live={live}><Shell musicAvailable={existsSync(join(process.cwd(), 'public', backgroundTrack.source))}>{children}</Shell></CollectionProvider><Analytics /></body></html>;
 }
