@@ -1,7 +1,7 @@
 'use client';
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {stopLearningSpeech} from './learning-speech';
-const allowed=new Set(['ma1','mi3','mu4','ba1','bi3','bu4','a1','yi3','wu4','mo1','bo1']);
+import {pinyinAudioIds as allowed} from '@/domain/pinyin';
 /** Recorded pronunciation only. Never send pinyin letters to system TTS. */
 export function usePinyinAudio(){
  const player=useRef<HTMLAudioElement|null>(null),revision=useRef(0),timer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined);

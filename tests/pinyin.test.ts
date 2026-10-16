@@ -2,18 +2,18 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 import {changeLearning,newLearning,learningState,type LearningState} from '../src/domain/learning';
-import {pinyinQuestions,pinyinById,pinyinItems} from '../src/domain/pinyin';
+import {pinyinQuestions,pinyinById,pinyinItems,pinyinStages,pinyinPool,pinyinInitialAudio} from '../src/domain/pinyin';
 import {LearningSession} from '../src/lib/learning-session';
 const now=Date.parse('2026-10-12T04:00:00Z');
 const act=(s:LearningState,input:Record<string,unknown>,time=now)=>changeLearning(s,{subject:'pinyin',requestId:crypto.randomUUID(),...input},[],false,time);
 function nextAnswer(s:LearningState){const l=s.pinyin!.active!,q=l.questions.find(q=>!q.done)!;return {action:'answer',subject:'pinyin',requestId:crypto.randomUUID(),lessonId:l.id,questionId:q.id,answer:q.target};}
 function finish(s:LearningState){while(s.pinyin!.active!.questions.some(q=>!q.done))s=act(s,nextAnswer(s));return s;}
-test('pilot has all three activities, legal unique options, and matching local audio',()=>{
- for(let stage=0;stage<3;stage++)for(const random of [()=>0,()=>.99999,Math.random]){
+test('expanded catalog has all three activities, legal unique options, and matching local audio',()=>{
+ for(let stage=0;stage<pinyinStages.length;stage++)for(const random of [()=>0,()=>.99999,Math.random]){
   const qs=pinyinQuestions(stage,'lesson',random);assert.equal(qs.length,5);assert.equal(new Set(qs.map(q=>q.kind)).size,3);
   for(const q of qs){assert.equal(new Set(q.options).size,3);assert.ok(q.options.includes(q.target));for(const id of q.options)assert.ok(pinyinById.has(id));if(stage<2)assert.ok(q.options.every(id=>pinyinById.get(id)!.initial===(stage===0?'m':'b')));}
  }
- for(const item of pinyinItems)for(const audio of [item.id,item.finalAudio,item.initial==='m'?'mo1':'bo1'])assert.ok(existsSync(`public/audio/pinyin/${audio}.mp3`));
+ for(const item of pinyinItems)for(const audio of [item.id,item.finalAudio,pinyinInitialAudio[item.initial]])assert.ok(existsSync(`public/audio/pinyin/${audio}.mp3`));
  assert.match(readFileSync('public/audio/pinyin/LICENSE.txt','utf8'),/public domain/);
 });
 test('legacy math state and active lesson survive separate pinyin progress',()=>{
@@ -63,3 +63,31 @@ test('reward and math settings save independently and require a parent',()=>{
  assert.equal(s.dailyRounds,4);assert.equal(s.stage,1);assert.equal(s.fixedStage,null);
  assert.throws(()=>changeLearning(s,{...rewards,dailyRounds:6,requestId:crypto.randomUUID()},[],true,now));
 });
+
+ test('appended stages preserve old pools and cover every new syllable',()=>{
+  assert.deepEqual(pinyinPool(0).map(x=>x.id),['ma1','mi3','mu4']);
+  assert.deepEqual(pinyinPool(1).map(x=>x.id),['ba1','bi3','bu4']);
+  assert.equal(pinyinPool(2).length,6);
+  assert.equal(pinyinPool(5).length,12);
+  assert.equal(pinyinPool(7).length,15);
+  for(let stage=0;stage<pinyinStages.length;stage++){
+   const pool=new Set(pinyinPool(stage).map(x=>x.id));
+   for(let run=0;run<30;run++)for(const q of pinyinQuestions(stage,'lesson',Math.random)){
+    assert.ok(pool.has(q.target));assert.ok(q.options.every(id=>pool.has(id)));
+   }
+  }
+ });
+ test('mastery continues beyond legacy cap, preserves unfinished lessons, and stops at final stage',()=>{
+  for(const stage of [2,3,4,5,6,7]){
+   let s=newLearning();s.pinyin={stage,fixedStage:null,active:null,history:[]};
+   s=finish(act(s,{action:'start'}));s=finish(act(s,{action:'start'}));
+   assert.equal(s.pinyin!.stage,Math.min(stage+1,pinyinStages.length-1));
+   assert.equal(s.balance,20);assert.equal(s.rounds,2);
+  }
+  let s=act(newLearning(),{action:'start'});const old=structuredClone(s.pinyin!.active);
+  s=changeLearning(s,{action:'settings',subject:'pinyin',stage:6,fixed:true,requestId:crypto.randomUUID()},[],true,now);
+  assert.deepEqual(s.pinyin!.active,old);
+  s=finish(s);s=act(s,{action:'start'});assert.equal(s.pinyin!.active!.stage,6);
+  s=finish(s);assert.equal(s.pinyin!.stage,6);
+  for(const stage of [-1,8,1.5])assert.throws(()=>changeLearning(s,{action:'settings',subject:'pinyin',stage,requestId:crypto.randomUUID()},[],true,now));
+ });

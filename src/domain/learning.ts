@@ -1,5 +1,5 @@
 import {newThinking,thinkingQuestions,thinkingStages,type ThinkingState} from './thinking';
-import {newPinyin,pinyinQuestions,type PinyinState} from './pinyin';
+import {newPinyin,pinyinQuestions,pinyinStages,type PinyinState} from './pinyin';
 import { learnset } from './battle-loadout';
 import { usageDay } from './play-time';
 
@@ -91,13 +91,13 @@ export function changeLearning(previous:LearningState,input:Record<string,unknow
         if(l.questions.every(q=>q.done)){
           l.finishedAt=at;p.history.push(structuredClone(l));
           const recent=p.history.filter(h=>h.stage===l.stage).slice(-2);
-          if(p.fixedStage===null&&recent.length===2&&recent.every(h=>h.questions.filter(q=>q.first).length>=4))p.stage=Math.min(2,p.stage+1);
+          if(p.fixedStage===null&&recent.length===2&&recent.every(h=>h.questions.filter(q=>q.first).length>=4))p.stage=Math.min(pinyinStages.length-1,l.stage+1);
         }
       }
     }
   }else if(input.subject==='pinyin'&&input.action==='settings'){
     requireInput(parent,'请先打开家长空间。');
-    requireInput(Number.isInteger(input.stage)&&Number(input.stage)>=0&&Number(input.stage)<=2);
+    requireInput(Number.isInteger(input.stage)&&Number(input.stage)>=0&&Number(input.stage)<pinyinStages.length);
     const p=s.pinyin??=newPinyin();p.stage=Number(input.stage);p.fixedStage=input.fixed===true?p.stage:null;
   }else if(input.action==='start'){
     if(!s.active||s.active.finishedAt){

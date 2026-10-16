@@ -67,6 +67,102 @@
       "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/yi3.mp3",
       "sha256": "d370c3eb7b5b43ea71c147970975cd589366264ec95eea154183c27b260a88d7",
       "seconds": 0.940375
+    },
+    {
+      "file": "da4.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/da4.mp3",
+      "sha256": "fb81ac3d07a82f7712b25c9c3d46e2e55ad8d3f2f39d438616720b9668890fd8",
+      "seconds": 1.149375
+    },
+    {
+      "file": "di2.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/di2.mp3",
+      "sha256": "13eae7a29a02aded64902d74935a15acb60d050e9e5a7a6dbc34ec611ab410fd",
+      "seconds": 1.384438
+    },
+    {
+      "file": "du4.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/du4.mp3",
+      "sha256": "9c5461203e7a0c47baa4060f5ca15258bb09e73ecc1535f49563d9ecb678053c",
+      "seconds": 1.619563
+    },
+    {
+      "file": "ta3.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/ta3.mp3",
+      "sha256": "a9a7bac98e5ffc6d218bd9ff8fce3d270617867944bc129906f97b865f9783bb",
+      "seconds": 1.410563
+    },
+    {
+      "file": "ti1.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/ti1.mp3",
+      "sha256": "d685775049f43c909462e2b8fd3ac4e3e12f90784f92eadfed15fa3d91027f63",
+      "seconds": 0.835875
+    },
+    {
+      "file": "tu4.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/tu4.mp3",
+      "sha256": "dfb79fe3183970f9446067a939327ba46a2fb0e18c716ceda2ceb22f42211f99",
+      "seconds": 1.306063
+    },
+    {
+      "file": "la4.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/la4.mp3",
+      "sha256": "e2c42d3715c2e20ef059484404f0f7667966db3018ee3261147e6625365a6156",
+      "seconds": 1.332188
+    },
+    {
+      "file": "li2.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/li2.mp3",
+      "sha256": "60bfb0714be63a0fcb266eb1bdb5d23b564d0b421277a22926c90b2b85de627a",
+      "seconds": 1.436688
+    },
+    {
+      "file": "lu4.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/lu4.mp3",
+      "sha256": "f918863316237c05e5d011364022c4e883baec136fb60a49104180f21792f81a",
+      "seconds": 1.01875
+    },
+    {
+      "file": "a4.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/a4.mp3",
+      "sha256": "d7eb8aff24b6dd53b5989a15ac61c00770fcabd4f1fcf2d470f6a527462665d1",
+      "seconds": 1.044875
+    },
+    {
+      "file": "a3.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/a3.mp3",
+      "sha256": "e2f1a12b93b49cbe180318402dab64f1b3ae262c5d320f65dec8e987717e999f",
+      "seconds": 1.12325
+    },
+    {
+      "file": "yi2.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/yi2.mp3",
+      "sha256": "ae25c11f495409312e9f61d5f99e27999849a0574cd1deb6e65f41f3cdfec7d7",
+      "seconds": 1.12325
+    },
+    {
+      "file": "yi1.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/yi1.mp3",
+      "sha256": "c904f8d0ceb78a4ab8ae4602f177b933e816866e04cc289f866185b1a9b9be23",
+      "seconds": 0.940375
+    },
+    {
+      "file": "de1.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/de1.mp3",
+      "sha256": "abae2f5208b6a53e0ae56dd2ea09dbb08042a3950643c5c196c4afa6e973a9da",
+      "seconds": 0.91425
+    },
+    {
+      "file": "te1.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/te1.mp3",
+      "sha256": "fa90de1028811a74ae2c9dd920b69449a03b1af8cf8c72572d0828efdca97da9",
+      "seconds": 0.940375
+    },
+    {
+      "file": "le1.mp3",
+      "source": "https://raw.githubusercontent.com/davinfifield/mp3-chinese-pinyin-sound/master/mp3/le1.mp3",
+      "sha256": "11285590cce91356b67bb40977caab032725dcd665bcdf902397fa78118d0d8c",
+      "seconds": 1.044875
     }
   ]
 }
