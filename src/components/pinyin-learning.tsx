@@ -1,14 +1,16 @@
 'use client';
 import Link from 'next/link';
 import {useCallback,useEffect,useRef,useState} from 'react';
-import {ArrowLeft,ArrowRight,BookOpen,Check,Lightbulb,Play,Plus,Star,Volume2,VolumeX} from 'lucide-react';
-import {pinyinById,pinyinInitialAudio,pinyinPool,pinyinStages,newPinyin,type PinyinQuestion,type PinyinItem} from '@/domain/pinyin';
+import {ArrowLeft,ArrowRight,Check,Lightbulb,Play,Plus,Star,Volume2,VolumeX} from 'lucide-react';
+import {pinyinById,pinyinParts,pinyinPool,pinyinItems,pinyinStages,newPinyin,type PinyinQuestion} from '@/domain/pinyin';
 import {usageDay} from '@/domain/play-time';
 import {learningClient} from '@/lib/learning-client';
 import {type LearningView} from '@/lib/learning-session';
 import {speakLearning,stopLearningSpeech} from '@/lib/learning-speech';
 import {usePinyinAudio} from '@/lib/pinyin-audio';
 import {LearningLoading,LearningPartner} from './learning-station';
+import {PinyinCatalog} from './pinyin-catalog';
+import {Fragment} from 'react';
 import {PinyinPicture} from './pinyin-picture';
 import styles from './pinyin-learning.module.css';
 
@@ -31,6 +33,7 @@ export function PinyinLearning(){
  const stage=lesson&&!lesson.finishedAt?lesson.stage:pinyin.fixedStage??pinyin.stage;
  const questionId=question?.id;
  const target=question?pinyinById.get(question.target):undefined;
+ const blendParts=target?pinyinParts(target):[];
  const listen=useCallback((ids:string[])=>{if(!muted)play(ids);},[muted,play]);
  const say=useCallback((text:string)=>{stop();if(!muted)speakLearning(text);},[muted,stop]);
  useEffect(()=>{
@@ -65,7 +68,6 @@ export function PinyinLearning(){
   finally{sending.current=false;}
  }
  function part(name:string,audio:string){setParts(old=>old.includes(name)?old:[...old,name]);listen([audio]);}
- function preview(item:PinyinItem){listen([item.id]);}
  const finished=practicing&&lesson?.finishedAt&&!celebration;
  const rewardAvailable=!!data&&(data.day!==today||data.rounds<data.dailyRounds);
  return <div className={`page ${styles.page}`}>
@@ -86,22 +88,21 @@ export function PinyinLearning(){
     <div className={styles.prompt}>
      {question.kind==='picture'&&<div className={styles.picture}><PinyinPicture item={target}/></div>}
      {question.kind==='blend'?<div className={styles.blend}>
-      <button className={parts.includes('initial')?styles.touched:''} disabled={muted||!!celebration} aria-label={`听声母${target.initial}的呼读音`} onClick={()=>part('initial',pinyinInitialAudio[target.initial])}>{target.initial}<Volume2 size={19}/></button><Plus size={22}/>
-      <button className={parts.includes('final')?styles.touched:''} disabled={muted||!!celebration} aria-label="听韵母" onClick={()=>part('final',target.finalAudio)}>{target.final}<Volume2 size={19}/></button>
-      <button className={styles.join} disabled={muted||!!celebration||parts.length<2} onClick={()=>{setBuilt(true);listen([target.id]);}}><ArrowRight/>合起来听</button>
+      {blendParts.map((partInfo,i)=><Fragment key={i}>{i>0&&<Plus size={22}/>}<button className={parts.includes(String(i))?styles.touched:''} disabled={muted||!!celebration} aria-label={`听${i===0?'声母':blendParts.length===3&&i===1?'介音':'韵母'}${partInfo.label}`} onClick={()=>part(String(i),partInfo.audio)}>{partInfo.label}<Volume2 size={19}/></button></Fragment>)}
+      <button className={styles.join} disabled={muted||!!celebration||parts.length<blendParts.length} onClick={()=>{setBuilt(true);listen([target.id]);}}><ArrowRight/>合起来听</button>
      </div>:<button className={styles.listen} disabled={muted||!!celebration} onClick={()=>listen([target.id])} aria-label="听题目读音"><Volume2 size={33}/><span>{playing?'再听一次':'点我听一听'}</span></button>}
     </div>
     {muted&&<button className={styles.soundNotice} onClick={()=>{setMuted(false);play([target.id]);}}>这题需要听声音，点这里开启<Volume2 size={18}/></button>}
-    {question.kind==='blend'&&!built&&!muted&&<p className={styles.cue}>点两张卡片，再合起来听</p>}
+    {question.kind==='blend'&&!built&&!muted&&<p className={styles.cue}>点{blendParts.length===3?'三':'两'}张卡片，再合起来听</p>}
     <div className={styles.options}>{question.options.map(id=><button key={id} disabled={!!celebration||muted||(question.kind==='blend'&&!built)} aria-label={`选择${pinyinById.get(id)!.text}`} className={`${wrong===id?styles.wrong:''} ${celebration&&id===question.target?styles.correct:''}`} onClick={()=>act('answer',id)}>{pinyinById.get(id)!.text}{celebration&&id===question.target&&<Check size={22}/>}</button>)}</div>
     <p className={styles.feedback} role="status">{celebration?<>答对啦！{celebration.stars>0&&<> +{celebration.stars}<Star size={18} fill="currentColor"/></>}</>:wrong?'再听一听，试一次。':''}</p>
-    {question.hint&&!celebration&&<div className={styles.help}><PinyinPicture item={target}/><div><strong>{target.initial} + {target.final} → {target.text}</strong><button disabled={muted} onClick={()=>listen([target.id])}><Volume2 size={20}/>再听一次</button></div></div>}
+    {question.hint&&!celebration&&<div className={styles.help}><PinyinPicture item={target}/><div><strong>{blendParts.length?`${blendParts.map(p=>p.label).join(' + ')} → ${target.text}`:target.whole?`整体认读：${target.text}`:target.text}</strong><button disabled={muted} onClick={()=>listen([target.id])}><Volume2 size={20}/>再听一次</button></div></div>}
     {!celebration&&<button className="button secondary" disabled={muted} onClick={()=>act('hint')}><Lightbulb size={19}/>帮帮我</button>}
    </section>
   </>:<>
-   <section className={styles.hero}><div><span className={styles.eyebrow}>语文 · 生活里的拼音</span><h2>小小声音，<br/>藏在生活里。</h2><p>{pinyinStages[stage]}</p><button className="button" disabled={busy} onClick={()=>void start()}><Play size={19}/>{busy?'正在准备…':lesson&&!lesson.finishedAt?'继续这五题':rewardAvailable?'开始五个小活动':'自由练习'}<ArrowRight size={19}/></button><small>{lesson&&!lesson.finishedAt?`已完成 ${lesson.questions.filter(q=>q.done).length} / 5`:rewardAvailable?'各学科共用每日奖励轮数':'今天的奖励已领完，还可以继续练习'}</small></div><div className={styles.heroArt}><span>{pinyinPool(stage)[0].initial} + {pinyinPool(stage)[0].final}</span><LearningPartner/></div></section>
-   <section className={styles.explore}><h2><BookOpen size={20}/>先听一听</h2><div className={styles.cards}>{pinyinPool(stage).map(item=><button key={item.id} disabled={muted} onClick={()=>preview(item)} aria-label={`听${item.text}，${item.word}`}><PinyinPicture item={item}/><strong>{item.text}</strong><span>{item.word}<Volume2 size={18}/></span></button>)}</div></section>
-   <details className={styles.notes}><summary>给家长看的说明</summary><p>目前有 8 个阶段、15 个音节，从 m、b 开始，再认识 d、t、l，穿插混合复习。图画用于帮助联想，其中“木”画成树、“八”画成八个小球；“妈妈、肚子、梯子、蜡烛”取第一个字的读音。“大”用一大一小两个球作比较。每个新声母先练三个音节；连续两轮各独立答对至少四题会进入下一阶段，也可以由家长固定阶段。声调跟随音节展示，暂不单独考声调。点击上面的图卡熟悉读音，不消耗奖励轮次。</p><p>拼读卡里的声母使用呼读音，合起来听的是完整音节，不把两段录音机械拼接。教学读音使用本地普通话录音，普通操作提示使用系统声音；不使用英语字母读音，不做录音评分。家长可在学习手帐调整拼音阶段。</p><a href="https://github.com/davinfifield/mp3-chinese-pinyin-sound" target="_blank" rel="noreferrer">录音来源与许可 ↗</a></details>
+   <section className={styles.hero}><div><span className={styles.eyebrow}>语文 · 生活里的拼音</span><h2>小小声音，<br/>藏在生活里。</h2><p>{pinyinStages[stage]}</p><button className="button" disabled={busy} onClick={()=>void start()}><Play size={19}/>{busy?'正在准备…':lesson&&!lesson.finishedAt?'继续这五题':rewardAvailable?'开始五个小活动':'自由练习'}<ArrowRight size={19}/></button><small>{lesson&&!lesson.finishedAt?`已完成 ${lesson.questions.filter(q=>q.done).length} / 5`:rewardAvailable?'各学科共用每日奖励轮数':'今天的奖励已领完，还可以继续练习'}</small></div><div className={styles.heroArt}><span>{pinyinPool(stage)[0].text}</span><LearningPartner/></div></section>
+   <PinyinCatalog key={stage} items={pinyinPool(stage)} muted={muted} onPlay={listen}/>
+   <details className={styles.notes}><summary>给家长看的说明</summary><p>目前有 {pinyinStages.length} 个阶段、{pinyinItems.length} 个示例音节，涵盖常用声母、韵母例音、整体认读和四声辨听。原有阶段保持不变，后续内容循序增加。图画用于帮助联想，其中“木”画成树、“八”画成八个小球；“妈妈、肚子、梯子、蜡烛”取第一个字的读音。“大”用一大一小两个球作比较。新声母用常用音节练习；连续两轮各独立答对至少四题会进入下一阶段，也可以由家长固定阶段。后面的四声阶段会专门辨听 mā、má、mǎ、mà。点击上面的图卡熟悉读音，不消耗奖励轮次。</p><p>拼读卡里的声母使用呼读音，合起来听的是完整音节，不把两段录音机械拼接。三拼音节分声母、介音、韵母；整体认读音节直接整读。j、q、x 与 ü 相拼时省略两点，拼读卡仍显示 ü。韵母表播放的是标明的完整例音，不能把例音当作韵母的单独发音。没有合适图画的词只做听音题。教学读音使用本地普通话录音，普通操作提示使用系统声音；不使用英语字母读音，不做录音评分。家长可在学习手帐调整拼音阶段。</p><a href="https://github.com/davinfifield/mp3-chinese-pinyin-sound" target="_blank" rel="noreferrer">录音来源与许可 ↗</a></details>
   </>}
  </div>;
 }

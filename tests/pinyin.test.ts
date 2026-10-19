@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 import {changeLearning,newLearning,learningState,type LearningState} from '../src/domain/learning';
-import {pinyinQuestions,pinyinById,pinyinItems,pinyinStages,pinyinPool,pinyinInitialAudio} from '../src/domain/pinyin';
+import {pinyinQuestions,pinyinById,pinyinItems,pinyinStages,pinyinPool,pinyinInitialAudio,pinyinAudioIds,pinyinParts,pinyinFinalExamples,pinyinWholeIds,pinyinStageDefinitions} from '../src/domain/pinyin';
 import {LearningSession} from '../src/lib/learning-session';
 const now=Date.parse('2026-10-12T04:00:00Z');
 const act=(s:LearningState,input:Record<string,unknown>,time=now)=>changeLearning(s,{subject:'pinyin',requestId:crypto.randomUUID(),...input},[],false,time);
@@ -10,10 +10,10 @@ function nextAnswer(s:LearningState){const l=s.pinyin!.active!,q=l.questions.fin
 function finish(s:LearningState){while(s.pinyin!.active!.questions.some(q=>!q.done))s=act(s,nextAnswer(s));return s;}
 test('expanded catalog has all three activities, legal unique options, and matching local audio',()=>{
  for(let stage=0;stage<pinyinStages.length;stage++)for(const random of [()=>0,()=>.99999,Math.random]){
-  const qs=pinyinQuestions(stage,'lesson',random);assert.equal(qs.length,5);assert.equal(new Set(qs.map(q=>q.kind)).size,3);
+  const qs=pinyinQuestions(stage,'lesson',random);assert.equal(qs.length,5);if(stage<8)assert.equal(new Set(qs.map(q=>q.kind)).size,3);
   for(const q of qs){assert.equal(new Set(q.options).size,3);assert.ok(q.options.includes(q.target));for(const id of q.options)assert.ok(pinyinById.has(id));if(stage<2)assert.ok(q.options.every(id=>pinyinById.get(id)!.initial===(stage===0?'m':'b')));}
  }
- for(const item of pinyinItems)for(const audio of [item.id,item.finalAudio,pinyinInitialAudio[item.initial]])assert.ok(existsSync(`public/audio/pinyin/${audio}.mp3`));
+ for(const audio of pinyinAudioIds)assert.ok(existsSync(`public/audio/pinyin/${audio}.mp3`));
  assert.match(readFileSync('public/audio/pinyin/LICENSE.txt','utf8'),/public domain/);
 });
 test('legacy math state and active lesson survive separate pinyin progress',()=>{
@@ -78,7 +78,7 @@ test('reward and math settings save independently and require a parent',()=>{
   }
  });
  test('mastery continues beyond legacy cap, preserves unfinished lessons, and stops at final stage',()=>{
-  for(const stage of [2,3,4,5,6,7]){
+  for(const stage of [2,3,4,5,6,7,8,29,pinyinStages.length-1]){
    let s=newLearning();s.pinyin={stage,fixedStage:null,active:null,history:[]};
    s=finish(act(s,{action:'start'}));s=finish(act(s,{action:'start'}));
    assert.equal(s.pinyin!.stage,Math.min(stage+1,pinyinStages.length-1));
@@ -89,5 +89,33 @@ test('reward and math settings save independently and require a parent',()=>{
   assert.deepEqual(s.pinyin!.active,old);
   s=finish(s);s=act(s,{action:'start'});assert.equal(s.pinyin!.active!.stage,6);
   s=finish(s);assert.equal(s.pinyin!.stage,6);
-  for(const stage of [-1,8,1.5])assert.throws(()=>changeLearning(s,{action:'settings',subject:'pinyin',stage,requestId:crypto.randomUUID()},[],true,now));
+  for(const stage of [-1,pinyinStages.length,1.5])assert.throws(()=>changeLearning(s,{action:'settings',subject:'pinyin',stage,requestId:crypto.randomUUID()},[],true,now));
+ });
+
+ test('curriculum covers initials, finals and whole syllables with valid audio provenance',()=>{
+  assert.equal(Object.keys(pinyinInitialAudio).length,23);
+  assert.equal(pinyinFinalExamples.length,24);
+  assert.equal(new Set(pinyinFinalExamples.map(f=>f.text)).size,24);
+  assert.equal(pinyinWholeIds.length,16);
+  assert.equal(new Set(pinyinItems.map(item=>item.id)).size,pinyinItems.length);
+  assert.equal(new Set(pinyinItems.map(item=>item.text)).size,pinyinItems.length);
+  const staged=new Set<string>(pinyinStageDefinitions.flatMap(s=>[...s.items]));
+  const manifest=JSON.parse(readFileSync('public/audio/pinyin/sources.json','utf8')).clips as {file:string;seconds:number}[];
+  for(const item of pinyinItems){assert.ok(staged.has(item.id),item.id);assert.ok(pinyinAudioIds.has(item.id));}
+  for(const id of pinyinAudioIds){assert.ok(manifest.some(c=>c.file===`${id}.mp3`&&c.seconds>0));}
+  for(const f of pinyinFinalExamples)assert.ok(pinyinById.has(f.example));
+  for(const id of pinyinWholeIds){assert.ok(pinyinById.get(id)!.whole);assert.deepEqual(pinyinParts(pinyinById.get(id)!),[]);}
+ });
+ test('whole reading and missing pictures never generate misleading tasks',()=>{
+  for(let stage=0;stage<pinyinStages.length;stage++)for(let round=0;round<50;round++){
+   for(const q of pinyinQuestions(stage,'lesson',Math.random)){
+    const item=pinyinById.get(q.target)!;
+    if(q.kind==='picture'){assert.ok(item.picture,q.target);assert.ok(q.options.filter(id=>id!==q.target).every(id=>pinyinById.get(id)!.picture!==item.picture));}
+    if(q.kind==='blend'){assert.ok(!item.whole);assert.ok(pinyinParts(item).length>=2);for(const part of pinyinParts(item))assert.ok(pinyinAudioIds.has(part.audio));}
+   }
+  }
+  assert.deepEqual(pinyinParts(pinyinById.get('gua1')!).map(p=>p.label),['g','u','ā']);
+  assert.deepEqual(pinyinParts(pinyinById.get('jia1')!).map(p=>p.label),['j','i','ā']);
+  assert.deepEqual(pinyinParts(pinyinById.get('ju2')!).map(p=>p.label),['j','ǘ']);
+  assert.deepEqual(pinyinParts(pinyinById.get('dong1')!),[]);
  });

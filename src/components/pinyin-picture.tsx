@@ -1,7 +1,16 @@
 import type {PinyinItem} from '@/domain/pinyin';
+import {Shell,Flower2,House,Car,Coffee,BookOpen,Sun,UserRound,Circle,Eraser,Cat,Dog,Droplets,Snowflake,Trees,Shield,Lamp,Star,Fish,Leaf,Moon,Music,Cloud,Ear,Shirt,Compass,PiggyBank,Volume2,type LucideIcon} from 'lucide-react';
+const symbols:Record<string,LucideIcon>={shell:Shell,flower:Flower2,house:House,car:Car,cup:Coffee,book:BookOpen,sun:Sun,person:UserRound,ball:Circle,eraser:Eraser,cat:Cat,dog:Dog,water:Droplets,snow:Snowflake,trees:Trees,shield:Shield,lamp:Lamp,star:Star,fish:Fish,leaf:Leaf,moon:Moon,music:Music,cloud:Cloud,ear:Ear,shirt:Shirt,compass:Compass,pig:PiggyBank,circle:Circle};
 /** Locally drawn teaching pictures: no text is needed to recognize the object. */
 export function PinyinPicture({item}:{item:PinyinItem}){
+ const symbol=item.picture?.startsWith('symbol:')?item.picture.slice(7):null;
+ const Icon=symbol?symbols[symbol]:undefined;
+ if(!item.picture)return <svg viewBox="0 0 180 160" role="img" aria-label="听一听"><circle cx="90" cy="80" r="57" fill="#f4f1e3"/><Volume2 x="53" y="43" width="74" height="74" color="#97a67d" strokeWidth={1.5}/></svg>;
  return <svg viewBox="0 0 180 160" role="img" aria-label={item.word}>
+  {Icon&&<><circle cx="90" cy="77" r="60" fill="#f4f1e3"/><Icon x="43" y="30" width="94" height="94" color="#809765" strokeWidth={1.5}/></>}
+  {(symbol==='seven'||symbol==='four')&&Array.from({length:symbol==='seven'?7:4},(_,i)=><circle key={i} cx={38+(i%4)*34} cy={55+Math.floor(i/4)*48} r="13" fill="#c68b78"/>)}
+  {symbol==='purple'&&<circle cx="90" cy="78" r="50" fill="#9469b0"/>}
+  {symbol==='spider'&&<g stroke="#7c725d" strokeWidth="5" fill="none" strokeLinecap="round">{[0,1,2,3].map(i=><g key={i}><path d={`M75 ${62+i*13} 48 ${43+i*23} 29 ${48+i*24}`}/><path d={`M105 ${62+i*13} 132 ${43+i*23} 151 ${48+i*24}`}/></g>)}<ellipse cx="90" cy="88" rx="24" ry="29" fill="#ac9c7e"/><circle cx="90" cy="54" r="17" fill="#ac9c7e"/><circle cx="84" cy="50" r="2" fill="#423f36"/><circle cx="96" cy="50" r="2" fill="#423f36"/></g>}
   <ellipse cx="90" cy="144" rx="60" ry="7" fill="#dedbc8" opacity=".45"/>
   {item.picture==='mother'?<><path d="M43 87V53a47 47 0 0 1 94 0v45" fill="#675344"/><path d="M36 140q4-57 54-57t54 57" fill="#d5968c"/><ellipse cx="90" cy="59" rx="35" ry="40" fill="#f4d1ad"/><path d="M55 52Q60 7 92 19q32-2 36 35-27-4-42-25-8 20-31 23" fill="#675344"/><circle cx="77" cy="60" r="3" fill="#655342"/><circle cx="105" cy="60" r="3" fill="#655342"/><path d="M80 78q11 9 21-1" fill="none" stroke="#b46c63" strokeWidth="3" strokeLinecap="round"/></>:null}
   {item.picture==='rice'?<><path d="M33 80h114q-5 62-57 62T33 80" fill="#86a8b1"/><ellipse cx="90" cy="79" rx="57" ry="18" fill="#d5e5df"/>{Array.from({length:15},(_,i)=><ellipse key={i} cx={47+(i%5)*21} cy={66+Math.floor(i/5)*10} rx="10" ry="5" transform={`rotate(${i%2?25:-20} ${47+(i%5)*21} ${66+Math.floor(i/5)*10})`} fill="#fffcf0" stroke="#e2decb" strokeWidth="1.5"/>)}<path d="M71 114h38" stroke="#ecf2e8" strokeWidth="5" strokeLinecap="round"/></>:null}
