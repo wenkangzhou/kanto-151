@@ -47,3 +47,24 @@ test('opted-in API transport never fetches real family data, even on errors',asy
   assert.equal(fetched,0);
  }finally{Object.assign(globalThis,original);}
 });
+
+test('unopened capture balls accumulate, survive reload, and acknowledge independently',()=>{
+ let d=createDemoData();
+ const first=handleDemo(d,'redeem',{code:'111111'}) as Receipt;
+ handleDemo(d,'parent/unlock',{pin:'123456'});
+ const reward=handleDemo(d,'parent/rewards',{type:'capture',reason:'再一次努力',requestId:'another-ball'}) as ParentReward;
+ const second=handleDemo(d,'redeem',{code:reward.code}) as Receipt;
+ handleDemo(d,'redeem',{code:'222222'});
+ d=JSON.parse(JSON.stringify(d));
+ handleDemo(d,'session');
+ assert.deepEqual(d.snapshot.pendingCaptures?.map(r=>r.id),[first.id,second.id]);
+ assert.equal((handleDemo(d,'redeem',{code:reward.code}) as Receipt).id,second.id);
+ assert.equal(d.snapshot.pendingCaptures?.length,2);
+ handleDemo(d,'receipts/acknowledge',{id:first.id});
+ handleDemo(d,'receipts/acknowledge',{id:first.id});
+ assert.deepEqual(d.snapshot.pendingCaptures?.map(r=>r.id),[second.id]);
+ assert.equal(d.snapshot.pendingReceipt?.id,second.id);
+ handleDemo(d,'receipts/acknowledge',{id:second.id});
+ assert.equal(d.snapshot.pendingCaptures?.length,0);
+ assert.equal(d.snapshot.inventory.evolution,2);
+});

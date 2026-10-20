@@ -18,10 +18,10 @@ function ItemVoice({ name, text, children }: { name: string; text: string; child
   return <button type="button" className="bag-item-picture" aria-label={playing ? `停止介绍${name}` : `听听${name}的用途`} aria-pressed={playing} onClick={() => speakText(owner, text)}>{children}</button>;
 }
 export function Bag() {
-  const { snapshot, live, pendingReceipt } = useCollection();
+  const { snapshot, live, pendingCaptures } = useCollection();
   const [useIntent, setUseIntent] = useState<{type: InventoryTicket['type']; key: number} | null>(null);
   const openTickets = (type: InventoryTicket['type']) => setUseIntent(previous => ({type, key: (previous?.key ?? 0) + 1}));
-  const balls = pendingReceipt?.kind === 'capture' && !pendingReceipt.acknowledged_at ? 1 : 0;
+  const balls = pendingCaptures.length;
   const options = evolutionOptions(snapshot);
   const parents = [...new Set(options.map(p => p.evolvesFrom!))];
   return <div className="page bag-page"><div className="page-heading"><div><div className="eyebrow"><span /> GOOD THINGS IN YOUR POCKET</div><h1>装着惊喜的小背包<span className="title-dot">.</span></h1><p>每一张券，都来自一次了不起的努力。</p></div></div>
@@ -31,8 +31,8 @@ export function Bag() {
         <ItemVoice name="精灵球" text="精灵球，里面藏着一位新伙伴。拿到奖励后，打开精灵球，就能和它见面啦。"><CollectionMark state="available" /></ItemVoice>
         <h2>精灵球 <strong>{balls}<small> 个待打开</small></strong></h2>
         <p>打开精灵球，认识新伙伴。</p>
-        <span className="ticket-status">{balls ? '有一位伙伴正在等你' : '拿到奖励后，就能打开精灵球啦'}</span>
-        {live && balls > 0 && <Link className="text-link" href={`/capture?receipt=${encodeURIComponent(pendingReceipt!.id)}`}>打开精灵球 <ArrowRight size={19} /></Link>}
+        <span className="ticket-status">{balls ? `${balls} 位伙伴正在等你，准备好再打开` : '拿到奖励后，就能打开精灵球啦'}</span>
+        {live && balls > 0 && <Link className="text-link" href={`/capture?receipt=${encodeURIComponent(pendingCaptures[0].id)}`}>打开精灵球 <ArrowRight size={19} /></Link>}
       </section>
       <section className="inventory-ticket evolution-ticket">
         <ItemVoice name="进化券" text="进化券，可以让一位伙伴长成新的模样。先选一张券，再选一位可以进化的伙伴。原来的伙伴也会留下来哦。"><Ticket size={56} aria-hidden="true" /></ItemVoice>

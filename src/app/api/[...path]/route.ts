@@ -2,7 +2,7 @@ import { playTimeLocked, validMinutes, type PlayTime } from '@/domain/play-time'
 import { validSlots } from '@/domain/battle-loadout';
 import { readLearning, updateLearning } from '@/lib/server/learning';
 import { rewardOutcomes } from '@/domain/reward-history';
-import type { ParentReward } from '@/domain/types';
+import type { LiveSnapshot, ParentReward } from '@/domain/types';
 import { randomBytes } from 'node:crypto';
 import { NextRequest } from 'next/server';
 import { getRuntimeConfig } from '@/lib/server/runtime-config';
@@ -23,7 +23,10 @@ export async function GET(request: NextRequest, context: Context) {
     if (path === 'session') {
       try {
         const session = await deviceSession(request);
-        const snapshot = await rpc('kanto_snapshot', { p_child_id: session.childId });
+        const snapshot = await rpc<LiveSnapshot>('kanto_snapshot', { p_child_id: session.childId });
+        const captures = await db().from('kanto_receipts').select('*').eq('child_id', session.childId).eq('kind', 'capture').is('acknowledged_at', null).order('created_at').order('id');
+        if (captures.error) throw databaseError(captures.error);
+        snapshot.pendingCaptures = captures.data;
         return reply({ status: 'ready', familyName: session.familyName, childName: session.childName, parent: session.parent, parentExpiresAt: session.parentExpiresAt, snapshot });
       } catch (error) {
         if (!(error instanceof ApiError) || error.code !== 'DEVICE_REQUIRED') throw error;

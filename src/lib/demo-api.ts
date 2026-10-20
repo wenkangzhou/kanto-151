@@ -19,6 +19,8 @@ export function createDemoData(finale = false): DemoData {
 export function handleDemo(data: DemoData, path: string, body?: Record<string, unknown>): unknown {
   const [route,query] = path.split('?');
   const s=data.snapshot;
+  const syncPending=()=>{s.pendingCaptures=data.receipts.filter(r=>r.kind==='capture'&&!r.acknowledged_at);s.pendingReceipt=data.receipts.find(r=>!r.acknowledged_at)??null;};
+  syncPending();
   if(data.moveLayout!==2){
     const state=learningState(data.learning??null);
     for(const [id,moves] of Object.entries(s.movePresets??{})){
@@ -36,7 +38,7 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
     if(pokemonId&&!s.records.some(p=>p.pokemonId===pokemonId))s.records.push({pokemonId,reason,acquiredAt:r.created_at,method:kind==='evolution'?'evolution':kind==='legendary'||kind==='mew'?'legendary':'capture'});
     if(kind==='evolution'&&pokemonId&&from&&s.movePresets?.[from]&&!s.movePresets[pokemonId])s.movePresets[pokemonId]=retainedSlots(pokemonId,s.movePresets[from]).map((m,i)=>i>=2&&m&&!machineAvailable(pokemonId,m,s.unlockedMoves)?null:m) as import('@/domain/battle-loadout').MoveSlots;
     if (previousChapter && currentChapter(s)?.id !== previousChapter.id) r.completed_chapter = previousChapter.id;
-    data.receipts.push(r);s.pendingReceipt=r;return r;
+    data.receipts.push(r);syncPending();return r;
   };
   const time = (deviceId = 'demo-this', activate = true):PlayTime => {
     if(!data.devices.some(d=>d.id===deviceId))fail('没有找到这台设备。');
@@ -117,7 +119,7 @@ export function handleDemo(data: DemoData, path: string, body?: Record<string, u
     const r=data.rewards.find(r=>r.id===id);if(r)r.outcome={state:'used',usedAt:now(),pokemonId:target!.id,fromPokemonId:result.from_pokemon_id};return result;
   }
   if(route==='mew'){const old=data.receipts.find(r=>r.kind==='mew');if(old)return old;if(!legendaryEligible(151,s))fail('请先认识前 150 位伙伴。');return make('mew',151,'集齐伙伴，迎接最后的相遇');}
-  if(route==='receipts/acknowledge'){const r=receipt(body?.id);r.acknowledged_at=now();if(s.pendingReceipt?.id===r.id)s.pendingReceipt=null;return {};}
+  if(route==='receipts/acknowledge'){const r=receipt(body?.id);r.acknowledged_at=now();syncPending();return {};}
   if(route.startsWith('receipts/'))return receipt(decodeURIComponent(route.slice(9)));
   if(route==='parent/devices')return {devices:data.devices,currentId:'demo-this'};
   if(route==='parent/devices/revoke'){data.devices=data.devices.filter(d=>d.id!==body?.id);return {};}

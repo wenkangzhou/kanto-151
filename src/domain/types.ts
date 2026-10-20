@@ -35,7 +35,7 @@ export interface Receipt {
   pokemon_id: number | null; from_pokemon_id: number | null; ticket_id: string | null;
   reason: string; created_at: string; acknowledged_at: string | null; completed_chapter?: number | null; route_version?: 'game-v1' | 'anime-v1';
 }
-export interface LiveSnapshot extends CollectionSnapshot { tickets: InventoryTicket[]; pendingReceipt: Receipt | null }
+export interface LiveSnapshot extends CollectionSnapshot { tickets: InventoryTicket[]; pendingReceipt: Receipt | null; pendingCaptures?: Receipt[] }
 export interface FamilySession {
   status: 'ready' | 'demo' | 'setup-required' | 'unpaired';
   parent?: boolean; parentExpiresAt?: number | null; familyName?: string; childName?: string; snapshot?: LiveSnapshot;
