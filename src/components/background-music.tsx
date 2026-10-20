@@ -58,7 +58,7 @@ function MusicControl({ available }: { available: boolean }) {
     setSoundEnabled(!on);
     if(on){battle.current?.setEnabled(false);player.current.stop();}
     else {void player.current.toggle();battle.current?.setEnabled(true);}
-  }}>{on ? <Volume2 size={20} aria-hidden="true" /> : state === 'loading' ? <LoaderCircle size={20} className="music-loading" aria-hidden="true" /> : <VolumeX size={20} aria-hidden="true" />}</button><span className="sr-only" role="status">{state === 'error' ? '背景音乐暂时不可用，短音效仍可播放' : ''}</span></div>;
+  }}>{state === 'loading' ? <LoaderCircle size={20} className="music-loading" aria-hidden="true" /> : on ? <Volume2 size={20} aria-hidden="true" /> : <VolumeX size={20} aria-hidden="true" />}</button><div className="music-feedback" role="status">{on && state === 'loading' && <span>音乐正在加载，网络慢时请稍等…</span>}{on && state === 'error' && <><span>背景音乐未能播放，其他声音仍可使用。</span><button type="button" onClick={() => { void player.current?.toggle(); }}>重试音乐</button></>}</div></div>;
 }
 export function BackgroundMusic({ available }: { available: boolean }) {
   const large = useSyncExternalStore(subscribe, isLargeDevice, () => false);

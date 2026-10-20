@@ -554,3 +554,5 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 @media(max-width:760px){.learning-subjects{grid-template-columns:1fr}.learning-rewards{padding:18px}.learning-rewards-controls{width:100%}.learning-rewards-controls .learning-field{flex:1;min-width:0}.learning-rewards-controls select{min-width:0}.learning-rewards-controls .button{padding:10px 14px}}
 
 .encounter-defer{display:flex;align-items:center;flex-direction:column;gap:10px;margin:20px auto 0}.encounter-defer .text-link{min-height:44px;display:inline-flex;align-items:center;gap:8px}.encounter-defer small{color:var(--muted)}
+
+.background-music{position:relative}.music-feedback:not(:empty){position:absolute;right:0;top:calc(100% + 8px);width:max-content;max-width:min(300px,80vw);padding:12px 16px;border:1px solid #e5dfcc;border-radius:14px;background:#fffdf5;box-shadow:0 5px 20px #25332312;color:#727762;font-size:13px;line-height:1.7;z-index:50}.music-feedback button{display:block;min-height:44px;color:#4f7041;text-decoration:underline}

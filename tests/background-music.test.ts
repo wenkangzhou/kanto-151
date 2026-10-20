@@ -76,3 +76,21 @@ test('a cue can interrupt music while its first play is still loading', async ()
   assert.equal(states.at(-1), 'playing');
   player.dispose();
 });
+
+test('a stalled stream times out, releases the failed source and retries a fresh player', async t => {
+ t.mock.timers.enable({apis:['setTimeout']});
+ const states:MusicState[]=[];const clips:ReturnType<typeof fakeAudio>[]=[];
+ const player=createMusicPlayer(()=>{const clip=fakeAudio();clips.push(clip);return clip;},s=>states.push(s));
+ await player.toggle();clips[0].emit('waiting');assert.equal(states.at(-1),'loading');
+ t.mock.timers.tick(10000);clips[0].emit('stalled');t.mock.timers.tick(5000);
+ assert.equal(states.at(-1),'error');assert.equal(clips[0].released,true);
+ await player.toggle();assert.equal(clips.length,2);assert.equal(states.at(-1),'playing');
+ clips[0].emit('error');assert.equal(states.at(-1),'playing');player.dispose();
+});
+test('resuming after a voice cue has a bounded loading timeout',async t=>{
+ t.mock.timers.enable({apis:['setTimeout']});let calls=0;const states:MusicState[]=[];
+ const clip=fakeAudio(()=>++calls===1?Promise.resolve():new Promise(()=>{}));
+ const player=createMusicPlayer(()=>clip,s=>states.push(s));await player.toggle();
+ player.suspendForCue()();assert.equal(states.at(-1),'loading');t.mock.timers.tick(15000);
+ assert.equal(states.at(-1),'error');assert.equal(clip.released,true);player.dispose();
+});

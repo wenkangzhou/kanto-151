@@ -26,7 +26,16 @@ export function createMusicPlayer(createAudio: () => MusicAudio, notify: (state:
   const clear = () => { clearTimeout(timeout); timeout = undefined; };
   const emit = (state: MusicState) => { if (!disposed) notify(state); };
   const stop = () => { wanted = false; suspended = false; revision++; clear(); audio?.pause(); emit('off'); };
-  const fail = () => { stop(); emit('error'); };
+  const release = () => {
+    const previous = audio; audio = null;
+    if (!previous) return;
+    previous.removeEventListener('playing', playing); previous.removeEventListener('pause', paused);
+    previous.removeEventListener('error', fail); previous.removeEventListener('waiting', buffering); previous.removeEventListener('stalled', buffering);
+    previous.pause(); previous.removeAttribute('src'); previous.load();
+  };
+  const fail = () => { stop(); release(); emit('error'); };
+  const watch = () => { clear(); const attempt = revision; timeout = setTimeout(() => { if (attempt === revision && wanted && !suspended) fail(); }, 15_000); };
+  const buffering = () => { if (!wanted || disposed || suspended) return; emit('loading'); if (!timeout) watch(); };
   const playing = () => { if (!wanted || disposed || suspended) { audio?.pause(); return; } clear(); emit('playing'); };
   const paused = () => { if (wanted && !suspended) { wanted = false; revision++; clear(); emit('off'); } };
   return {
@@ -37,9 +46,9 @@ export function createMusicPlayer(createAudio: () => MusicAudio, notify: (state:
       try {
         if (!audio) {
           audio = createAudio(); audio.loop = true; audio.volume = 0.2;
-          audio.addEventListener('playing', playing); audio.addEventListener('pause', paused); audio.addEventListener('error', fail);
+          audio.addEventListener('playing', playing); audio.addEventListener('pause', paused); audio.addEventListener('error', fail); audio.addEventListener('waiting', buffering); audio.addEventListener('stalled', buffering);
         }
-        timeout = setTimeout(() => { if (attempt === revision && wanted) fail(); }, 15_000);
+        watch();
         await audio.play();
         if (attempt === revision && wanted && !disposed) playing();
         // Pausing an in-flight play for a scene can reject it; resume handles the next play.
@@ -48,19 +57,17 @@ export function createMusicPlayer(createAudio: () => MusicAudio, notify: (state:
     stop,
     suspendForCue() {
       if (!wanted || !audio || disposed) return () => {};
-      suspended = true; clear(); audio.pause(); const attempt = revision;
+      suspended = true; revision++; clear(); audio.pause(); const attempt = revision;
       return () => {
         if (disposed || !wanted || attempt !== revision) return;
-        suspended = false;
+        suspended = false; emit('loading'); watch();
         void audio!.play().then(() => { if (attempt === revision && wanted) playing(); }).catch(() => { if (attempt === revision && wanted) fail(); });
       };
     },
     dispose() {
       disposed = true; stop();
-      if (audio) {
-        audio.removeEventListener('playing', playing); audio.removeEventListener('pause', paused); audio.removeEventListener('error', fail);
-        audio.removeAttribute('src'); audio.load(); audio = null;
-      }
+      release();
+
     },
   };
 }
