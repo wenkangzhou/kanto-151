@@ -76,7 +76,7 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
   const toggleDemo = () => { if (live) return; try { localStorage.setItem('kanto-preview', preference ? 'empty' : 'demo'); window.dispatchEvent(new Event('kanto-settings')); } catch {} };
   const snapshot = live ? session?.snapshot ?? emptySnapshot : preference ? demoSnapshot : emptySnapshot;
   return <Context.Provider value={{ snapshot, visitorDemo, demo: !live && preference, live, toggleDemo,
-    status: !live ? 'demo' : error ? 'error' : session?.status ?? 'loading', error,
+    status: !live ? 'demo' : session?.status === 'ready' ? 'ready' : error ? 'error' : session?.status ?? 'loading', error,
     parent: session?.parent ?? false, childName: session?.childName ?? '', familyName: session?.familyName ?? '',
     pendingCaptures: session?.snapshot?.pendingCaptures ?? [], tickets: session?.snapshot?.tickets ?? [], pendingReceipt: session?.snapshot?.pendingReceipt ?? null, refresh, saveTeam, saveMoves,
   }}><MotionConfig reducedMotion="user">{children}</MotionConfig></Context.Provider>;

@@ -11,7 +11,7 @@ export function learningClient(){
  if(!session){
   const storage=mode==='demo'?sessionStorage:localStorage;
   const prefix=(scope:string)=>`kanto-learning-events-v1:${mode}:${scope}:`;
-  session=new LearningSession(body=>api<LearningReply>('learning',body,AbortSignal.timeout(20000)),{
+  session=new LearningSession(body=>api<LearningReply>('learning',body),{
    read(scope){const start=prefix(scope);const events=[];for(let i=0;i<storage.length;i++){const key=storage.key(i)!;if(key.startsWith(start)){const value=JSON.parse(storage.getItem(key)!);events.push(value);}}return events.sort((a,b)=>a.at-b.at).map(value=>value.event);},
    put(scope,event){try{storage.setItem(prefix(scope)+event.requestId,JSON.stringify({at:Date.now()*1000+(sequence++%1000),event}));}catch{throw Error('本机存储空间不足，暂时不能保存答题记录。');}},
    remove(scope,event){storage.removeItem(prefix(scope)+event.requestId);},
