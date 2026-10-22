@@ -1896,5 +1896,14 @@
   "常青": "Viridian",
   "。": ".",
   "{0}已与{1}位伙伴相遇。": "{0} has met {1} partners.",
-  "#{0} · 伙伴档案": "#{0} · Partner Profile"
+  "#{0} · 伙伴档案": "#{0} · Partner Profile",
+  "保存家庭数据": "Save Family Data",
+  "下载收藏、奖励券、相遇、学习进度和设置，留一份自己的记录。": "Download your collection, reward tickets, encounters, learning progress and settings for your own records.",
+  "只包含已同步到服务器的数据；其他设备尚未同步的练习不在其中。文件含家庭记录和奖励码，请妥善保管。": "Includes only data already synced to the server, not unsynced practice on other devices. The file contains family records and reward codes. Keep it private.",
+  "不包含 PIN 或设备登录凭据。目前提供导出，暂不支持在应用内导入恢复。": "PINs and device sign-in credentials are excluded. Export is available; in-app import and recovery are not yet supported.",
+  "正在整理数据…": "Preparing your data…",
+  "下载数据文件": "Download Data File",
+  "演示模式不导出真实家庭数据。": "Real family data cannot be exported in demo mode.",
+  "已发起下载，请在浏览器下载列表或文件 App 中确认保存。": "Download started. Check your browser downloads or Files app to confirm it was saved.",
+  "导出失败，请重试。": "Export failed. Please try again."
 }

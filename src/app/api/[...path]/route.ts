@@ -1,3 +1,4 @@
+import { createFamilyExport, type ExportData } from '@/lib/family-export';
 import { playTimeLocked, validMinutes, type PlayTime } from '@/domain/play-time';
 import { validSlots } from '@/domain/battle-loadout';
 import { readLearning, updateLearning } from '@/lib/server/learning';
@@ -34,6 +35,14 @@ export async function GET(request: NextRequest, context: Context) {
         if (dbError) throw databaseError(dbError);
         return reply({ status: data.length ? 'unpaired' : 'setup-required' });
       }
+    }
+    if (path === 'parent/export') {
+      const session = await parentSession(request);
+      await limit('export:' + session.deviceId, 5, 300);
+      const data = await rpc<ExportData>('kanto_export_family', { p_child_id: session.childId });
+      const response = reply(createFamilyExport(data));
+      response.headers.set('Content-Disposition', 'attachment; filename="kanto-family-export.json"');
+      return response;
     }
     if (path === 'learning' || path === 'parent/learning') {
       const session = path.startsWith('parent/') ? await parentSession(request) : await deviceSession(request);
