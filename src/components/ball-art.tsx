@@ -1,8 +1,11 @@
+'use client';
+import { useT } from '@/lib/i18n/locale';
 import type {EncyclopediaBall} from '@/domain/encyclopedia';
 // Local vector illustrations remain crisp on tablets and need no network image request.
 export function BallArt({ball}:{ball:EncyclopediaBall}){
+  const localize = useT();
  const top=ball.id==='ultra'?'#353a42':ball.color;
- return <svg className="encyclopedia-ball" viewBox="0 0 200 200" role="img" aria-label={ball.name}>
+ return <svg className="encyclopedia-ball" viewBox="0 0 200 200" role="img" aria-label={localize(ball.name)}>
   <ellipse cx="100" cy="179" rx="59" ry="9" fill="#29333a" opacity=".08"/>
   <path d="M24 100a76 76 0 0 1 152 0Z" fill={top}/><path d="M24 100a76 76 0 0 0 152 0Z" fill="#fffdf5"/>
   {ball.id==='great'&&<><path d="M49 43l19-12 15 51-23 7Z" fill="#ef5555"/><path d="M151 43l-19-12-15 51 23 7Z" fill="#ef5555"/></>}

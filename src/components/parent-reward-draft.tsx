@@ -1,4 +1,6 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { ParentReward } from '@/domain/types';
 import { useCollection } from './collection-provider';
@@ -9,14 +11,16 @@ type Draft = {
 const empty = (type: ParentReward['type']): Draft => ({ type, reason: '', result: null, busy: false, error: '', copied: false, request: null });
 const Context = createContext<{ activeType: ParentReward['type']; setActiveType: (type: ParentReward['type']) => void; drafts: Record<ParentReward['type'], Draft>; patch: (type: ParentReward['type'], change: Partial<Draft>) => void } | null>(null);
 function UnlockedDrafts({ children }: { children: ReactNode }) {
+  const localize = useT();
   const [activeType, setActiveType] = useState<ParentReward['type']>('capture');
   const [drafts, setDrafts] = useState(() => ({ capture: empty('capture'), evolution: empty('evolution'), legendary: empty('legendary') }));
-  return <Context.Provider value={{ activeType, setActiveType, drafts, patch: (type, change) => setDrafts(previous => ({ ...previous, [type]: { ...previous[type], ...change } })) }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ activeType, setActiveType, drafts, patch: (type, change) => setDrafts(previous => ({ ...previous, [type]: { ...previous[type], ...change } })) }}>{localize(children)}</Context.Provider>;
 }
 export function ParentRewardDraftProvider({ children }: { children: ReactNode }) {
+  const localize = useT();
   const { parent, visitorDemo } = useCollection();
   // Only lives in the unlocked parent layout; never persists PINs or form data to storage.
-  return parent ? <UnlockedDrafts key={String(visitorDemo)}>{children}</UnlockedDrafts> : children;
+  return parent ? <UnlockedDrafts key={String(visitorDemo)}>{localize(children)}</UnlockedDrafts> : children;
 }
 export function useParentRewardDraft(type: ParentReward['type']) {
   const context = useContext(Context);

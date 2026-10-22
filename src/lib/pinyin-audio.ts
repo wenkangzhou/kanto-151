@@ -23,6 +23,7 @@ export function usePinyinAudio(){
   };
   audio.onplaying=()=>{if(token===revision.current)setPlaying(true);};audio.onerror=fail;audio.onended=next;next();
  },[stop]);
+ useEffect(()=>{window.addEventListener('kanto-language',stop);return()=>window.removeEventListener('kanto-language',stop);},[stop]);
  useEffect(()=>()=>{revision.current++;clearTimeout(timer.current);player.current?.pause();if(player.current){player.current.onended=null;player.current.onerror=null;player.current.onplaying=null;}},[]);
  return {play,stop,audioError,playing};
 }

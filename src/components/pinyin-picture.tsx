@@ -1,11 +1,14 @@
+'use client';
+import {useT} from '@/lib/i18n/locale';
 import type {PinyinItem} from '@/domain/pinyin';
 import {Shell,Flower2,House,Car,Coffee,BookOpen,Sun,UserRound,Circle,Eraser,Cat,Dog,Droplets,Snowflake,Trees,Shield,Lamp,Star,Fish,Leaf,Moon,Music,Cloud,Ear,Shirt,Compass,PiggyBank,Volume2,type LucideIcon} from 'lucide-react';
 const symbols:Record<string,LucideIcon>={shell:Shell,flower:Flower2,house:House,car:Car,cup:Coffee,book:BookOpen,sun:Sun,person:UserRound,ball:Circle,eraser:Eraser,cat:Cat,dog:Dog,water:Droplets,snow:Snowflake,trees:Trees,shield:Shield,lamp:Lamp,star:Star,fish:Fish,leaf:Leaf,moon:Moon,music:Music,cloud:Cloud,ear:Ear,shirt:Shirt,compass:Compass,pig:PiggyBank,circle:Circle};
 /** Locally drawn teaching pictures: no text is needed to recognize the object. */
 export function PinyinPicture({item}:{item:PinyinItem}){
+ const localize=useT();
  const symbol=item.picture?.startsWith('symbol:')?item.picture.slice(7):null;
  const Icon=symbol?symbols[symbol]:undefined;
- if(!item.picture)return <svg viewBox="0 0 180 160" role="img" aria-label="听一听"><circle cx="90" cy="80" r="57" fill="#f4f1e3"/><Volume2 x="53" y="43" width="74" height="74" color="#97a67d" strokeWidth={1.5}/></svg>;
+ if(!item.picture)return <svg viewBox="0 0 180 160" role="img" aria-label={localize("听一听")}><circle cx="90" cy="80" r="57" fill="#f4f1e3"/><Volume2 x="53" y="43" width="74" height="74" color="#97a67d" strokeWidth={1.5}/></svg>;
  return <svg viewBox="0 0 180 160" role="img" aria-label={item.word}>
   {Icon&&<><circle cx="90" cy="77" r="60" fill="#f4f1e3"/><Icon x="43" y="30" width="94" height="94" color="#809765" strokeWidth={1.5}/></>}
   {(symbol==='seven'||symbol==='four')&&Array.from({length:symbol==='seven'?7:4},(_,i)=><circle key={i} cx={38+(i%4)*34} cy={55+Math.floor(i/4)*48} r="13" fill="#c68b78"/>)}

@@ -1,4 +1,6 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import Link from 'next/link';
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {ArrowLeft,ArrowRight,Check,Lightbulb,Play,Plus,Star,Volume2,VolumeX} from 'lucide-react';
@@ -15,6 +17,7 @@ import {PinyinPicture} from './pinyin-picture';
 import styles from './pinyin-learning.module.css';
 
 export function PinyinLearning(){
+  const localize = useT();
  const [view,setView]=useState<LearningView>(()=>typeof window==='undefined'?{data:null,pending:0,syncing:false,error:''}:learningClient().getSnapshot());
  const [practicing,setPracticing]=useState(false),[busy,setBusy]=useState(false),[muted,setMuted]=useState(false),[error,setError]=useState('');
  const [today,setToday]=useState(()=>usageDay(Date.now()));
@@ -71,38 +74,38 @@ export function PinyinLearning(){
  const finished=practicing&&lesson?.finishedAt&&!celebration;
  const rewardAvailable=!!data&&(data.day!==today||data.rounds<data.dailyRounds);
  return <div className={`page ${styles.page}`}>
-  <Link className="back-link" href="/learn"><ArrowLeft size={19}/>学习小站</Link>
-  <header className={styles.header}><div><span>和伙伴一起，听听拼音</span><h1>拼音小站<span>。</span></h1></div><div className={styles.tools}><strong><Star size={19}/>{data?.balance??'—'}</strong><button type="button" className={styles.soundToggle} title={muted?'开启拼音声音':'关闭拼音声音'} aria-label={muted?'开启拼音声音':'关闭拼音声音'} aria-pressed={!muted} onClick={()=>{setMuted(!muted);stop();stopLearningSpeech();}}>{muted?<VolumeX/>:<Volume2/>}</button></div></header>
-  {view.pending>0&&<p className={styles.status} role="status">{view.error?'记录已保存在本机，等待同步':'记录已保存在本机'}{view.error&&<button onClick={()=>void learningClient().flush()}>重试同步</button>}</p>}
-  {(error||(!view.pending&&view.error))&&<p className="form-error" role="alert">{error||view.error}<button className="text-link" onClick={()=>data?void start():void learningClient().load()}>重试</button></p>}
-  {audioError&&<p className="form-error" role="alert">{audioError}</p>}
+  <Link className="back-link" href="/learn"><ArrowLeft size={19}/>{localize("学习小站")}</Link>
+  <header className={styles.header}><div><span>{localize("和伙伴一起，听听拼音")}</span><h1>{localize("拼音小站")}<span>{localize("。")}</span></h1></div><div className={styles.tools}><strong><Star size={19}/>{localize(data?.balance??'—')}</strong><button type="button" className={styles.soundToggle} title={localize(muted?'开启拼音声音':'关闭拼音声音')} aria-label={localize(muted?'开启拼音声音':'关闭拼音声音')} aria-pressed={!muted} onClick={()=>{setMuted(!muted);stop();stopLearningSpeech();}}>{muted?<VolumeX/>:<Volume2/>}</button></div></header>
+  {view.pending>0&&<p className={styles.status} role="status">{localize(view.error?'记录已保存在本机，等待同步':'记录已保存在本机')}{view.error&&<button onClick={()=>void learningClient().flush()}>{localize("重试同步")}</button>}</p>}
+  {(error||(!view.pending&&view.error))&&<p className="form-error" role="alert">{localize(error||view.error)}<button className="text-link" onClick={()=>data?void start():void learningClient().load()}>{localize("重试")}</button></p>}
+  {audioError&&<p className="form-error" role="alert">{localize(audioError)}</p>}
   {!data?<LearningLoading/>:finished?<section className={styles.result}>
-   <LearningPartner compact/><h2>五个小活动完成啦！</h2><strong className={styles.earned}>+{lesson.questions.reduce((n,q)=>n+q.stars,0)}<Star fill="currentColor"/></strong>
-   <div className={styles.results}>{lesson.questions.map((q,i)=><div key={q.id}><small>第{i+1}题</small><b>{pinyinById.get(q.target)!.text}</b><span>{q.first?'独立答对':q.hint?'提示后完成':'自己改对'}</span></div>)}</div>
-   <p>{view.pending?'这轮记录已保存在本机，星星同步后可兑换':lesson.rewarded?'星星已存入口袋':'自由练习完成啦'}</p>
-   <div className="action-row"><button className="button secondary" onClick={()=>setPracticing(false)}>回拼音小站</button><Link className="button" href="/learn">回学习小站</Link></div>
+   <LearningPartner compact/><h2>{localize("五个小活动完成啦！")}</h2><strong className={styles.earned}>+{localize(lesson.questions.reduce((n,q)=>n+q.stars,0))}<Star fill="currentColor"/></strong>
+   <div className={styles.results}>{lesson.questions.map((q,i)=><div key={q.id}><small>{localize(`第${i+1}题`)}</small><b>{localize(pinyinById.get(q.target)!.text)}</b><span>{localize(q.first?'独立答对':q.hint?'提示后完成':'自己改对')}</span></div>)}</div>
+   <p>{localize(view.pending?'这轮记录已保存在本机，星星同步后可兑换':lesson.rewarded?'星星已存入口袋':'自由练习完成啦')}</p>
+   <div className="action-row"><button className="button secondary" onClick={()=>setPracticing(false)}>{localize("回拼音小站")}</button><Link className="button" href="/learn">{localize("回学习小站")}</Link></div>
   </section>:practicing&&question&&target?<>
-   <div className={styles.progress}><button className="back-link" disabled={!!celebration} onClick={()=>{setPracticing(false);stop();stopLearningSpeech();void learningClient().flush();}}><ArrowLeft size={18}/>稍后继续</button><div className="lesson-dots" aria-label={`第${lesson!.questions.findIndex(q=>q.id===question.id)+1}题，共5题`}>{lesson!.questions.map((q,i)=><span key={q.id} className={q.done?'done':q.id===question.id?'active':''}>{q.done?<Check size={16}/>:i+1}</span>)}</div></div>
+   <div className={styles.progress}><button className="back-link" disabled={!!celebration} onClick={()=>{setPracticing(false);stop();stopLearningSpeech();void learningClient().flush();}}><ArrowLeft size={18}/>{localize("稍后继续")}</button><div className="lesson-dots" aria-label={localize(`第${lesson!.questions.findIndex(q=>q.id===question.id)+1}题，共5题`)}>{lesson!.questions.map((q,i)=><span key={q.id} className={q.done?'done':q.id===question.id?'active':''}>{q.done?<Check size={16}/>:i+1}</span>)}</div></div>
    <section className={styles.activity}>
-    <div className={styles.activityHeading}><LearningPartner compact/><h2>{question.kind==='listen'?'听声音，找拼音':question.kind==='picture'?'看图片，找拼音':'拼起来，听一听'}</h2>{!lesson!.rewarded&&<small>自由练习</small>}</div>
+    <div className={styles.activityHeading}><LearningPartner compact/><h2>{localize(question.kind==='listen'?'听声音，找拼音':question.kind==='picture'?'看图片，找拼音':'拼起来，听一听')}</h2>{!lesson!.rewarded&&<small>{localize("自由练习")}</small>}</div>
     <div className={styles.prompt}>
      {question.kind==='picture'&&<div className={styles.picture}><PinyinPicture item={target}/></div>}
      {question.kind==='blend'?<div className={styles.blend}>
-      {blendParts.map((partInfo,i)=><Fragment key={i}>{i>0&&<Plus size={22}/>}<button className={parts.includes(String(i))?styles.touched:''} disabled={muted||!!celebration} aria-label={`听${i===0?'声母':blendParts.length===3&&i===1?'介音':'韵母'}${partInfo.label}`} onClick={()=>part(String(i),partInfo.audio)}>{partInfo.label}<Volume2 size={19}/></button></Fragment>)}
-      <button className={styles.join} disabled={muted||!!celebration||parts.length<blendParts.length} onClick={()=>{setBuilt(true);listen([target.id]);}}><ArrowRight/>合起来听</button>
-     </div>:<button className={styles.listen} disabled={muted||!!celebration} onClick={()=>listen([target.id])} aria-label="听题目读音"><Volume2 size={33}/><span>{playing?'再听一次':'点我听一听'}</span></button>}
+      {blendParts.map((partInfo,i)=><Fragment key={i}>{i>0&&<Plus size={22}/>}<button className={parts.includes(String(i))?styles.touched:''} disabled={muted||!!celebration} aria-label={localize(`听${i===0?'声母':blendParts.length===3&&i===1?'介音':'韵母'}${partInfo.label}`)} onClick={()=>part(String(i),partInfo.audio)}>{localize(partInfo.label)}<Volume2 size={19}/></button></Fragment>)}
+      <button className={styles.join} disabled={muted||!!celebration||parts.length<blendParts.length} onClick={()=>{setBuilt(true);listen([target.id]);}}><ArrowRight/>{localize("合起来听")}</button>
+     </div>:<button className={styles.listen} disabled={muted||!!celebration} onClick={()=>listen([target.id])} aria-label={localize("听题目读音")}><Volume2 size={33}/><span>{localize(playing?'再听一次':'点我听一听')}</span></button>}
     </div>
-    {muted&&<button className={styles.soundNotice} onClick={()=>{setMuted(false);play([target.id]);}}>这题需要听声音，点这里开启<Volume2 size={18}/></button>}
-    {question.kind==='blend'&&!built&&!muted&&<p className={styles.cue}>点{blendParts.length===3?'三':'两'}张卡片，再合起来听</p>}
-    <div className={styles.options}>{question.options.map(id=><button key={id} disabled={!!celebration||muted||(question.kind==='blend'&&!built)} aria-label={`选择${pinyinById.get(id)!.text}`} className={`${wrong===id?styles.wrong:''} ${celebration&&id===question.target?styles.correct:''}`} onClick={()=>act('answer',id)}>{pinyinById.get(id)!.text}{celebration&&id===question.target&&<Check size={22}/>}</button>)}</div>
-    <p className={styles.feedback} role="status">{celebration?<>答对啦！{celebration.stars>0&&<> +{celebration.stars}<Star size={18} fill="currentColor"/></>}</>:wrong?'再听一听，试一次。':''}</p>
-    {question.hint&&!celebration&&<div className={styles.help}><PinyinPicture item={target}/><div><strong>{blendParts.length?`${blendParts.map(p=>p.label).join(' + ')} → ${target.text}`:target.whole?`整体认读：${target.text}`:target.text}</strong><button disabled={muted} onClick={()=>listen([target.id])}><Volume2 size={20}/>再听一次</button></div></div>}
-    {!celebration&&<button className="button secondary" disabled={muted} onClick={()=>act('hint')}><Lightbulb size={19}/>帮帮我</button>}
+    {muted&&<button className={styles.soundNotice} onClick={()=>{setMuted(false);play([target.id]);}}>{localize("这题需要听声音，点这里开启")}<Volume2 size={18}/></button>}
+    {question.kind==='blend'&&!built&&!muted&&<p className={styles.cue}>{localize(`点击${blendParts.length===3?'三':'两'}张卡片，再合起来听`)}</p>}
+    <div className={styles.options}>{question.options.map(id=><button key={id} disabled={!!celebration||muted||(question.kind==='blend'&&!built)} aria-label={localize(`选择${pinyinById.get(id)!.text}`)} className={`${wrong===id?styles.wrong:''} ${celebration&&id===question.target?styles.correct:''}`} onClick={()=>act('answer',id)}>{localize(pinyinById.get(id)!.text)}{celebration&&id===question.target&&<Check size={22}/>}</button>)}</div>
+    <p className={styles.feedback} role="status">{celebration?<>{localize("答对啦！")}{celebration.stars>0&&<> +{localize(celebration.stars)}<Star size={18} fill="currentColor"/></>}</>:wrong?'再听一听，试一次。':''}</p>
+    {question.hint&&!celebration&&<div className={styles.help}><PinyinPicture item={target}/><div><strong>{blendParts.length?`${blendParts.map(p=>p.label).join(' + ')} → ${target.text}`:target.whole?`整体认读：${target.text}`:target.text}</strong><button disabled={muted} onClick={()=>listen([target.id])}><Volume2 size={20}/>{localize("再听一次")}</button></div></div>}
+    {!celebration&&<button className="button secondary" disabled={muted} onClick={()=>act('hint')}><Lightbulb size={19}/>{localize("帮帮我")}</button>}
    </section>
   </>:<>
-   <section className={styles.hero}><div><span className={styles.eyebrow}>语文 · 生活里的拼音</span><h2>小小声音，<br/>藏在生活里。</h2><p>{pinyinStages[stage]}</p><button className="button" disabled={busy} onClick={()=>void start()}><Play size={19}/>{busy?'正在准备…':lesson&&!lesson.finishedAt?'继续这五题':rewardAvailable?'开始五个小活动':'自由练习'}<ArrowRight size={19}/></button><small>{lesson&&!lesson.finishedAt?`已完成 ${lesson.questions.filter(q=>q.done).length} / 5`:rewardAvailable?'各学科共用每日奖励轮数':'今天的奖励已领完，还可以继续练习'}</small></div><div className={styles.heroArt}><span>{pinyinPool(stage)[0].text}</span><LearningPartner/></div></section>
+   <section className={styles.hero}><div><span className={styles.eyebrow}>{localize("语文 · 生活里的拼音")}</span><h2>{localize("小小声音，")}<br/>{localize("藏在生活里。")}</h2><p>{localize(pinyinStages[stage])}</p><button className="button" disabled={busy} onClick={()=>void start()}><Play size={19}/>{localize(busy?'正在准备…':lesson&&!lesson.finishedAt?'继续这五题':rewardAvailable?'开始五个小活动':'自由练习')}<ArrowRight size={19}/></button><small>{localize(lesson&&!lesson.finishedAt?`已完成 ${lesson.questions.filter(q=>q.done).length} / 5`:rewardAvailable?'各学科共用每日奖励轮数':'今天的奖励已领完，还可以继续练习')}</small></div><div className={styles.heroArt}><span>{localize(pinyinPool(stage)[0].text)}</span><LearningPartner/></div></section>
    <PinyinCatalog key={stage} items={pinyinPool(stage)} muted={muted} onPlay={listen}/>
-   <details className={styles.notes}><summary>给家长看的说明</summary><p>目前有 {pinyinStages.length} 个阶段、{pinyinItems.length} 个示例音节，涵盖常用声母、韵母例音、整体认读和四声辨听。原有阶段保持不变，后续内容循序增加。图画用于帮助联想，其中“木”画成树、“八”画成八个小球；“妈妈、肚子、梯子、蜡烛”取第一个字的读音。“大”用一大一小两个球作比较。新声母用常用音节练习；连续两轮各独立答对至少四题会进入下一阶段，也可以由家长固定阶段。后面的四声阶段会专门辨听 mā、má、mǎ、mà。点击上面的图卡熟悉读音，不消耗奖励轮次。</p><p>拼读卡里的声母使用呼读音，合起来听的是完整音节，不把两段录音机械拼接。三拼音节分声母、介音、韵母；整体认读音节直接整读。j、q、x 与 ü 相拼时省略两点，拼读卡仍显示 ü。韵母表播放的是标明的完整例音，不能把例音当作韵母的单独发音。没有合适图画的词只做听音题。教学读音使用本地普通话录音，普通操作提示使用系统声音；不使用英语字母读音，不做录音评分。家长可在学习手帐调整拼音阶段。</p><a href="https://github.com/davinfifield/mp3-chinese-pinyin-sound" target="_blank" rel="noreferrer">录音来源与许可 ↗</a></details>
+   <details className={styles.notes}><summary>{localize("给家长看的说明")}</summary><p>{localize("目前有")}{localize(pinyinStages.length)}{localize("个阶段、")}{localize(pinyinItems.length)}{localize("个示例音节，涵盖常用声母、韵母例音、整体认读和四声辨听。原有阶段保持不变，后续内容循序增加。图画用于帮助联想，其中“木”画成树、“八”画成八个小球；“妈妈、肚子、梯子、蜡烛”取第一个字的读音。“大”用一大一小两个球作比较。新声母用常用音节练习；连续两轮各独立答对至少四题会进入下一阶段，也可以由家长固定阶段。后面的四声阶段会专门辨听 mā、má、mǎ、mà。点击上面的图卡熟悉读音，不消耗奖励轮次。")}</p><p>{localize("拼读卡里的声母使用呼读音，合起来听的是完整音节，不把两段录音机械拼接。三拼音节分声母、介音、韵母；整体认读音节直接整读。j、q、x 与 ü 相拼时省略两点，拼读卡仍显示 ü。韵母表播放的是标明的完整例音，不能把例音当作韵母的单独发音。没有合适图画的词只做听音题。教学读音使用本地普通话录音，普通操作提示使用系统声音；不使用英语字母读音，不做录音评分。家长可在学习手帐调整拼音阶段。")}</p><a href="https://github.com/davinfifield/mp3-chinese-pinyin-sound" target="_blank" rel="noreferrer">{localize("录音来源与许可 ↗")}</a></details>
   </>}
  </div>;
 }

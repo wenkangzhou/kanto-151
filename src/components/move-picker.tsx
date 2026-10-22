@@ -1,4 +1,6 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import { useEffect, useId, useRef, useState } from 'react';
 import { ArrowLeft, Check, X, LockKeyhole } from 'lucide-react';
 import Link from 'next/link';
@@ -13,6 +15,7 @@ import { TypePicture } from './type-badge';
 import { ReadAloud } from './read-aloud';
 
 export function MovePicker({ id, onClose, discovery }: { id: number; onClose: () => void; discovery?: {slot:number;moveId:string} }) {
+  const localize = useT();
   const { snapshot, saveMoves, refresh } = useCollection();
   const partner = pokemonById.get(id)!;
   const dialog = useRef<HTMLDialogElement>(null);
@@ -67,34 +70,34 @@ export function MovePicker({ id, onClose, discovery }: { id: number; onClose: ()
   }
   const candidates = slot === null ? [] : slotMoves(id,slot).filter(m=>!guided||(!saved.includes(m.id)&&(slot<2||machineAvailable(id,m.id,learning?.unlocked??snapshot.unlockedMoves))));
   return <dialog ref={dialog} className="loadout-dialog" aria-labelledby={title} onCancel={event=>{event.preventDefault();if(!saving.current){if(slot!==null)returnToSlots(slot);else onClose();}}}>
-    <header><h2 id={title}>{slot === null ? `${partner.name}的招式` : slot >= 2 ? '技能机招式' : '升级招式'}</h2><button className="opponent-close" disabled={busy} aria-label="关闭招式设置" onClick={onClose} autoFocus><X size={24}/></button></header>
+    <header><h2 id={title}>{localize(slot === null ? `${partner.name}的招式` : slot >= 2 ? '技能机招式' : '升级招式')}</h2><button className="opponent-close" disabled={busy} aria-label={localize("关闭招式设置")} onClick={onClose} autoFocus><X size={24}/></button></header>
     <div className="loadout-dialog-content">
-      {learned?<div className="move-discovery-success"><PokemonArt pokemon={partner}/><h3>{partner.name}学会{learned}啦！</h3><ReadAloud systemFallback text={`${partner.name}学会${learned}啦！`} label="听听新招式"/><Link className="button" href="/battle" onClick={onClose}>去对战试试</Link><button className="text-link" onClick={()=>{setLearned(null);setGuided(false);}}>看看其他招式</button></div>:slot === null ? <>
+      {learned?<div className="move-discovery-success"><PokemonArt pokemon={partner}/><h3>{localize(partner.name)}{localize("学会")}{localize(learned)}{localize("啦！")}</h3><ReadAloud systemFallback text={localize(`${partner.name}学会${learned}啦！`)} label={localize("听听新招式")}/><Link className="button" href="/battle" onClick={onClose}>{localize("去对战试试")}</Link><button className="text-link" onClick={()=>{setLearned(null);setGuided(false);}}>{localize("看看其他招式")}</button></div>:slot === null ? <>
         <div className="loadout-dialog-partner"><PokemonArt pokemon={partner}/></div>
         <div className="move-slot-grid">{saved.map((moveId,index)=>{
           const move=slotMoves(id,index).find(m=>m.id===moveId);
           const available=slotMoves(id,index).length>0;
-          return <div key={index} className="move-audio-card"><button ref={element=>{slotButtons.current[index]=element;}} aria-label={`更换${index>=2?'技能机':`第${index+1}个升级`}招式${move?`，${move.name}`:''}`} disabled={!available||busy} onClick={()=>chooseSlot(index)}>
-            <small>{index>=2?`技能机 ${index-1}`:`升级 ${index+1}`}</small><div><strong>{move?.name??'空位'}</strong>{move&&<TypePicture type={move.type} interactive={false}/>}</div>
-          </button>{move&&<ReadAloud systemFallback text={move.name} label={`朗读${move.name}`}/>}</div>;
+          return <div key={index} className="move-audio-card"><button ref={element=>{slotButtons.current[index]=element;}} aria-label={localize(`更换${index>=2?'技能机':`第${index+1}个升级`}招式${move?`，${move.name}`:''}`)} disabled={!available||busy} onClick={()=>chooseSlot(index)}>
+            <small>{localize(index>=2?`技能机 ${index-1}`:`升级 ${index+1}`)}</small><div><strong>{localize(move?.name??'空位')}</strong>{move&&<TypePicture type={move.type} interactive={false}/>}</div>
+          </button>{move&&<ReadAloud systemFallback text={localize(move.name)} label={localize(`朗读${move.name}`)}/>}</div>;
         })}</div>
-        {!saved.some(Boolean)&&<p className="loadout-dialog-hint">对战时使用「挣扎」</p>}
+        {!saved.some(Boolean)&&<p className="loadout-dialog-hint">{localize("对战时使用「挣扎」")}</p>}
 
       </> : <>
-        {guided&&<div className="move-discovery-instruction"><strong>选一招，学个新本领</strong><button className="text-link" onClick={()=>setGuided(false)}>全部招式</button></div>}
-        <button ref={back} className="back-link" disabled={busy} onClick={()=>returnToSlots(slot)}><ArrowLeft size={18}/>返回</button>
-        {slot>=2&&!guided&&<div className="learning-target"><strong>⭐ {learning?.balance??'—'}</strong>{lockedMove&&<><span>{candidates.find(m=>m.id===lockedMove)?.name} · {MACHINE_STAR_COST} ⭐</span>{(learning?.balance??0)>=MACHINE_STAR_COST?<button className="button" disabled={busy} onClick={()=>void unlockMove()}>{MACHINE_STAR_COST} ⭐ 兑换</button>:<Link className="button" href="/learn" onClick={onClose}>去学习攒星星</Link>}</>}</div>}
+        {guided&&<div className="move-discovery-instruction"><strong>{localize("选一招，学个新本领")}</strong><button className="text-link" onClick={()=>setGuided(false)}>{localize("全部招式")}</button></div>}
+        <button ref={back} className="back-link" disabled={busy} onClick={()=>returnToSlots(slot)}><ArrowLeft size={18}/>{localize("返回")}</button>
+        {slot>=2&&!guided&&<div className="learning-target"><strong>⭐ {localize(learning?.balance??'—')}</strong>{lockedMove&&<><span>{localize(candidates.find(m=>m.id===lockedMove)?.name)} · {localize(MACHINE_STAR_COST)} ⭐</span>{(learning?.balance??0)>=MACHINE_STAR_COST?<button className="button" disabled={busy} onClick={()=>void unlockMove()}>{localize(MACHINE_STAR_COST)}{localize("⭐ 兑换")}</button>:<Link className="button" href="/learn" onClick={onClose}>{localize("去学习攒星星")}</Link>}</>}</div>}
         <div className="move-candidate-grid">{candidates.map(move=>{
           const current=saved[slot]===move.id;
           const occupied=!current&&saved.includes(move.id);
           const locked=slot>=2&&!current&&!machineAvailable(id,move.id,learning?.unlocked??snapshot.unlockedMoves);
           return <div key={move.id} className="move-audio-card"><button className={guided&&move.id===discovery?.moveId?'discovery-suggested':undefined} disabled={busy||failed||occupied} aria-pressed={current} onClick={()=>{if(locked){setLockedMove(move.id);}else void replace(move.id);}}>
-            <div><strong>{move.name}</strong><TypePicture type={move.type} interactive={false}/></div>
-            <small>{current?<><Check size={14}/>正在使用</>:occupied?'已装备':locked?<><LockKeyhole size={14}/>{MACHINE_STAR_COST} ⭐</>:slot>=2?'已开放':move.level===0?'进化':`Lv.${move.level}`}</small>
-          </button><ReadAloud systemFallback text={move.name} label={`朗读${move.name}`}/></div>;
+            <div><strong>{localize(move.name)}</strong><TypePicture type={move.type} interactive={false}/></div>
+            <small>{current?<><Check size={14}/>{localize("正在使用")}</>:occupied?'已装备':locked?<><LockKeyhole size={14}/>{localize(MACHINE_STAR_COST)} ⭐</>:slot>=2?'已开放':move.level===0?'进化':`Lv.${move.level}`}</small>
+          </button><ReadAloud systemFallback text={localize(move.name)} label={localize(`朗读${move.name}`)}/></div>;
         })}</div>
       </>}
     </div>
-    {(busy||error||notice)&&<footer aria-live="polite">{busy?'正在保存…':error||notice}{failed&&<button className="button secondary" onClick={onClose}>返回小队</button>}</footer>}
+    {(busy||error||notice)&&<footer aria-live="polite">{localize(busy?'正在保存…':error||notice)}{failed&&<button className="button secondary" onClick={onClose}>{localize("返回小队")}</button>}</footer>}
   </dialog>;
 }

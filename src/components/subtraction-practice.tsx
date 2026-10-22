@@ -1,10 +1,13 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import {useState} from 'react';
 import {ArrowLeft,Check,ChevronRight,RotateCcw,Volume2,VolumeX,X} from 'lucide-react';
 import {subtractionHelp} from '@/domain/subtraction-help';
 import type {Question} from '@/domain/learning';
 
 export function SubtractionPractice({question:q,say,muted}:{question:Question;say:(text:string)=>void;muted:boolean}){
+  const localize = useT();
  const steps=subtractionHelp(q.a,q.b);
  const [step,setStep]=useState(0),[removed,setRemoved]=useState<string[]>([]),[done,setDone]=useState(false),[closed,setClosed]=useState(false);
  const current=steps[Math.min(step,steps.length-1)];
@@ -25,22 +28,22 @@ export function SubtractionPractice({question:q,say,muted}:{question:Question;sa
    if(!limit||removed.includes(key)||ready)return;
    setRemoved(old=>old.includes(key)||old.filter(k=>k.startsWith(`${group}:`)).length>=limit?old:[...old,key]);
  }
- if(closed)return <button className="text-link help-reopen" onClick={restart}><RotateCcw size={16}/>再帮我一次</button>;
+ if(closed)return <button className="text-link help-reopen" onClick={restart}><RotateCcw size={16}/>{localize("再帮我一次")}</button>;
  return <div className="subtraction-help interactive-help">
-  <div className="help-heading"><strong>{done?'数一数，还剩几个？':current.title}</strong><button aria-label="读出这一步" disabled={muted} onClick={()=>say(done?current.speech:instruction)}>{muted?<VolumeX size={20}/>:<Volume2 size={20}/>}</button></div>
-  {step===0?<button className="split-number" onClick={advance} aria-label={q.a>=10?`把${q.a}拆成十和${q.a-10}`:`摆出${q.a}个圆点`}><strong>{q.a}</strong><span>{q.a>=10?'拆出十':'摆出来'}<ChevronRight size={20}/></span></button>:<>
-   <div className="help-decomposition">{steps[0].equation.split('；').map(line=><span key={line}>{line}</span>)}</div>
-   <div className="help-equation">{done?current.equation:current.equation.split(' = ')[0]+' = ?'}</div>
-   {done?<div className="merged-counters" aria-label={`还剩${q.a-q.b}个圆点`}>{Array.from({length:q.a-q.b},(_,i)=><span key={i}/>)}{q.a===q.b&&<strong>0</strong>}</div>:<div className="help-groups">{current.groups.map((group,i)=>{
+  <div className="help-heading"><strong>{localize(done?'数一数，还剩几个？':current.title)}</strong><button aria-label={localize("读出这一步")} disabled={muted} onClick={()=>say(done?current.speech:instruction)}>{muted?<VolumeX size={20}/>:<Volume2 size={20}/>}</button></div>
+  {step===0?<button className="split-number" onClick={advance} aria-label={localize(q.a>=10?`把${q.a}拆成十和${q.a-10}`:`摆出${q.a}个圆点`)}><strong>{localize(q.a)}</strong><span>{localize(q.a>=10?'拆出十':'摆出来')}<ChevronRight size={20}/></span></button>:<>
+   <div className="help-decomposition">{steps[0].equation.split('；').map(line=><span key={line}>{localize(line)}</span>)}</div>
+   <div className="help-equation">{localize(done?current.equation:current.equation.split(' = ')[0]+' = ?')}</div>
+   {done?<div className="merged-counters" aria-label={localize(`还剩${q.a-q.b}个圆点`)}>{Array.from({length:q.a-q.b},(_,i)=><span key={i}/>)}{q.a===q.b&&<strong>0</strong>}</div>:<div className="help-groups">{current.groups.map((group,i)=>{
     const count=removed.filter(k=>k.startsWith(`${i}:`)).length;
     const contents=<><div className="help-counters">{Array.from({length:group.total},(_,n)=>{
      const key=`${i}:${n}`,gone=removed.includes(key);
-     return wholeTen||!group.removed?<span key={key} className={gone?'removed':''}>{gone?<X size={14}/>:null}</span>:<button key={key} className={gone?'removed':''} aria-label={`拿走第${i+1}组第${n+1}个圆点`} disabled={gone||count>=group.removed} onClick={()=>take(i,n)}>{gone?<X size={14}/>:null}</button>;
-    })}</div><strong>{count?`剩 ${group.total-count}`:group.total}</strong></>;
-    return wholeTen&&group.removed===10?<button className="help-group take-ten" key={i} disabled={ready} aria-label="拿走一整组十" onClick={()=>{setRemoved(Array.from({length:10},(_,n)=>`${i}:${n}`));say('十拿走了。');}}>{contents}</button>:<div className="help-group" key={i}>{contents}</div>;
+     return wholeTen||!group.removed?<span key={key} className={gone?'removed':''}>{gone?<X size={14}/>:null}</span>:<button key={key} className={gone?'removed':''} aria-label={localize(`拿走第${i+1}组第${n+1}个圆点`)} disabled={gone||count>=group.removed} onClick={()=>take(i,n)}>{gone?<X size={14}/>:null}</button>;
+    })}</div><strong>{localize(count?`剩 ${group.total-count}`:group.total)}</strong></>;
+    return wholeTen&&group.removed===10?<button className="help-group take-ten" key={i} disabled={ready} aria-label={localize("拿走一整组十")} onClick={()=>{setRemoved(Array.from({length:10},(_,n)=>`${i}:${n}`));say('十拿走了。');}}>{localize(contents)}</button>:<div className="help-group" key={i}>{localize(contents)}</div>;
    })}</div>}
-   {!done&&<p className="help-count" role="status">{combining?'合起来数一数':needed===0?'不用再拿圆点了':wholeTen?(ready?'十拿走了':'点十格，拿走十'):<>已拿走 <b>{removed.length} / {needed}</b></>}</p>}
+   {!done&&<p className="help-count" role="status">{combining?'合起来数一数':needed===0?'不用再拿圆点了':wholeTen?(ready?'十拿走了':'点十格，拿走十'):<>{localize("已拿走")}<b>{localize(removed.length)} / {localize(needed)}</b></>}</p>}
   </>}
-  <div className="help-controls"><button onClick={restart} disabled={step===0}><RotateCcw size={16}/>重来</button>{done?<button className="button secondary" onClick={()=>{setClosed(true);say('现在自己填一填答案吧。');}}><Check size={18}/>我来填答案</button>:step>0?<button className="button secondary" disabled={!ready} onClick={advance}>{combining?'合起来':step===steps.length-1?'数一数':'下一步'}<ChevronRight size={18}/></button>:<span><ArrowLeft size={14}/>点上面的数字</span>}</div>
+  <div className="help-controls"><button onClick={restart} disabled={step===0}><RotateCcw size={16}/>{localize("重来")}</button>{done?<button className="button secondary" onClick={()=>{setClosed(true);say('现在自己填一填答案吧。');}}><Check size={18}/>{localize("我来填答案")}</button>:step>0?<button className="button secondary" disabled={!ready} onClick={advance}>{localize(combining?'合起来':step===steps.length-1?'数一数':'下一步')}<ChevronRight size={18}/></button>:<span><ArrowLeft size={14}/>{localize("点上面的数字")}</span>}</div>
  </div>;
 }

@@ -1,4 +1,6 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeftRight, ArrowRight, Check, House, UsersRound, X } from 'lucide-react';
@@ -8,15 +10,17 @@ import { useCollection } from './collection-provider';
 import { PokemonArt } from './pokemon-art';
 
 export function EncounterTeam({ partner, previousId, disabled, preview = false }: { partner: Pokemon; previousId?: number | null; disabled: boolean; preview?: boolean }) {
+  const localize = useT();
   const { snapshot } = useCollection();
   const team = snapshot.team ?? [];
   const [selection, setSelection] = useState<number[] | null>(null);
   const owned = snapshot.records.some(record => record.pokemonId === partner.id);
-  if (!preview && team.includes(partner.id)) return <div className="encounter-team"><p className="encounter-team-saved" role="status"><Check size={20} />已经在小队里，一起出发吧！</p><Link href="/team" className="button secondary"><UsersRound size={24} />去小队<ArrowRight size={20} /></Link></div>;
-  return <div className="encounter-team"><button className="button secondary" disabled={disabled || (!preview && !owned)} onClick={() => { if (!preview) setSelection([...team]); }}><UsersRound size={24} />加入小队<ArrowRight size={20} /></button><p><House size={16} />也可以先留在精灵中心，随时再邀请。</p>{selection && <InviteDialog partner={partner} previousId={previousId} expected={selection} onClose={() => setSelection(null)} />}</div>;
+  if (!preview && team.includes(partner.id)) return <div className="encounter-team"><p className="encounter-team-saved" role="status"><Check size={20} />{localize("已经在小队里，一起出发吧！")}</p><Link href="/team" className="button secondary"><UsersRound size={24} />{localize("去小队")}<ArrowRight size={20} /></Link></div>;
+  return <div className="encounter-team"><button className="button secondary" disabled={disabled || (!preview && !owned)} onClick={() => { if (!preview) setSelection([...team]); }}><UsersRound size={24} />{localize("加入小队")}<ArrowRight size={20} /></button><p><House size={16} />{localize("也可以先留在精灵中心，随时再邀请。")}</p>{selection && <InviteDialog partner={partner} previousId={previousId} expected={selection} onClose={() => setSelection(null)} />}</div>;
 }
 
 export function InviteDialog({ partner, previousId, expected, onClose, onDone }: { partner: Pokemon; previousId?: number | null; expected: number[]; onClose: () => void; onDone?: () => void }) {
+  const localize = useT();
   const { saveTeam, refresh } = useCollection();
   const preferred = previousId ? expected.indexOf(previousId) : -1;
   const [slot, setSlot] = useState<number | null>(preferred >= 0 ? preferred : expected.length < 6 ? expected.length : null);
@@ -36,9 +40,9 @@ export function InviteDialog({ partner, previousId, expected, onClose, onDone }:
     finally { saving.current = false; setBusy(false); }
   }
   return <dialog ref={dialog} className="team-dialog invite-dialog" aria-labelledby="invite-title" onCancel={event => { event.preventDefault(); if (!saving.current) onClose(); }}>
-    <div className="team-dialog-heading"><h2 id="invite-title">{preferred >= 0 ? '让新模样一起出发？' : expected.length === 6 ? '谁回中心休息？' : '一起出发吧！'}</h2><button aria-label="关闭入队选择" disabled={busy} onClick={onClose}><X size={24} /></button></div>
-    <div className="team-dialog-content"><div className="invite-preview">{leaving && <><div><PokemonArt pokemon={leaving} /><strong>{leaving.name}</strong><small><House size={16} />回精灵中心</small></div><ArrowLeftRight size={28} /></>}<div><PokemonArt pokemon={partner} /><strong>{partner.name}</strong><small><UsersRound size={16} />加入小队</small></div></div>
-      {expected.length > 0 && <><p className="invite-instruction">{expected.length === 6 ? '小队有六位伙伴了，选一位回中心。' : '可以使用空位，也可以接替一位伙伴。'}</p><div className="team-choices">{expected.map((id, index) => { const p = pokemonById.get(id)!; return <button key={id} disabled={busy || failed} aria-label={`让${p.name}回中心`} aria-pressed={slot === index} className={slot === index ? 'selected' : ''} onClick={() => setSlot(index)}><PokemonArt pokemon={p} /><strong>{p.name}</strong>{slot === index && <Check className="team-choice-check" size={22} />}</button>; })}{expected.length < 6 && <button disabled={busy || failed} aria-pressed={slot === expected.length} className={slot === expected.length ? 'selected invite-empty' : 'invite-empty'} onClick={() => setSlot(expected.length)}><UsersRound size={35} /><strong>使用空位</strong>{slot === expected.length && <Check className="team-choice-check" size={22} />}</button>}</div></>}
-    </div><div className="team-dialog-footer">{error && <p className="team-error" role="alert">{error}</p>}{!failed && <button className="button" disabled={busy || slot === null} onClick={() => void confirm()}>{busy ? '正在安排…' : leaving ? '确认交换' : '一起出发'}<ArrowRight size={20} /></button>}</div>
+    <div className="team-dialog-heading"><h2 id="invite-title">{localize(preferred >= 0 ? '让新模样一起出发？' : expected.length === 6 ? '谁回中心休息？' : '一起出发吧！')}</h2><button aria-label={localize("关闭入队选择")} disabled={busy} onClick={onClose}><X size={24} /></button></div>
+    <div className="team-dialog-content"><div className="invite-preview">{leaving && <><div><PokemonArt pokemon={leaving} /><strong>{localize(leaving.name)}</strong><small><House size={16} />{localize("回精灵中心")}</small></div><ArrowLeftRight size={28} /></>}<div><PokemonArt pokemon={partner} /><strong>{localize(partner.name)}</strong><small><UsersRound size={16} />{localize("加入小队")}</small></div></div>
+      {expected.length > 0 && <><p className="invite-instruction">{localize(expected.length === 6 ? '小队有六位伙伴了，选一位回中心。' : '可以使用空位，也可以接替一位伙伴。')}</p><div className="team-choices">{expected.map((id, index) => { const p = pokemonById.get(id)!; return <button key={id} disabled={busy || failed} aria-label={localize(`让${p.name}回中心`)} aria-pressed={slot === index} className={slot === index ? 'selected' : ''} onClick={() => setSlot(index)}><PokemonArt pokemon={p} /><strong>{localize(p.name)}</strong>{slot === index && <Check className="team-choice-check" size={22} />}</button>; })}{expected.length < 6 && <button disabled={busy || failed} aria-pressed={slot === expected.length} className={slot === expected.length ? 'selected invite-empty' : 'invite-empty'} onClick={() => setSlot(expected.length)}><UsersRound size={35} /><strong>{localize("使用空位")}</strong>{slot === expected.length && <Check className="team-choice-check" size={22} />}</button>}</div></>}
+    </div><div className="team-dialog-footer">{error && <p className="team-error" role="alert">{localize(error)}</p>}{!failed && <button className="button" disabled={busy || slot === null} onClick={() => void confirm()}>{localize(busy ? '正在安排…' : leaving ? '确认交换' : '一起出发')}<ArrowRight size={20} /></button>}</div>
   </dialog>;
 }

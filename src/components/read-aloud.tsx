@@ -1,11 +1,14 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import { useEffect, useId, useSyncExternalStore } from 'react';
 import { Volume2, Square, LoaderCircle } from 'lucide-react';
 import { speakText, stopVoice, subscribeVoice, voiceSnapshot, voiceServerSnapshot } from '@/lib/voice-audio';
 export function ReadAloud({ text, label = '听听这段说明', systemFallback = false }: { text: string; label?: string; systemFallback?: boolean }) {
+  const localize = useT();
   const owner = useId();
   const state = useSyncExternalStore(subscribeVoice, voiceSnapshot, voiceServerSnapshot);
   const playing = state.owner === owner;
   useEffect(() => () => stopVoice(owner), [owner, text]);
-  return <span className="read-aloud"><button type="button" className="read-aloud-button" aria-label={playing ? state.loading ? '正在加载语音，点击取消' : '停止朗读' : label} title={playing ? state.loading ? '正在加载语音，点击取消' : '停止朗读' : label} aria-pressed={playing} onClick={() => speakText(owner, text, {systemFallback})}>{playing && state.loading ? <LoaderCircle size={19} className="music-loading" aria-hidden="true" /> : playing ? <Square size={15} fill="currentColor" /> : <Volume2 size={19} />}</button></span>;
+  return <span className="read-aloud"><button type="button" className="read-aloud-button" aria-label={localize(playing ? state.loading ? '正在加载语音，点击取消' : '停止朗读' : label)} title={localize(playing ? state.loading ? '正在加载语音，点击取消' : '停止朗读' : label)} aria-pressed={playing} onClick={() => speakText(owner, text, {systemFallback})}>{playing && state.loading ? <LoaderCircle size={19} className="music-loading" aria-hidden="true" /> : playing ? <Square size={15} fill="currentColor" /> : <Volume2 size={19} />}</button></span>;
 }

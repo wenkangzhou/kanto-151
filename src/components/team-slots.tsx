@@ -1,4 +1,6 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { saveTeamView } from './team-memory';
@@ -12,6 +14,7 @@ import { useCollection } from './collection-provider';
 
 type Drag = { id: number; pointer: number; x: number; y: number; active: boolean; expected: number[]; order: number[]; boxes: DOMRect[]; inside: boolean; mouse: boolean };
 export function TeamSlots({ team, disabled, edit, configureMoves, notify }: { team: number[]; disabled: boolean; edit: (slot: number) => void; configureMoves: (id:number)=>void; notify: (message: string) => void }) {
+  const localize = useT();
   const { saveTeam, refresh } = useCollection();
   const router = useRouter();
   const suppressClick = useRef(false);
@@ -82,14 +85,14 @@ export function TeamSlots({ team, disabled, edit, configureMoves, notify }: { te
   return <><div className="team-slots" ref={root} aria-busy={busy} onPointerMove={move} onPointerUp={end} onPointerLeave={() => { if (gesture.current && !gesture.current.active && gesture.current.mouse) cancel(); }} onPointerCancel={cancel} onLostPointerCapture={() => { if (gesture.current) cancel(); }}>{Array.from({ length: 6 }, (_, slot) => {
     const p = pokemonById.get(order[slot]);
     return <motion.article layout={reduced ? false : 'position'} transition={{ duration: .18 }} data-team-id={p?.id} className={`team-slot ${p ? 'occupied' : ''} ${ghost?.id === p?.id && p ? 'team-dragging' : ''}`} key={p?.id ?? `empty-${slot}`}>
-      <span className="team-slot-number">{String(slot + 1).padStart(2, '0')}</span>
-      {p ? <><button className="team-partner-art team-drag-handle" disabled={busy} aria-label={`查看${p.name}，长按可换位置`} aria-describedby="team-sort-hint" onPointerDown={event => start(event, p.id)} onClick={() => { if (suppressClick.current) return; saveTeamView({y:window.scrollY}); router.push(`/pokemon/${p.id}?from=team`); }} onContextMenu={event => event.preventDefault()} onKeyDown={event => {
+      <span className="team-slot-number">{localize(String(slot + 1).padStart(2, '0'))}</span>
+      {p ? <><button className="team-partner-art team-drag-handle" disabled={busy} aria-label={localize(`查看${p.name}，长按可换位置`)} aria-describedby="team-sort-hint" onPointerDown={event => start(event, p.id)} onClick={() => { if (suppressClick.current) return; saveTeamView({y:window.scrollY}); router.push(`/pokemon/${p.id}?from=team`); }} onContextMenu={event => event.preventDefault()} onKeyDown={event => {
         if (event.key === 'Enter' || event.key === ' ') suppressClick.current=false;
         if (disabled || !['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key) || saving.current || gesture.current) return;
         event.preventDefault();
         const to = slot + (event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1);
         void commit(reorderTeam(team, p.id, to), [...team]);
-      }}><PokemonArt pokemon={p} /></button><Link className="team-detail-link" href={`/pokemon/${p.id}?from=team`} aria-label={`查看${p.name}的详情`}><strong>{p.name}</strong></Link><div className="team-slot-actions"><button className="team-change" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(slot)}><ArrowLeftRight size={18} />换伙伴</button><button className="team-configure-moves" disabled={disabled || busy || Boolean(ghost)} onClick={()=>configureMoves(p.id)} aria-label={`设置${p.name}的招式`}><SlidersHorizontal size={17}/>招式</button></div></> : <button className="team-empty" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(team.length)} aria-label={`邀请伙伴，位置${slot + 1}`}><span className="empty-ball"><Plus size={32} /></span><strong>一起出发</strong></button>}
+      }}><PokemonArt pokemon={p} /></button><Link className="team-detail-link" href={`/pokemon/${p.id}?from=team`} aria-label={localize(`查看${p.name}的详情`)}><strong>{localize(p.name)}</strong></Link><div className="team-slot-actions"><button className="team-change" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(slot)}><ArrowLeftRight size={18} />{localize("换伙伴")}</button><button className="team-configure-moves" disabled={disabled || busy || Boolean(ghost)} onClick={()=>configureMoves(p.id)} aria-label={localize(`设置${p.name}的招式`)}><SlidersHorizontal size={17}/>{localize("招式")}</button></div></> : <button className="team-empty" disabled={disabled || busy || Boolean(ghost)} onClick={() => edit(team.length)} aria-label={localize(`邀请伙伴，位置${slot + 1}`)}><span className="empty-ball"><Plus size={32} /></span><strong>{localize("一起出发")}</strong></button>}
     </motion.article>;
-  })}</div><p id="team-sort-hint" className="team-sort-hint">长按伙伴，拖动换位置<span className="sr-only">。键盘可聚焦伙伴后用方向键调整顺序，Escape 取消拖动。</span></p>{ghost && <div className="team-drag-ghost" aria-hidden="true" style={{ left: ghost.x, top: ghost.y }}><PokemonArt pokemon={pokemonById.get(ghost.id)!} /></div>}</>;
+  })}</div><p id="team-sort-hint" className="team-sort-hint">{localize("长按伙伴，拖动换位置")}<span className="sr-only">{localize("。键盘可聚焦伙伴后用方向键调整顺序，Escape 取消拖动。")}</span></p>{ghost && <div className="team-drag-ghost" aria-hidden="true" style={{ left: ghost.x, top: ghost.y }}><PokemonArt pokemon={pokemonById.get(ghost.id)!} /></div>}</>;
 }

@@ -1,4 +1,6 @@
 'use client';
+import { getLocale } from './i18n/locale';
+import { translate } from './i18n/translate';
 import { preparedAudio } from './battle-assets';
 import voiceIndex from '@/data/voice-index.json';
 export const voiceFocusEvent = 'kanto-voice-focus';
@@ -25,18 +27,20 @@ function begin(owner: string) {
   const current = generation;
   return (error = '') => { if (current !== generation || state.owner !== owner) return; generation++; const cleanup = release; release = undefined; cleanup?.(); emit({ owner: '', error }); focus(false); };
 }
-export function voiceSource(text:string) { const clip=clips[text]; return clip?`/audio/voices/${clip[0]}.mp3`:undefined; }
+export function voiceSource(text:string) { if(getLocale()==='en')return undefined; const clip=clips[text]; return clip?`/audio/voices/${clip[0]}.mp3`:undefined; }
 export function speakText(owner: string, text: string, options:{loadTimeoutMs?:number;systemFallback?:boolean}={}) {
   if (state.owner === owner) { stopVoice(owner); return; }
   const done = begin(owner);
   const loadingError=options.loadTimeoutMs?'声音暂时没加载好，先继续对战。':'语音加载超时，请再点一次。';
-  const clip = clips[text];
+  const english = getLocale() === 'en';
+  text = translate(text, english ? 'en' : 'zh');
+  const clip = english ? undefined : clips[text];
   if (!clip) {
-    if (!options.systemFallback || !window.speechSynthesis) { done('这段语音还没有准备好。'); return; }
+    if ((!options.systemFallback && !english) || !window.speechSynthesis) { done('这段语音还没有准备好。'); return; }
     try {
       const speech = new SpeechSynthesisUtterance(text);
-      speech.lang = 'zh-CN'; speech.rate = .85;
-      const voice = window.speechSynthesis.getVoices().find(v => v.lang === 'zh-CN');
+      speech.lang = english ? 'en-US' : 'zh-CN'; speech.rate = english ? .9 : .85;
+      const voice = window.speechSynthesis.getVoices().find(v => english ? v.lang.startsWith('en') : v.lang === 'zh-CN');
       if (voice) speech.voice = voice;
       let timer = setTimeout(() => done('语音暂时不可用，请再试一次。'), 15000);
       const current = generation;

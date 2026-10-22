@@ -1,3 +1,4 @@
+import {LocalizedText} from '@/components/localized-text';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { pokemon, pokemonById, dexNumber } from '@/domain/pokemon';
@@ -13,5 +14,5 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   if (!/^[1-9]\d{0,2}$/.test(id)) notFound();
   const p = pokemonById.get(Number(id));
   if (!p) notFound();
-  return <Suspense fallback={<div className="page">正在翻开伙伴档案…</div>}><PokemonDetail pokemon={p} /></Suspense>;
+  return <Suspense fallback={<div className="page"><LocalizedText text="正在翻开伙伴档案…"/></div>}><PokemonDetail pokemon={p} /></Suspense>;
 }

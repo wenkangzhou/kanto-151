@@ -1,4 +1,6 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import type { MoveSlots } from '@/domain/battle-loadout';
 import { createContext, useCallback, useContext, useEffect, useState, useRef, useSyncExternalStore, type ReactNode } from 'react';
 import { MotionConfig } from 'framer-motion';
@@ -21,6 +23,7 @@ const subscribe = (callback: () => void) => {
 };
 const getPreference = () => { try { return localStorage.getItem('kanto-preview') !== 'empty'; } catch { return true; } };
 export function CollectionProvider({ children, live: configuredLive = false }: { children: ReactNode; live?: boolean }) {
+  const localize = useT();
   const visitorDemo = useSyncExternalStore(subscribe, isVisitorDemo, () => false);
   const live = configuredLive || visitorDemo;
   const preference = useSyncExternalStore(subscribe, getPreference, () => true);
@@ -79,6 +82,6 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
     status: !live ? 'demo' : session?.status === 'ready' ? 'ready' : error ? 'error' : session?.status ?? 'loading', error,
     parent: session?.parent ?? false, childName: session?.childName ?? '', familyName: session?.familyName ?? '',
     pendingCaptures: session?.snapshot?.pendingCaptures ?? [], tickets: session?.snapshot?.tickets ?? [], pendingReceipt: session?.snapshot?.pendingReceipt ?? null, refresh, saveTeam, saveMoves,
-  }}><MotionConfig reducedMotion="user">{children}</MotionConfig></Context.Provider>;
+  }}><MotionConfig reducedMotion="user">{localize(children)}</MotionConfig></Context.Provider>;
 }
 export const useCollection = () => useContext(Context);

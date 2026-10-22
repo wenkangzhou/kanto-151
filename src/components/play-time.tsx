@@ -1,4 +1,6 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import Link from 'next/link';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
@@ -18,6 +20,7 @@ const initial: View = { data: null, seconds: 0, expired: false, locked: true, no
 const Context = createContext<ContextValue>({ ...initial, async refresh() {}, accept() {}, activity() {} });
 export const usePlayTime = () => useContext(Context);
 export function PlayTimeProvider({ children }: { children: ReactNode }) {
+  const localize = useT();
   const { live, status } = useCollection();
   const pathname = usePathname();
   const active = live && status === 'ready';
@@ -91,22 +94,25 @@ export function PlayTimeProvider({ children }: { children: ReactNode }) {
     reminderUntil.current = performance.now() + 6000;
     speakText('play-time-warning', warning, { loadTimeoutMs: 2500 });
   }, [active, parentPage, view.data, view.seconds]);
-  return <Context.Provider value={{ ...view, locked: active && view.locked, expired: active && view.expired, refresh, accept, activity }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ ...view, locked: active && view.locked, expired: active && view.expired, refresh, accept, activity }}>{localize(children)}</Context.Provider>;
 }
 export function usePlayTimeAnimation(key: string | null) {
   const { activity } = usePlayTime();
   useEffect(() => { activity(key); return () => activity(null); }, [activity, key]);
 }
 export function PlayTimeBadge() {
+  const localize = useT();
   const { data, seconds, expired } = usePlayTime();
   if (!data?.enabled) return null;
-  return <span className={`play-time-badge ${seconds <= 120 ? 'ending' : ''}`} aria-label={expired ? '休息时间' : `剩余 ${Math.ceil(seconds / 60)} 分钟`}><Clock3 size={17} aria-hidden="true" />{expired ? '休息时间' : timeLabel(seconds)}</span>;
+  return <span className={`play-time-badge ${seconds <= 120 ? 'ending' : ''}`} aria-label={localize(expired ? '休息时间' : `剩余 ${Math.ceil(seconds / 60)} 分钟`)}><Clock3 size={17} aria-hidden="true" />{localize(expired ? '休息时间' : timeLabel(seconds))}</span>;
 }
 export function PlayTimeNotice() {
+  const localize = useT();
   const { notice } = usePlayTime();
-  return notice ? <div className="play-time-notice" role="status">快到休息时间啦，我们准备休息吧</div> : null;
+  return notice ? <div className="play-time-notice" role="status">{localize("快到休息时间啦，我们准备休息吧")}</div> : null;
 }
 export function PlayTimeRest() {
+  const localize = useT();
   const { data, error, refresh } = usePlayTime();
-  return <section className="play-time-rest" aria-labelledby="rest-title"><div className="rest-partner"><PokemonArt pokemon={pokemonById.get(143)!} /><Moon aria-hidden="true" /></div><h1 id="rest-title">{data ? '伙伴们要休息啦' : '正在核对使用时间'}</h1><p>{data ? '休息一下，明天可以继续，也可以请家长重新开启。' : '连接家庭手帐后继续冒险。'}</p>{error && <><p className="form-error" role="alert">{error}</p><button className="button secondary" onClick={() => void refresh()}>重新连接</button></>}<Link href="/parent" className="text-link"><ShieldCheck size={17} />家长开启</Link></section>;
+  return <section className="play-time-rest" aria-labelledby="rest-title"><div className="rest-partner"><PokemonArt pokemon={pokemonById.get(143)!} /><Moon aria-hidden="true" /></div><h1 id="rest-title">{localize(data ? '伙伴们要休息啦' : '正在核对使用时间')}</h1><p>{localize(data ? '休息一下，明天可以继续，也可以请家长重新开启。' : '连接家庭手帐后继续冒险。')}</p>{error && <><p className="form-error" role="alert">{localize(error)}</p><button className="button secondary" onClick={() => void refresh()}>{localize("重新连接")}</button></>}<Link href="/parent" className="text-link"><ShieldCheck size={17} />{localize("家长开启")}</Link></section>;
 }

@@ -1,4 +1,6 @@
 'use client';
+import { useT } from '@/lib/i18n/locale';
+
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import type { CollectionSnapshot, Pokemon, Receipt } from '@/domain/types';
@@ -14,6 +16,7 @@ const snapshot: CollectionSnapshot = {
 
 /** In-memory only: uses the production gift, selection and animation components. */
 export function TicketFlowPreview() {
+  const localize = useT();
   const [stage, setStage] = useState<'gift' | 'bag' | 'evolution'>('gift');
   const [target, setTarget] = useState<Pokemon | null>(null);
   const [run, setRun] = useState(0);
@@ -25,13 +28,13 @@ export function TicketFlowPreview() {
     ticket_id: ticket.id, created_at: createdAt, acknowledged_at: null, reason: ticket.reason,
   };
   return <div className="page">
-    <p className="lesson-note" role="note">本地完整流程模拟 · 领取 1 张进化券 → 去背包 → 选伙伴 → 确认进化。只使用模拟伙伴和模拟券，不影响真实数据。进化结果页的详情、入队按钮不执行操作。</p>
-    <nav className="preview-animation-tabs" aria-label="模拟流程控制">
-      <Link href="/dev/capture">开球动画</Link><Link href="/dev/capture?mode=evolution">进化动画</Link>
-      <button type="button" onClick={() => { setTarget(null); setStage('gift'); setRun(value => value + 1); }}>从领券重新开始</button>
+    <p className="lesson-note" role="note">{localize("本地完整流程模拟 · 领取 1 张进化券 → 去背包 → 选伙伴 → 确认进化。只使用模拟伙伴和模拟券，不影响真实数据。进化结果页的详情、入队按钮不执行操作。")}</p>
+    <nav className="preview-animation-tabs" aria-label={localize("模拟流程控制")}>
+      <Link href="/dev/capture">{localize("开球动画")}</Link><Link href="/dev/capture?mode=evolution">{localize("进化动画")}</Link>
+      <button type="button" onClick={() => { setTarget(null); setStage('gift'); setRun(value => value + 1); }}>{localize("从领券重新开始")}</button>
     </nav>
     {stage === 'bag' ? <>
-      <div className="page-heading"><div><h1>我的背包</h1><p>进化券 · 1 张</p></div></div>
+      <div className="page-heading"><div><h1>{localize("我的背包")}</h1><p>{localize("进化券 · 1 张")}</p></div></div>
       <TicketUse key={run} preview={{ snapshot, tickets: [ticket], onUse: selected => { setTarget(selected); setStage('evolution'); } }} />
     </> : <Encounter key={receipt.id} receipt={receipt} preview onPreviewContinue={stage === 'gift' ? () => setStage('bag') : undefined} />}
   </div>;

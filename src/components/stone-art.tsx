@@ -1,7 +1,10 @@
+'use client';
+import { useT } from '@/lib/i18n/locale';
 import type {EvolutionStone} from '@/domain/evolution-stones';
 // Lightweight original vector diagrams; not official item artwork.
 export function StoneArt({stone}:{stone:EvolutionStone}){
- return <svg viewBox="0 0 180 180" role="img" aria-label={stone.name} style={{display:'block',width:'100%',height:'auto'}}>
+  const localize = useT();
+ return <svg viewBox="0 0 180 180" role="img" aria-label={localize(stone.name)} style={{display:'block',width:'100%',height:'auto'}}>
   <ellipse cx="90" cy="160" rx="48" ry="7" fill="#29333a" opacity=".08"/>
   <path d="M54 22 114 16 151 59 142 128 102 155 45 137 26 77Z" fill={stone.color} stroke="#354844" strokeWidth="3" strokeLinejoin="round"/>
   <path d="m54 22 14 31 45-4 1-33Z" fill="#fff" opacity=".4"/><path d="m26 77 42-24-11 62-12 22Z" fill="#fff" opacity=".22"/><path d="m113 49 38 10-9 69-23-20Z" fill="#192e35" opacity=".16"/><path d="m57 115 45 40 40-27-23-20Z" fill="#192e35" opacity=".2"/>
