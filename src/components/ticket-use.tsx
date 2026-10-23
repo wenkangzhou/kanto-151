@@ -17,7 +17,7 @@ import { ticketEntry } from '@/domain/ticket-navigation';
 function Transformation({ target }: { target: Pokemon }) {
   const localize = useT();
   const parent = target.evolvesFrom ? pokemonById.get(target.evolvesFrom) : null;
-  return <div className="transformation">{parent ? <><div><PokemonArt pokemon={parent} /><span>{localize(parent.name)}</span></div><ArrowRight className="transform-arrow" size={25} aria-hidden="true" /></> : <Mountain className="transform-mountain" size={38} aria-hidden="true" />}<div><PokemonArt pokemon={target} hidden /><span>{localize(dexNumber(target.id))}{localize("· 新伙伴")}</span></div></div>;
+  return <div className="transformation">{parent ? <><div><PokemonArt pokemon={parent} sizes="240px" /><span>{localize(parent.name)}</span></div><ArrowRight className="transform-arrow" size={25} aria-hidden="true" /></> : <Mountain className="transform-mountain" size={38} aria-hidden="true" />}<div><PokemonArt pokemon={target} hidden sizes="240px" /><span>{localize(dexNumber(target.id))}{localize("· 新伙伴")}</span></div></div>;
 }
 export function TicketUse({ preview, initialType }: { initialType?: InventoryTicket['type']; preview?: { snapshot: CollectionSnapshot; tickets: InventoryTicket[]; onUse: (target: Pokemon) => void } } = {}) {
   const localize = useT();

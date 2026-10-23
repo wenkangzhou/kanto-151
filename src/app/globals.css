@@ -563,3 +563,5 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 
 .parent-export{margin:24px 0;padding:24px;border:1px solid var(--line,#dfe5d6);border-radius:24px;background:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
 .parent-export>div{flex:1 1 380px;min-width:0}.parent-export h2{display:flex;align-items:center;gap:10px;font-size:22px;margin-bottom:12px}.parent-export p{line-height:1.7}.parent-export>p{flex-basis:100%;margin:0}
+
+.read-aloud-error{display:inline-block;margin-inline-start:6px;color:#a13932;font-size:12px;line-height:1.4;vertical-align:middle}

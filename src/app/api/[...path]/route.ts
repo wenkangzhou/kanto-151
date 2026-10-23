@@ -24,8 +24,10 @@ export async function GET(request: NextRequest, context: Context) {
     if (path === 'session') {
       try {
         const session = await deviceSession(request);
-        const snapshot = await rpc<LiveSnapshot>('kanto_snapshot', { p_child_id: session.childId });
-        const captures = await db().from('kanto_receipts').select('*').eq('child_id', session.childId).eq('kind', 'capture').is('acknowledged_at', null).order('created_at').order('id');
+        const [snapshot, captures] = await Promise.all([
+          rpc<LiveSnapshot>('kanto_snapshot', { p_child_id: session.childId }),
+          db().from('kanto_receipts').select('*').eq('child_id', session.childId).eq('kind', 'capture').is('acknowledged_at', null).order('created_at').order('id'),
+        ]);
         if (captures.error) throw databaseError(captures.error);
         snapshot.pendingCaptures = captures.data;
         return reply({ status: 'ready', familyName: session.familyName, childName: session.childName, parent: session.parent, parentExpiresAt: session.parentExpiresAt, snapshot });

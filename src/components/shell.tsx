@@ -29,7 +29,7 @@ function ShellContent({ children, musicAvailable }: { children: React.ReactNode;
   const { snapshot, demo, toggleDemo, live, status } = useCollection();
   return <div className={`app-shell ${pathname === '/battle' ? 'battle-shell' : ''}`}><VoiceLifecycle /><LocalizedPageTitle />
     <aside className="sidebar">
-      <Link href="/" className="brand"><Image src="/logo-pokeball.png" alt="" width={46} height={46} unoptimized /><span>KANTO <b>151</b><small>{localize("我的关都冒险手帐")}</small></span></Link>
+      <Link href="/" className="brand"><Image src="/logo-pokeball.png" alt="" width={46} height={46} sizes="46px" loading="eager" fetchPriority="high" /><span>KANTO <b>151</b><small>{localize("我的关都冒险手帐")}</small></span></Link>
       <nav aria-label={localize("主要导航")} inert={locked && !parentPage}>{links.map(({ href, name, en, icon: Icon }) => <Link key={href} href={href} className={`nav-link ${pathname === href || (href === '/learn' && pathname.startsWith('/learn/')) || (href === '/pokedex' && (pathname.startsWith('/pokemon/') || pathname.startsWith('/pokedex/'))) ? 'active' : ''}`}><Icon size={21} strokeWidth={1.7} /><span>{localize(name)}<small>{localize(en)}</small></span></Link>)}</nav>
       <div className="sidebar-bottom"><Link href="/parent" className="parent-link"><ShieldCheck size={18} />{localize("家长中心")}</Link></div>
     </aside>

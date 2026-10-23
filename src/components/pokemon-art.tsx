@@ -2,7 +2,7 @@
 import { useT } from '@/lib/i18n/locale';
 import Image from 'next/image';
 import type { Pokemon } from '@/domain/types';
-export function PokemonArt({ pokemon, hidden = false, priority = false, className = '' }: { pokemon: Pokemon; hidden?: boolean; priority?: boolean; className?: string }) {
+export function PokemonArt({ pokemon, hidden = false, priority = false, sizes = '128px', className = '' }: { pokemon: Pokemon; hidden?: boolean; priority?: boolean; sizes?: string; className?: string }) {
   const localize = useT();
-  return <Image className={`pokemon-art ${hidden ? 'silhouette' : ''} ${className}`} src={pokemon.artwork} alt={localize(hidden ? '尚未发现的宝可梦剪影' : pokemon.name)} width={475} height={475} priority={priority} unoptimized draggable={false} />;
+  return <Image className={`pokemon-art ${hidden ? 'silhouette' : ''} ${className}`} src={pokemon.artwork} alt={localize(hidden ? '尚未发现的宝可梦剪影' : pokemon.name)} width={475} height={475} sizes={sizes} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} draggable={false} />;
 }

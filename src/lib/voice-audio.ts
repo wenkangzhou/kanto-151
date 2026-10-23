@@ -4,7 +4,7 @@ import { translate } from './i18n/translate';
 import { preparedAudio } from './battle-assets';
 import voiceIndex from '@/data/voice-index.json';
 export const voiceFocusEvent = 'kanto-voice-focus';
-export type VoiceState = { owner: string; error: string; loading?: boolean };
+export type VoiceState = { owner: string; error: string; loading?: boolean; failedOwner?: string };
 const idle: VoiceState = { owner: '', error: '' };
 let state = idle;
 let release: (() => void) | undefined;
@@ -25,7 +25,7 @@ export function stopVoice(owner?: string) {
 function begin(owner: string) {
   stopVoice(); emit({ owner, error: '' }); focus(true);
   const current = generation;
-  return (error = '') => { if (current !== generation || state.owner !== owner) return; generation++; const cleanup = release; release = undefined; cleanup?.(); emit({ owner: '', error }); focus(false); };
+  return (error = '') => { if (current !== generation || state.owner !== owner) return; generation++; const cleanup = release; release = undefined; cleanup?.(); emit({ owner: '', error, failedOwner: error ? owner : undefined }); focus(false); };
 }
 export function voiceSource(text:string) { if(getLocale()==='en')return undefined; const clip=clips[text]; return clip?`/audio/voices/${clip[0]}.mp3`:undefined; }
 export function speakText(owner: string, text: string, options:{loadTimeoutMs?:number;systemFallback?:boolean}={}) {
@@ -62,11 +62,12 @@ export function speakText(owner: string, text: string, options:{loadTimeoutMs?:n
     const audio = player ??= new Audio();
     audio.volume = .85;
     audio.preload = 'auto';
-    let timer = setTimeout(() => done(loadingError), options.loadTimeoutMs ?? 15000);
+    const loadTimeoutMs = options.loadTimeoutMs ?? (Number(clip[1]) >= 10000 ? 30000 : 15000);
+    let timer = setTimeout(() => done(loadingError), loadTimeoutMs);
     const current=generation;
     emit({owner,error:'',loading:true});
     audio.onplaying=()=>{if(current!==generation)return;clearTimeout(timer);emit({owner,error:'',loading:false});timer=setTimeout(()=>done('语音播放超时。'),Number(clip[1])+3000);};
-    audio.onwaiting=()=>{if(current!==generation)return;clearTimeout(timer);emit({owner,error:'',loading:true});timer=setTimeout(()=>done(loadingError),options.loadTimeoutMs??15000);};
+    audio.onwaiting=()=>{if(current!==generation)return;clearTimeout(timer);emit({owner,error:'',loading:true});timer=setTimeout(()=>done(loadingError),loadTimeoutMs);};
     audio.onended = () => done();
     audio.onerror = () => done('语音暂时不可用，请再试一次。');
     release = () => { clearTimeout(timer); audio.onended = null; audio.onerror = null; audio.onplaying=null; audio.onwaiting=null; audio.pause(); };

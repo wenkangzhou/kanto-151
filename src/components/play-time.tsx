@@ -114,5 +114,5 @@ export function PlayTimeNotice() {
 export function PlayTimeRest() {
   const localize = useT();
   const { data, error, refresh } = usePlayTime();
-  return <section className="play-time-rest" aria-labelledby="rest-title"><div className="rest-partner"><PokemonArt pokemon={pokemonById.get(143)!} /><Moon aria-hidden="true" /></div><h1 id="rest-title">{localize(data ? '伙伴们要休息啦' : '正在核对使用时间')}</h1><p>{localize(data ? '休息一下，明天可以继续，也可以请家长重新开启。' : '连接家庭手帐后继续冒险。')}</p>{error && <><p className="form-error" role="alert">{localize(error)}</p><button className="button secondary" onClick={() => void refresh()}>{localize("重新连接")}</button></>}<Link href="/parent" className="text-link"><ShieldCheck size={17} />{localize("家长开启")}</Link></section>;
+  return <section className="play-time-rest" aria-labelledby="rest-title"><div className="rest-partner"><PokemonArt pokemon={pokemonById.get(143)!} sizes="280px" /><Moon aria-hidden="true" /></div><h1 id="rest-title">{localize(data ? '伙伴们要休息啦' : '正在核对使用时间')}</h1><p>{localize(data ? '休息一下，明天可以继续，也可以请家长重新开启。' : '连接家庭手帐后继续冒险。')}</p>{error && <><p className="form-error" role="alert">{localize(error)}</p><button className="button secondary" onClick={() => void refresh()}>{localize("重新连接")}</button></>}<Link href="/parent" className="text-link"><ShieldCheck size={17} />{localize("家长开启")}</Link></section>;
 }

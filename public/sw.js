@@ -1,6 +1,6 @@
 /* Only public static assets are cached. Family data and HTML are always online. */
-const VERSION = 'kanto-public-v3';
-const SHELL = ['/offline.html', '/logo-pokeball.png', '/icons/pokeball-192.png', '/icons/pokeball-512.png'];
+const VERSION = 'kanto-public-v4';
+const SHELL = ['/offline.html', '/icons/icon-192.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(VERSION).then(cache => cache.addAll(SHELL)));
   self.skipWaiting();
