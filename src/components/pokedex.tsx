@@ -35,13 +35,14 @@ export function Pokedex() {
     return () => cancelAnimationFrame(frame);
   }, [status, view, search, query]);
   const ids = useMemo(() => collectedIds(snapshot), [snapshot]);
+  const acquiredAt = useMemo(() => new Map(snapshot.records.map(record => [record.pokemonId, record.acquiredAt])), [snapshot.records]);
   const candidates = useMemo(() => pokemon.filter(p => {
     const state = collectionState(p, snapshot);
     const known = ids.has(p.id);
     const matchesQuery = !search || String(p.id).padStart(3, '0').includes(search.replace(/^#/, '')) || (known && [p.name, p.traditionalName, p.englishName].some(name => name.toLowerCase().includes(search)));
     const matchesState = filter === 'all' || (filter === 'collected' ? known : filter === 'locked' ? !known : state === 'evolvable' || state === 'evolution-ready');
     return matchesQuery && matchesState;
-  }).sort((a, b) => sort === 'recent' ? (snapshot.records.find(r => r.pokemonId === b.id)?.acquiredAt ?? '').localeCompare(snapshot.records.find(r => r.pokemonId === a.id)?.acquiredAt ?? '') || a.id - b.id : a.id - b.id), [snapshot, search, filter, sort, ids]);
+  }).sort((a, b) => sort === 'recent' ? (acquiredAt.get(b.id) ?? '').localeCompare(acquiredAt.get(a.id) ?? '') || a.id - b.id : a.id - b.id), [snapshot, search, filter, sort, ids, acquiredAt]);
   const results = candidates.filter(p => type === 'all' || (ids.has(p.id) && p.types.includes(type as PokemonType)));
   const typeCounts = (Object.keys(TYPE_NAMES) as PokemonType[]).map(value => ({ type: value, count: candidates.filter(p => ids.has(p.id) && p.types.includes(value)).length }));
   const progress = Math.round(ids.size / 151 * 100);

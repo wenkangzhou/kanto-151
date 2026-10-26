@@ -18,7 +18,7 @@ export function PokemonCard({ pokemon: p }: { pokemon: Pokemon }) {
   const pathname = usePathname();
   const state = collectionState(p, snapshot);
   const known = state === 'collected' || state === 'evolvable';
-  return <div className={`pokemon-card card-${known ? p.types[0] : 'locked'} state-${state}`}><Link className="pokemon-card-link" href={`/pokemon/${p.id}${pathname === '/' ? '?from=home' : ''}`} aria-label={localize(`${dexNumber(p.id)} ${known ? p.name : '未发现的宝可梦'}，${stateNames[state]}`)}>
+  return <div className={`pokemon-card card-${known ? p.types[0] : 'locked'} state-${state}`}><Link prefetch={false} className="pokemon-card-link" href={`/pokemon/${p.id}${pathname === '/' ? '?from=home' : ''}`} aria-label={localize(`${dexNumber(p.id)} ${known ? p.name : '未发现的宝可梦'}，${stateNames[state]}`)}>
     <div className="card-top"><span className="mono">{localize(dexNumber(p.id))}</span><CollectionMark state={state} /></div>
     <div className="card-art"><PokemonArt pokemon={p} hidden={!known} sizes="143px" /></div>
     <div className="card-name">{localize(known ? p.name : '???')}</div>

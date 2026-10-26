@@ -83,20 +83,20 @@ export function CaptureExperience() {
   const receiptId = search.get('receipt'); const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [code, setCode] = useState(''); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   useEffect(() => {
-    if (!receiptId || !live) return;
+    if (!receiptId || !live || receipt?.id === receiptId) return;
     const controller = new AbortController();
     api<Receipt>(`receipts/${encodeURIComponent(receiptId)}`, undefined, controller.signal).then(result => { if (!controller.signal.aborted) { setReceipt(result); setError(''); } }).catch(error => { if (!controller.signal.aborted) setError(error.message); });
     return () => controller.abort();
-  }, [receiptId, live]);
+  }, [receiptId, live, receipt?.id]);
   async function redeem(event: FormEvent) {
     event.preventDefault(); if (!live || busy || !/^[0-9]{6}$/.test(code)) return; setBusy(true); setError('');
-    try { const result = await api<Receipt>('redeem', { code }); setReceipt(result); await refresh(); router.push(`/capture?receipt=${result.id}`); }
+    try { const result = await api<Receipt>('redeem', { code }); setReceipt(result); void refresh(); router.push(`/capture?receipt=${result.id}`); }
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); }
     finally { setBusy(false); }
   }
   async function mew() {
     if (busy) return; setBusy(true); setError('');
-    try { const result = await api<Receipt>('mew', {}); setReceipt(result); await refresh(); router.push(`/capture?receipt=${result.id}`); }
+    try { const result = await api<Receipt>('mew', {}); setReceipt(result); void refresh(); router.push(`/capture?receipt=${result.id}`); }
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); }
     finally { setBusy(false); }
   }

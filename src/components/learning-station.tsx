@@ -18,7 +18,7 @@ export function LearningPartner({compact=false}:{compact?:boolean}){
  const partner=pokemonById.get(id??25)!;
  return <div className={compact?styles.partnerCompact:styles.partner}>
   <div className={styles.partnerHalo} aria-hidden="true"/>
-  <PokemonArt pokemon={partner} hidden={!id}/>
+  <PokemonArt pokemon={partner} hidden={!id} sizes={compact?'140px':'(max-width: 700px) 40vw, 320px'}/>
   {!compact&&<span className={styles.partnerLabel}>{localize(id?`${partner.name}陪你学`:'伙伴陪你学')}</span>}
  </div>;
 }

@@ -36,7 +36,7 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
     if (!live || savingTeam.current) return;
     if (force) reads.current.invalidate();
     await reads.current.run(
-      () => api<FamilySession>('session'),
+      signal => api<FamilySession>('session', undefined, signal),
       next => { setSession(next); setError(''); },
       error => setError(error instanceof Error ? error.message : '暂时无法连接家庭手帐。'),
     );

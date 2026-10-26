@@ -49,3 +49,24 @@ test('a current failure is reported and a manual retry can succeed', async () =>
   await gate.run(() => Promise.resolve('recovered'), value => values.push(value), () => assert.fail());
   assert.deepEqual(values, ['offline', 'recovered']);
 });
+test('invalidating a slow read cancels its transport, without surfacing stale errors', async () => {
+  const gate = new LatestRead();
+  let signal!: AbortSignal;
+  const pending = gate.run(current => {
+    signal = current;
+    return new Promise((_,reject) => current.addEventListener('abort',()=>reject(new Error('aborted')),{once:true}));
+  },()=>assert.fail(),()=>assert.fail());
+  await Promise.resolve();
+  gate.invalidate();
+  assert.equal(signal.aborted,true);
+  await pending;
+  const values:string[]=[];
+  await gate.run(async current=>{assert.equal(current.aborted,false);return 'fresh';},value=>values.push(value),()=>assert.fail());
+  assert.deepEqual(values,['fresh']);
+});
+test('invalidating before transport starts supplies an already-aborted signal',async()=>{
+  const gate=new LatestRead();
+  const pending=gate.run(async signal=>{assert.equal(signal.aborted,true);throw new Error('cancelled');},()=>assert.fail(),()=>assert.fail());
+  gate.invalidate();
+  await pending;
+});
