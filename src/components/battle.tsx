@@ -120,7 +120,7 @@ function Match({presets,team,enemy,again,retry,canChange,audioOwner,initialPartn
       {state.phase==='finished'?<div className={`battle-result-scene ${state.result==='win'?'won':''}`}>
         <span className="battle-result-heading">{localize("对战结束")}</span>
         <div className="battle-winner-art">
-          {state.result==='draw'?<><PokemonArt pokemon={active!}/><Handshake size={48} aria-hidden="true"/><PokemonArt pokemon={pokemonById.get(enemy)!}/></>:<><PokemonArt pokemon={state.result==='win'?active!:pokemonById.get(enemy)!}/><span className="battle-trophy" aria-hidden="true"><Trophy size={66}/></span></>}
+          {state.result==='draw'?<><PokemonArt pokemon={active!} sizes="(max-width: 640px) 200px, 320px"/><Handshake size={48} aria-hidden="true"/><PokemonArt pokemon={pokemonById.get(enemy)!} sizes="(max-width: 640px) 200px, 320px"/></>:<><PokemonArt pokemon={state.result==='win'?active!:pokemonById.get(enemy)!} sizes="(max-width: 640px) 200px, 320px"/><span className="battle-trophy" aria-hidden="true"><Trophy size={66}/></span></>}
         </div>
         <strong>{localize(state.result==='win'?`${active!.name}赢啦！`:state.result==='rest'?`${pokemonById.get(enemy)!.name}获胜`:'双方打成平手')}</strong>
         <span>{localize(state.result==='win'?'我们的小队获胜！':state.result==='rest'?'对手获胜，我们下次再加油！':'握握手，下次再切磋！')}</span>
