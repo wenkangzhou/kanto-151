@@ -264,6 +264,15 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .battle-recap-row>span { display:flex; flex-direction:column; align-items:center; gap:6px; }
 .battle-recap .pokemon-art { width:var(--recap-art-size); height:var(--recap-art-size); object-fit:contain; flex-shrink:0; }
 .battle-recap p { font-size:13px; margin-bottom:0; }
+.battle-recap-explanation { margin-top:14px; padding-top:12px; border-top:1px solid #dce6d4; }
+.battle-recap-explanation>p:first-child { margin:0 0 8px; color:#506348; }
+.battle-recap-factors { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:8px; font-size:13px; }
+.battle-recap-factors>span { display:flex; align-items:center; gap:8px; }
+.battle-recap-factors>span>span { padding:7px 10px; background:#fff; border:1px solid #dce6d4; border-radius:10px; }
+.battle-recap-factors strong { color:#426a2c; }
+.battle-recap-factors b { color:#71876b; }
+.battle-recap .battle-recap-total { margin:10px 0 0; color:#3f603a; font-size:16px; font-weight:700; }
+.battle-recap-guide { display:inline-flex; align-items:center; gap:7px; margin-top:12px; min-height:44px; }
 @media(max-width:640px) { .battle-choice-card{min-width:0}.battle-turn-order{gap:6px}.battle-turn-partner{gap:4px}.battle-turn-partner b{font-size:12px}.battle-turn-partner>.pokemon-art{width:35px;height:35px}.battle-recap-row{--recap-art-size:54px;grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);gap:8px} }
 
 /* Keep picture/detail links generous without changing the drag handle. */

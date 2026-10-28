@@ -4,3 +4,5 @@
 .table thead tr>th.corner{z-index:3}
 
 .headerVoice{width:100%;min-height:44px;color:inherit;border-radius:8px}.headerVoice:hover{background:#dce6d3}
+.battleMatchup{margin-top:20px;padding:22px;border:1px solid #dbe8d3;border-radius:22px;background:#f5f9f0}.battleMatchup h2{font-size:20px;margin:0 0 14px}.battleMatchup p{font-size:19px;font-weight:700;color:#416333;margin:14px 0 8px}.battleMatchup small{color:#66795f}.battleFactors{display:flex;flex-wrap:wrap;gap:10px}.battleFactors>span{display:flex;align-items:center;gap:7px;padding:8px 10px;background:#fff;border:1px solid #e2e9dd;border-radius:12px}.battleFactors>span>b{margin-right:6px;color:#6c8066}.battleFactors strong{font-size:14px}.battleFactors em{font-style:normal;font-weight:700;color:#426a2c}.battleFactors .icon{width:29px;height:29px}
+@media(max-width:640px){.battleMatchup{padding:17px}.battleFactors>span{flex-wrap:wrap}}
