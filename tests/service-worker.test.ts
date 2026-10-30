@@ -161,16 +161,111 @@ test('previously loaded static code is reused on a weak connection without cachi
   assert.equal(await visit('/pokedex', 'navigate'), 'offline page');
 });
 
+test('short audio is saved complete after a partial first play and serves offline ranges', async () => {
+  const handlers: Record<string, (event: unknown) => void> = {};
+  const saved = new Map<string, Response>();
+  const audioCache = {
+    match: async (key: string) => saved.get(key)?.clone(),
+    put: async (key: string, response: Response) => { saved.set(key, response); },
+    keys: async () => [...saved.keys()],
+    delete: async (key: string) => saved.delete(key),
+  };
+  let offline = false;
+  let requests = 0;
+  vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
+    self: { location: { origin: 'https://kanto.test' }, addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; } },
+    URL, Response, Headers, caches: { open: async () => audioCache },
+    fetch: async (request: Request | string) => {
+      requests++;
+      if (offline) throw Error('offline');
+      const range = typeof request === 'string' ? null : request.headers.get('range');
+      const response = new Response(range ? '0123' : '0123456789', { status: range ? 206 : 200, headers: { 'content-type': 'audio/mpeg' } });
+      Object.defineProperty(response, 'type', { value: 'basic' });
+      return response;
+    },
+  });
+  async function play(range: string) {
+    let result: Promise<Response> | undefined;
+    const writes: Promise<unknown>[] = [];
+    let dispatching = true;
+    const request = new Request('https://kanto.test/audio/effects/evolution.mp3', { headers: { range } });
+    handlers.fetch({ request, respondWith: (promise: Promise<Response>) => { result = promise; }, waitUntil: (promise: Promise<unknown>) => { assert.equal(dispatching, true); writes.push(promise); } });
+    dispatching = false;
+    const response = await result;
+    await Promise.all(writes);
+    return response!;
+  }
+  assert.equal(await (await play('bytes=0-3')).text(), '0123');
+  assert.equal(requests, 2);
+  assert.equal(saved.size, 1);
+  offline = true;
+  const middle = await play('bytes=4-7');
+  assert.equal(middle.status, 206);
+  assert.equal(middle.headers.get('content-range'), 'bytes 4-7/10');
+  assert.equal(await middle.text(), '4567');
+  assert.equal(await (await play('bytes=-3')).text(), '789');
+  const outside = await play('bytes=10-');
+  assert.equal(outside.status, 416);
+  assert.equal(outside.headers.get('content-range'), 'bytes */10');
+  assert.equal(requests, 2);
+});
+
+test('scene warmup, pinyin and battle cues are bounded to valid short audio', async () => {
+  const handlers: Record<string, (event: unknown) => void> = {};
+  const saved = new Map<string, Response>();
+  const audioCache = {
+    match: async (key: string) => saved.get(key)?.clone(),
+    put: async (key: string, response: Response) => { saved.set(key, response); },
+    keys: async () => [...saved.keys()],
+    delete: async (key: string) => saved.delete(key),
+  };
+  vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
+    self: { location: { origin: 'https://kanto.test' }, addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; } },
+    URL, Response, Headers, caches: { open: async () => audioCache },
+    fetch: async (request: Request | string) => {
+      const url = typeof request === 'string' ? request : request.url;
+      const invalid = url.endsWith('/pinyin/a1.mp3');
+      const large = url.endsWith('/battle/types/fire.wav');
+      const response = new Response(large ? 'x'.repeat(1_000_001) : invalid ? '<html>wrong file</html>' : 'short audio', { headers: { 'content-type': invalid ? 'text/html' : 'audio/mpeg' } });
+      Object.defineProperty(response, 'type', { value: 'basic' });
+      return response;
+    },
+  });
+  let warmup: Promise<unknown> | undefined;
+  handlers.message({ data: { type: 'warm-scene-audio' }, waitUntil: (promise: Promise<unknown>) => { warmup = promise; } });
+  await warmup;
+  assert.equal(saved.size, 5);
+  assert.ok(saved.has('https://kanto.test/audio/effects/evolution.mp3'));
+  async function visit(path: string) {
+    let result: Promise<Response> | undefined;
+    const writes: Promise<unknown>[] = [];
+    handlers.fetch({ request: new Request(`https://kanto.test${path}`), respondWith: (promise: Promise<Response>) => { result = promise; }, waitUntil: (promise: Promise<unknown>) => { writes.push(promise); } });
+    await result;
+    await Promise.all(writes);
+  }
+  await visit('/audio/pinyin/a1.mp3');
+  await visit('/audio/battle/types/fire.wav');
+  assert.equal(saved.size, 5);
+  await visit('/audio/pinyin/ba1.mp3');
+  await visit('/audio/battle/throw.wav');
+  assert.ok(saved.has('https://kanto.test/audio/pinyin/ba1.mp3'));
+  assert.ok(saved.has('https://kanto.test/audio/battle/throw.wav'));
+  assert.equal(saved.size, 7);
+  for (const path of ['/audio/battle/trainer.mp3', '/audio/sevii-islands-6-7.mp3', '/audio/voices/abc.mp3']) {
+    handlers.fetch({ request: new Request(`https://kanto.test${path}`), respondWith: () => assert.fail(`Intercepted ${path}`) });
+  }
+});
+
 test('upgrading removes the old HTML cache without deleting other applications caches', async () => {
   const handlers: Record<string, (event: unknown) => void> = {};
   const removed: string[] = []; let claimed = false;
   vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
     self: { addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; }, clients: { claim: async () => { claimed = true; } } },
-    caches: { keys: async () => ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5', 'kanto-public-v5-images', 'kanto-public-v5-resources', 'other-app'], delete: async (key: string) => { removed.push(key); } },
+    caches: { keys: async () => ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5', 'kanto-public-v5-images', 'kanto-public-v5-resources', 'kanto-public-v6', 'kanto-public-v6-audio', 'other-app'], delete: async (key: string) => { removed.push(key); } },
   });
   let completion: Promise<unknown> | undefined;
   handlers.activate({ waitUntil: (promise: Promise<unknown>) => { completion = promise; } });
   await completion;
-  assert.deepEqual(removed, ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4']);
+  assert.deepEqual(removed, ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5']);
   assert.equal(claimed, true);
 });

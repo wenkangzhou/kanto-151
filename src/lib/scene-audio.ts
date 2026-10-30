@@ -8,6 +8,14 @@ export const sceneTracks = {
 export type SceneSound = keyof typeof sceneTracks;
 export const sceneAudioEvent = 'kanto-scene-audio';
 export type SceneAudioRequest = { owner: string; sound?: SceneSound };
+let warmupRequested = false;
+export function warmSceneSounds() {
+  if (warmupRequested || !('serviceWorker' in navigator)) return;
+  warmupRequested = true;
+  const requestWarmup = () => navigator.serviceWorker.controller?.postMessage({ type: 'warm-scene-audio' });
+  requestWarmup();
+  navigator.serviceWorker.addEventListener('controllerchange', requestWarmup, { once: true });
+}
 export function playSceneSound(owner: string, sound: SceneSound) {
   window.dispatchEvent(new CustomEvent<SceneAudioRequest>(sceneAudioEvent, { detail: { owner, sound } }));
 }

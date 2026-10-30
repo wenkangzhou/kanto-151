@@ -11,7 +11,7 @@ export function usePinyinAudio(){
   stop();stopLearningSpeech();setAudioError('');
   if(!ids.length||ids.some(id=>!allowed.has(id)))return;
   const token=revision.current;
-  const audio=player.current??=new Audio();audio.preload='auto';let i=0;
+  const audio=player.current??=new Audio();audio.crossOrigin='anonymous';audio.preload='auto';let i=0;
   const fail=()=>{if(token!==revision.current)return;stop();setAudioError('声音没加载好，点喇叭再听一次。');};
   const next=()=>{
    if(token!==revision.current)return;

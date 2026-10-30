@@ -1,12 +1,21 @@
 /* Only public static assets are cached. Family data and HTML are always online.
-   Bump VERSION when public artwork changes so old images are replaced. */
-const VERSION = 'kanto-public-v5';
-const IMAGE_CACHE = `${VERSION}-images`;
-const RESOURCE_CACHE = `${VERSION}-resources`;
+   Version each asset cache separately so audio updates retain downloaded artwork. */
+const VERSION = 'kanto-public-v6';
+const IMAGE_CACHE = 'kanto-public-v5-images';
+const RESOURCE_CACHE = 'kanto-public-v5-resources';
+const AUDIO_CACHE = `${VERSION}-audio`;
 const IMAGE_LIMIT = 120;
 const RESOURCE_LIMIT = 120;
+const AUDIO_LIMIT = 180;
+const AUDIO_MAX_BYTES = 350_000;
 const SHELL = ['/offline.html', '/icons/icon-192.png'];
+const SCENE_AUDIO = [
+  '/audio/effects/evolution.mp3', '/audio/effects/evolution-success.mp3',
+  '/audio/effects/capture.mp3', '/audio/effects/capture-success.mp3',
+  '/audio/effects/gift.mp3',
+];
 const writes = new Map();
+const audioWarming = new Map();
 
 function isPublicImage(pathname) {
   return /^\/(?:pokemon\/\d+|encyclopedia\/[a-z0-9/_-]+|illustrations\/[a-z0-9/_-]+|icons\/[a-z0-9/_-]+|logo(?:-pokeball)?)\.(?:png|jpe?g|webp|avif)$/.test(pathname);
@@ -21,6 +30,14 @@ function isCacheableImage(url) {
   return original.origin === self.location.origin && !original.search && isPublicImage(original.pathname);
 }
 
+function isShortAudio(url) {
+  if (url.search) return false;
+  return SCENE_AUDIO.includes(url.pathname)
+    || /^\/audio\/pinyin\/[a-z0-9]+\.mp3$/.test(url.pathname)
+    || /^\/audio\/battle\/(?:hit|throw)\.wav$/.test(url.pathname)
+    || /^\/audio\/battle\/types\/[a-z-]+\.wav$/.test(url.pathname);
+}
+
 function remember(cache, request, response, name, limit) {
   const previous = writes.get(name) ?? Promise.resolve();
   const pending = previous.catch(() => {}).then(async () => {
@@ -32,13 +49,100 @@ function remember(cache, request, response, name, limit) {
   return pending;
 }
 
+function respondWithStorage(event, work) {
+  const storage = [];
+  const response = work(promise => storage.push(promise));
+  event.respondWith(response);
+  // Register while the fetch event is dispatching; storage may finish after playback starts.
+  event.waitUntil(response.then(() => Promise.all(storage), () => {}));
+}
+
+function validAudio(response) {
+  return response.status === 200 && response.type === 'basic' && !response.redirected
+    && response.headers.get('content-type')?.toLowerCase().startsWith('audio/');
+}
+
+async function rememberAudio(cache, url, response) {
+  const declaredSize = Number(response.headers.get('content-length'));
+  if (declaredSize > AUDIO_MAX_BYTES) return;
+  const bytes = await response.arrayBuffer();
+  if (bytes.byteLength > AUDIO_MAX_BYTES) return;
+  const headers = new Headers(response.headers);
+  headers.delete('content-encoding');
+  headers.delete('content-range');
+  headers.set('content-length', String(bytes.byteLength));
+  await remember(cache, url, new Response(bytes, { headers }), AUDIO_CACHE, AUDIO_LIMIT);
+}
+
+function warmAudio(cache, url) {
+  const key = url.href;
+  if (audioWarming.has(key)) return audioWarming.get(key);
+  const pending = (async () => {
+    if (await cache.match(key)) return;
+    const response = await fetch(key, { credentials: 'same-origin', cache: 'no-cache' });
+    if (validAudio(response)) await rememberAudio(cache, key, response);
+  })().catch(() => {}).finally(() => audioWarming.delete(key));
+  audioWarming.set(key, pending);
+  return pending;
+}
+
+async function audioRange(response, range) {
+  const match = /^bytes=(\d*)-(\d*)$/i.exec(range.trim());
+  if (!match || (!match[1] && !match[2])) return null;
+  const bytes = await response.arrayBuffer();
+  const size = bytes.byteLength;
+  const suffix = !match[1];
+  const start = suffix ? Math.max(0, size - Number(match[2])) : Number(match[1]);
+  const end = suffix ? size - 1 : match[2] ? Math.min(size - 1, Number(match[2])) : size - 1;
+  const headers = new Headers(response.headers);
+  headers.set('accept-ranges', 'bytes');
+  if (!size || start >= size || end < start || (suffix && !Number(match[2]))) {
+    headers.set('content-range', `bytes */${size}`);
+    headers.set('content-length', '0');
+    return new Response(null, { status: 416, headers });
+  }
+  const part = bytes.slice(start, end + 1);
+  headers.set('content-range', `bytes ${start}-${end}/${size}`);
+  headers.set('content-length', String(part.byteLength));
+  return new Response(part, { status: 206, headers });
+}
+
+async function shortAudioResponse(request, url, store) {
+  let cache;
+  try {
+    cache = await caches.open(AUDIO_CACHE);
+    const cached = await cache.match(url.href);
+    if (cached) {
+      const range = request.headers.get('range');
+      if (!range || (request.headers.get('if-range') && ![cached.headers.get('etag'), cached.headers.get('last-modified')].includes(request.headers.get('if-range')))) return cached;
+      const partial = await audioRange(cached, range);
+      if (partial) return partial;
+    }
+  } catch { /* Storage may be unavailable; still play from the network. */ }
+  try {
+    const response = await fetch(request);
+    if (cache && validAudio(response)) store(rememberAudio(cache, url.href, response.clone()).catch(() => {}));
+    else if (cache && response.status === 206) {
+      // Let the first streamed playback finish before downloading its complete copy.
+      store(response.clone().arrayBuffer().then(() => warmAudio(cache, url)).catch(() => {}));
+    }
+    return response;
+  } catch { return Response.error(); }
+}
+
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(VERSION).then(cache => cache.addAll(SHELL)));
   self.skipWaiting();
 });
 self.addEventListener('activate', event => {
-  const current = [VERSION, IMAGE_CACHE, RESOURCE_CACHE];
+  const current = [VERSION, IMAGE_CACHE, RESOURCE_CACHE, AUDIO_CACHE];
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('kanto-public-') && !current.includes(key)).map(key => caches.delete(key)))).then(() => self.clients.claim()));
+});
+self.addEventListener('message', event => {
+  if (event.data?.type !== 'warm-scene-audio') return;
+  event.waitUntil(caches.open(AUDIO_CACHE).then(async cache => {
+    for (const path of SCENE_AUDIO) await warmAudio(cache, new URL(path, self.location.origin));
+  }).catch(() => {}));
 });
 self.addEventListener('fetch', event => {
   const request = event.request;
@@ -49,10 +153,14 @@ self.addEventListener('fetch', event => {
     event.respondWith(fetch(request).catch(() => caches.match('/offline.html')));
     return;
   }
+  if (isShortAudio(url)) {
+    respondWithStorage(event, store => shortAudioResponse(request, url, store));
+    return;
+  }
   const image = isCacheableImage(url);
   const resource = url.pathname.startsWith('/_next/static/');
   if (!image && !resource) return;
-  event.respondWith((async () => {
+  respondWithStorage(event, store => (async () => {
     const name = image ? IMAGE_CACHE : RESOURCE_CACHE;
     let cache;
     try {
@@ -64,7 +172,7 @@ self.addEventListener('fetch', event => {
       const response = await fetch(request);
       const validImage = !image || response.headers.get('content-type')?.toLowerCase().startsWith('image/');
       if (cache && response.ok && response.type === 'basic' && !response.redirected && validImage) {
-        event.waitUntil(remember(cache, request, response.clone(), name, image ? IMAGE_LIMIT : RESOURCE_LIMIT).catch(() => {}));
+        store(remember(cache, request, response.clone(), name, image ? IMAGE_LIMIT : RESOURCE_LIMIT).catch(() => {}));
       }
       return response;
     } catch { return Response.error(); }

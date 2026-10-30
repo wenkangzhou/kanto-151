@@ -7,7 +7,7 @@ import { backgroundTrack, createMusicPlayer, supportsBackgroundMusic, type Music
 
 import { battleAudioEvent, createBattleAudio, type BattleAudioRequest } from '@/lib/battle-audio';
 import { voiceFocusEvent, voiceSnapshot, stopVoice } from '@/lib/voice-audio';
-import { createCuePlayer, sceneAudioEvent, type SceneAudioRequest } from '@/lib/scene-audio';
+import { createCuePlayer, sceneAudioEvent, warmSceneSounds, type SceneAudioRequest } from '@/lib/scene-audio';
 
 const subscribe = (callback: () => void) => {
   window.addEventListener('resize', callback); window.addEventListener('orientationchange', callback);
@@ -23,14 +23,14 @@ function MusicControl({ available }: { available: boolean }) {
   const cue = useRef<ReturnType<typeof createCuePlayer> | null>(null);
   const battle = useRef<ReturnType<typeof createBattleAudio> | null>(null);
   useEffect(() => {
-    battle.current = createBattleAudio(source => { const audio = new Audio(source); audio.preload = 'none'; return audio; }, () => player.current?.suspendForCue() ?? (() => {}));
+    battle.current = createBattleAudio(source => { const audio = new Audio(); audio.crossOrigin = 'anonymous'; audio.preload = 'none'; audio.src = source; return audio; }, () => player.current?.suspendForCue() ?? (() => {}));
     const battleEvent = (event: Event) => {
       const request = (event as CustomEvent<BattleAudioRequest>).detail;
       if (request.action === 'enter') cue.current?.stop(true);
       battle.current?.request(request);
     };
     window.addEventListener(battleAudioEvent, battleEvent);
-    cue.current = createCuePlayer(source => { const audio = new Audio(source); audio.preload = 'none'; return audio; }, () => player.current?.suspendForCue() ?? (() => {}));
+    cue.current = createCuePlayer(source => { const audio = new Audio(); audio.crossOrigin = 'anonymous'; audio.preload = 'none'; audio.src = source; return audio; }, () => player.current?.suspendForCue() ?? (() => {}));
     let resumeVoice: (() => void) | undefined;
     const voiceFocus = (event: Event) => {
       const active = (event as CustomEvent<boolean>).detail;
@@ -60,7 +60,7 @@ function MusicControl({ available }: { available: boolean }) {
     soundEnabledRef.current = !on;
     setSoundEnabled(!on);
     if(on){battle.current?.setEnabled(false);player.current.stop();}
-    else {void player.current.toggle();battle.current?.setEnabled(true);}
+    else {void player.current.toggle();battle.current?.setEnabled(true);warmSceneSounds();}
   }}>{state === 'loading' ? <LoaderCircle size={20} className="music-loading" aria-hidden="true" /> : on ? <Volume2 size={20} aria-hidden="true" /> : <VolumeX size={20} aria-hidden="true" />}</button><div className="music-feedback" role="status">{on && state === 'loading' && <span>{localize("音乐正在加载，网络慢时请稍等…")}</span>}{on && state === 'error' && <><span>{localize("背景音乐未能播放，其他声音仍可使用。")}</span><button type="button" onClick={() => { void player.current?.toggle(); }}>{localize("重试音乐")}</button></>}</div></div>;
 }
 export function BackgroundMusic({ available }: { available: boolean }) {
