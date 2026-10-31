@@ -50,7 +50,7 @@ test('HTML is never persisted; offline navigation uses the fallback; viewed artw
   };
   vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
     self: { location: { origin: 'https://kanto.test' }, addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; } },
-    URL, Response, caches: { open: async () => fakeCache, match: fakeCache.match },
+    URL, Response, Headers, caches: { open: async () => fakeCache, match: fakeCache.match },
     fetch: async (request: { mode: string }) => {
       if (offline) throw Error('offline');
       const response = new Response(request.mode === 'navigate' ? 'page with private state' : 'public artwork', { headers: { 'content-type': request.mode === 'navigate' ? 'text/html' : 'image/png' } });
@@ -84,7 +84,7 @@ test('HTML is never persisted; offline navigation uses the fallback; viewed artw
   assert.equal(await visit(optimized, 'cors'), 'public artwork');
 });
 
-test('public image cache is bounded and does not store an HTML response as an image', async () => {
+test('image cache keeps a complete Pokédex and its second size within a bounded store', async () => {
   const handlers: Record<string, (event: unknown) => void> = {};
   const stores = new Map<string, Map<string, Response>>();
   const cache = (name: string) => {
@@ -99,9 +99,9 @@ test('public image cache is bounded and does not store an HTML response as an im
   };
   vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
     self: { location: { origin: 'https://kanto.test' }, addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; } },
-    URL, Response, Map, caches: { open: async (name: string) => cache(name) },
+    URL, Response, Headers, Map, caches: { open: async (name: string) => cache(name) },
     fetch: async (request: { url: string }) => {
-      const html = request.url.endsWith('/pokemon/122.png');
+      const html = request.url.endsWith('/icons/cache-212.png');
       const response = new Response(html ? '<html>wrong response</html>' : 'public artwork', { headers: { 'content-type': html ? 'text/html' : 'image/png' } });
       Object.defineProperty(response, 'type', { value: 'basic' });
       return response;
@@ -114,13 +114,91 @@ test('public image cache is bounded and does not store an HTML response as an im
     await result;
     await Promise.all(writes);
   }
-  for (let id = 1; id <= 122; id++) await visit(`/pokemon/${id}.png`);
+  for (let id = 1; id <= 151; id++) await visit(`/pokemon/${id}.png`);
+  for (let id = 1; id <= 151; id++) await visit(`/_next/image?url=%2Fpokemon%2F${id}.png&w=256&q=75`);
   const images = stores.get('kanto-public-v5-images');
-  assert.equal(images?.size, 120);
+  assert.equal(images?.size, 302);
+  assert.equal(images?.has('https://kanto.test/pokemon/1.png'), true);
+  assert.equal(images?.has('https://kanto.test/_next/image?url=%2Fpokemon%2F151.png&w=256&q=75'), true);
+  for (let id = 1; id <= 212; id++) await visit(`/icons/cache-${id}.png`);
+  assert.equal(images?.size, 512);
   assert.equal(images?.has('https://kanto.test/pokemon/1.png'), false);
   assert.equal(images?.has('https://kanto.test/pokemon/2.png'), true);
-  assert.equal(images?.has('https://kanto.test/pokemon/121.png'), true);
-  assert.equal(images?.has('https://kanto.test/pokemon/122.png'), false);
+  assert.equal(images?.has('https://kanto.test/icons/cache-212.png'), false);
+});
+
+test('image cache respects a byte budget and skips an oversized artwork', async () => {
+  const handlers: Record<string, (event: unknown) => void> = {};
+  const saved = new Map<string, Response>();
+  const source = readFileSync('public/sw.js', 'utf8')
+    .replace('const IMAGE_BUDGET = 48_000_000;', 'const IMAGE_BUDGET = 100;')
+    .replace('const IMAGE_MAX_BYTES = 1_500_000;', 'const IMAGE_MAX_BYTES = 30;');
+  vm.runInNewContext(source, {
+    self: { location: { origin: 'https://kanto.test' }, addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; } },
+    URL, Request, Response, Headers, caches: { open: async () => ({
+      match: async (key: Request) => saved.get(key.url)?.clone(),
+      put: async (key: Request, response: Response) => { saved.set(key.url, response); },
+      keys: async () => [...saved.keys()].map(url => new Request(url)),
+      delete: async (key: Request) => saved.delete(key.url),
+    }) },
+    fetch: async (request: Request) => {
+      const oversized = request.url.endsWith('/pokemon/6.png');
+      const response = new Response('x'.repeat(oversized ? 31 : 25), { headers: { 'content-type': 'image/png' } });
+      Object.defineProperty(response, 'type', { value: 'basic' });
+      return response;
+    },
+  });
+  for (let id = 1; id <= 6; id++) {
+    let result: Promise<Response> | undefined;
+    const writes: Promise<unknown>[] = [];
+    handlers.fetch({ request: new Request(`https://kanto.test/pokemon/${id}.png`), respondWith: (promise: Promise<Response>) => { result = promise; }, waitUntil: (promise: Promise<unknown>) => { writes.push(promise); } });
+    await result;
+    await Promise.all(writes);
+  }
+  assert.equal(saved.size, 4);
+  assert.equal(saved.has('https://kanto.test/pokemon/1.png'), false);
+  assert.equal(saved.has('https://kanto.test/pokemon/2.png'), true);
+  assert.equal(saved.has('https://kanto.test/pokemon/6.png'), false);
+});
+
+test('an offline optimized image can reuse another cached size or its original', async () => {
+  const handlers: Record<string, (event: unknown) => void> = {};
+  const saved = new Map<string, { request: Request; response: Response }>();
+  let offline = false;
+  let networkRequests = 0;
+  const keyOf = (key: string | Request) => typeof key === 'string' ? key : key.url;
+  const cache = {
+    match: async (key: string | Request) => saved.get(keyOf(key))?.response.clone(),
+    put: async (key: Request, response: Response) => { saved.set(key.url, { request: key, response }); },
+    keys: async () => [...saved.values()].map(entry => entry.request),
+    delete: async (key: Request) => saved.delete(key.url),
+  };
+  vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
+    self: { location: { origin: 'https://kanto.test' }, addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; } },
+    URL, Response, Headers, caches: { open: async () => cache },
+    fetch: async (request: Request) => {
+      networkRequests++;
+      if (offline) throw Error('offline');
+      const original = request.url.endsWith('/pokemon/7.png');
+      const response = new Response(original ? 'original image' : 'small image', { headers: { 'content-type': original ? 'image/png' : 'image/webp' } });
+      Object.defineProperty(response, 'type', { value: 'basic' });
+      return response;
+    },
+  });
+  async function visit(path: string) {
+    let result: Promise<Response> | undefined;
+    const writes: Promise<unknown>[] = [];
+    handlers.fetch({ request: new Request(`https://kanto.test${path}`, { headers: { accept: 'image/webp' } }), respondWith: (promise: Promise<Response>) => { result = promise; }, waitUntil: (promise: Promise<unknown>) => { writes.push(promise); } });
+    const response = await result;
+    await Promise.all(writes);
+    return response?.text();
+  }
+  assert.equal(await visit('/_next/image?url=%2Fpokemon%2F6.png&w=256&q=75'), 'small image');
+  assert.equal(await visit('/pokemon/7.png'), 'original image');
+  offline = true;
+  assert.equal(await visit('/_next/image?url=%2Fpokemon%2F6.png&w=640&q=75'), 'small image');
+  assert.equal(await visit('/_next/image?url=%2Fpokemon%2F7.png&w=640&q=75'), 'original image');
+  assert.equal(networkRequests, 4);
 });
 
 test('previously loaded static code is reused on a weak connection without caching page HTML', async () => {

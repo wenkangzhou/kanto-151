@@ -4,7 +4,9 @@ const VERSION = 'kanto-public-v6';
 const IMAGE_CACHE = 'kanto-public-v5-images';
 const RESOURCE_CACHE = 'kanto-public-v5-resources';
 const AUDIO_CACHE = `${VERSION}-audio`;
-const IMAGE_LIMIT = 120;
+const IMAGE_LIMIT = 512;
+const IMAGE_BUDGET = 48_000_000;
+const IMAGE_MAX_BYTES = 1_500_000;
 const RESOURCE_LIMIT = 120;
 const AUDIO_LIMIT = 180;
 const AUDIO_MAX_BYTES = 350_000;
@@ -16,6 +18,7 @@ const SCENE_AUDIO = [
 ];
 const writes = new Map();
 const audioWarming = new Map();
+const imageSizes = new Map();
 
 function isPublicImage(pathname) {
   return /^\/(?:pokemon\/\d+|encyclopedia\/[a-z0-9/_-]+|illustrations\/[a-z0-9/_-]+|icons\/[a-z0-9/_-]+|logo(?:-pokeball)?)\.(?:png|jpe?g|webp|avif)$/.test(pathname);
@@ -47,6 +50,84 @@ function remember(cache, request, response, name, limit) {
   });
   writes.set(name, pending);
   return pending;
+}
+
+function imageKey(request) {
+  const url = typeof request === 'string' ? request : request.url;
+  const accept = typeof request === 'string' ? '' : request.headers.get('accept') ?? '';
+  return `${url}\n${accept}`;
+}
+
+async function imageSize(response) {
+  const declared = Number(response.headers.get('x-kanto-image-bytes') ?? response.headers.get('content-length'));
+  return Number.isFinite(declared) && declared > 0 ? declared : (await response.blob()).size;
+}
+
+function rememberImage(cache, request, response) {
+  const previous = writes.get(IMAGE_CACHE) ?? Promise.resolve();
+  const pending = previous.catch(() => {}).then(async () => {
+    const body = await response.blob();
+    if (body.size > IMAGE_MAX_BYTES) return;
+    const headers = new Headers(response.headers);
+    headers.delete('content-encoding');
+    headers.set('content-length', String(body.size));
+    headers.set('x-kanto-image-bytes', String(body.size));
+    await cache.put(request, new Response(body, { status: response.status, headers }));
+    imageSizes.set(imageKey(request), body.size);
+    const keys = await cache.keys();
+    const live = new Set();
+    let total = 0;
+    for (const key of keys) {
+      const id = imageKey(key);
+      live.add(id);
+      let size = imageSizes.get(id);
+      if (size === undefined) {
+        const saved = await cache.match(key);
+        size = saved ? await imageSize(saved) : 0;
+        imageSizes.set(id, size);
+      }
+      total += size;
+    }
+    for (const id of imageSizes.keys()) if (!live.has(id)) imageSizes.delete(id);
+    while (keys.length > IMAGE_LIMIT || total > IMAGE_BUDGET) {
+      const oldest = keys.shift();
+      if (!oldest) break;
+      const id = imageKey(oldest);
+      await cache.delete(oldest);
+      total -= imageSizes.get(id) ?? 0;
+      imageSizes.delete(id);
+    }
+  });
+  writes.set(IMAGE_CACHE, pending);
+  return pending;
+}
+
+async function imageFallback(cache, request, url) {
+  if (url.pathname !== '/_next/image') return null;
+  const source = url.searchParams.get('url');
+  if (!source) return null;
+  const original = await cache.match(new URL(source, self.location.origin).href);
+  if (original) return original;
+  const width = Number(url.searchParams.get('w')) || 0;
+  const candidates = (await cache.keys()).filter(key => {
+    const stored = new URL(key.url);
+    return stored.pathname === '/_next/image' && stored.searchParams.get('url') === source;
+  }).sort((left, right) => {
+    const score = key => {
+      const candidate = Number(new URL(key.url).searchParams.get('w')) || 0;
+      return candidate >= width ? candidate - width : width - candidate + 10_000;
+    };
+    return score(left) - score(right);
+  });
+  const accept = request.headers.get('accept') ?? '';
+  for (const candidate of candidates) {
+    const saved = await cache.match(candidate);
+    const mime = saved?.headers.get('content-type')?.split(';')[0].toLowerCase();
+    if (mime === 'image/avif' && !accept.includes('image/avif')) continue;
+    if (mime === 'image/webp' && !accept.includes('image/webp')) continue;
+    if (saved) return saved;
+  }
+  return null;
 }
 
 function respondWithStorage(event, work) {
@@ -171,10 +252,20 @@ self.addEventListener('fetch', event => {
     try {
       const response = await fetch(request);
       const validImage = !image || response.headers.get('content-type')?.toLowerCase().startsWith('image/');
-      if (cache && response.ok && response.type === 'basic' && !response.redirected && validImage) {
-        store(remember(cache, request, response.clone(), name, image ? IMAGE_LIMIT : RESOURCE_LIMIT).catch(() => {}));
+      if (image && cache && (!response.ok || !validImage)) {
+        const fallback = await imageFallback(cache, request, url);
+        if (fallback) return fallback;
+      }
+      if (cache && response.status === 200 && response.type === 'basic' && !response.redirected && validImage) {
+        const save = image ? rememberImage(cache, request, response.clone()) : remember(cache, request, response.clone(), name, RESOURCE_LIMIT);
+        store(save.catch(() => {}));
       }
       return response;
-    } catch { return Response.error(); }
+    } catch {
+      if (image && cache) {
+        try { const fallback = await imageFallback(cache, request, url); if (fallback) return fallback; } catch { /* Offline fallback is optional. */ }
+      }
+      return Response.error();
+    }
   })());
 });
