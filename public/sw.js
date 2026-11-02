@@ -21,7 +21,7 @@ const audioWarming = new Map();
 const imageSizes = new Map();
 
 function isPublicImage(pathname) {
-  return /^\/(?:pokemon\/\d+|encyclopedia\/[a-z0-9/_-]+|illustrations\/[a-z0-9/_-]+|icons\/[a-z0-9/_-]+|logo(?:-pokeball)?)\.(?:png|jpe?g|webp|avif)$/.test(pathname);
+  return /^\/(?:pokemon\/\d+|(?:johto|hoenn)\/pokemon\/\d+|encyclopedia\/[a-z0-9/_-]+|illustrations\/[a-z0-9/_-]+|icons\/[a-z0-9/_-]+|logo(?:-pokeball)?)\.(?:png|jpe?g|webp|avif)$/.test(pathname);
 }
 
 function isCacheableImage(url) {

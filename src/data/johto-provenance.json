@@ -1,0 +1,8 @@
+{
+  "importedAt": "2026-10-31T18:37:19.472437+00:00",
+  "source": "https://pokeapi.co/docs/v2",
+  "generation": "generation-ii",
+  "regionalPokedex": "original-johto",
+  "count": 100,
+  "note": "Default forms and current types; evolution parents beyond the original 251 are omitted. Artwork is stored locally. Preview data is separate from the Kanto collection."
+}

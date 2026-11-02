@@ -1,0 +1,8 @@
+{
+  "importedAt": "2026-11-01T13:12:24.381748+00:00",
+  "source": "https://pokeapi.co/docs/v2",
+  "generation": "generation-iii",
+  "regionalPokedex": "hoenn",
+  "count": 135,
+  "note": "Default forms and current types; evolution parents beyond the original 386 are omitted. Artwork is stored locally. Preview data is separate from all collection records."
+}

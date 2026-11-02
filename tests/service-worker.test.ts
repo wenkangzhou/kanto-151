@@ -72,8 +72,14 @@ test('HTML is never persisted; offline navigation uses the fallback; viewed artw
   assert.equal(saved.size, 2);
   assert.equal(await visit('/logo-pokeball.png', 'cors'), 'public artwork');
   assert.equal(await visit('/encyclopedia/leaders/brock.png', 'cors'), 'public artwork');
+  assert.equal(await visit('/johto/pokemon/152.png', 'cors'), 'public artwork');
+  assert.equal(await visit('/hoenn/pokemon/252.png', 'cors'), 'public artwork');
   const optimized = '/_next/image?url=%2Fpokemon%2F1.png&w=256&q=75';
   assert.equal(await visit(optimized, 'cors'), 'public artwork');
+  const johtoOptimized = '/_next/image?url=%2Fjohto%2Fpokemon%2F152.png&w=256&q=75';
+  assert.equal(await visit(johtoOptimized, 'cors'), 'public artwork');
+  const hoennOptimized = '/_next/image?url=%2Fhoenn%2Fpokemon%2F252.png&w=256&q=75';
+  assert.equal(await visit(hoennOptimized, 'cors'), 'public artwork');
   offline = true;
   assert.equal(await visit('/pokedex'), 'offline page');
   assert.equal(await visit('/pokemon/151'), 'offline page');
@@ -81,7 +87,11 @@ test('HTML is never persisted; offline navigation uses the fallback; viewed artw
   assert.equal(await visit('/logo-pokeball.png', 'cors'), 'public artwork');
   assert.equal(await visit('/pokemon/1.png', 'cors'), 'public artwork');
   assert.equal(await visit('/encyclopedia/leaders/brock.png', 'cors'), 'public artwork');
+  assert.equal(await visit('/johto/pokemon/152.png', 'cors'), 'public artwork');
+  assert.equal(await visit('/hoenn/pokemon/252.png', 'cors'), 'public artwork');
   assert.equal(await visit(optimized, 'cors'), 'public artwork');
+  assert.equal(await visit(johtoOptimized, 'cors'), 'public artwork');
+  assert.equal(await visit(hoennOptimized, 'cors'), 'public artwork');
 });
 
 test('image cache keeps a complete Pokédex and its second size within a bounded store', async () => {

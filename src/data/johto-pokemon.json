@@ -1,0 +1,1651 @@
+[
+  {
+    "id": 152,
+    "name": "菊草叶",
+    "traditionalName": "菊草葉",
+    "englishName": "Chikorita",
+    "genus": "叶子宝可梦",
+    "types": [
+      "grass"
+    ],
+    "description": "头顶的叶子能感知气温与湿度；轻轻挥动时，还会散发让周围平静下来的香气。",
+    "evolvesFrom": null,
+    "height": 0.9,
+    "weight": 6.4,
+    "artwork": "/johto/pokemon/152.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/152.png"
+  },
+  {
+    "id": 153,
+    "name": "月桂叶",
+    "traditionalName": "月桂葉",
+    "englishName": "Bayleef",
+    "genus": "叶子宝可梦",
+    "types": [
+      "grass"
+    ],
+    "description": "脖子上的叶片藏着小小的嫩芽，散发的清新香气能让人振作起来。",
+    "evolvesFrom": 152,
+    "height": 1.2,
+    "weight": 15.8,
+    "artwork": "/johto/pokemon/153.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/153.png"
+  },
+  {
+    "id": 154,
+    "name": "大竺葵",
+    "traditionalName": "大竺葵",
+    "englishName": "Meganium",
+    "genus": "芳草宝可梦",
+    "types": [
+      "grass"
+    ],
+    "description": "花朵的香气能安抚情绪。战斗时，它会用这股香气让对手放松警惕。",
+    "evolvesFrom": 153,
+    "height": 1.8,
+    "weight": 100.5,
+    "artwork": "/johto/pokemon/154.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/154.png"
+  },
+  {
+    "id": 155,
+    "name": "火球鼠",
+    "traditionalName": "火球鼠",
+    "englishName": "Cyndaquil",
+    "genus": "火鼠宝可梦",
+    "types": [
+      "fire"
+    ],
+    "description": "性格胆小，常把身体蜷成一团；受到惊吓时，背上的火焰会猛烈燃起。",
+    "evolvesFrom": null,
+    "height": 0.5,
+    "weight": 7.9,
+    "artwork": "/johto/pokemon/155.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/155.png"
+  },
+  {
+    "id": 156,
+    "name": "火岩鼠",
+    "traditionalName": "火岩鼠",
+    "englishName": "Quilava",
+    "genus": "火山宝可梦",
+    "types": [
+      "fire"
+    ],
+    "description": "背上的火焰烧不到自己的皮毛。若它突然转身露出背部，就要留意接下来的攻击。",
+    "evolvesFrom": 155,
+    "height": 0.9,
+    "weight": 19.0,
+    "artwork": "/johto/pokemon/156.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/156.png"
+  },
+  {
+    "id": 157,
+    "name": "火暴兽",
+    "traditionalName": "火爆獸",
+    "englishName": "Typhlosion",
+    "genus": "火山宝可梦",
+    "types": [
+      "fire"
+    ],
+    "description": "能从背部迸发炽热的火焰，爆发时产生的热浪足以让对手退避。",
+    "evolvesFrom": 156,
+    "height": 1.7,
+    "weight": 79.5,
+    "artwork": "/johto/pokemon/157.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/157.png"
+  },
+  {
+    "id": 158,
+    "name": "小锯鳄",
+    "traditionalName": "小鋸鱷",
+    "englishName": "Totodile",
+    "genus": "大颚宝可梦",
+    "types": [
+      "water"
+    ],
+    "description": "虽然个头不大，颚部却格外有力。即使只是玩闹着轻咬，也可能留下深深的牙印。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 9.5,
+    "artwork": "/johto/pokemon/158.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/158.png"
+  },
+  {
+    "id": 159,
+    "name": "蓝鳄",
+    "traditionalName": "藍鱷",
+    "englishName": "Croconaw",
+    "genus": "大颚宝可梦",
+    "types": [
+      "water"
+    ],
+    "description": "一旦咬住目标便不会轻易松口，向后弯曲的尖牙让猎物难以挣脱。",
+    "evolvesFrom": 158,
+    "height": 1.1,
+    "weight": 25.0,
+    "artwork": "/johto/pokemon/159.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/159.png"
+  },
+  {
+    "id": 160,
+    "name": "大力鳄",
+    "traditionalName": "大力鱷",
+    "englishName": "Feraligatr",
+    "genus": "大颚宝可梦",
+    "types": [
+      "water"
+    ],
+    "description": "张开巨口威吓对手后，会用强壮的后腿蹬地，迅速向前冲刺。",
+    "evolvesFrom": 159,
+    "height": 2.3,
+    "weight": 88.8,
+    "artwork": "/johto/pokemon/160.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/160.png"
+  },
+  {
+    "id": 161,
+    "name": "尾立",
+    "traditionalName": "尾立",
+    "englishName": "Sentret",
+    "genus": "放哨宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "同伴睡觉时总有一只负责放哨；一有危险，就立刻叫醒整个群体。",
+    "evolvesFrom": null,
+    "height": 0.8,
+    "weight": 6.0,
+    "artwork": "/johto/pokemon/161.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/161.png"
+  },
+  {
+    "id": 162,
+    "name": "大尾立",
+    "traditionalName": "大尾立",
+    "englishName": "Furret",
+    "genus": "长躯干宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "细长的身体可以从狭窄的缝隙钻过，短短的四肢也能支撑它敏捷奔跑。",
+    "evolvesFrom": 161,
+    "height": 1.8,
+    "weight": 32.5,
+    "artwork": "/johto/pokemon/162.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/162.png"
+  },
+  {
+    "id": 163,
+    "name": "咕咕",
+    "traditionalName": "咕咕",
+    "englishName": "Hoothoot",
+    "genus": "猫头鹰宝可梦",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "description": "总是在固定的时间鸣叫，因此也有训练家拿它来代替钟表带出门。",
+    "evolvesFrom": null,
+    "height": 0.7,
+    "weight": 21.2,
+    "artwork": "/johto/pokemon/163.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/163.png"
+  },
+  {
+    "id": 164,
+    "name": "猫头夜鹰",
+    "traditionalName": "貓頭夜鷹",
+    "englishName": "Noctowl",
+    "genus": "猫头鹰宝可梦",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "description": "开始思考事情时，会将脖子旋转１８０度，以此提高大脑的工作效率。",
+    "evolvesFrom": 163,
+    "height": 1.6,
+    "weight": 40.8,
+    "artwork": "/johto/pokemon/164.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/164.png"
+  },
+  {
+    "id": 165,
+    "name": "芭瓢虫",
+    "traditionalName": "芭瓢蟲",
+    "englishName": "Ledyba",
+    "genus": "五星宝可梦",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "description": "非常胆小的宝可梦。会和伙伴一起张开反射壁来保护巢穴。",
+    "evolvesFrom": null,
+    "height": 1.0,
+    "weight": 10.8,
+    "artwork": "/johto/pokemon/165.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/165.png"
+  },
+  {
+    "id": 166,
+    "name": "安瓢虫",
+    "traditionalName": "安瓢蟲",
+    "englishName": "Ledian",
+    "genus": "五星宝可梦",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "description": "在夜空中飞翔的同时会抛撒闪闪发光的粉末。据说粉末沾到身上就会有好事发生。",
+    "evolvesFrom": 165,
+    "height": 1.4,
+    "weight": 35.6,
+    "artwork": "/johto/pokemon/166.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/166.png"
+  },
+  {
+    "id": 167,
+    "name": "圆丝蛛",
+    "traditionalName": "圓絲蛛",
+    "englishName": "Spinarak",
+    "genus": "吐丝宝可梦",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "description": "牙齿上的毒并不强烈，但用来削弱那些挂在网上无法动弹的猎物是绰绰有余了。",
+    "evolvesFrom": null,
+    "height": 0.5,
+    "weight": 8.5,
+    "artwork": "/johto/pokemon/167.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/167.png"
+  },
+  {
+    "id": 168,
+    "name": "阿利多斯",
+    "traditionalName": "阿利多斯",
+    "englishName": "Ariados",
+    "genus": "长腿宝可梦",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "description": "会通过吐丝来捕捉猎物。到了晚上，就会离开巢穴并积极地狩猎。",
+    "evolvesFrom": 167,
+    "height": 1.1,
+    "weight": 33.5,
+    "artwork": "/johto/pokemon/168.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/168.png"
+  },
+  {
+    "id": 169,
+    "name": "叉字蝠",
+    "traditionalName": "叉字蝠",
+    "englishName": "Crobat",
+    "genus": "蝙蝠宝可梦",
+    "types": [
+      "poison",
+      "flying"
+    ],
+    "description": "可以自由地控制４根翅膀振翅而飞。即使在狭窄的洞窟内也能保持速度飞来飞去。",
+    "evolvesFrom": 42,
+    "height": 1.8,
+    "weight": 75.0,
+    "artwork": "/johto/pokemon/169.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/169.png"
+  },
+  {
+    "id": 170,
+    "name": "灯笼鱼",
+    "traditionalName": "燈籠魚",
+    "englishName": "Chinchou",
+    "genus": "琵琶鱼宝可梦",
+    "types": [
+      "water",
+      "electric"
+    ],
+    "description": "在黑暗的海底，触手上不断闪烁着的光是它们唯一的通信手段。",
+    "evolvesFrom": null,
+    "height": 0.5,
+    "weight": 12.0,
+    "artwork": "/johto/pokemon/170.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/170.png"
+  },
+  {
+    "id": 171,
+    "name": "电灯怪",
+    "traditionalName": "電燈怪",
+    "englishName": "Lanturn",
+    "genus": "灯宝可梦",
+    "types": [
+      "water",
+      "electric"
+    ],
+    "description": "发出强光蒙住猎物的眼睛。抓住那一瞬间的空档，使其遭受电的攻击。",
+    "evolvesFrom": 170,
+    "height": 1.2,
+    "weight": 22.5,
+    "artwork": "/johto/pokemon/171.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/171.png"
+  },
+  {
+    "id": 172,
+    "name": "皮丘",
+    "traditionalName": "皮丘",
+    "englishName": "Pichu",
+    "genus": "小鼠宝可梦",
+    "types": [
+      "electric"
+    ],
+    "description": "脸颊上的电囊还很小，如果囊里的电太多了，就会漏出来电到自己。",
+    "evolvesFrom": null,
+    "height": 0.3,
+    "weight": 2.0,
+    "artwork": "/johto/pokemon/172.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png"
+  },
+  {
+    "id": 173,
+    "name": "皮宝宝",
+    "traditionalName": "皮寶寶",
+    "englishName": "Cleffa",
+    "genus": "星形宝可梦",
+    "types": [
+      "fairy"
+    ],
+    "description": "有着星星一样的轮廓。由于那外形，人们相信它是乘着流星而来的。",
+    "evolvesFrom": null,
+    "height": 0.3,
+    "weight": 3.0,
+    "artwork": "/johto/pokemon/173.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/173.png"
+  },
+  {
+    "id": 174,
+    "name": "宝宝丁",
+    "traditionalName": "寶寶丁",
+    "englishName": "Igglybuff",
+    "genus": "气球宝可梦",
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "description": "用柔软的身体弹跳著移动。当它的体温上升时，身体会变成深粉红色。",
+    "evolvesFrom": null,
+    "height": 0.3,
+    "weight": 1.0,
+    "artwork": "/johto/pokemon/174.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/174.png"
+  },
+  {
+    "id": 175,
+    "name": "波克比",
+    "traditionalName": "波克比",
+    "englishName": "Togepi",
+    "genus": "针球宝可梦",
+    "types": [
+      "fairy"
+    ],
+    "description": "好运的象征。据说在它的壳里装着满满的幸福。",
+    "evolvesFrom": null,
+    "height": 0.3,
+    "weight": 1.5,
+    "artwork": "/johto/pokemon/175.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/175.png"
+  },
+  {
+    "id": 176,
+    "name": "波克基古",
+    "traditionalName": "波克基古",
+    "englishName": "Togetic",
+    "genus": "幸福宝可梦",
+    "types": [
+      "fairy",
+      "flying"
+    ],
+    "description": "不待在温柔的人身边就会变得没有精神。不挥动翅膀也能浮在空中。",
+    "evolvesFrom": 175,
+    "height": 0.6,
+    "weight": 3.2,
+    "artwork": "/johto/pokemon/176.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/176.png"
+  },
+  {
+    "id": 177,
+    "name": "天然雀",
+    "traditionalName": "天然雀",
+    "englishName": "Natu",
+    "genus": "小鸟宝可梦",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "description": "由于羽翼未丰，所以会跳着移动。一直在注视着什么。",
+    "evolvesFrom": null,
+    "height": 0.2,
+    "weight": 2.0,
+    "artwork": "/johto/pokemon/177.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/177.png"
+  },
+  {
+    "id": 178,
+    "name": "天然鸟",
+    "traditionalName": "天然鳥",
+    "englishName": "Xatu",
+    "genus": "神秘宝可梦",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "description": "能够看穿过去和未来。日复一日注视着太阳动向的奇异宝可梦。",
+    "evolvesFrom": 177,
+    "height": 1.5,
+    "weight": 15.0,
+    "artwork": "/johto/pokemon/178.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/178.png"
+  },
+  {
+    "id": 179,
+    "name": "咩利羊",
+    "traditionalName": "咩利羊",
+    "englishName": "Mareep",
+    "genus": "绵毛宝可梦",
+    "types": [
+      "electric"
+    ],
+    "description": "绒毛摩擦产生的电力会被储存起来。如果觉得可爱而直接用手碰它的话，就会被啪地一下电得又麻又痛。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 7.8,
+    "artwork": "/johto/pokemon/179.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/179.png"
+  },
+  {
+    "id": 180,
+    "name": "茸茸羊",
+    "traditionalName": "茸茸羊",
+    "englishName": "Flaaffy",
+    "genus": "绵毛宝可梦",
+    "types": [
+      "electric"
+    ],
+    "description": "能将电力储存在松软的毛发中。因为储存了太多电力，所以身上有些地方已经变得光秃秃的了。",
+    "evolvesFrom": 179,
+    "height": 0.8,
+    "weight": 13.3,
+    "artwork": "/johto/pokemon/180.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/180.png"
+  },
+  {
+    "id": 181,
+    "name": "电龙",
+    "traditionalName": "電龍",
+    "englishName": "Ampharos",
+    "genus": "灯宝可梦",
+    "types": [
+      "electric"
+    ],
+    "description": "尾巴会发出很强的亮光。从以前起，它就被船员们当做路标而深受重视。",
+    "evolvesFrom": 180,
+    "height": 1.4,
+    "weight": 61.5,
+    "artwork": "/johto/pokemon/181.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/181.png"
+  },
+  {
+    "id": 182,
+    "name": "美丽花",
+    "traditionalName": "美麗花",
+    "englishName": "Bellossom",
+    "genus": "花宝可梦",
+    "types": [
+      "grass"
+    ],
+    "description": "有时能看到美丽花聚在一起做着像是跳舞一样的动作。据说这是呼唤太阳的仪式。",
+    "evolvesFrom": 44,
+    "height": 0.4,
+    "weight": 5.8,
+    "artwork": "/johto/pokemon/182.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/182.png"
+  },
+  {
+    "id": 183,
+    "name": "玛力露",
+    "traditionalName": "瑪力露",
+    "englishName": "Marill",
+    "genus": "水鼠宝可梦",
+    "types": [
+      "water",
+      "fairy"
+    ],
+    "description": "体毛的防水性能很好，就算是从冰冷的海里上岸，身体也会立刻干掉，一点都不冷。",
+    "evolvesFrom": null,
+    "height": 0.4,
+    "weight": 8.5,
+    "artwork": "/johto/pokemon/183.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/183.png"
+  },
+  {
+    "id": 184,
+    "name": "玛力露丽",
+    "traditionalName": "瑪力露麗",
+    "englishName": "Azumarill",
+    "genus": "水兔宝可梦",
+    "types": [
+      "water",
+      "fairy"
+    ],
+    "description": "会制作填满空气的泡泡。当露力丽在河里玩的时候，它就会用这个泡泡包住露力丽。",
+    "evolvesFrom": 183,
+    "height": 0.8,
+    "weight": 28.5,
+    "artwork": "/johto/pokemon/184.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/184.png"
+  },
+  {
+    "id": 185,
+    "name": "树才怪",
+    "traditionalName": "樹才怪",
+    "englishName": "Sudowoodo",
+    "genus": "模仿宝可梦",
+    "types": [
+      "rock"
+    ],
+    "description": "为了不被袭击会模仿树的样子。很讨厌水，所以下雨后，不知什么时候就会消失。",
+    "evolvesFrom": null,
+    "height": 1.2,
+    "weight": 38.0,
+    "artwork": "/johto/pokemon/185.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/185.png"
+  },
+  {
+    "id": 186,
+    "name": "蚊香蛙皇",
+    "traditionalName": "蚊香蛙皇",
+    "englishName": "Politoed",
+    "genus": "蛙宝可梦",
+    "types": [
+      "water"
+    ],
+    "description": "雄性的叫声更响亮。叫声低沉可怕的蚊香蛙皇更能受到雌性的欢迎。",
+    "evolvesFrom": 61,
+    "height": 1.1,
+    "weight": 33.9,
+    "artwork": "/johto/pokemon/186.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/186.png"
+  },
+  {
+    "id": 187,
+    "name": "毽子草",
+    "traditionalName": "毽子草",
+    "englishName": "Hoppip",
+    "genus": "棉草宝可梦",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "description": "会随风飘浮。强风将至时，毽子草们会互相勾住叶子，避免被吹散。",
+    "evolvesFrom": null,
+    "height": 0.4,
+    "weight": 0.5,
+    "artwork": "/johto/pokemon/187.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/187.png"
+  },
+  {
+    "id": 188,
+    "name": "毽子花",
+    "traditionalName": "毽子花",
+    "englishName": "Skiploom",
+    "genus": "棉草宝可梦",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "description": "头顶的花会随着气温升高而开放，花瓣张开的程度也能提示天气的冷暖。",
+    "evolvesFrom": 187,
+    "height": 0.6,
+    "weight": 1.0,
+    "artwork": "/johto/pokemon/188.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/188.png"
+  },
+  {
+    "id": 189,
+    "name": "毽子棉",
+    "traditionalName": "毽子棉",
+    "englishName": "Jumpluff",
+    "genus": "棉草宝可梦",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "description": "搭乘温暖的南风越过大海；遇上冷空气时，便会慢慢降回地面。",
+    "evolvesFrom": 188,
+    "height": 0.8,
+    "weight": 3.0,
+    "artwork": "/johto/pokemon/189.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/189.png"
+  },
+  {
+    "id": 190,
+    "name": "长尾怪手",
+    "traditionalName": "長尾怪手",
+    "englishName": "Aipom",
+    "genus": "长尾宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "会从树上寻找猎物。发现喜食的甜竹竹后，就会兴奋地飞扑过去。",
+    "evolvesFrom": null,
+    "height": 0.8,
+    "weight": 11.5,
+    "artwork": "/johto/pokemon/190.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/190.png"
+  },
+  {
+    "id": 191,
+    "name": "向日种子",
+    "traditionalName": "向日種子",
+    "englishName": "Sunkern",
+    "genus": "种子宝可梦",
+    "types": [
+      "grass"
+    ],
+    "description": "为了保存进化所需的养分，平时几乎不动，只靠早晨的露水补充水分。",
+    "evolvesFrom": null,
+    "height": 0.3,
+    "weight": 1.8,
+    "artwork": "/johto/pokemon/191.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/191.png"
+  },
+  {
+    "id": 192,
+    "name": "向日花怪",
+    "traditionalName": "向日花怪",
+    "englishName": "Sunflora",
+    "genus": "太阳宝可梦",
+    "types": [
+      "grass"
+    ],
+    "description": "把阳光转化为养分，白天活跃地移动；太阳落山后便安静下来。",
+    "evolvesFrom": 191,
+    "height": 0.8,
+    "weight": 8.5,
+    "artwork": "/johto/pokemon/192.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/192.png"
+  },
+  {
+    "id": 193,
+    "name": "蜻蜻蜓",
+    "traditionalName": "蜻蜻蜓",
+    "englishName": "Yanma",
+    "genus": "薄翼宝可梦",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "description": "透明的翅膀看起来十分轻薄，振动起来却能掀起强劲的气流。",
+    "evolvesFrom": null,
+    "height": 1.2,
+    "weight": 38.0,
+    "artwork": "/johto/pokemon/193.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/193.png"
+  },
+  {
+    "id": 194,
+    "name": "乌波",
+    "traditionalName": "烏波",
+    "englishName": "Wooper",
+    "genus": "水鱼宝可梦",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "description": "为了在地面上行走时不让皮肤干燥，会用有毒的粘膜覆盖身体。",
+    "evolvesFrom": null,
+    "height": 0.4,
+    "weight": 8.5,
+    "artwork": "/johto/pokemon/194.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/194.png"
+  },
+  {
+    "id": 195,
+    "name": "沼王",
+    "traditionalName": "沼王",
+    "englishName": "Quagsire",
+    "genus": "水鱼宝可梦",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "description": "身体总是滑溜溜的。虽然游泳时头总会撞到河底，但它自己毫不在意。",
+    "evolvesFrom": 194,
+    "height": 1.4,
+    "weight": 75.0,
+    "artwork": "/johto/pokemon/195.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/195.png"
+  },
+  {
+    "id": 196,
+    "name": "太阳伊布",
+    "traditionalName": "太陽伊布",
+    "englishName": "Espeon",
+    "genus": "太阳宝可梦",
+    "types": [
+      "psychic"
+    ],
+    "description": "从额头的珠子放射出精神力量进行战斗。当力量用尽时，珠子的颜色也会褪去。",
+    "evolvesFrom": 133,
+    "height": 0.9,
+    "weight": 26.5,
+    "artwork": "/johto/pokemon/196.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/196.png"
+  },
+  {
+    "id": 197,
+    "name": "月亮伊布",
+    "traditionalName": "月亮伊布",
+    "englishName": "Umbreon",
+    "genus": "月光宝可梦",
+    "types": [
+      "dark"
+    ],
+    "description": "在满月之夜或是兴奋的时候，它身上圈圈一样的花纹就会发出金黄色的光。",
+    "evolvesFrom": 133,
+    "height": 1.0,
+    "weight": 27.0,
+    "artwork": "/johto/pokemon/197.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png"
+  },
+  {
+    "id": 198,
+    "name": "黑暗鸦",
+    "traditionalName": "黑暗鴉",
+    "englishName": "Murkrow",
+    "genus": "黑暗宝可梦",
+    "types": [
+      "dark",
+      "flying"
+    ],
+    "description": "会为老大去寻找闪闪发光的东西。据说它很不吉利，厌恶它的人也很多。",
+    "evolvesFrom": null,
+    "height": 0.5,
+    "weight": 2.1,
+    "artwork": "/johto/pokemon/198.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/198.png"
+  },
+  {
+    "id": 199,
+    "name": "呆呆王",
+    "traditionalName": "呆呆王",
+    "englishName": "Slowking",
+    "genus": "王者宝可梦",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "description": "虽然无论向呆呆王提出什么难题它都会帮忙解决，但是谁都无法理解它的语言。",
+    "evolvesFrom": 79,
+    "height": 2.0,
+    "weight": 79.5,
+    "artwork": "/johto/pokemon/199.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/199.png"
+  },
+  {
+    "id": 200,
+    "name": "梦妖",
+    "traditionalName": "夢妖",
+    "englishName": "Misdreavus",
+    "genus": "夜啼宝可梦",
+    "types": [
+      "ghost"
+    ],
+    "description": "会通过模仿人哭叫的声音来吓唬大家并以此为乐。不擅长对付胆大的对手。",
+    "evolvesFrom": null,
+    "height": 0.7,
+    "weight": 1.0,
+    "artwork": "/johto/pokemon/200.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/200.png"
+  },
+  {
+    "id": 201,
+    "name": "未知图腾",
+    "traditionalName": "未知圖騰",
+    "englishName": "Unown",
+    "genus": "象征宝可梦",
+    "types": [
+      "psychic"
+    ],
+    "description": "拥有许多形似文字的姿态。它们之间是否存在某种含义，至今仍是谜。",
+    "evolvesFrom": null,
+    "height": 0.5,
+    "weight": 5.0,
+    "artwork": "/johto/pokemon/201.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/201.png"
+  },
+  {
+    "id": 202,
+    "name": "果然翁",
+    "traditionalName": "果然翁",
+    "englishName": "Wobbuffet",
+    "genus": "忍耐宝可梦",
+    "types": [
+      "psychic"
+    ],
+    "description": "为了隐藏漆黑的尾巴而悄悄地生活在黑暗之中。不会主动发起攻击。",
+    "evolvesFrom": null,
+    "height": 1.3,
+    "weight": 28.5,
+    "artwork": "/johto/pokemon/202.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/202.png"
+  },
+  {
+    "id": 203,
+    "name": "麒麟奇",
+    "traditionalName": "麒麟奇",
+    "englishName": "Girafarig",
+    "genus": "长颈宝可梦",
+    "types": [
+      "normal",
+      "psychic"
+    ],
+    "description": "尾巴上的小脑袋即使在本体睡觉时也能保持警觉，替它观察身后的动静。",
+    "evolvesFrom": null,
+    "height": 1.5,
+    "weight": 41.5,
+    "artwork": "/johto/pokemon/203.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/203.png"
+  },
+  {
+    "id": 204,
+    "name": "榛果球",
+    "traditionalName": "榛果球",
+    "englishName": "Pineco",
+    "genus": "蓑衣虫宝可梦",
+    "types": [
+      "bug"
+    ],
+    "description": "会用唾液将树皮粘在自己身上，从而让自己变得又厚又大。上了年纪的榛果球是无比巨大的。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 7.2,
+    "artwork": "/johto/pokemon/204.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/204.png"
+  },
+  {
+    "id": 205,
+    "name": "佛烈托斯",
+    "traditionalName": "佛烈托斯",
+    "englishName": "Forretress",
+    "genus": "蓑衣虫宝可梦",
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "description": "仅在吞下猎物的瞬间，壳里面的身体才会出现，但至今仍未有人或宝可梦见过其真面目。",
+    "evolvesFrom": 204,
+    "height": 1.2,
+    "weight": 125.8,
+    "artwork": "/johto/pokemon/205.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/205.png"
+  },
+  {
+    "id": 206,
+    "name": "土龙弟弟",
+    "traditionalName": "土龍弟弟",
+    "englishName": "Dunsparce",
+    "genus": "地蛇宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "栖息在像迷宫一样的巢穴里。能通过土壤的气味来判断自己的位置，所以绝对不会迷路。",
+    "evolvesFrom": null,
+    "height": 1.5,
+    "weight": 14.0,
+    "artwork": "/johto/pokemon/206.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/206.png"
+  },
+  {
+    "id": 207,
+    "name": "天蝎",
+    "traditionalName": "天蠍",
+    "englishName": "Gligar",
+    "genus": "飞蝎宝可梦",
+    "types": [
+      "ground",
+      "flying"
+    ],
+    "description": "会先用身体遮住猎物的视线，再用尾端的毒针发动突袭。",
+    "evolvesFrom": null,
+    "height": 1.1,
+    "weight": 64.8,
+    "artwork": "/johto/pokemon/207.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/207.png"
+  },
+  {
+    "id": 208,
+    "name": "大钢蛇",
+    "traditionalName": "大鋼蛇",
+    "englishName": "Steelix",
+    "genus": "铁蛇宝可梦",
+    "types": [
+      "steel",
+      "ground"
+    ],
+    "description": "人们认为它的身体是因为堆积了很多和泥土一起吞下的铁元素，才会发生变化的。",
+    "evolvesFrom": 95,
+    "height": 9.2,
+    "weight": 400.0,
+    "artwork": "/johto/pokemon/208.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/208.png"
+  },
+  {
+    "id": 209,
+    "name": "布鲁",
+    "traditionalName": "布魯",
+    "englishName": "Snubbull",
+    "genus": "妖精宝可梦",
+    "types": [
+      "fairy"
+    ],
+    "description": "它和看上去不同，其实很胆小。所以如果把它和小狗宝可梦放在一起，它就有可能会受到欺负。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 7.8,
+    "artwork": "/johto/pokemon/209.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/209.png"
+  },
+  {
+    "id": 210,
+    "name": "布鲁皇",
+    "traditionalName": "布魯皇",
+    "englishName": "Granbull",
+    "genus": "妖精宝可梦",
+    "types": [
+      "fairy"
+    ],
+    "description": "虽然深受年轻女性的欢迎，但它胆小怕事，内心柔弱，所以无法成为一条看门犬。",
+    "evolvesFrom": 209,
+    "height": 1.4,
+    "weight": 48.7,
+    "artwork": "/johto/pokemon/210.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/210.png"
+  },
+  {
+    "id": 211,
+    "name": "千针鱼",
+    "traditionalName": "千針魚",
+    "englishName": "Qwilfish",
+    "genus": "气球宝可梦",
+    "types": [
+      "water",
+      "poison"
+    ],
+    "description": "全身上下的小针都是由鳞片变化而来的。如果被刺中的话，就会因中毒而昏迷。",
+    "evolvesFrom": null,
+    "height": 0.5,
+    "weight": 3.9,
+    "artwork": "/johto/pokemon/211.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/211.png"
+  },
+  {
+    "id": 212,
+    "name": "巨钳螳螂",
+    "traditionalName": "巨鉗螳螂",
+    "englishName": "Scizor",
+    "genus": "钳子宝可梦",
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "description": "虽然身体纤细，却有着惊人的攻击力。身体的肌肉也是由金属构成的。",
+    "evolvesFrom": 123,
+    "height": 1.8,
+    "weight": 118.0,
+    "artwork": "/johto/pokemon/212.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/212.png"
+  },
+  {
+    "id": 213,
+    "name": "壶壶",
+    "traditionalName": "壺壺",
+    "englishName": "Shuckle",
+    "genus": "发酵宝可梦",
+    "types": [
+      "bug",
+      "rock"
+    ],
+    "description": "储存在壶形甲壳里的树果会在不知不觉间变成黏糊糊的果汁。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 20.5,
+    "artwork": "/johto/pokemon/213.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/213.png"
+  },
+  {
+    "id": 214,
+    "name": "赫拉克罗斯",
+    "traditionalName": "赫拉克羅斯",
+    "englishName": "Heracross",
+    "genus": "独角宝可梦",
+    "types": [
+      "bug",
+      "fighting"
+    ],
+    "description": "能轻轻松松地举起比自己体重还重１００倍的东西，是以一身怪力为傲的宝可梦。",
+    "evolvesFrom": null,
+    "height": 1.5,
+    "weight": 54.0,
+    "artwork": "/johto/pokemon/214.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/214.png"
+  },
+  {
+    "id": 215,
+    "name": "狃拉",
+    "traditionalName": "狃拉",
+    "englishName": "Sneasel",
+    "genus": "钩爪宝可梦",
+    "types": [
+      "dark",
+      "ice"
+    ],
+    "description": "狡黠凶恶的性格。趁着双亲不在就侵入巢穴，将蛋盗出。",
+    "evolvesFrom": null,
+    "height": 0.9,
+    "weight": 28.0,
+    "artwork": "/johto/pokemon/215.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/215.png"
+  },
+  {
+    "id": 216,
+    "name": "熊宝宝",
+    "traditionalName": "熊寶寶",
+    "englishName": "Teddiursa",
+    "genus": "小熊宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "掌心常沾着香甜的蜂蜜，因此总爱舔自己的爪子；也会悄悄寻找蜂巢。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 8.8,
+    "artwork": "/johto/pokemon/216.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/216.png"
+  },
+  {
+    "id": 217,
+    "name": "圈圈熊",
+    "traditionalName": "圈圈熊",
+    "englishName": "Ursaring",
+    "genus": "冬眠宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "擅长在山林里寻找树果。到了食物稀少的季节，觅食中的它会变得格外凶猛。",
+    "evolvesFrom": 216,
+    "height": 1.8,
+    "weight": 125.8,
+    "artwork": "/johto/pokemon/217.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/217.png"
+  },
+  {
+    "id": 218,
+    "name": "熔岩虫",
+    "traditionalName": "熔岩蟲",
+    "englishName": "Slugma",
+    "genus": "熔岩宝可梦",
+    "types": [
+      "fire"
+    ],
+    "description": "体内流动的不是血液，而是滚烫的熔岩；停下来冷却对它十分危险。",
+    "evolvesFrom": null,
+    "height": 0.7,
+    "weight": 35.0,
+    "artwork": "/johto/pokemon/218.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/218.png"
+  },
+  {
+    "id": 219,
+    "name": "熔岩蜗牛",
+    "traditionalName": "熔岩蝸牛",
+    "englishName": "Magcargo",
+    "genus": "熔岩宝可梦",
+    "types": [
+      "fire",
+      "rock"
+    ],
+    "description": "身体的热量极高，雨滴落上去会立刻蒸发，周围也会升起水雾。",
+    "evolvesFrom": 218,
+    "height": 0.8,
+    "weight": 55.0,
+    "artwork": "/johto/pokemon/219.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/219.png"
+  },
+  {
+    "id": 220,
+    "name": "小山猪",
+    "traditionalName": "小山豬",
+    "englishName": "Swinub",
+    "genus": "小猪宝可梦",
+    "types": [
+      "ice",
+      "ground"
+    ],
+    "description": "嗅到诱人的香味时，便会不顾一切地朝着气味的方向飞奔过去。",
+    "evolvesFrom": null,
+    "height": 0.4,
+    "weight": 6.5,
+    "artwork": "/johto/pokemon/220.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/220.png"
+  },
+  {
+    "id": 221,
+    "name": "长毛猪",
+    "traditionalName": "長毛豬",
+    "englishName": "Piloswine",
+    "genus": "野猪宝可梦",
+    "types": [
+      "ice",
+      "ground"
+    ],
+    "description": "虽然４只脚很短，但因为蹄子很宽很粗糙，所以就算在雪地上行走也不会打滑。",
+    "evolvesFrom": 220,
+    "height": 1.1,
+    "weight": 55.8,
+    "artwork": "/johto/pokemon/221.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/221.png"
+  },
+  {
+    "id": 222,
+    "name": "太阳珊瑚",
+    "traditionalName": "太陽珊瑚",
+    "englishName": "Corsola",
+    "genus": "珊瑚宝可梦",
+    "types": [
+      "water",
+      "rock"
+    ],
+    "description": "在温暖的大海里生活。也曾经大量栖息于上古时期的伽勒尔近海。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 5.0,
+    "artwork": "/johto/pokemon/222.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/222.png"
+  },
+  {
+    "id": 223,
+    "name": "铁炮鱼",
+    "traditionalName": "鐵炮魚",
+    "englishName": "Remoraid",
+    "genus": "喷射宝可梦",
+    "types": [
+      "water"
+    ],
+    "description": "会用变成吸盘状的背鳍吸附在巨翅飞鱼身上，让它分一点吃剩的东西给自己吃。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 12.0,
+    "artwork": "/johto/pokemon/223.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/223.png"
+  },
+  {
+    "id": 224,
+    "name": "章鱼桶",
+    "traditionalName": "章魚桶",
+    "englishName": "Octillery",
+    "genus": "喷射宝可梦",
+    "types": [
+      "water"
+    ],
+    "description": "有着结实的坚硬脑袋。会用带吸盘的脚缠住对手，然后再一个劲地用头猛撞。",
+    "evolvesFrom": 223,
+    "height": 0.9,
+    "weight": 28.5,
+    "artwork": "/johto/pokemon/224.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/224.png"
+  },
+  {
+    "id": 225,
+    "name": "信使鸟",
+    "traditionalName": "信使鳥",
+    "englishName": "Delibird",
+    "genus": "搬运宝可梦",
+    "types": [
+      "ice",
+      "flying"
+    ],
+    "description": "因为有跟人类及宝可梦分享自己食物的习性，所以一直都在到处寻找食物。",
+    "evolvesFrom": null,
+    "height": 0.9,
+    "weight": 16.0,
+    "artwork": "/johto/pokemon/225.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/225.png"
+  },
+  {
+    "id": 226,
+    "name": "巨翅飞鱼",
+    "traditionalName": "巨翅飛魚",
+    "englishName": "Mantine",
+    "genus": "风筝宝可梦",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "description": "悠然地畅游在大海中。就算有觊觎食物残渣的铁炮鱼吸附在自己身上也毫不在意。",
+    "evolvesFrom": null,
+    "height": 2.1,
+    "weight": 220.0,
+    "artwork": "/johto/pokemon/226.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/226.png"
+  },
+  {
+    "id": 227,
+    "name": "盔甲鸟",
+    "traditionalName": "盔甲鳥",
+    "englishName": "Skarmory",
+    "genus": "钢甲鸟宝可梦",
+    "types": [
+      "steel",
+      "flying"
+    ],
+    "description": "由于它身上掉落下来的羽毛可以用来制剑，因此作为纹章的图案也很有人气。",
+    "evolvesFrom": null,
+    "height": 1.7,
+    "weight": 50.5,
+    "artwork": "/johto/pokemon/227.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/227.png"
+  },
+  {
+    "id": 228,
+    "name": "戴鲁比",
+    "traditionalName": "戴魯比",
+    "englishName": "Houndour",
+    "genus": "阴暗宝可梦",
+    "types": [
+      "dark",
+      "fire"
+    ],
+    "description": "会在天亮之前反复发出恐怖的长嚎，并以此来彰显自己群体的存在。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 10.8,
+    "artwork": "/johto/pokemon/228.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/228.png"
+  },
+  {
+    "id": 229,
+    "name": "黑鲁加",
+    "traditionalName": "黑魯加",
+    "englishName": "Houndoom",
+    "genus": "阴暗宝可梦",
+    "types": [
+      "dark",
+      "fire"
+    ],
+    "description": "恐怖的长嚎是其特征。过去人们曾认为它是来自地狱的使者而对其心存畏惧。",
+    "evolvesFrom": 228,
+    "height": 1.4,
+    "weight": 35.0,
+    "artwork": "/johto/pokemon/229.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/229.png"
+  },
+  {
+    "id": 230,
+    "name": "刺龙王",
+    "traditionalName": "刺龍王",
+    "englishName": "Kingdra",
+    "genus": "龙宝可梦",
+    "types": [
+      "water",
+      "dragon"
+    ],
+    "description": "身上掉下的鳞片闪耀着高雅而有深度的光泽，甚至会被拿去进献给王族。",
+    "evolvesFrom": 117,
+    "height": 1.8,
+    "weight": 152.0,
+    "artwork": "/johto/pokemon/230.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/230.png"
+  },
+  {
+    "id": 231,
+    "name": "小小象",
+    "traditionalName": "小小象",
+    "englishName": "Phanpy",
+    "genus": "长鼻宝可梦",
+    "types": [
+      "ground"
+    ],
+    "description": "会用长鼻子给自己淋水，也喜欢和同伴互相喷水，玩累后再到水边晾干身体。",
+    "evolvesFrom": null,
+    "height": 0.5,
+    "weight": 33.5,
+    "artwork": "/johto/pokemon/231.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/231.png"
+  },
+  {
+    "id": 232,
+    "name": "顿甲",
+    "traditionalName": "頓甲",
+    "englishName": "Donphan",
+    "genus": "铠甲宝可梦",
+    "types": [
+      "ground"
+    ],
+    "description": "坚硬的身体与强大的力气足以冲开障碍，也会帮助清理挡住山路的落石。",
+    "evolvesFrom": 231,
+    "height": 1.1,
+    "weight": 120.0,
+    "artwork": "/johto/pokemon/232.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/232.png"
+  },
+  {
+    "id": 233,
+    "name": "多边兽２型",
+    "traditionalName": "多邊獸Ⅱ",
+    "englishName": "Porygon2",
+    "genus": "虚拟宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "在装载了ＡＩ功能后，多边兽２型便开始用只有彼此能懂的神秘语言互相交流了。",
+    "evolvesFrom": 137,
+    "height": 0.6,
+    "weight": 32.5,
+    "artwork": "/johto/pokemon/233.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/233.png"
+  },
+  {
+    "id": 234,
+    "name": "惊角鹿",
+    "traditionalName": "驚角鹿",
+    "englishName": "Stantler",
+    "genus": "大角宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "形状奇特的角会让注视它的人产生眩晕感，因此人们对它的角充满好奇。",
+    "evolvesFrom": null,
+    "height": 1.4,
+    "weight": 71.2,
+    "artwork": "/johto/pokemon/234.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/234.png"
+  },
+  {
+    "id": 235,
+    "name": "图图犬",
+    "traditionalName": "圖圖犬",
+    "englishName": "Smeargle",
+    "genus": "画画宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "会用尾巴前端渗出的体液画下标记。对于有些标记，爱好者会以高价买卖。",
+    "evolvesFrom": null,
+    "height": 1.2,
+    "weight": 58.0,
+    "artwork": "/johto/pokemon/235.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/235.png"
+  },
+  {
+    "id": 236,
+    "name": "无畏小子",
+    "traditionalName": "無畏小子",
+    "englishName": "Tyrogue",
+    "genus": "打斗宝可梦",
+    "types": [
+      "fighting"
+    ],
+    "description": "体型偏小却不可轻视，因为它只要发现合适的对手便会马上扑上去大打出手。",
+    "evolvesFrom": null,
+    "height": 0.7,
+    "weight": 21.0,
+    "artwork": "/johto/pokemon/236.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/236.png"
+  },
+  {
+    "id": 237,
+    "name": "战舞郎",
+    "traditionalName": "戰舞郎",
+    "englishName": "Hitmontop",
+    "genus": "倒立宝可梦",
+    "types": [
+      "fighting"
+    ],
+    "description": "会通过倒立来扰乱对方的节奏，然后趁隙施展华丽的踢击。",
+    "evolvesFrom": 236,
+    "height": 1.4,
+    "weight": 48.0,
+    "artwork": "/johto/pokemon/237.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/237.png"
+  },
+  {
+    "id": 238,
+    "name": "迷唇娃",
+    "traditionalName": "迷唇娃",
+    "englishName": "Smoochum",
+    "genus": "亲吻宝可梦",
+    "types": [
+      "ice",
+      "psychic"
+    ],
+    "description": "好奇心旺盛的宝可梦。不管是什么都会试着用嘴唇去触碰，确认是否喜欢。",
+    "evolvesFrom": null,
+    "height": 0.4,
+    "weight": 6.0,
+    "artwork": "/johto/pokemon/238.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/238.png"
+  },
+  {
+    "id": 239,
+    "name": "电击怪",
+    "traditionalName": "電擊怪",
+    "englishName": "Elekid",
+    "genus": "电气宝可梦",
+    "types": [
+      "electric"
+    ],
+    "description": "储存电力的本领还不到家。为了吸取电力，会偷偷潜入民宅寻找插座。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 23.5,
+    "artwork": "/johto/pokemon/239.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/239.png"
+  },
+  {
+    "id": 240,
+    "name": "鸭嘴宝宝",
+    "traditionalName": "鴨嘴寶寶",
+    "englishName": "Magby",
+    "genus": "火种宝可梦",
+    "types": [
+      "fire"
+    ],
+    "description": "栖息在火山地带。会浸泡在岩浆中，疗愈一整天的疲劳。",
+    "evolvesFrom": null,
+    "height": 0.7,
+    "weight": 21.4,
+    "artwork": "/johto/pokemon/240.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/240.png"
+  },
+  {
+    "id": 241,
+    "name": "大奶罐",
+    "traditionalName": "大奶罐",
+    "englishName": "Miltank",
+    "genus": "奶牛宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "如果不每天帮它挤鲜奶，它的身体就会不舒服。鲜奶的味道会随季节改变。",
+    "evolvesFrom": null,
+    "height": 1.2,
+    "weight": 75.5,
+    "artwork": "/johto/pokemon/241.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/241.png"
+  },
+  {
+    "id": 242,
+    "name": "幸福蛋",
+    "traditionalName": "幸福蛋",
+    "englishName": "Blissey",
+    "genus": "幸福宝可梦",
+    "types": [
+      "normal"
+    ],
+    "description": "会生下装满幸福的奇妙之蛋。据说，吃下它的蛋的人，能够对所有人都温柔相待。",
+    "evolvesFrom": 113,
+    "height": 1.5,
+    "weight": 46.8,
+    "artwork": "/johto/pokemon/242.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/242.png"
+  },
+  {
+    "id": 243,
+    "name": "雷公",
+    "traditionalName": "雷公",
+    "englishName": "Raikou",
+    "genus": "天雷宝可梦",
+    "types": [
+      "electric"
+    ],
+    "description": "奔跑时像闪电一样迅疾，吼声会震动空气，仿佛雷鸣就在身旁。",
+    "evolvesFrom": null,
+    "height": 1.9,
+    "weight": 178.0,
+    "artwork": "/johto/pokemon/243.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/243.png"
+  },
+  {
+    "id": 244,
+    "name": "炎帝",
+    "traditionalName": "炎帝",
+    "englishName": "Entei",
+    "genus": "火山宝可梦",
+    "types": [
+      "fire"
+    ],
+    "description": "传说它与火山的喷发相伴而生，奔跑时能释放炽烈的火焰。",
+    "evolvesFrom": null,
+    "height": 2.1,
+    "weight": 198.0,
+    "artwork": "/johto/pokemon/244.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/244.png"
+  },
+  {
+    "id": 245,
+    "name": "水君",
+    "traditionalName": "水君",
+    "englishName": "Suicune",
+    "genus": "极光宝可梦",
+    "types": [
+      "water"
+    ],
+    "description": "在大地上优雅地奔跑，拥有净化污水的力量，常让人联想到清澈的泉水。",
+    "evolvesFrom": null,
+    "height": 2.0,
+    "weight": 187.0,
+    "artwork": "/johto/pokemon/245.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/245.png"
+  },
+  {
+    "id": 246,
+    "name": "幼基拉斯",
+    "traditionalName": "幼基拉斯",
+    "englishName": "Larvitar",
+    "genus": "岩石肤宝可梦",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "description": "以吃土为生。吃掉一座大山后，就会为了成长而开始沉睡。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 72.0,
+    "artwork": "/johto/pokemon/246.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/246.png"
+  },
+  {
+    "id": 247,
+    "name": "沙基拉斯",
+    "traditionalName": "沙基拉斯",
+    "englishName": "Pupitar",
+    "genus": "子弹宝可梦",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "description": "虽然是蛹却不会呆着不动。在坚硬的甲壳之下已经长出了手脚。",
+    "evolvesFrom": 246,
+    "height": 1.2,
+    "weight": 152.0,
+    "artwork": "/johto/pokemon/247.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/247.png"
+  },
+  {
+    "id": 248,
+    "name": "班基拉斯",
+    "traditionalName": "班基拉斯",
+    "englishName": "Tyranitar",
+    "genus": "铠甲宝可梦",
+    "types": [
+      "rock",
+      "dark"
+    ],
+    "description": "当它带着巨大轰鸣声迈开脚步，就连大山都会为之崩裂，周围的地形也会因此改变。",
+    "evolvesFrom": 247,
+    "height": 2.0,
+    "weight": 202.0,
+    "artwork": "/johto/pokemon/248.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/248.png"
+  },
+  {
+    "id": 249,
+    "name": "洛奇亚",
+    "traditionalName": "洛奇亞",
+    "englishName": "Lugia",
+    "genus": "潜水宝可梦",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "description": "翅膀轻轻拍动就能掀起强风，因此长久栖身于远离人群的深海。",
+    "evolvesFrom": null,
+    "height": 5.2,
+    "weight": 216.0,
+    "artwork": "/johto/pokemon/249.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png"
+  },
+  {
+    "id": 250,
+    "name": "凤王",
+    "traditionalName": "鳳王",
+    "englishName": "Ho-Oh",
+    "genus": "虹色宝可梦",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "description": "羽毛会随光线角度呈现七彩光泽。传说见到它的人会得到幸福。",
+    "evolvesFrom": null,
+    "height": 3.8,
+    "weight": 199.0,
+    "artwork": "/johto/pokemon/250.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png"
+  },
+  {
+    "id": 251,
+    "name": "时拉比",
+    "traditionalName": "時拉比",
+    "englishName": "Celebi",
+    "genus": "时空穿越宝可梦",
+    "types": [
+      "psychic",
+      "grass"
+    ],
+    "description": "从未来穿越时光而来。能够治愈伤痛，也会把自己的力量分给草木。",
+    "evolvesFrom": null,
+    "height": 0.6,
+    "weight": 5.0,
+    "artwork": "/johto/pokemon/251.png",
+    "artworkSource": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/251.png"
+  }
+]

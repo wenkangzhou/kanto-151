@@ -17,6 +17,11 @@ import { NetworkNotice } from './network-notice';
 import { FamilyGate } from './family-access';
 const links = [{ href: '/learn', name: '去学习', en: 'LEARN', icon: GraduationCap }, { href: '/', name: '去冒险', en: 'ADVENTURE', icon: Compass }, { href: '/pokedex', name: '图鉴与百科', en: 'POKÉDEX', icon: BookOpen }, { href: '/team', name: '我的小队', en: 'MY TEAM', icon: UsersRound }, { href: '/bag', name: '我的背包', en: 'BACKPACK', icon: Backpack }, { href: '/history', name: '成长足迹', en: 'MEMORIES', icon: Footprints }];
 export function Shell({ children, musicAvailable = false }: { children: React.ReactNode; musicAvailable?: boolean }) {
+  const pathname = usePathname();
+  if (pathname === '/johto/pokedex' || pathname === '/hoenn/pokedex') return <div className="regional-standalone"><main id="main-content">{children}</main></div>;
+  return <KantoShell musicAvailable={musicAvailable}>{children}</KantoShell>;
+}
+function KantoShell({ children, musicAvailable }: { children: React.ReactNode; musicAvailable: boolean }) {
   const localize = useT();
   const { visitorDemo, status } = useCollection();
   return <PlayTimeProvider key={`${visitorDemo}:${status === 'ready'}`}><ShellContent musicAvailable={musicAvailable}>{localize(children)}</ShellContent></PlayTimeProvider>;
