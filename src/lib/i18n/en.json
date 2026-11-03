@@ -4,6 +4,8 @@
   "图鉴": "Pokédex",
   "去学习": "Learn",
   "学习小站": "Learning Station",
+  "学习需要先进入演示冒险": "Enter the demo adventure to try learning",
+  "当前没有连接家庭数据。进入演示后，学习记录只保存在当前标签页，不影响真实家庭。": "No family data is connected. In the demo, learning progress stays in this tab and does not affect a real family.",
   "家长中心": "Parent Center",
   "伙伴小队": "My Team",
   "我的小队": "My Team",
