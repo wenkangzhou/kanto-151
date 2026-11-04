@@ -18,6 +18,7 @@ test('English uses system speech, Chinese keeps recordings, and storage failure 
   speakLearning('13减8等于几？');assert.equal(spoken.at(-1)?.text,'What is 13 minus 8?');assert.equal(spoken.at(-1)?.lang,'en-US');
   setLocale('zh');assert.ok(voiceSource('皮卡丘'));
   speakText('partner','皮卡丘');assert.equal(mediaCount,1);stopVoice();
+  speakText('regional','皮卡丘',{systemOnly:true});assert.equal(mediaCount,1);assert.equal(spoken.at(-1)?.text,'皮卡丘');assert.equal(spoken.at(-1)?.lang,'zh-CN');stopVoice();
   Object.assign(globalThis,{localStorage:{setItem(){throw new Error('blocked');}}});setLocale('en');assert.equal(getLocale(),'en');
  }finally{stopVoice();stopLearningSpeech();setLocale('zh');Object.assign(globalThis,original);}
 });

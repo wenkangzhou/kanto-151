@@ -5,7 +5,7 @@ import type { Pokemon } from '@/domain/types';
 import bounds from '@/data/artwork-bounds.json';
 import { ASH_HEIGHT, COMPARISON_WIDTH, COMPARISON_BASELINE, comparisonLayout, lengthComparisonIds } from '@/domain/size-comparison';
 
-export function SizeComparison({ pokemon }: { pokemon: Pokemon }) {
+export function SizeComparison({ pokemon }: { pokemon: Pick<Pokemon, 'id' | 'name' | 'height' | 'weight' | 'artwork'> }) {
   const localize = useT();
   const [, , width, height] = (bounds as Record<string, number[]>)[pokemon.id] ?? [0, 0, 475, 475, 475, 475];
   const length = lengthComparisonIds.has(pokemon.id);

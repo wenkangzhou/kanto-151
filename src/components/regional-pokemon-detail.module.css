@@ -1,0 +1,13 @@
+.page{min-height:100vh;padding-top:36px;padding-bottom:60px}
+.previewLabel{margin:-11px 0 22px;color:#7d9786;font-size:12px;letter-spacing:.08em}
+.hoenn .previewLabel{color:#6b98a3}
+.regionalNote{margin-top:24px}
+.regionLinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:19px}
+.regionLinks a,.regionLinks span{display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid #e0d9cb;border-radius:10px;background:#fffcf5;color:#8c775b;font-size:13px;font-weight:700}
+.regionLinks a:hover{background:#f9efdd}
+.regionLinks span{border-color:#c9b896;background:#f4ead5}
+.branchingFamily{flex-wrap:wrap;justify-content:flex-start}
+.branchingFamily :global(.evolution-step){flex:0 1 145px}
+.branchingFamily :global(.chain-arrow){display:none}
+.page :global(.stat-row>span){width:62px;flex:none}
+@media(max-width:640px){.page{padding-top:24px}.previewLabel{text-align:center;margin:-9px 0 18px}.regionLinks{justify-content:center}.branchingFamily :global(.evolution-step){flex:0 1 calc(50% - 10px)}}

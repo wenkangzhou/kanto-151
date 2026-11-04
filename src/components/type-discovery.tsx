@@ -17,7 +17,9 @@ function StrongHit({ multiplier }: { multiplier: number }) {
   return <span className="strong-hit" aria-label={localize(`招式效果为 ${multiplier} 倍`)}><ArrowRight aria-hidden="true" size={28} /><span className="hit-sparks" aria-hidden="true">{Array.from({ length: multiplier }, (_, i) => <Zap key={i} size={15} fill="currentColor" />)}</span><b>×{localize(multiplier)}</b></span>;
 }
 
-export function TypeDiscovery({ partner, discovered }: { partner: Pokemon; discovered: Set<number> }) {
+type ExamplePokemon = Pick<Pokemon, 'id' | 'name' | 'types' | 'artwork'>;
+
+export function TypeDiscovery({ partner, discovered, examplePool }: { partner: ExamplePokemon; discovered?: ReadonlySet<number>; examplePool?: ExamplePokemon[] }) {
   const localize = useT();
   const speakType = useTypeVoice();
   const [choice, setChoice] = useState<PokemonType>(() => defaultExampleType(partner.types));
@@ -33,7 +35,7 @@ export function TypeDiscovery({ partner, discovered }: { partner: Pokemon; disco
   const combinedExample = partner.types.length > 1 ? (Object.keys(TYPE_NAMES) as PokemonType[]).find(type =>
     effectiveness(type, partner.types) === 1 && partner.types.some(defense => effectiveness(type, [defense]) > 1)
   ) ?? incoming[0]?.type : undefined;
-  const examples = pokemon.filter(p => p.id !== partner.id && discovered.has(p.id) && effectiveness(attack, p.types) > 1).slice(0, 3);
+  const examples = (examplePool ?? pokemon.filter(p => discovered?.has(p.id))).filter(p => p.id !== partner.id && effectiveness(attack, p.types) > 1).slice(0, 3);
   return <section className="detail-panel type-discovery"><div className="section-heading"><h2><Sparkles size={23} />{localize("看图认识属性")}</h2></div>
     <div className="type-lessons"><section className="type-lesson outgoing"><h3><Swords size={25} aria-hidden="true" />{localize("我出招！")}<ReadAloud text={localize(targets.length ? `${TYPE_NAMES[attack]}招式！攻击${targets.map(type => TYPE_NAMES[type]).join('、')}属性时，力量会变成两倍。${partner.types.length > 1 ? '点另一个属性，可以换招式。' : ''}` : '一般招式也能攻击，只是没有特别擅长的属性对手。')} /></h3>
       <div className="lesson-context"><div className="lesson-avatar"><PokemonArt pokemon={partner} /><strong>{localize(partner.name)}</strong></div><div className="move-controls"><span className="lesson-label">{localize("这次用的招式")}</span><div className="move-picker" role="group" aria-label={localize("选择出招属性，不改变伙伴自身属性")}>{partner.types.map(type => <button key={type} type="button" aria-pressed={partner.types.length > 1 ? attack === type : undefined} aria-label={localize(`看看${TYPE_NAMES[type]}属性招式`)} onClick={() => castMove(type)}><TypePicture type={type} interactive={false} /></button>)}</div><small className="move-hint">{localize("点一点，试试这招")}</small></div></div>

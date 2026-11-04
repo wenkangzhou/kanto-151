@@ -5,17 +5,28 @@ import { hoennPokemon, hoennRegional } from '@/domain/hoenn';
 import { johtoPokemon } from '@/domain/johto';
 import { pokemonById } from '@/domain/pokemon';
 import { TYPE_NAMES } from '@/domain/types';
+import bounds from '@/data/artwork-bounds.json';
 
 test('the unlisted Hoenn preview has 135 locally illustrated new species', () => {
   assert.deepEqual(hoennPokemon.map(pokemon => pokemon.id), Array.from({ length: 135 }, (_, index) => index + 252));
   for (const pokemon of hoennPokemon) {
     assert.ok(pokemon.name && pokemon.traditionalName && pokemon.englishName && pokemon.genus);
     assert.ok(pokemon.description.length >= 20);
+    assert.ok(pokemon.englishDescription.length >= 20);
     assert.ok(pokemon.types.length > 0 && pokemon.types.every(type => type in TYPE_NAMES));
+    assert.equal(Object.keys(pokemon.stats).length, 6);
+    assert.ok(Object.values(pokemon.stats).every(value => Number.isInteger(value) && value > 0));
     assert.equal(pokemon.artwork, `/hoenn/pokemon/${pokemon.id}.png`);
     assert.ok(statSync(`public${pokemon.artwork}`).size > 0);
+    assert.ok(statSync(`public/illustrations/silhouettes/${pokemon.id}.png`).size > 0);
+    assert.ok((bounds as Record<string, number[]>)[pokemon.id]?.[2] > 0);
     if (pokemon.evolvesFrom !== null) assert.ok(pokemon.evolvesFrom < pokemon.id);
   }
+});
+
+test('Hoenn English descriptions are distinct and readable', () => {
+  assert.equal(new Set(hoennPokemon.map(pokemon => pokemon.englishDescription)).size, hoennPokemon.length);
+  assert.ok(hoennPokemon.every(pokemon => !/[\n\f\u00ad]/.test(pokemon.englishDescription)));
 });
 
 test('the original Hoenn regional order reuses existing Kanto and Johto records', () => {

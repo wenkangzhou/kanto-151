@@ -5,7 +5,7 @@ export const COMPARISON_WIDTH = 240;
 export const COMPARISON_BASELINE = 132;
 // Only coiled/serpentine species need a body-length schematic.
 // Caterpie and Weedle use the same height comparison as other small partners.
-export const lengthComparisonIds = new Set([23, 24, 95, 130, 147, 148]);
+export const lengthComparisonIds = new Set([23, 24, 95, 130, 147, 148, 208, 321, 336, 350, 367, 368, 382, 384]);
 
 export function comparisonLayout(height: number, aspect: number, length = false) {
   // In length mode the longest visible dimension represents the listed length.

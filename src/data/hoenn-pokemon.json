@@ -8,7 +8,16 @@
     "types": [
       "grass"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 35,
+      "special-attack": 65,
+      "special-defense": 55,
+      "speed": 70
+    },
     "description": "性格沉着，面对比自己高大的对手也不会慌张，反而会坚定地回望过去。",
+    "englishDescription": "It makes its nest in a giant tree in the forest. It ferociously guards against anything nearing its territory. It is said to be the protector of the forest’s trees.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 5.0,
@@ -24,7 +33,16 @@
     "types": [
       "grass"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 45,
+      "special-attack": 85,
+      "special-defense": 65,
+      "speed": 95
+    },
     "description": "能灵巧地在树枝之间跳跃，在森林里很少有宝可梦追得上它。",
+    "englishDescription": "Leaves grow out of this Pokémon’s body. They help obscure a Grovyle from the eyes of its enemies while it is in a thickly overgrown forest.",
     "evolvesFrom": 252,
     "height": 0.9,
     "weight": 21.6,
@@ -40,7 +58,16 @@
     "types": [
       "grass"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 85,
+      "defense": 65,
+      "special-attack": 105,
+      "special-defense": 85,
+      "speed": 120
+    },
     "description": "背上的种子蕴藏着丰富养分，据说它会细心照料森林里的树木。",
+    "englishDescription": "In the jungle, its power is without equal. This Pokémon carefully grows trees and plants. It regulates its body temperature by basking in sunlight.",
     "evolvesFrom": 253,
     "height": 1.7,
     "weight": 52.2,
@@ -56,7 +83,16 @@
     "types": [
       "fire"
     ],
+    "stats": {
+      "hp": 45,
+      "attack": 60,
+      "defense": 40,
+      "special-attack": 70,
+      "special-defense": 50,
+      "speed": 45
+    },
     "description": "柔软的绒毛下藏着温暖的火焰，抱住它时能感觉到身体散发的热度。",
+    "englishDescription": "If attacked, it strikes back by spitting balls of fire it forms in its stomach. A Torchic dislikes darkness because it can’t see its surroundings.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 2.5,
@@ -73,7 +109,16 @@
       "fire",
       "fighting"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 85,
+      "defense": 60,
+      "special-attack": 85,
+      "special-defense": 60,
+      "speed": 55
+    },
     "description": "会从嘴里喷出炽热火焰，再用强劲的踢击接连进攻。",
+    "englishDescription": "It lashes out with 10 kicks per second. Its strong fighting instinct compels it to keep up its offensive until the opponent gives up.",
     "evolvesFrom": 255,
     "height": 0.9,
     "weight": 19.5,
@@ -90,7 +135,16 @@
       "fire",
       "fighting"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 120,
+      "defense": 70,
+      "special-attack": 110,
+      "special-defense": 70,
+      "speed": 80
+    },
     "description": "腿部力量惊人，能够跃上高楼；拳头上的火焰也让对手不敢靠近。",
+    "englishDescription": "It learns martial arts that use punches and kicks. Every several years, its old feathers burn off, and new, supple feathers grow back in their place.",
     "evolvesFrom": 256,
     "height": 1.9,
     "weight": 52.0,
@@ -106,7 +160,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 70,
+      "defense": 50,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 40
+    },
     "description": "脸颊上的鳃让它能在水中呼吸，遇到危急情况时还能使出超乎体型的力量。",
+    "englishDescription": "On land, it can powerfully lift large boulders by planting its four feet and heaving. It sleeps by burying itself in soil at the water’s edge.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 7.6,
@@ -123,7 +186,16 @@
       "water",
       "ground"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 85,
+      "defense": 70,
+      "special-attack": 60,
+      "special-defense": 70,
+      "speed": 50
+    },
     "description": "比起游泳，它更擅长在泥地里移动；发达的后腿能支撑身体行走。",
+    "englishDescription": "Its toughened hind legs enable it to stand upright. Because it weakens if its skin dries out, it replenishes fluids by playing in mud.",
     "evolvesFrom": 258,
     "height": 0.7,
     "weight": 28.0,
@@ -140,7 +212,16 @@
       "water",
       "ground"
     ],
+    "stats": {
+      "hp": 100,
+      "attack": 110,
+      "defense": 90,
+      "special-attack": 85,
+      "special-defense": 90,
+      "speed": 60
+    },
     "description": "能用鳍感知海浪与风向的细微变化，暴风雨来临前会堆起岩石保护自己。",
+    "englishDescription": "If it senses the approach of a storm and a tidal wave, it protects its seaside nest by piling up boulders. It swims as fast as a jet ski.",
     "evolvesFrom": 259,
     "height": 1.5,
     "weight": 81.9,
@@ -156,7 +237,16 @@
     "types": [
       "dark"
     ],
+    "stats": {
+      "hp": 35,
+      "attack": 55,
+      "defense": 35,
+      "special-attack": 30,
+      "special-defense": 30,
+      "speed": 35
+    },
     "description": "会竖起尾巴上的毛威吓对手，嘴里的尖牙在小小的身体上格外醒目。",
+    "englishDescription": "It savagely threatens foes with bared fangs. It chases after fleeing targets tenaciously. It turns tail and runs, however, if the foe strikes back.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 13.6,
@@ -172,7 +262,16 @@
     "types": [
       "dark"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 90,
+      "defense": 70,
+      "special-attack": 60,
+      "special-defense": 60,
+      "speed": 70
+    },
     "description": "野外的大狼犬成群行动，只有认可训练家的能力后才愿意听从指挥。",
+    "englishDescription": "In the wild, Mightyena live in a pack. They never defy their leader’s orders. They defeat foes with perfectly coordinated teamwork.",
     "evolvesFrom": 261,
     "height": 1.0,
     "weight": 37.0,
@@ -188,7 +287,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 38,
+      "attack": 30,
+      "defense": 41,
+      "special-attack": 30,
+      "special-defense": 41,
+      "speed": 60
+    },
     "description": "伽勒尔的蛇纹熊适应了其他地区环境后的样子。十分擅长找东西。",
+    "englishDescription": "Rubbing its nose against the ground, it always wanders about back and forth in search of something. It is distinguished by the zigzag footprints it leaves.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 17.5,
@@ -204,7 +312,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 78,
+      "attack": 70,
+      "defense": 61,
+      "special-attack": 50,
+      "special-defense": 61,
+      "speed": 100
+    },
     "description": "用自己超群的爆发力和锐利的爪子来制服猎物。不擅长在弯曲的道路上奔跑。",
+    "englishDescription": "It is exceedingly fast if it only has to run in a straight line. When it spots pond-dwelling prey underwater, it quickly leaps in and catches it with its sharp claws.",
     "evolvesFrom": 263,
     "height": 0.5,
     "weight": 32.5,
@@ -220,7 +337,16 @@
     "types": [
       "bug"
     ],
+    "stats": {
+      "hp": 45,
+      "attack": 45,
+      "defense": 35,
+      "special-attack": 20,
+      "special-defense": 30,
+      "speed": 20
+    },
     "description": "喜欢吸食树汁。光看外表无法知道它将来会变成哪一种形态。",
+    "englishDescription": "It sticks to tree branches and eats leaves. The thread it spits from its mouth, which becomes gooey when it touches air, slows the movement of its foes.",
     "evolvesFrom": null,
     "height": 0.3,
     "weight": 3.6,
@@ -236,7 +362,16 @@
     "types": [
       "bug"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 35,
+      "defense": 55,
+      "special-attack": 25,
+      "special-defense": 25,
+      "speed": 15
+    },
     "description": "用细细的丝包住身体，为进化积蓄能量；即使几乎不动，也始终警惕周围。",
+    "englishDescription": "It prepares for evolution using the energy it stored while it was a WURMPLE. It keeps watch over the surroundings with its two eyes.",
     "evolvesFrom": 265,
     "height": 0.6,
     "weight": 10.0,
@@ -253,7 +388,16 @@
       "bug",
       "flying"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 70,
+      "defense": 50,
+      "special-attack": 100,
+      "special-defense": 50,
+      "speed": 65
+    },
     "description": "翅膀颜色鲜艳，十分喜欢花蜜，有时会赶走想采蜜的其他宝可梦。",
+    "englishDescription": "Its colorfully patterned wings are its most prominent feature. It flies through flower-covered fields collecting pollen. It attacks ferociously when angered.",
     "evolvesFrom": 266,
     "height": 1.0,
     "weight": 28.4,
@@ -269,7 +413,16 @@
     "types": [
       "bug"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 35,
+      "defense": 55,
+      "special-attack": 25,
+      "special-defense": 25,
+      "speed": 15
+    },
     "description": "包裹身体的丝看似轻薄却很结实，闪亮的丝线还能用来制作衣物。",
+    "englishDescription": "To avoid detection by its enemies, it hides motionlessly beneath large leaves and in the gaps of branches. It also attaches dead leaves to its body for camouflage.",
     "evolvesFrom": 265,
     "height": 0.7,
     "weight": 11.5,
@@ -286,7 +439,16 @@
       "bug",
       "poison"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 70,
+      "special-attack": 50,
+      "special-defense": 90,
+      "speed": 65
+    },
     "description": "黑夜里容易被火光吸引，翅膀上的粉末带有毒性，靠近时要格外小心。",
+    "englishDescription": "It is a nocturnal Pokémon that flies from fields and mountains to the attraction of streetlights at night. It looses highly toxic powder from its wings.",
     "evolvesFrom": 268,
     "height": 1.2,
     "weight": 31.6,
@@ -303,7 +465,16 @@
       "water",
       "grass"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 30,
+      "defense": 30,
+      "special-attack": 40,
+      "special-defense": 50,
+      "speed": 30
+    },
     "description": "因为叶子长得太大太重，所以才会改变习性，漂浮在水面上生活。",
+    "englishDescription": "This Pokémon lives in ponds with clean water. It is known to ferry small Pokémon across ponds by carrying them on the broad leaf on its head.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 2.6,
@@ -320,7 +491,16 @@
       "water",
       "grass"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 50,
+      "special-attack": 60,
+      "special-defense": 70,
+      "speed": 50
+    },
     "description": "住在日照良好的水边。白天在水草做的床上睡觉，太阳下山后就会出来活动。",
+    "englishDescription": "In the evening, it takes great delight in popping out of rivers and startling people. It feeds on aquatic moss that grows on rocks in the riverbed.",
     "evolvesFrom": 270,
     "height": 1.2,
     "weight": 32.5,
@@ -337,7 +517,16 @@
       "water",
       "grass"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 70,
+      "defense": 70,
+      "special-attack": 90,
+      "special-defense": 100,
+      "speed": 70
+    },
     "description": "乐天河童会跟着欢快的音乐摇摆身体，从而增强自己的力量。",
+    "englishDescription": "When it hears festive music, all the cells in its body become stimulated, and it begins moving in rhythm. It does not quail even when it faces a tough opponent.",
     "evolvesFrom": 271,
     "height": 1.5,
     "weight": 55.0,
@@ -353,7 +542,16 @@
     "types": [
       "grass"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 40,
+      "defense": 50,
+      "special-attack": 30,
+      "special-defense": 30,
+      "speed": 30
+    },
     "description": "会将头顶粘在树枝上悬挂着。也有被大风吹落的时候。",
+    "englishDescription": "It hangs off branches and absorbs nutrients. When it finishes eating, its body becomes so heavy that it drops to the ground with a thump.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 4.0,
@@ -370,7 +568,16 @@
       "grass",
       "dark"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 70,
+      "defense": 40,
+      "special-attack": 60,
+      "special-defense": 40,
+      "speed": 60
+    },
     "description": "长鼻叶居住在大树上的洞穴里，它吹奏出的草笛声会让听到的人感到不安。",
+    "englishDescription": "A forest-dwelling Pokémon that is skilled at climbing trees. Its long and pointed nose is its weak point. It loses power if the nose is gripped.",
     "evolvesFrom": 273,
     "height": 1.0,
     "weight": 28.0,
@@ -387,7 +594,16 @@
       "grass",
       "dark"
     ],
+    "stats": {
+      "hp": 90,
+      "attack": 100,
+      "defense": 60,
+      "special-attack": 90,
+      "special-defense": 60,
+      "speed": 80
+    },
     "description": "在森林深处静静地生活。据说当它扇动大大的团扇，就会刮起冬日寒风。",
+    "englishDescription": "It is said to arrive on chilly, wintry winds. Feared from long ago as the guardian of forests, this Pokémon lives in a deep forest where people do not venture.",
     "evolvesFrom": 274,
     "height": 1.3,
     "weight": 59.6,
@@ -404,7 +620,16 @@
       "normal",
       "flying"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 55,
+      "defense": 30,
+      "special-attack": 30,
+      "special-defense": 30,
+      "speed": 85
+    },
     "description": "刚离巢的傲骨燕有时会在夜里寂寞地鸣叫，平时会捕食森林里的刺尾虫。",
+    "englishDescription": "Although it is small, it is very courageous. It will take on a larger SKARMORY on an equal footing. However, its will weakens if it becomes hungry.",
     "evolvesFrom": null,
     "height": 0.3,
     "weight": 2.3,
@@ -421,7 +646,16 @@
       "normal",
       "flying"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 85,
+      "defense": 60,
+      "special-attack": 75,
+      "special-defense": 50,
+      "speed": 125
+    },
     "description": "非常爱惜光亮的翅膀，同伴相遇时还会互相整理羽毛。",
+    "englishDescription": "A Swellow dives upon prey from far above. It never misses its targets. It takes to the skies in search of lands with a warm climate.",
     "evolvesFrom": 276,
     "height": 0.7,
     "weight": 19.8,
@@ -438,7 +672,16 @@
       "water",
       "flying"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 30,
+      "defense": 30,
+      "special-attack": 55,
+      "special-defense": 30,
+      "speed": 85
+    },
     "description": "利用气流，不拍打翅膀就能飞上天空。会在海边的岩壁上筑巢。",
+    "englishDescription": "It makes its nest on a sheer cliff at the edge of the sea. It has trouble keeping its wings flapping in flight. Instead, it soars on updrafts.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 9.5,
@@ -455,7 +698,16 @@
       "water",
       "flying"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 100,
+      "special-attack": 95,
+      "special-defense": 70,
+      "speed": 65
+    },
     "description": "会贴着海面飞行，用大大的鸟嘴连着海水一起把食物捞起来带走。",
+    "englishDescription": "It skims the tops of waves as it flies. When it spots prey, it uses its large beak to scoop up the victim with water. It protects its eggs in its beak.",
     "evolvesFrom": 278,
     "height": 1.2,
     "weight": 28.0,
@@ -472,7 +724,16 @@
       "psychic",
       "fairy"
     ],
+    "stats": {
+      "hp": 28,
+      "attack": 25,
+      "defense": 25,
+      "special-attack": 45,
+      "special-defense": 35,
+      "speed": 40
+    },
     "description": "用红色的角捕捉到人和宝可梦的温情后，全身也会稍稍变暖起来。",
+    "englishDescription": "A Ralts has the power to sense the emotions of people and Pokémon with the horns on its head. It takes cover if it senses any hostility.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 6.6,
@@ -489,7 +750,16 @@
       "psychic",
       "fairy"
     ],
+    "stats": {
+      "hp": 38,
+      "attack": 35,
+      "defense": 35,
+      "special-attack": 65,
+      "special-defense": 55,
+      "speed": 50
+    },
     "description": "可以通过操纵精神力量扭曲周围的空间来看清未来。",
+    "englishDescription": "A Kirlia has the psychic power to create a rip in the dimensions and see into the future. It is said to dance with pleasure on sunny mornings.",
     "evolvesFrom": 280,
     "height": 0.8,
     "weight": 20.2,
@@ -506,7 +776,16 @@
       "psychic",
       "fairy"
     ],
+    "stats": {
+      "hp": 68,
+      "attack": 65,
+      "defense": 65,
+      "special-attack": 125,
+      "special-defense": 115,
+      "speed": 80
+    },
     "description": "如果是为了保护训练家，它就会用尽自己的精神力量制造出小型黑洞。",
+    "englishDescription": "It apparently does not feel the pull of gravity because it supports itself with psychic power. It will give its life to protect its TRAINER.",
     "evolvesFrom": 281,
     "height": 1.6,
     "weight": 48.4,
@@ -523,7 +802,16 @@
       "bug",
       "water"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 30,
+      "defense": 32,
+      "special-attack": 50,
+      "special-defense": 52,
+      "speed": 65
+    },
     "description": "栖息在水草丛生的池塘或沼泽里。会经常和栖息地以及食物都与自己相近的滴蛛争斗。",
+    "englishDescription": "They gather on puddles after evening downpours, gliding across the surface of water as if sliding. It secretes honey with a sweet aroma from its head.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 1.7,
@@ -540,7 +828,16 @@
       "bug",
       "flying"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 60,
+      "defense": 62,
+      "special-attack": 100,
+      "special-defense": 82,
+      "speed": 80
+    },
     "description": "像薄薄的翅膀一样的触角很容易吸收湿气。雨天会静静地待在树洞等地方度过。",
+    "englishDescription": "It intimidates foes with the large eyelike patterns on its antennae. Because it can’t fly if its wings get wet, it shelters itself from rain under large trees and eaves.",
     "evolvesFrom": 283,
     "height": 0.8,
     "weight": 3.6,
@@ -556,7 +853,16 @@
     "types": [
       "grass"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 40,
+      "defense": 60,
+      "special-attack": 40,
+      "special-defense": 60,
+      "speed": 35
+    },
     "description": "察觉危险时会摇晃身体，从头顶撒出能让植物枯萎的孢子。",
+    "englishDescription": "It loves to eat damp, composted soil in forests. If you enter a forest after a long rain, you can see many Shroomish feasting on composted soil.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 4.5,
@@ -573,7 +879,16 @@
       "grass",
       "fighting"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 130,
+      "defense": 80,
+      "special-attack": 60,
+      "special-defense": 60,
+      "speed": 70
+    },
     "description": "尾巴周围的颗粒由坚硬的毒孢子形成，不能把它们当成食物。",
+    "englishDescription": "It scatters spores from holes in the cap on its head. It loves warm and humid climates. It feeds on trees and plants in fields and forests.",
     "evolvesFrom": 285,
     "height": 1.2,
     "weight": 39.2,
@@ -589,7 +904,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 60,
+      "defense": 60,
+      "special-attack": 35,
+      "special-defense": 35,
+      "speed": 30
+    },
     "description": "几乎整天躺着不动，连心跳都十分缓慢，难得见到它主动跑起来。",
+    "englishDescription": "It sleeps virtually all day and night long. It doesn’t change its nest its entire life, but it sometimes travels great distances by swimming in rivers.",
     "evolvesFrom": null,
     "height": 0.8,
     "weight": 24.0,
@@ -605,7 +929,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 80,
+      "defense": 80,
+      "special-attack": 55,
+      "special-defense": 55,
+      "speed": 90
+    },
     "description": "片刻也闲不下来，就算想睡觉，也要先在森林里奔跑一阵。",
+    "englishDescription": "It can’t keep still because its blood boils with energy. It runs through the fields and mountains all day to calm itself. If it doesn’t, it can’t sleep at night.",
     "evolvesFrom": 287,
     "height": 1.4,
     "weight": 46.5,
@@ -621,7 +954,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 150,
+      "attack": 160,
+      "defense": 100,
+      "special-attack": 95,
+      "special-defense": 65,
+      "speed": 100
+    },
     "description": "躺在草地上就能吃到周围的草，留下一个个以自己为中心的圆圈。",
+    "englishDescription": "Hordes of Slaking gather around trees when fruits come into season. They wait around patiently for ripened fruits to fall out of the trees.",
     "evolvesFrom": 288,
     "height": 2.0,
     "weight": 130.5,
@@ -638,7 +980,16 @@
       "bug",
       "ground"
     ],
+    "stats": {
+      "hp": 31,
+      "attack": 45,
+      "defense": 90,
+      "special-attack": 30,
+      "special-defense": 30,
+      "speed": 40
+    },
     "description": "有时能在土里生活１０年以上。会从树木的根部那里吸取营养。",
+    "englishDescription": "It makes its nest at the roots of a mighty tree. Using its whiskerlike antennae, it probes its surroundings in the pitch-black darkness of soil.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 5.5,
@@ -655,7 +1006,16 @@
       "bug",
       "flying"
     ],
+    "stats": {
+      "hp": 61,
+      "attack": 90,
+      "defense": 45,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 160
+    },
     "description": "行动十分迅速的宝可梦。说它无论什么攻击都能避开也不夸张。非常喜欢甘甜的树液。",
+    "englishDescription": "Because it darts about vigorously at high speed, it is very difficult to see. Hearing its distinctive cries for too long induces a headache.",
     "evolvesFrom": 290,
     "height": 0.8,
     "weight": 12.0,
@@ -672,7 +1032,16 @@
       "bug",
       "ghost"
     ],
+    "stats": {
+      "hp": 1,
+      "attack": 90,
+      "defense": 45,
+      "special-attack": 30,
+      "special-defense": 30,
+      "speed": 40
+    },
     "description": "不拍动翅膀也能四处飞行。身体里面空空的，是一种不呼吸的奇妙宝可梦。",
+    "englishDescription": "A peculiar Pokémon that floats in air even though its wings remain completely still. The inside of its body is hollow and utterly dark.",
     "evolvesFrom": 290,
     "height": 0.8,
     "weight": 1.2,
@@ -688,7 +1057,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 64,
+      "attack": 51,
+      "defense": 23,
+      "special-attack": 51,
+      "special-defense": 23,
+      "speed": 28
+    },
     "description": "一旦开始喊叫，就会被自己的声音惊吓到，然后以更大的声音大吼大叫起来。叫累了以后就会睡着，",
+    "englishDescription": "Its cries equal a jet plane in volume. It inhales through its ear canals. Because of this system, it can cry continually without having to catch its breath.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 16.3,
@@ -704,7 +1082,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 84,
+      "attack": 71,
+      "defense": 43,
+      "special-attack": 71,
+      "special-defense": 43,
+      "speed": 48
+    },
     "description": "它发出的大叫声不仅会刺激听觉，还会压缩空气造成冲击波将敌人吹飞给予伤害。",
+    "englishDescription": "It positions the round speakers on its head to assail foes with ultrasonic waves at massive volume. It builds power by stomping the ground.",
     "evolvesFrom": 293,
     "height": 1.0,
     "weight": 40.5,
@@ -720,7 +1107,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 104,
+      "attack": 91,
+      "defense": 63,
+      "special-attack": 91,
+      "special-defense": 73,
+      "speed": 68
+    },
     "description": "它不仅仅会大喊大叫。为了和伙伴相互传情达意，它会从身体的洞里发出各种各样的音色。",
+    "englishDescription": "It has sound-generating organs all over its body. It communicates with others by adjusting the tone and volume of the cries it emits.",
     "evolvesFrom": 294,
     "height": 1.5,
     "weight": 84.0,
@@ -736,7 +1132,16 @@
     "types": [
       "fighting"
     ],
+    "stats": {
+      "hp": 72,
+      "attack": 60,
+      "defense": 30,
+      "special-attack": 20,
+      "special-defense": 30,
+      "speed": 25
+    },
     "description": "据说为了培育强大的幕下力士，存在着一种训练家们按传统手法制作的火锅料理。",
+    "englishDescription": "It loves to toughen up its body above all else. If you hear quaking rumbles in a cave, it is the sound of Makuhita undertaking strenuous training.",
     "evolvesFrom": null,
     "height": 1.0,
     "weight": 86.4,
@@ -752,7 +1157,16 @@
     "types": [
       "fighting"
     ],
+    "stats": {
+      "hp": 144,
+      "attack": 120,
+      "defense": 60,
+      "special-attack": 40,
+      "special-defense": 60,
+      "speed": 50
+    },
     "description": "体型粗壮的铁掌力士未必强大。即便身型矮小，也有身轻如燕，擅长巧力的铁掌力士。",
+    "englishDescription": "It has the habit of challenging others without hesitation to tests of strength. It’s been known to stand on train tracks and stop trains using forearm thrusts.",
     "evolvesFrom": 296,
     "height": 2.3,
     "weight": 253.8,
@@ -769,7 +1183,16 @@
       "normal",
       "fairy"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 20,
+      "defense": 40,
+      "special-attack": 20,
+      "special-defense": 40,
+      "speed": 20
+    },
     "description": "虽然是种性情温顺的宝可梦，但生起气来，便会嗖嗖地挥舞起尾巴上的大球来猛烈击打对手。",
+    "englishDescription": "Its tail, which is packed with nutrition, is very bouncy like a rubber ball. On sunny days they gather at the edge of water and splash about for fun.",
     "evolvesFrom": null,
     "height": 0.2,
     "weight": 2.0,
@@ -785,7 +1208,16 @@
     "types": [
       "rock"
     ],
+    "stats": {
+      "hp": 30,
+      "attack": 45,
+      "defense": 135,
+      "special-attack": 45,
+      "special-defense": 90,
+      "speed": 30
+    },
     "description": "它会一动不动地用强力的磁力将猎物吸过来狩猎。但有时也会吸到天敌。",
+    "englishDescription": "Its body emits a powerful magnetism. It feeds on prey that is pulled in by the force. Its magnetism is stronger in cold seasons.",
     "evolvesFrom": null,
     "height": 1.0,
     "weight": 97.0,
@@ -801,7 +1233,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 45,
+      "defense": 45,
+      "special-attack": 35,
+      "special-defense": 35,
+      "speed": 50
+    },
     "description": "常常开心地追逐自己的尾巴。野外的向尾喵会住在森林的树洞里。",
+    "englishDescription": "A Skitty’s adorably cute behavior makes it highly popular. In battle, it makes its tail puff out. It threatens foes with a sharp growl.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 11.0,
@@ -817,7 +1258,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 65,
+      "defense": 65,
+      "special-attack": 55,
+      "special-defense": 55,
+      "speed": 90
+    },
     "description": "没有固定的睡觉地点，想睡在哪里就睡在哪里；受到打扰时会换个地方。",
+    "englishDescription": "Rather than keeping a permanent lair, it habitually seeks comfortable spots and sleeps there. It is nocturnal and becomes active at dusk.",
     "evolvesFrom": 300,
     "height": 1.1,
     "weight": 32.6,
@@ -834,7 +1284,16 @@
       "dark",
       "ghost"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 75,
+      "defense": 75,
+      "special-attack": 65,
+      "special-defense": 65,
+      "speed": 50
+    },
     "description": "会去吃宝石的结晶。双眼在漆黑一片的地方会发出宝石的光芒。",
+    "englishDescription": "It digs branching holes in caves using its sharp claws in search of food--raw gems. A Sableye lurks in darkness and is seen only rarely.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 11.0,
@@ -851,7 +1310,16 @@
       "steel",
       "fairy"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 85,
+      "defense": 85,
+      "special-attack": 55,
+      "special-defense": 55,
+      "speed": 50
+    },
     "description": "大嘴娃能用自己那由钢角变化而成的巨大颚部将对手一口紧紧咬住。",
+    "englishDescription": "Its giant jaws are actually steel horns that transformed. It fools foes into complacency with its adorable gestures, then chomps them with its huge jaws.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 11.5,
@@ -868,7 +1336,16 @@
       "steel",
       "rock"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 70,
+      "defense": 100,
+      "special-attack": 40,
+      "special-defense": 40,
+      "speed": 30
+    },
     "description": "进化的时候，钢铁盔甲会全部脱落。人们曾经将其捡来活用于生活。",
+    "englishDescription": "A Pokémon that is clad in steel armor. A new suit of armor is made when it evolves. The old, discarded armor is salvaged as metal for making iron products.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 60.0,
@@ -885,7 +1362,16 @@
       "steel",
       "rock"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 90,
+      "defense": 140,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 40
+    },
     "description": "会用钢铁之躯互相撞击来争夺地盘。仔细看会发现钢铁盔甲上有伤痕和凹陷。",
+    "englishDescription": "When two Lairon meet in the wild, they fight for territory by bashing into each other with their steel bodies. The sound of their collision carries for miles.",
     "evolvesFrom": 304,
     "height": 0.9,
     "weight": 120.0,
@@ -902,7 +1388,16 @@
       "steel",
       "rock"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 110,
+      "defense": 180,
+      "special-attack": 60,
+      "special-defense": 60,
+      "speed": 50
+    },
     "description": "很久以前，有位国王由于希望像波士可多拉一样强大而戴上了模仿它的头部制成的头盔。",
+    "englishDescription": "Its iron horns grow longer a little at a time. They are used to determine the Aggron’s age. The gouges in its armor are worn with pride as mementos from battles.",
     "evolvesFrom": 305,
     "height": 2.1,
     "weight": 360.0,
@@ -919,7 +1414,16 @@
       "fighting",
       "psychic"
     ],
+    "stats": {
+      "hp": 30,
+      "attack": 40,
+      "defense": 55,
+      "special-attack": 40,
+      "special-defense": 55,
+      "speed": 60
+    },
     "description": "通过冥想锻炼内在力量，每天只吃少量树果，也把节制当作修行。",
+    "englishDescription": "It continually meditates for hours every day. As a result of rigorous and dedicated yoga training, it has tempered its spiritual power so much it can fly.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 11.2,
@@ -936,7 +1440,16 @@
       "fighting",
       "psychic"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 60,
+      "defense": 75,
+      "special-attack": 60,
+      "special-defense": 75,
+      "speed": 80
+    },
     "description": "长久的冥想让它拥有敏锐的感知力，并能运用念力行动。",
+    "englishDescription": "Through crushingly harsh yoga training, it gained the power to foretell its foe’s actions. It battles with elegant, dance-like movement.",
     "evolvesFrom": 307,
     "height": 1.3,
     "weight": 31.5,
@@ -952,7 +1465,16 @@
     "types": [
       "electric"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 40,
+      "special-attack": 65,
+      "special-defense": 40,
+      "speed": 65
+    },
     "description": "会在体毛中储存静电。在空气干燥的季节会从全身散发出火花。",
+    "englishDescription": "It generates electricity using friction from the atmosphere. In seasons with especially arid air, its entire body blazes with violent showers of sparks.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 15.2,
@@ -968,7 +1490,16 @@
     "types": [
       "electric"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 75,
+      "defense": 60,
+      "special-attack": 105,
+      "special-defense": 60,
+      "speed": 105
+    },
     "description": "极少出现在人前。据说它的住所就在雷电落下的地方。",
+    "englishDescription": "Because lightning falls in their vicinities, Manectric were thought to have been born from lightning. In battle, they create thunderclouds.",
     "evolvesFrom": 309,
     "height": 1.5,
     "weight": 40.2,
@@ -984,7 +1515,16 @@
     "types": [
       "electric"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 40,
+      "special-attack": 85,
+      "special-defense": 75,
+      "speed": 95
+    },
     "description": "替伙伴加油时会从身体迸出电火花，伙伴失利时也会难过地叫出声。",
+    "englishDescription": "It has the trait of cheering on its fellow Pokémon. By shorting out the electricity it releases from its paws, it creates pom-poms for cheering.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 4.2,
@@ -1000,7 +1540,16 @@
     "types": [
       "electric"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 40,
+      "defense": 50,
+      "special-attack": 75,
+      "special-defense": 85,
+      "speed": 95
+    },
     "description": "最喜欢为伙伴打气；伙伴陷入困境时，它身上的电火花会变得更强。",
+    "englishDescription": "At a meeting of Pokémon academics, it was announced that simultaneous exposure to electricity from a PLUSLE and Minun will promote circulation and boost vitality.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 4.2,
@@ -1016,7 +1565,16 @@
     "types": [
       "bug"
     ],
+    "stats": {
+      "hp": 65,
+      "attack": 73,
+      "defense": 75,
+      "special-attack": 47,
+      "special-defense": 85,
+      "speed": 85
+    },
     "description": "尾巴能像灯一样发光，伙伴们会在夜空中画出明亮的几何图案。",
+    "englishDescription": "With their taillights lit, Volbeat fly in a swarm, drawing geometric designs in the night sky. They move their nests if their pond water becomes dirty.",
     "evolvesFrom": null,
     "height": 0.7,
     "weight": 17.7,
@@ -1032,7 +1590,16 @@
     "types": [
       "bug"
     ],
+    "stats": {
+      "hp": 65,
+      "attack": 47,
+      "defense": 75,
+      "special-attack": 73,
+      "special-defense": 85,
+      "speed": 85
+    },
     "description": "会带领发光的电萤虫飞行，合力在夜空中绘出复杂的光之图案。",
+    "englishDescription": "A nocturnal Pokémon that becomes active upon nightfall. It leads a VOLBEAT swarm to draw patterns in the night sky. Over 200 different patterns have been confirmed.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 17.7,
@@ -1049,7 +1616,16 @@
       "grass",
       "poison"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 60,
+      "defense": 45,
+      "special-attack": 100,
+      "special-defense": 80,
+      "speed": 65
+    },
     "description": "会用右手和左手分别放出２种不同的毒来进行攻击。香气越浓越有精神。",
+    "englishDescription": "A Roselia that drinks nutritionally rich springwater blooms with lovely flowers. The fragrance of its flowers has the effect of making its foes careless.",
     "evolvesFrom": null,
     "height": 0.3,
     "weight": 2.0,
@@ -1065,7 +1641,16 @@
     "types": [
       "poison"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 43,
+      "defense": 53,
+      "special-attack": 43,
+      "special-defense": 53,
+      "speed": 40
+    },
     "description": "身体的大部分由胃组成，胃里的特殊液体几乎能溶解任何吞下的东西。",
+    "englishDescription": "This Pokémon’s stomach fluid can even digest scrap iron. In one gulp, it can swallow something that is as large as itself.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 10.3,
@@ -1081,7 +1666,16 @@
     "types": [
       "poison"
     ],
+    "stats": {
+      "hp": 100,
+      "attack": 73,
+      "defense": 83,
+      "special-attack": 73,
+      "special-defense": 83,
+      "speed": 55
+    },
     "description": "没有牙齿，却有一张宽大的嘴；遇到食物时会不加咀嚼地整个吞下。",
+    "englishDescription": "Its powerful stomach acid is capable of digesting almost anything. The one thing in the whole world a Swalot can’t digest is its own stomach.",
     "evolvesFrom": 316,
     "height": 1.7,
     "weight": 80.0,
@@ -1098,7 +1692,16 @@
       "water",
       "dark"
     ],
+    "stats": {
+      "hp": 45,
+      "attack": 90,
+      "defense": 20,
+      "special-attack": 65,
+      "special-defense": 20,
+      "speed": 65
+    },
     "description": "拥有锋利的牙齿和结实的下颚。水手们绝不会主动靠近利牙鱼的栖息地。",
+    "englishDescription": "Carvanha attack ships in swarms, making them sink. Although it is said to be a very vicious Pokémon, it timidly flees as soon as it finds itself alone.",
     "evolvesFrom": null,
     "height": 0.8,
     "weight": 20.8,
@@ -1115,7 +1718,16 @@
       "water",
       "dark"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 120,
+      "defense": 40,
+      "special-attack": 95,
+      "special-defense": 40,
+      "speed": 95
+    },
     "description": "被称为大海恶霸。进入它栖息海域的船只会无一例外地遭到袭击。",
+    "englishDescription": "The vicious and sly gangster of the sea. Its skin is specially textured to minimize drag in water. Its speed tops out at over 75 miles per hour.",
     "evolvesFrom": 318,
     "height": 1.8,
     "weight": 88.8,
@@ -1131,7 +1743,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 130,
+      "attack": 70,
+      "defense": 35,
+      "special-attack": 70,
+      "special-defense": 35,
+      "speed": 60
+    },
     "description": "喝入大量的海水之后，身体会鼓成像球一样。每天要吃掉１吨的食物。",
+    "englishDescription": "While this Pokémon usually lives in the sea, it can survive on land, although not too long. It loses vitality if its body becomes dried out.",
     "evolvesFrom": null,
     "height": 2.0,
     "weight": 130.0,
@@ -1147,7 +1768,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 170,
+      "attack": 90,
+      "defense": 45,
+      "special-attack": 90,
+      "special-defense": 45,
+      "speed": 60
+    },
     "description": "总之，因为超级巨大而受欢迎。观看吼鲸王在各地都是非常受欢迎的游览项目。",
+    "englishDescription": "It breathes through nostrils that it raises above the sea. By inhaling to its maximum capacity, a Wailord can dive close to 10,000 feet beneath the waves.",
     "evolvesFrom": 320,
     "height": 14.5,
     "weight": 398.0,
@@ -1164,7 +1794,16 @@
       "fire",
       "ground"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 60,
+      "defense": 40,
+      "special-attack": 65,
+      "special-defense": 45,
+      "speed": 35
+    },
     "description": "体内储存着高温熔岩，淋湿后熔岩冷却，身体就会变重、行动迟缓。",
+    "englishDescription": "A Numel stores boiling magma in the hump on its back. It is a hardy Pokémon that can transport a 220-pound load. It has served humans at work since long ago.",
     "evolvesFrom": null,
     "height": 0.7,
     "weight": 24.0,
@@ -1181,7 +1820,16 @@
       "fire",
       "ground"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 100,
+      "defense": 70,
+      "special-attack": 105,
+      "special-defense": 75,
+      "speed": 40
+    },
     "description": "背上的驼峰能够喷出熔岩，生气时尤其容易突然喷发。",
+    "englishDescription": "A Pokémon that lives in the crater of a volcano. Every 10 years, the volcanoes on its back erupt violently. Research is under way on the cause of eruption.",
     "evolvesFrom": 322,
     "height": 1.9,
     "weight": 220.0,
@@ -1197,7 +1845,16 @@
     "types": [
       "fire"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 85,
+      "defense": 140,
+      "special-attack": 85,
+      "special-defense": 70,
+      "speed": 20
+    },
     "description": "在弃用的煤矿中住着很多煤炭龟，它们会不停地挖掘煤炭。",
+    "englishDescription": "It battles using energy it gets from burning coal. When loosing smoke from its nostrils, it lets off a sound that is similar to a locomotive’s horn.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 80.4,
@@ -1213,7 +1870,16 @@
     "types": [
       "psychic"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 25,
+      "defense": 35,
+      "special-attack": 70,
+      "special-defense": 80,
+      "speed": 60
+    },
     "description": "头顶的珍珠能增强超能力，因此总想找到一颗更大、更漂亮的珍珠。",
+    "englishDescription": "A Pokémon that manipulates psychic power at will. It doesn’t stop bouncing even when it is asleep. It loves eating mushrooms that grow underground.",
     "evolvesFrom": null,
     "height": 0.7,
     "weight": 30.6,
@@ -1229,7 +1895,16 @@
     "types": [
       "psychic"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 45,
+      "defense": 65,
+      "special-attack": 90,
+      "special-defense": 110,
+      "speed": 80
+    },
     "description": "会借助身上的黑珍珠施展力量，使用能力时还会跳起奇特的舞。",
+    "englishDescription": "It stores power in the black pearls on its forehead. When it uses psychic power, it performs an odd dance step. Its style of dancing became hugely popular overseas.",
     "evolvesFrom": 325,
     "height": 0.9,
     "weight": 71.5,
@@ -1245,7 +1920,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 60,
+      "defense": 60,
+      "special-attack": 60,
+      "special-defense": 60,
+      "speed": 60
+    },
     "description": "每一只身上的斑点花纹都不同。会用晃晃悠悠的动作绝妙地躲避对手的攻击。",
+    "englishDescription": "It is distinguished by a pattern of spots that is always different. Its unsteady, tottering walk has the effect of fouling its foe’s aim.",
     "evolvesFrom": null,
     "height": 1.1,
     "weight": 5.0,
@@ -1261,7 +1945,16 @@
     "types": [
       "ground"
     ],
+    "stats": {
+      "hp": 45,
+      "attack": 100,
+      "defense": 45,
+      "special-attack": 45,
+      "special-defense": 45,
+      "speed": 10
+    },
     "description": "建造了绝对无法逃脱的捣蒜钵状巢穴，并在巢穴里等着猎物自己掉进来。",
+    "englishDescription": "Its big jaws crunch through boulders. Because its head is so big, it has a hard time getting back upright if it tips over onto its back.",
     "evolvesFrom": null,
     "height": 0.7,
     "weight": 15.0,
@@ -1278,7 +1971,16 @@
       "ground",
       "dragon"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 70,
+      "defense": 50,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 70
+    },
     "description": "为了让翅膀成长，每天要用消化液溶化并吸食大量的猎物。",
+    "englishDescription": "It looses ultrasonic waves by rubbing its wings together. Since a Vibrava’s wings are still in the process of growing, it can only fly short distances.",
     "evolvesFrom": 328,
     "height": 1.1,
     "weight": 15.3,
@@ -1295,7 +1997,16 @@
       "ground",
       "dragon"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 100,
+      "defense": 80,
+      "special-attack": 80,
+      "special-defense": 80,
+      "speed": 100
+    },
     "description": "由于它挥动翅膀的声音好似女性优美的歌声，因此被称为沙漠精灵。",
+    "englishDescription": "The flapping of its wings sounds like singing. To prevent detection by enemies, it hides itself by flapping up a cloud of desert sand.",
     "evolvesFrom": 329,
     "height": 2.0,
     "weight": 82.0,
@@ -1311,7 +2022,16 @@
     "types": [
       "grass"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 85,
+      "defense": 40,
+      "special-attack": 85,
+      "special-defense": 40,
+      "speed": 35
+    },
     "description": "越是干燥艰苦的地方，越能开出芬芳的花；战斗时会挥舞长满刺的手臂。",
+    "englishDescription": "Cacnea live in deserts with virtually no rainfall. It battles by swinging its thick, spiked arms. Once a year, a yellow flower blooms.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 51.3,
@@ -1328,7 +2048,16 @@
       "grass",
       "dark"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 115,
+      "defense": 60,
+      "special-attack": 115,
+      "special-defense": 60,
+      "speed": 55
+    },
     "description": "会在夜色中的沙漠里悄悄跟随旅人，等待对方疲惫下来。",
+    "englishDescription": "After spending thousands of years in harsh deserts, its blood transformed into the same substances as sand. It is nocturnal, so it hunts at night.",
     "evolvesFrom": 331,
     "height": 1.3,
     "weight": 77.4,
@@ -1345,7 +2074,16 @@
       "normal",
       "flying"
     ],
+    "stats": {
+      "hp": 45,
+      "attack": 40,
+      "defense": 60,
+      "special-attack": 40,
+      "special-defense": 75,
+      "speed": 50
+    },
     "description": "看起来像是一团棉花云，因此不易被敌人发现。据说翅膀是随着世代演进逐渐变白的。",
+    "englishDescription": "A Pokémon that has wings like cottony clouds. After enduring winter, in which little food is available, Swablu flocks move closer to towns in the spring.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 1.2,
@@ -1362,7 +2100,16 @@
       "dragon",
       "flying"
     ],
+    "stats": {
+      "hp": 75,
+      "attack": 70,
+      "defense": 90,
+      "special-attack": 70,
+      "special-defense": 105,
+      "speed": 80
+    },
     "description": "虽然性情温顺，但如果被惹怒，就会用尖锐的叫声威吓对方，并且毫不留情地发动进攻。",
+    "englishDescription": "It hums in a beautiful soprano voice. It flies among white clouds in the blue sky. It launches intensely hot fireballs from its mouth.",
     "evolvesFrom": 333,
     "height": 1.1,
     "weight": 20.6,
@@ -1378,7 +2125,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 73,
+      "attack": 115,
+      "defense": 60,
+      "special-attack": 60,
+      "special-defense": 60,
+      "speed": 90
+    },
     "description": "发怒时会直立起来，亮出锋利的爪子；与饭匙蛇是代代相争的对手。",
+    "englishDescription": "When it battles, it stands on its hind legs and attacks with its sharply clawed forelegs. Its fur bristles if it encounters any SEVIPER.",
     "evolvesFrom": null,
     "height": 1.3,
     "weight": 40.3,
@@ -1394,7 +2150,16 @@
     "types": [
       "poison"
     ],
+    "stats": {
+      "hp": 73,
+      "attack": 100,
+      "defense": 60,
+      "special-attack": 100,
+      "special-defense": 60,
+      "speed": 65
+    },
     "description": "剑一般的尾巴既能劈砍，也能释放毒液；与猫鼬斩的争斗由来已久。",
+    "englishDescription": "Seviper and ZANGOOSE are eternal rivals. It counters a ZANGOOSE’s dazzling agility with its swordlike tail, which also oozes a horrible poison.",
     "evolvesFrom": null,
     "height": 2.7,
     "weight": 52.5,
@@ -1411,7 +2176,16 @@
       "rock",
       "psychic"
     ],
+    "stats": {
+      "hp": 90,
+      "attack": 55,
+      "defense": 65,
+      "special-attack": 95,
+      "special-defense": 85,
+      "speed": 70
+    },
     "description": "第一次发现它是在４０年前陨石坠落的地方。只要注视敌人就能使其入睡。",
+    "englishDescription": "It becomes very active on the night of a full moon. This Pokémon was first discovered 40 years ago at the site of a meteor strike.",
     "evolvesFrom": null,
     "height": 1.0,
     "weight": 168.0,
@@ -1428,7 +2202,16 @@
       "rock",
       "psychic"
     ],
+    "stats": {
+      "hp": 90,
+      "attack": 95,
+      "defense": 85,
+      "special-attack": 55,
+      "special-defense": 65,
+      "speed": 70
+    },
     "description": "太阳能量是其力量之源，所以白天会很强。旋转时身体会发光。",
+    "englishDescription": "Solar energy is the source of this Pokémon’s power. On sunny days, groups of Solrock line up facing the sun and absorb its light.",
     "evolvesFrom": null,
     "height": 1.2,
     "weight": 154.0,
@@ -1445,7 +2228,16 @@
       "water",
       "ground"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 48,
+      "defense": 43,
+      "special-attack": 46,
+      "special-defense": 41,
+      "speed": 60
+    },
     "description": "会用２根长长的胡须探索浑浊的河底。用湿滑的粘膜保护着身体。",
+    "englishDescription": "Its body is covered with a slimy film. The film acts as a barrier to prevent germs in muddy water from entering the Barboach’s body.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 1.9,
@@ -1462,7 +2254,16 @@
       "water",
       "ground"
     ],
+    "stats": {
+      "hp": 110,
+      "attack": 78,
+      "defense": 73,
+      "special-attack": 76,
+      "special-defense": 71,
+      "speed": 60
+    },
     "description": "会将大沼泽划为自己的领地。如果有敌人接近的话，它就会狂暴起来，并引发大地震。",
+    "englishDescription": "Mysteriously, it can foretell earthquakes. In the daytime, it sleeps in mud at the bottom of a pond. When it awakens, it continually feeds throughout the night.",
     "evolvesFrom": 339,
     "height": 0.9,
     "weight": 23.6,
@@ -1478,7 +2279,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 43,
+      "attack": 80,
+      "defense": 65,
+      "special-attack": 50,
+      "special-defense": 35,
+      "speed": 35
+    },
     "description": "来自于外国的宝可梦，现在已经回归了野生环境。不管多么污浊的河水都能适应。",
+    "englishDescription": "Once it grips prey with its large pincers, it will never let go, no matter what. It is a hardy Pokémon that can thrive in any environment.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 11.5,
@@ -1495,7 +2305,16 @@
       "water",
       "dark"
     ],
+    "stats": {
+      "hp": 63,
+      "attack": 120,
+      "defense": 85,
+      "special-attack": 90,
+      "special-defense": 55,
+      "speed": 55
+    },
     "description": "有着热爱战斗的性格。当遇到靠近自己领地的对手，会毫不留情地将之打倒。",
+    "englishDescription": "A brutish Pokémon that loves to battle. A veteran Crawdaunt that has prevailed in hundreds of battles has giant pincers marked with countless scars.",
     "evolvesFrom": 341,
     "height": 1.1,
     "weight": 32.8,
@@ -1512,7 +2331,16 @@
       "ground",
       "psychic"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 40,
+      "defense": 55,
+      "special-attack": 40,
+      "special-defense": 70,
+      "speed": 55
+    },
     "description": "在古代遗迹被发现。会一边旋转一边移动。晚上睡觉的时候也是单脚站着。",
+    "englishDescription": "A Baltoy moves by spinning on its single foot. It has been depicted in murals adorning the walls of a once-bustling city in an ancient age.",
     "evolvesFrom": null,
     "height": 0.5,
     "weight": 21.5,
@@ -1529,7 +2357,16 @@
       "ground",
       "psychic"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 70,
+      "defense": 105,
+      "special-attack": 70,
+      "special-defense": 120,
+      "speed": 75
+    },
     "description": "似乎是从古代人做的泥偶诞生而来的宝可梦。能靠念力浮在空中移动。",
+    "englishDescription": "A Claydol sleeps while hovering in midair. Its arms are separate from its body. They are kept floating by the Pokémon’s manipulation of psychic power.",
     "evolvesFrom": 343,
     "height": 1.5,
     "weight": 108.0,
@@ -1546,7 +2383,16 @@
       "rock",
       "grass"
     ],
+    "stats": {
+      "hp": 66,
+      "attack": 41,
+      "defense": 77,
+      "special-attack": 61,
+      "special-defense": 87,
+      "speed": 23
+    },
     "description": "会吸附在海底岩石上，用花瓣一样的触手缠住接近自己的猎物。",
+    "englishDescription": "It disguises itself as seaweed by making its tentacles sway. Unsuspecting prey that come too close are swallowed whole. It became extinct 100 million years ago.",
     "evolvesFrom": null,
     "height": 1.0,
     "weight": 23.8,
@@ -1563,7 +2409,16 @@
       "rock",
       "grass"
     ],
+    "stats": {
+      "hp": 86,
+      "attack": 81,
+      "defense": 97,
+      "special-attack": 81,
+      "special-defense": 107,
+      "speed": 43
+    },
     "description": "用触手将猎物缠住后，会用消化液将其溶化，然后吸收其中的养分。",
+    "englishDescription": "It drags its heavy body along the seafloor. It makes its nest in the shallows of warm seas. Cradily can be seen on beaches when the tide goes out.",
     "evolvesFrom": 345,
     "height": 1.5,
     "weight": 60.4,
@@ -1580,7 +2435,16 @@
       "rock",
       "bug"
     ],
+    "stats": {
+      "hp": 45,
+      "attack": 95,
+      "defense": 50,
+      "special-attack": 40,
+      "special-defense": 50,
+      "speed": 75
+    },
     "description": "会把８根翅膀当做船桨划水，并且游泳的速度相当快。是虫宝可梦的一种祖先。",
+    "englishDescription": "It was resurrected from a fossil using the power of science. It swims by undulating the eight wings at its sides. They were feet that adapted to life in the sea.",
     "evolvesFrom": null,
     "height": 0.7,
     "weight": 12.5,
@@ -1597,7 +2461,16 @@
       "rock",
       "bug"
     ],
+    "stats": {
+      "hp": 75,
+      "attack": 125,
+      "defense": 100,
+      "special-attack": 70,
+      "special-defense": 80,
+      "speed": 45
+    },
     "description": "栖息在陆地，但也擅长游泳。会潜入大海寻找猎物，用锋利的爪子给予致命一击。",
+    "englishDescription": "Armaldo usually lives on land. However, when it hunts for prey, it dives beneath the ocean. It swims around using its two large wings.",
     "evolvesFrom": 347,
     "height": 1.5,
     "weight": 68.2,
@@ -1613,7 +2486,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 20,
+      "attack": 15,
+      "defense": 20,
+      "special-attack": 10,
+      "special-defense": 55,
+      "speed": 80
+    },
     "description": "虽然外表丑陋，但拥有顽强的生命力，只要少量的水就能存活。",
+    "englishDescription": "Feebas live in ponds that are heavily infested with weeds. Because of its hopelessly shabby appearance, it seems as if few TRAINERS raise it.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 7.4,
@@ -1629,7 +2511,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 95,
+      "attack": 60,
+      "defense": 79,
+      "special-attack": 100,
+      "special-defense": 125,
+      "speed": 81
+    },
     "description": "据说目睹了美纳斯美丽身姿的人，心中一切的愤恨都能得到抚慰。",
+    "englishDescription": "It is said to live at the bottom of large lakes. Considered to be the most beautiful of all Pokémon, it has been depicted in paintings and statues.",
     "evolvesFrom": 349,
     "height": 6.2,
     "weight": 162.0,
@@ -1645,7 +2536,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 70,
+      "defense": 70,
+      "special-attack": 70,
+      "special-defense": 70,
+      "speed": 70
+    },
     "description": "样子会根据天气发生变化。天气越恶劣，性格也会变得越暴躁。",
+    "englishDescription": "It alters its form depending on the weather. Changes in the climate such as the temperature and humidity appear to affect its cellular structure.",
     "evolvesFrom": null,
     "height": 0.3,
     "weight": 0.8,
@@ -1661,7 +2561,16 @@
     "types": [
       "normal"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 90,
+      "defense": 70,
+      "special-attack": 60,
+      "special-defense": 120,
+      "speed": 40
+    },
     "description": "在不隐身的时候，身体的颜色也会随着心情和状态改变。颜色越浓的时候越有精神。",
+    "englishDescription": "A Pokémon that has the ability to alter its body colors to match its surroundings. A Kecleon reverts to its original colors if it is startled.",
     "evolvesFrom": null,
     "height": 1.0,
     "weight": 22.0,
@@ -1677,7 +2586,16 @@
     "types": [
       "ghost"
     ],
+    "stats": {
+      "hp": 44,
+      "attack": 75,
+      "defense": 35,
+      "special-attack": 63,
+      "special-defense": 33,
+      "speed": 45
+    },
     "description": "流传着这样的古老俗语，日暮时分，不要去排列着怨影娃娃的房子。",
+    "englishDescription": "This Pokémon roams about deep in the night seeking such negative emotions as grudges and envy. It retreats to its nest when the sun begins to rise.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 2.3,
@@ -1693,7 +2611,16 @@
     "types": [
       "ghost"
     ],
+    "stats": {
+      "hp": 64,
+      "attack": 115,
+      "defense": 65,
+      "special-attack": 83,
+      "special-defense": 63,
+      "speed": 65
+    },
     "description": "因被丢弃的怨念而诞生。听说，如果满足它受重视的需求，就会变回原来的玩偶。",
+    "englishDescription": "An abandoned plush doll became this Pokémon. They are said to live in garbage dumps and wander about in search of the children that threw them away.",
     "evolvesFrom": 353,
     "height": 1.1,
     "weight": 12.5,
@@ -1709,7 +2636,16 @@
     "types": [
       "ghost"
     ],
+    "stats": {
+      "hp": 20,
+      "attack": 40,
+      "defense": 90,
+      "special-attack": 30,
+      "special-defense": 90,
+      "speed": 25
+    },
     "description": "会让身体变透明，然后偷偷地靠近猎物。拥有穿过厚墙壁的能力。",
+    "englishDescription": "A glare from its single scarlet eye makes even burly grown-ups freeze in utter fear. It is a nocturnal Pokémon that roams about under the cloak of darkness.",
     "evolvesFrom": null,
     "height": 0.8,
     "weight": 15.0,
@@ -1725,7 +2661,16 @@
     "types": [
       "ghost"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 70,
+      "defense": 130,
+      "special-attack": 60,
+      "special-defense": 130,
+      "speed": 25
+    },
     "description": "寻找游走的灵魂，吸入自己空洞的身体里。没人知道被吸入后会发生什么事。",
+    "englishDescription": "It is thought that its body is hollow with only a spectral ball of fire burning inside. However, no one has been able to confirm this theory as fact.",
     "evolvesFrom": 355,
     "height": 1.6,
     "weight": 30.6,
@@ -1742,7 +2687,16 @@
       "grass",
       "flying"
     ],
+    "stats": {
+      "hp": 99,
+      "attack": 68,
+      "defense": 83,
+      "special-attack": 72,
+      "special-defense": 87,
+      "speed": 51
+    },
     "description": "脖子上的那串水果很美味，很受欢迎。在温暖的地方，有许多培育热带龙的牧场。",
+    "englishDescription": "It flies by flapping its broad leaves. The bunch of fruit that grows around its neck is deliciously sweet. In the spring, it scatters pollen from its neck.",
     "evolvesFrom": null,
     "height": 2.0,
     "weight": 100.0,
@@ -1758,7 +2712,16 @@
     "types": [
       "psychic"
     ],
+    "stats": {
+      "hp": 75,
+      "attack": 50,
+      "defense": 80,
+      "special-attack": 95,
+      "special-defense": 90,
+      "speed": 65
+    },
     "description": "身体里会回荡细微的风声，发出的声音与气流有时能让对手失去平衡。",
+    "englishDescription": "They fly about very actively when the hot season arrives. They communicate among themselves using seven different and distinguishing cries.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 1.0,
@@ -1774,7 +2737,16 @@
     "types": [
       "dark"
     ],
+    "stats": {
+      "hp": 65,
+      "attack": 130,
+      "defense": 60,
+      "special-attack": 75,
+      "special-defense": 60,
+      "speed": 75
+    },
     "description": "由于拥有感知危险的能力，因此它被人们误解为是会招来灾祸的宝可梦。",
+    "englishDescription": "It sharply senses even subtle changes in the sky and the land to predict natural disasters. It is a long-lived Pokémon that has a life-span of 100 years.",
     "evolvesFrom": null,
     "height": 1.2,
     "weight": 47.0,
@@ -1790,7 +2762,16 @@
     "types": [
       "psychic"
     ],
+    "stats": {
+      "hp": 95,
+      "attack": 23,
+      "defense": 48,
+      "special-attack": 23,
+      "special-defense": 48,
+      "speed": 23
+    },
     "description": "具有集体行动的习性。睡觉的时候会聚集在洞窟中，和伙伴们把身体挨在一起。",
+    "englishDescription": "A Wynaut loves to eat sweet fruits. It cleverly picks fruits using its earlike arms. They gather in fruit gardens, drawn by the fragrance.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 14.0,
@@ -1806,7 +2787,16 @@
     "types": [
       "ice"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 50,
+      "defense": 50,
+      "special-attack": 50,
+      "special-defense": 50,
+      "speed": 50
+    },
     "description": "只能在寒冷的土地上生存。即使在零下１００度的环境下也能充满活力地到处蹦蹦跳跳。",
+    "englishDescription": "They tend to move about in groups of around five Snorunt. In snowy regions, it is said that when they are seen late at night, snowfall will arrive by morning.",
     "evolvesFrom": null,
     "height": 0.7,
     "weight": 16.8,
@@ -1822,7 +2812,16 @@
     "types": [
       "ice"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 80,
+      "defense": 80,
+      "special-attack": 80,
+      "special-defense": 80,
+      "speed": 80
+    },
     "description": "用令空气中的水分瞬间冻结的力量，将猎物冰冻起来。",
+    "englishDescription": "A Glalie has the power to instantaneously freeze moisture in the atmosphere. A dazzling cloud of diamondlike ice crystals forms around its body.",
     "evolvesFrom": 361,
     "height": 1.5,
     "weight": 256.5,
@@ -1839,7 +2838,16 @@
       "ice",
       "water"
     ],
+    "stats": {
+      "hp": 70,
+      "attack": 40,
+      "defense": 50,
+      "special-attack": 55,
+      "special-defense": 50,
+      "speed": 25
+    },
     "description": "会漂浮在波浪当中观察大海的状况。一旦发现猎物，就会通知群体里的帝牙海狮。",
+    "englishDescription": "It is completely covered with plushy fur. As a result, it never feels the cold even when it is rolling about on ice floes or diving in the sea.",
     "evolvesFrom": null,
     "height": 0.8,
     "weight": 39.5,
@@ -1856,7 +2864,16 @@
       "ice",
       "water"
     ],
+    "stats": {
+      "hp": 90,
+      "attack": 60,
+      "defense": 70,
+      "special-attack": 75,
+      "special-defense": 70,
+      "speed": 45
+    },
     "description": "不管是海豹球还是精灵球，只要是圆的物体都会顶在鼻子上转来转去。",
+    "englishDescription": "Sealeo live in herds on ice floes. Using its powerful flippers, it shatters ice. It dives into the sea to hunt prey five times a day.",
     "evolvesFrom": 363,
     "height": 1.1,
     "weight": 87.6,
@@ -1873,7 +2890,16 @@
       "ice",
       "water"
     ],
+    "stats": {
+      "hp": 110,
+      "attack": 80,
+      "defense": 90,
+      "special-attack": 95,
+      "special-defense": 90,
+      "speed": 65
+    },
     "description": "它的獠牙一生都会持续生长。即使在战斗中被折断也能逐渐恢复，只需要１年的时间便能完好如初。",
+    "englishDescription": "To protect its herd, the leader battles anything that invades its territory, even at the cost of its life. Its tusks may snap off in battle.",
     "evolvesFrom": 364,
     "height": 1.4,
     "weight": 150.6,
@@ -1889,7 +2915,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 35,
+      "attack": 64,
+      "defense": 85,
+      "special-attack": 74,
+      "special-defense": 55,
+      "speed": 32
+    },
     "description": "珍珠贝的珍珠非常贵重。据说，其价值或许是大舌贝珍珠的１０倍以上。",
+    "englishDescription": "A Clamperl slams its shell closed on prey to prevent escape. The pearl it creates upon evolution is said to be infused with a mysterious energy.",
     "evolvesFrom": null,
     "height": 0.4,
     "weight": 52.5,
@@ -1905,7 +2940,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 55,
+      "attack": 104,
+      "defense": 105,
+      "special-attack": 94,
+      "special-defense": 75,
+      "speed": 52
+    },
     "description": "栖息在深海中。传说，如果猎斑鱼被冲上沙滩，就会有不祥的事情发生。",
+    "englishDescription": "To withstand the crushing pressure of water deep under the sea, its spine is very thick and sturdy. Its tail, which is shaped like a small fish, has eyes that light up.",
     "evolvesFrom": 366,
     "height": 1.7,
     "weight": 27.0,
@@ -1921,7 +2965,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 55,
+      "attack": 84,
+      "defense": 105,
+      "special-attack": 114,
+      "special-defense": 75,
+      "speed": 52
+    },
     "description": "吸食猎物的体液。剩下的肉会沉入海底，成为其他宝可梦的食物。",
+    "englishDescription": "A Gorebyss siphons the body fluids of prey through its thin, tubular mouth. Its light pink body color turns vivid when it finishes feeding.",
     "evolvesFrom": 366,
     "height": 1.8,
     "weight": 22.6,
@@ -1938,7 +2991,16 @@
       "water",
       "rock"
     ],
+    "stats": {
+      "hp": 100,
+      "attack": 90,
+      "defense": 130,
+      "special-attack": 45,
+      "special-defense": 65,
+      "speed": 55
+    },
     "description": "在深海调查中被发现的宝可梦。样子在１亿年间都没有任何变化，被人们称为活化石。",
+    "englishDescription": "A Pokémon that was once believed to have been extinct. The species has not changed its form for 100 million years. It walks on the seafloor using its pectoral fins.",
     "evolvesFrom": null,
     "height": 1.0,
     "weight": 23.4,
@@ -1954,7 +3016,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 43,
+      "attack": 30,
+      "defense": 55,
+      "special-attack": 40,
+      "special-defense": 65,
+      "speed": 97
+    },
     "description": "温暖海域的珊瑚礁是它的栖息地。特别喜欢在太阳珊瑚的枝条间睡觉。",
+    "englishDescription": "Luvdisc make the branches of CORSOLA their nests. There is a custom from long ago of giving a Luvdisc as a gift to express one’s feelings of love.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 8.7,
@@ -1970,7 +3041,16 @@
     "types": [
       "dragon"
     ],
+    "stats": {
+      "hp": 45,
+      "attack": 75,
+      "defense": 60,
+      "special-attack": 40,
+      "special-defense": 30,
+      "speed": 50
+    },
     "description": "不会成群结队，喜欢单独生活。脑袋很硬，只要猛地一撞，就能把坚硬的岩石一分为二。",
+    "englishDescription": "Although it is small, this Pokémon is very powerful because its body is a bundle of muscles. It launches head-butts with its ironlike skull.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 42.1,
@@ -1986,7 +3066,16 @@
     "types": [
       "dragon"
     ],
+    "stats": {
+      "hp": 65,
+      "attack": 95,
+      "defense": 100,
+      "special-attack": 60,
+      "special-defense": 50,
+      "speed": 50
+    },
     "description": "可以不吃食物忍受饥饿。据说当它用尽积蓄的能量后，就会开始进化。",
+    "englishDescription": "It hardly eats while it awaits evolution. It becomes hardier by enduring hunger. Its shell peels off the instant it begins to evolve.",
     "evolvesFrom": 371,
     "height": 1.1,
     "weight": 110.5,
@@ -2003,7 +3092,16 @@
       "dragon",
       "flying"
     ],
+    "stats": {
+      "hp": 95,
+      "attack": 135,
+      "defense": 80,
+      "special-attack": 110,
+      "special-defense": 80,
+      "speed": 100
+    },
     "description": "虽然在空中翱翔能够让它乐在其中，但是一旦被惹怒，就会大闹一番，不可收拾。",
+    "englishDescription": "After many long years, its cellular structure underwent a sudden mutation to grow wings. When angered, it loses all thought and rampages out of control.",
     "evolvesFrom": 372,
     "height": 1.5,
     "weight": 102.6,
@@ -2020,7 +3118,16 @@
       "steel",
       "psychic"
     ],
+    "stats": {
+      "hp": 40,
+      "attack": 55,
+      "defense": 80,
+      "special-attack": 35,
+      "special-defense": 60,
+      "speed": 30
+    },
     "description": "身体的细胞由磁铁构成。循环于全身的不是血液，而是磁力。",
+    "englishDescription": "When Beldum gather in a swarm, they move in perfect unison as if they were but one Pokémon. They communicate with each other using brain waves.",
     "evolvesFrom": null,
     "height": 0.6,
     "weight": 95.2,
@@ -2037,7 +3144,16 @@
       "steel",
       "psychic"
     ],
+    "stats": {
+      "hp": 60,
+      "attack": 75,
+      "defense": 100,
+      "special-attack": 55,
+      "special-defense": 80,
+      "speed": 50
+    },
     "description": "依靠磁力飞行。能够在空中以高速穿过险峻的山岳，让追捕的猎物无处可逃。",
+    "englishDescription": "The claws tipping its arms pack the destructive power to tear through thick iron sheets as if they were silk. It flies at over 60 miles per hour.",
     "evolvesFrom": 374,
     "height": 1.2,
     "weight": 202.5,
@@ -2054,7 +3170,16 @@
       "steel",
       "psychic"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 135,
+      "defense": 130,
+      "special-attack": 95,
+      "special-defense": 90,
+      "speed": 70
+    },
     "description": "２只金属怪组合起来的样子。运用堪比超级计算机的头脑打败敌人。",
+    "englishDescription": "Metagross has four brains that are joined by a complex neural network. As a result of integration, this Pokémon is smarter than a supercomputer.",
     "evolvesFrom": 375,
     "height": 1.6,
     "weight": 550.0,
@@ -2070,7 +3195,16 @@
     "types": [
       "rock"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 100,
+      "defense": 200,
+      "special-attack": 50,
+      "special-defense": 100,
+      "speed": 50
+    },
     "description": "人们通过最新的科学技术对它的岩石身体做了调查，但是并未发现大脑和心脏。",
+    "englishDescription": "A Pokémon that is made entirely of rocks and boulders. If parts of its body chip off in battle, Regirock repairs itself by adding new rocks.",
     "evolvesFrom": null,
     "height": 1.7,
     "weight": 230.0,
@@ -2086,7 +3220,16 @@
     "types": [
       "ice"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 50,
+      "defense": 100,
+      "special-attack": 100,
+      "special-defense": 200,
+      "speed": 50
+    },
     "description": "拥有一副由冰构成的身体。据说是诞生于冰河时期冻得厚厚实实的冰块之下。",
+    "englishDescription": "Its entire body is made of Antarctic ice. After extensive studies, researchers believe the ice was formed during an ice age.",
     "evolvesFrom": null,
     "height": 1.8,
     "weight": 175.0,
@@ -2102,7 +3245,16 @@
     "types": [
       "steel"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 75,
+      "defense": 150,
+      "special-attack": 75,
+      "special-defense": 150,
+      "speed": 50
+    },
     "description": "据说诞生于地幔之中，在距今约１万年前现身于地面之上。",
+    "englishDescription": "Its body is harder than any other kind of metal. The body metal is composed of a mysterious substance. Not only is it hard, it shrinks and stretches flexibly.",
     "evolvesFrom": null,
     "height": 1.9,
     "weight": 205.0,
@@ -2119,7 +3271,16 @@
       "dragon",
       "psychic"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 80,
+      "defense": 90,
+      "special-attack": 110,
+      "special-defense": 130,
+      "speed": 110
+    },
     "description": "能够理解人类的话语，身上如玻璃般的细羽可以折射光线、改变外观。",
+    "englishDescription": "They make a small herd of only several members. They rarely make contact with people or other Pokémon. They disappear if they sense enemies.",
     "evolvesFrom": null,
     "height": 1.4,
     "weight": 40.0,
@@ -2136,7 +3297,16 @@
       "dragon",
       "psychic"
     ],
+    "stats": {
+      "hp": 80,
+      "attack": 90,
+      "defense": 80,
+      "special-attack": 130,
+      "special-defense": 110,
+      "speed": 110
+    },
     "description": "只会对心地善良的人敞开心扉，收拢前肢后能以极快速度飞行。",
+    "englishDescription": "Even in hiding, it can detect the locations of others and sense their emotions since it has telepathy. Its intelligence allows it to understand human languages.",
     "evolvesFrom": null,
     "height": 2.0,
     "weight": 60.0,
@@ -2152,7 +3322,16 @@
     "types": [
       "water"
     ],
+    "stats": {
+      "hp": 100,
+      "attack": 100,
+      "defense": 90,
+      "special-attack": 150,
+      "special-defense": 140,
+      "speed": 90
+    },
     "description": "传说它象征大海的力量，曾与固拉多为了自然之力多次交锋。",
+    "englishDescription": "Kyogre has appeared in mythology as the creator of the sea. After long years of feuding with GROUDON, it took to sleep at the bottom of the sea.",
     "evolvesFrom": null,
     "height": 4.5,
     "weight": 352.0,
@@ -2168,7 +3347,16 @@
     "types": [
       "ground"
     ],
+    "stats": {
+      "hp": 100,
+      "attack": 150,
+      "defense": 140,
+      "special-attack": 100,
+      "special-defense": 90,
+      "speed": 90
+    },
     "description": "传说它象征大地的力量，能让岩浆喷发，并使陆地不断扩张。",
+    "englishDescription": "Groudon has appeared in mythology as the creator of the land. It sleeps in magma underground and is said to make volcanoes erupt on awakening.",
     "evolvesFrom": null,
     "height": 3.5,
     "weight": 950.0,
@@ -2185,7 +3373,16 @@
       "dragon",
       "flying"
     ],
+    "stats": {
+      "hp": 105,
+      "attack": 150,
+      "defense": 90,
+      "special-attack": 150,
+      "special-defense": 90,
+      "speed": 95
+    },
     "description": "长久飞行于高空，穿过臭氧层时会吞食陨石来获取能量。",
+    "englishDescription": "A Pokémon that flies endlessly in the ozone layer. It is said it would descend to the ground if KYOGRE and GROUDON were to fight.",
     "evolvesFrom": null,
     "height": 7.0,
     "weight": 206.5,
@@ -2202,7 +3399,16 @@
       "steel",
       "psychic"
     ],
+    "stats": {
+      "hp": 100,
+      "attack": 100,
+      "defense": 100,
+      "special-attack": 100,
+      "special-defense": 100,
+      "speed": 100
+    },
     "description": "传说当它从１０００年的沉睡中醒来时，会实现写在它头部许愿笺上的愿望。",
+    "englishDescription": "Jirachi is said to make wishes come true. While it sleeps, a tough crystalline shell envelops the body to protect it from enemies.",
     "evolvesFrom": null,
     "height": 0.3,
     "weight": 1.1,
@@ -2218,7 +3424,16 @@
     "types": [
       "psychic"
     ],
+    "stats": {
+      "hp": 50,
+      "attack": 150,
+      "defense": 50,
+      "special-attack": 150,
+      "special-defense": 50,
+      "speed": 150
+    },
     "description": "据说它由来自宇宙的病毒变化而成，胸口的结晶能发射强大的光束。",
+    "englishDescription": "A Pokémon that mutated from an extraterrestrial virus exposed to a laser beam. Its body is configured for superior agility and speed.",
     "evolvesFrom": null,
     "height": 1.7,
     "weight": 60.8,

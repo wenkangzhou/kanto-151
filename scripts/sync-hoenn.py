@@ -32,6 +32,15 @@ def download(url, target):
             time.sleep(attempt + 1)
 
 
+def english_description(species):
+    entries = {entry["version"]["name"]: entry["flavor_text"] for entry in species["flavor_text_entries"] if entry["language"]["name"] == "en"}
+    text = next((entries[version] for version in ("emerald", "ruby", "sapphire") if version in entries), None)
+    if text is None:
+        raise ValueError(f"Missing English Hoenn description for {species['id']}")
+    name = next(entry["name"] for entry in species["names"] if entry["language"]["name"] == "en")
+    return " ".join(text.replace("\u00ad", "").replace("-\n", "-").replace("\n", " ").replace("\f", " ").split()).replace("POKéMON", "Pokémon").replace(name.upper(), name)
+
+
 def fetch(number):
     pokemon = json.loads(download(f"https://pokeapi.co/api/v2/pokemon/{number}/", CACHE / f"pokemon-{number}.json"))
     species = json.loads(download(f"https://pokeapi.co/api/v2/pokemon-species/{number}/", CACHE / f"species-{number}.json"))
@@ -52,7 +61,9 @@ def fetch(number):
         "englishName": names["en"],
         "genus": genera["zh-hans"],
         "types": [entry["type"]["name"] for entry in pokemon["types"]],
+        "stats": {entry["stat"]["name"]: entry["base_stat"] for entry in pokemon["stats"]},
         "description": descriptions[-1].replace("\n", "").replace("\f", "") if descriptions else DESCRIPTION_OVERRIDES.get(str(number), f"{names['zh-hans']}是{genera['zh-hans']}。"),
+        "englishDescription": english_description(species),
         "evolvesFrom": parent_id,
         "height": pokemon["height"] / 10,
         "weight": pokemon["weight"] / 10,

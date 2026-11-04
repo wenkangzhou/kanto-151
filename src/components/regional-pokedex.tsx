@@ -8,7 +8,7 @@ import { TYPE_NAMES, type Pokemon, type PokemonType } from '@/domain/types';
 import { useLocale } from '@/lib/i18n/locale';
 import styles from './johto-pokedex.module.css';
 
-export type RegionalEntry = Pick<Pokemon, 'id' | 'name' | 'traditionalName' | 'englishName' | 'types' | 'description' | 'evolvesFrom' | 'height' | 'weight' | 'artwork'> & { regionalNumber: number };
+export type RegionalEntry = Pick<Pokemon, 'id' | 'name' | 'traditionalName' | 'englishName' | 'types' | 'stats' | 'description' | 'evolvesFrom' | 'height' | 'weight' | 'artwork'> & { regionalNumber: number; englishDescription?: string; kantoEraTypes?: PokemonType[] };
 type Region = 'johto' | 'hoenn';
 type Origin = 'all' | 'new' | 'kanto' | 'johto' | 'branch';
 const number = (id: number) => `#${String(id).padStart(3, '0')}`;
@@ -18,15 +18,13 @@ const regionConfig = {
   hoenn: { zh: '丰缘', en: 'Hoenn', code: 'HOENN', total: 202, newStart: 252, newCount: 135, heroId: 252, volume: '003', otherRoute: '/johto/pokedex', otherZh: '城都预览', otherEn: 'Johto preview' },
 } as const;
 
-export function RegionalPokedex({ region, entries, initialPokemonId }: { region: Region; entries: RegionalEntry[]; initialPokemonId?: number }) {
+export function RegionalPokedex({ region, entries }: { region: Region; entries: RegionalEntry[] }) {
   const config = regionConfig[region];
   const locale = useLocale();
   const english = locale === 'en';
-  const initialEntry = entries.find(pokemon => pokemon.id === initialPokemonId);
-  const [query, setQuery] = useState(initialEntry?.name ?? '');
+  const [query, setQuery] = useState('');
   const [type, setType] = useState<PokemonType | 'all'>('all');
   const [origin, setOrigin] = useState<Origin>('all');
-  const [selectedId, setSelectedId] = useState(initialEntry?.id ?? config.heroId);
   const search = useDeferredValue(query.trim().toLowerCase());
   const kantoCount = entries.filter(pokemon => pokemon.id <= 151).length;
   const johtoCount = entries.filter(pokemon => pokemon.id >= 152 && pokemon.id <= 251).length;
@@ -39,7 +37,6 @@ export function RegionalPokedex({ region, entries, initialPokemonId }: { region:
     return !search || number(pokemon.id).includes(search.replace(/^#/, '')) || number(pokemon.regionalNumber).includes(search.replace(/^#/, ''))
       || [pokemon.name, pokemon.traditionalName, pokemon.englishName].some(name => name.toLowerCase().includes(search));
   }), [entries, config.newStart, origin, type, search]);
-  const selected = results.find(pokemon => pokemon.id === selectedId) ?? results[0];
   const typeName = (value: PokemonType) => english ? value[0].toUpperCase() + value.slice(1) : TYPE_NAMES[value];
   const originFilters: { key: Origin; zh: string; en: string }[] = [
     { key: 'all', zh: `全部 ${config.total} 位`, en: `All ${config.total}` },
@@ -47,12 +44,6 @@ export function RegionalPokedex({ region, entries, initialPokemonId }: { region:
     { key: 'kanto', zh: region === 'johto' ? '关都旧友' : `关都 ${kantoCount} 位`, en: `Kanto ${kantoCount}` },
     region === 'johto' ? { key: 'branch', zh: '进化支线', en: 'Evolutions' } : { key: 'johto', zh: `城都 ${johtoCount} 位`, en: `Johto ${johtoCount}` },
   ];
-  const relatedId = selected && selected.id >= config.newStart ? selected.evolvesFrom : selected?.id;
-  const relatedHref = relatedId && relatedId < config.newStart ? relatedId <= 151 ? `/pokemon/${relatedId}` : `/johto/pokedex?pokemon=${relatedId}` : null;
-  const relatedText = selected && relatedId && relatedHref ? selected.id >= config.newStart
-    ? english ? `See its earlier form ${number(relatedId)}` : `看看之前的形态 ${number(relatedId)}`
-    : relatedId <= 151 ? english ? 'Open its Kanto record' : '翻开这位关都旧友的档案'
-      : english ? 'Open its Johto record' : '去城都查看这位旧友' : '';
 
   return <div className={`${styles.page} ${region === 'hoenn' ? styles.hoenn : ''}`}>
     <header className={styles.header}>
@@ -86,22 +77,11 @@ export function RegionalPokedex({ region, entries, initialPokemonId }: { region:
         <div className={styles.originFilter} role="group" aria-label={english ? 'Filter by origin' : '按来源筛选'}>{originFilters.map(filter => <button key={filter.key} type="button" aria-pressed={origin === filter.key} onClick={() => setOrigin(filter.key)}>{english ? filter.en : filter.zh}</button>)}</div>
       </div>
 
-      <div className={styles.content}>
-        <div className={styles.grid}>
-          {results.map(pokemon => <button className={styles.card} aria-pressed={selected?.id === pokemon.id} type="button" key={pokemon.id} onClick={() => setSelectedId(pokemon.id)}>
+      <div className={styles.grid}>
+          {results.map(pokemon => <Link className={styles.card} id={`pokemon-${pokemon.id}`} href={`/${region}/pokedex/${pokemon.id}`} prefetch={false} key={pokemon.id}>
             <span className={styles.cardNumber}>{english ? config.code : config.zh} {number(pokemon.regionalNumber)}</span><Image src={pokemon.artwork} alt="" width={475} height={475} sizes="(max-width: 600px) 92px, 116px" /><strong>{english ? pokemon.englishName : pokemon.name}</strong><small>{english ? 'National' : '全国'} {number(pokemon.id)}</small>
-          </button>)}
+          </Link>)}
           {results.length === 0 && <p className={styles.empty}>{english ? 'No Pokémon match these filters.' : '没有找到符合条件的宝可梦，试试其他名字或属性。'}</p>}
-        </div>
-        {selected && <aside className={styles.detail} aria-live="polite">
-          <div className={styles.detailImage}><span>{english ? config.code : config.zh} {number(selected.regionalNumber)}</span><Image key={selected.id} src={selected.artwork} alt={english ? selected.englishName : selected.name} width={475} height={475} sizes="(max-width: 700px) 220px, 260px" /></div>
-          <span className={styles.detailKicker}>{config.code} {number(selected.regionalNumber)} / NATIONAL {number(selected.id)}</span>
-          <h3>{english ? selected.englishName : selected.name}</h3><p className={styles.secondaryName}>{english ? selected.name : selected.englishName}</p>
-          <div className={styles.typeList}>{selected.types.map(value => <span key={value}>{typeName(value)}</span>)}</div>
-          <p className={styles.description}>{english ? `A Pokémon in the original ${config.en} regional Pokédex.` : selected.description}</p>
-          <div className={styles.measure}><span>{english ? 'Height' : '身高'} <b>{selected.height} m</b></span><span>{english ? 'Weight' : '体重'} <b>{selected.weight} kg</b></span></div>
-          {relatedHref && <Link href={relatedHref} className={styles.kantoLink}>{relatedText}<ArrowRight size={16} /></Link>}
-        </aside>}
       </div>
     </section>
     <footer className={styles.footer}><span>{config.code} FIELD GUIDE · PREVIEW</span><Link href="/pokedex">{english ? 'Back to Kanto' : '回到关都'}<ArrowRight size={15} /></Link></footer>

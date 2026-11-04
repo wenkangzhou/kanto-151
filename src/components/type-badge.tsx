@@ -5,14 +5,16 @@ import { useEffect, useId, useRef } from 'react';
 import { TYPE_NAMES, type PokemonType } from '@/domain/types';
 import { speakText, stopVoice } from '@/lib/voice-audio';
 import { TypeSymbol } from './type-symbol';
+import { useSystemVoiceOnly } from './voice-mode';
 
 export function useTypeVoice() {
   const owner = useId();
+  const systemOnly = useSystemVoiceOnly();
   const activeOwner = useRef(owner);
   useEffect(() => () => stopVoice(activeOwner.current), []);
   return (type: PokemonType) => {
     activeOwner.current = `${owner}-${type}`;
-    speakText(activeOwner.current, TYPE_NAMES[type]);
+    speakText(activeOwner.current, TYPE_NAMES[type], { systemOnly });
   };
 }
 

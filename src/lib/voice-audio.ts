@@ -28,15 +28,15 @@ function begin(owner: string) {
   return (error = '') => { if (current !== generation || state.owner !== owner) return; generation++; const cleanup = release; release = undefined; cleanup?.(); emit({ owner: '', error, failedOwner: error ? owner : undefined }); focus(false); };
 }
 export function voiceSource(text:string) { if(getLocale()==='en')return undefined; const clip=clips[text]; return clip?`/audio/voices/${clip[0]}.mp3`:undefined; }
-export function speakText(owner: string, text: string, options:{loadTimeoutMs?:number;systemFallback?:boolean}={}) {
+export function speakText(owner: string, text: string, options:{loadTimeoutMs?:number;systemFallback?:boolean;systemOnly?:boolean}={}) {
   if (state.owner === owner) { stopVoice(owner); return; }
   const done = begin(owner);
   const loadingError=options.loadTimeoutMs?'声音暂时没加载好，先继续对战。':'语音加载超时，请再点一次。';
   const english = getLocale() === 'en';
   text = translate(text, english ? 'en' : 'zh');
-  const clip = english ? undefined : clips[text];
+  const clip = english || options.systemOnly ? undefined : clips[text];
   if (!clip) {
-    if ((!options.systemFallback && !english) || !window.speechSynthesis) { done('这段语音还没有准备好。'); return; }
+    if ((!options.systemFallback && !options.systemOnly && !english) || !window.speechSynthesis) { done('这段语音还没有准备好。'); return; }
     try {
       const speech = new SpeechSynthesisUtterance(text);
       speech.lang = english ? 'en-US' : 'zh-CN'; speech.rate = english ? .9 : .85;

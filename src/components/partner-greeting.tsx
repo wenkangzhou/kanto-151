@@ -7,7 +7,7 @@ import type { Pokemon } from '@/domain/types';
 import { PokemonArt } from './pokemon-art';
 
 /** A greeting never changes collection or team membership. */
-export function PartnerGreeting({ pokemon }: { pokemon: Pokemon }) {
+export function PartnerGreeting({ pokemon }: { pokemon: Pick<Pokemon, 'name' | 'artwork'> }) {
   const localize = useT();
   const reduced = useReducedMotion();
   const [greeting, setGreeting] = useState(0);

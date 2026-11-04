@@ -1,7 +1,7 @@
 import data from '@/data/johto-pokemon.json';
 import regionalOrder from '@/data/johto-regional-order.json';
 import { pokemon as kantoPokemon } from './pokemon';
-import type { Pokemon, PokemonType } from './types';
+import type { Pokemon, PokemonType, Stats } from './types';
 
 export type JohtoPokemon = {
   id: number;
@@ -10,7 +10,9 @@ export type JohtoPokemon = {
   englishName: string;
   genus: string;
   types: PokemonType[];
+  stats: Stats;
   description: string;
+  englishDescription: string;
   evolvesFrom: number | null;
   height: number;
   weight: number;
