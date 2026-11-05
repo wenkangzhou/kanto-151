@@ -1,16 +1,15 @@
 'use client';
 
-import { useDeferredValue, useMemo, useState } from 'react';
+import { useDeferredValue, useLayoutEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, BookOpen, Search, Sparkles } from 'lucide-react';
 import { TYPE_NAMES, type Pokemon, type PokemonType } from '@/domain/types';
 import { useLocale } from '@/lib/i18n/locale';
+import { saveRegionalDexView, useRegionalDexView, type Origin, type Region } from './regional-dex-memory';
 import styles from './johto-pokedex.module.css';
 
 export type RegionalEntry = Pick<Pokemon, 'id' | 'name' | 'traditionalName' | 'englishName' | 'types' | 'stats' | 'description' | 'evolvesFrom' | 'height' | 'weight' | 'artwork'> & { regionalNumber: number; englishDescription?: string; kantoEraTypes?: PokemonType[] };
-type Region = 'johto' | 'hoenn';
-type Origin = 'all' | 'new' | 'kanto' | 'johto' | 'branch';
 const number = (id: number) => `#${String(id).padStart(3, '0')}`;
 const types = Object.keys(TYPE_NAMES) as PokemonType[];
 const regionConfig = {
@@ -22,10 +21,22 @@ export function RegionalPokedex({ region, entries }: { region: Region; entries: 
   const config = regionConfig[region];
   const locale = useLocale();
   const english = locale === 'en';
-  const [query, setQuery] = useState('');
-  const [type, setType] = useState<PokemonType | 'all'>('all');
-  const [origin, setOrigin] = useState<Origin>('all');
+  const view = useRegionalDexView(region);
+  const { query, type, origin } = view;
+  const restored = useRef(false);
+  const setQuery = (query: string) => saveRegionalDexView(region, { query, y: 0, anchor: 0 });
+  const setType = (type: PokemonType | 'all') => saveRegionalDexView(region, { type, y: 0, anchor: 0 });
+  const setOrigin = (origin: Origin) => saveRegionalDexView(region, { origin, y: 0, anchor: 0 });
   const search = useDeferredValue(query.trim().toLowerCase());
+  useLayoutEffect(() => {
+    if (restored.current || !view.ready || search !== query.trim().toLowerCase()) return;
+    const frame = requestAnimationFrame(() => {
+      const card = view.anchor ? document.getElementById(`pokemon-${view.anchor}`) : null;
+      window.scrollTo({ top: card ? card.getBoundingClientRect().top + window.scrollY - view.offset : view.y, behavior: 'instant' });
+      restored.current = true;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [view, search, query]);
   const kantoCount = entries.filter(pokemon => pokemon.id <= 151).length;
   const johtoCount = entries.filter(pokemon => pokemon.id >= 152 && pokemon.id <= 251).length;
   const results = useMemo(() => entries.filter(pokemon => {
@@ -45,7 +56,10 @@ export function RegionalPokedex({ region, entries }: { region: Region; entries: 
     region === 'johto' ? { key: 'branch', zh: '进化支线', en: 'Evolutions' } : { key: 'johto', zh: `城都 ${johtoCount} 位`, en: `Johto ${johtoCount}` },
   ];
 
-  return <div className={`${styles.page} ${region === 'hoenn' ? styles.hoenn : ''}`}>
+  return <div className={`${styles.page} ${region === 'hoenn' ? styles.hoenn : ''}`} onClickCapture={event => {
+    const card = (event.target as HTMLElement).closest<HTMLAnchorElement>(`a[href^="/${region}/pokedex/"]`);
+    if (card) saveRegionalDexView(region, { y: window.scrollY, anchor: Number(card.getAttribute('href')?.split('/').pop()), offset: card.getBoundingClientRect().top });
+  }}>
     <header className={styles.header}>
       <Link href="/pokedex" className={styles.return}><ArrowLeft size={17} />{english ? 'Kanto Pokédex' : '返回关都图鉴'}</Link>
       <div className={styles.headerRight}><Link href={config.otherRoute}>{english ? config.otherEn : config.otherZh}<ArrowRight size={15} /></Link><span className={styles.preview}>{english ? 'INDEPENDENT PREVIEW' : '独立预览 · 暂未开放收集'}</span></div>
