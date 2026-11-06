@@ -1,11 +1,12 @@
 'use client';
 
-import { useDeferredValue, useLayoutEffect, useMemo, useRef } from 'react';
+import { useDeferredValue, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, BookOpen, Search, Sparkles } from 'lucide-react';
 import { TYPE_NAMES, type Pokemon, type PokemonType } from '@/domain/types';
 import { useLocale } from '@/lib/i18n/locale';
+import { openRegionalPageOffline } from '@/lib/regional-offline-navigation';
 import { saveRegionalDexView, useRegionalDexView, type Origin, type Region } from './regional-dex-memory';
 import styles from './johto-pokedex.module.css';
 
@@ -15,6 +16,18 @@ const types = Object.keys(TYPE_NAMES) as PokemonType[];
 const regionConfig = {
   johto: { zh: '城都', en: 'Johto', code: 'JOHTO', total: 251, newStart: 152, newCount: 100, heroId: 152, volume: '002', otherRoute: '/hoenn/pokedex', otherZh: '丰缘预览', otherEn: 'Hoenn preview' },
   hoenn: { zh: '丰缘', en: 'Hoenn', code: 'HOENN', total: 202, newStart: 252, newCount: 135, heroId: 252, volume: '003', otherRoute: '/johto/pokedex', otherZh: '城都预览', otherEn: 'Johto preview' },
+} as const;
+const guideStories = {
+  johto: [
+    { ids: [95, 208], target: 208, zh: '大岩蛇的新进化', en: 'Onix becomes Steelix', zhNote: '从关都旧友出发，认识城都新增的进化形态。', enNote: 'Follow a Kanto friend into a new Johto evolution.' },
+    { ids: [172, 25], target: 172, zh: '皮丘与皮卡丘', en: 'Pichu and Pikachu', zhNote: '城都引入幼年形态，把熟悉的伙伴接成新的成长链。', enNote: 'A Johto baby Pokémon extends a familiar evolution family.' },
+    { ids: [25], target: 25, zh: '三地共同的伙伴', en: 'One friend, three regions', zhNote: '看看皮卡丘在关都、城都、丰缘各排第几。', enNote: 'Find Pikachu in the Kanto, Johto and Hoenn Pokédexes.' },
+  ],
+  hoenn: [
+    { ids: [252], target: 252, zh: '丰缘的第一位伙伴', en: 'Begin with Treecko', zhNote: '从木守宫出发，认识丰缘的新伙伴和它的成长形态。', enNote: 'Meet a new Hoenn partner and follow its evolution family.' },
+    { ids: [298, 183], target: 298, zh: '露力丽与玛力露', en: 'Azurill and Marill', zhNote: '丰缘新增的幼年形态，连回城都的旧友。', enNote: 'A Hoenn baby Pokémon connects to a Johto friend.' },
+    { ids: [25], target: 25, zh: '三地共同的伙伴', en: 'One friend, three regions', zhNote: '看看皮卡丘在关都、城都、丰缘各排第几。', enNote: 'Find Pikachu in the Kanto, Johto and Hoenn Pokédexes.' },
+  ],
 } as const;
 
 export function RegionalPokedex({ region, entries }: { region: Region; entries: RegionalEntry[] }) {
@@ -28,6 +41,12 @@ export function RegionalPokedex({ region, entries }: { region: Region; entries: 
   const setType = (type: PokemonType | 'all') => saveRegionalDexView(region, { type, y: 0, anchor: 0 });
   const setOrigin = (origin: Origin) => saveRegionalDexView(region, { origin, y: 0, anchor: 0 });
   const search = useDeferredValue(query.trim().toLowerCase());
+  useEffect(() => {
+    const legacyId = new URLSearchParams(window.location.search).get('pokemon');
+    if (legacyId && /^[1-9]\d{0,2}$/.test(legacyId) && entries.some(pokemon => pokemon.id === Number(legacyId))) {
+      window.location.replace(`/${region}/pokedex/${legacyId}`);
+    }
+  }, [entries, region]);
   useLayoutEffect(() => {
     if (restored.current || !view.ready || search !== query.trim().toLowerCase()) return;
     const frame = requestAnimationFrame(() => {
@@ -57,8 +76,12 @@ export function RegionalPokedex({ region, entries }: { region: Region; entries: 
   ];
 
   return <div className={`${styles.page} ${region === 'hoenn' ? styles.hoenn : ''}`} onClickCapture={event => {
-    const card = (event.target as HTMLElement).closest<HTMLAnchorElement>(`a[href^="/${region}/pokedex/"]`);
-    if (card) saveRegionalDexView(region, { y: window.scrollY, anchor: Number(card.getAttribute('href')?.split('/').pop()), offset: card.getBoundingClientRect().top });
+    const link = (event.target as HTMLElement).closest<HTMLAnchorElement>(`a[href^="/${region}/pokedex/"]`);
+    if (link) {
+      const card = link.classList.contains(styles.card);
+      saveRegionalDexView(region, { y: window.scrollY, anchor: card ? Number(link.getAttribute('href')?.split('/').pop()) : 0, offset: card ? link.getBoundingClientRect().top : 0 });
+    }
+    openRegionalPageOffline(event);
   }}>
     <header className={styles.header}>
       <Link href="/pokedex" className={styles.return}><ArrowLeft size={17} />{english ? 'Kanto Pokédex' : '返回关都图鉴'}</Link>
@@ -81,6 +104,19 @@ export function RegionalPokedex({ region, entries }: { region: Region; entries: 
       <div><span className={styles.bridgeNumber}>01</span><strong>{english ? 'Two ways to number' : '两种编号，相同的伙伴'}</strong><p>{english ? `${config.en} has its own regional order; national numbers stay the same.` : `${config.zh}有自己的地区顺序，全国编号仍与其他地区共用。`}</p></div>
       <div><span className={styles.bridgeNumber}>02</span><strong>{region === 'johto' ? english ? 'Familiar beginnings' : '旧伙伴的新分支' : english ? 'Familiar faces return' : '关都与城都的旧友'}</strong><p>{region === 'johto' ? english ? '11 new Pokémon evolve directly from Kanto species.' : '11 位城都伙伴直接由关都宝可梦进化而来。' : english ? `${kantoCount} Kanto and ${johtoCount} Johto Pokémon also appear here, using their existing records.` : `${kantoCount} 位关都与 ${johtoCount} 位城都伙伴也在这里出现，资料直接沿用。`}</p></div>
       <div><span className={styles.bridgeNumber}>03</span><strong>{english ? 'Preview only' : '先认识，再相遇'}</strong><p>{english ? 'This preview does not change your collection, team or rewards.' : '这里先看图鉴，不影响已有收藏、小队和奖励。'}</p></div>
+    </section>
+
+    <section className={styles.guide} aria-labelledby="regional-guide-title">
+      <div className={styles.guideHeading}><div><span className={styles.kicker}>FIELD ROUTES / 03</span><h2 id="regional-guide-title">{english ? 'Follow a field route' : '跟着线索逛图鉴'}</h2></div><p>{english ? 'Start with a Pokémon, then follow its evolution and regional links.' : '从一位伙伴出发，沿着进化与地区足迹继续探索。'}</p></div>
+      <div className={styles.guideGrid}>{guideStories[region].map((story, index) => <Link className={styles.guideCard} href={`/${region}/pokedex/${story.target}`} prefetch={false} key={story.target}>
+        <span className={styles.guideIndex}>0{index + 1} / {config.code}</span>
+        <span className={styles.guideArt}>{story.ids.map((id, position) => {
+          const pokemon = entries.find(entry => entry.id === id);
+          return pokemon && <span key={id}>{position > 0 && <ArrowRight size={18} aria-hidden="true" />}<Image src={pokemon.artwork} alt="" width={88} height={88} sizes="88px" /></span>;
+        })}</span>
+        <strong>{english ? story.en : story.zh}</strong><small>{english ? story.enNote : story.zhNote}</small>
+        <span className={styles.guideOpen}>{english ? 'Explore this clue' : '顺着线索看看'}<ArrowRight size={15} aria-hidden="true" /></span>
+      </Link>)}</div>
     </section>
 
     <section className={styles.catalog} aria-label={english ? `${config.en} Pokémon` : `${config.zh}宝可梦`}>

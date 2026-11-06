@@ -1,15 +1,19 @@
-/* Only public static assets are cached. Family data and HTML are always online.
-   Version each asset cache separately so audio updates retain downloaded artwork. */
-const VERSION = 'kanto-public-v6';
+/* Family pages, RSC and API responses stay online. Only the standalone public
+   regional field guides may store HTML after a visit. Asset caches keep their
+   own versions so a page update does not discard downloaded artwork or audio. */
+const VERSION = 'kanto-public-v7';
 const IMAGE_CACHE = 'kanto-public-v5-images';
 const RESOURCE_CACHE = 'kanto-public-v5-resources';
-const AUDIO_CACHE = `${VERSION}-audio`;
+const AUDIO_CACHE = 'kanto-public-v6-audio';
+const REGIONAL_PAGE_CACHE = `${VERSION}-regional-pages`;
 const IMAGE_LIMIT = 512;
 const IMAGE_BUDGET = 48_000_000;
 const IMAGE_MAX_BYTES = 1_500_000;
 const RESOURCE_LIMIT = 120;
 const AUDIO_LIMIT = 180;
 const AUDIO_MAX_BYTES = 350_000;
+const REGIONAL_PAGE_LIMIT = 32;
+const REGIONAL_PAGE_MAX_BYTES = 1_500_000;
 const SHELL = ['/offline.html', '/icons/icon-192.png'];
 const SCENE_AUDIO = [
   '/audio/effects/evolution.mp3', '/audio/effects/evolution-success.mp3',
@@ -39,6 +43,50 @@ function isShortAudio(url) {
     || /^\/audio\/pinyin\/[a-z0-9]+\.mp3$/.test(url.pathname)
     || /^\/audio\/battle\/(?:hit|throw)\.wav$/.test(url.pathname)
     || /^\/audio\/battle\/types\/[a-z-]+\.wav$/.test(url.pathname);
+}
+
+function isRegionalPage(url) {
+  return !url.search && /^\/(?:johto|hoenn)\/pokedex(?:\/[1-9]\d{0,2})?$/.test(url.pathname);
+}
+
+function validRegionalPage(response) {
+  return response.status === 200 && response.type === 'basic' && !response.redirected
+    && response.headers.get('content-type')?.toLowerCase().startsWith('text/html')
+    && !response.headers.has('set-cookie')
+    && !/(?:private|no-store)/i.test(response.headers.get('cache-control') ?? '');
+}
+
+async function rememberRegionalPage(cache, url, response) {
+  if (!validRegionalPage(response)) return;
+  const html = await response.blob();
+  if (html.size > REGIONAL_PAGE_MAX_BYTES) return;
+  const headers = new Headers(response.headers);
+  headers.delete('content-encoding');
+  headers.set('content-length', String(html.size));
+  await remember(cache, url.href, new Response(html, { headers }), REGIONAL_PAGE_CACHE, REGIONAL_PAGE_LIMIT);
+}
+
+async function warmRegionalPage(path) {
+  if (typeof path !== 'string') return;
+  const url = new URL(path, self.location.origin);
+  if (url.origin !== self.location.origin || !isRegionalPage(url)) return;
+  const cache = await caches.open(REGIONAL_PAGE_CACHE);
+  if (await cache.match(url.href)) return;
+  const response = await fetch(url.href, { credentials: 'same-origin', cache: 'no-store', headers: { accept: 'text/html' } });
+  await rememberRegionalPage(cache, url, response);
+}
+
+async function regionalNavigation(request, url, store) {
+  let cache;
+  try { cache = await caches.open(REGIONAL_PAGE_CACHE); } catch {}
+  try {
+    const response = await fetch(request);
+    if (cache) store(rememberRegionalPage(cache, url, response.clone()).catch(() => {}));
+    return response;
+  } catch {
+    const saved = await cache?.match(url.href).catch(() => null);
+    return saved || caches.match('/offline.html');
+  }
 }
 
 function remember(cache, request, response, name, limit) {
@@ -216,14 +264,17 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 self.addEventListener('activate', event => {
-  const current = [VERSION, IMAGE_CACHE, RESOURCE_CACHE, AUDIO_CACHE];
+  const current = [VERSION, IMAGE_CACHE, RESOURCE_CACHE, AUDIO_CACHE, REGIONAL_PAGE_CACHE];
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('kanto-public-') && !current.includes(key)).map(key => caches.delete(key)))).then(() => self.clients.claim()));
 });
 self.addEventListener('message', event => {
-  if (event.data?.type !== 'warm-scene-audio') return;
-  event.waitUntil(caches.open(AUDIO_CACHE).then(async cache => {
-    for (const path of SCENE_AUDIO) await warmAudio(cache, new URL(path, self.location.origin));
-  }).catch(() => {}));
+  if (event.data?.type === 'warm-regional-page') {
+    event.waitUntil(warmRegionalPage(event.data.path).catch(() => {}));
+  } else if (event.data?.type === 'warm-scene-audio') {
+    event.waitUntil(caches.open(AUDIO_CACHE).then(async cache => {
+      for (const path of SCENE_AUDIO) await warmAudio(cache, new URL(path, self.location.origin));
+    }).catch(() => {}));
+  }
 });
 self.addEventListener('fetch', event => {
   const request = event.request;
@@ -231,7 +282,8 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/parent') || request.headers.get('RSC') === '1' || url.searchParams.has('_rsc')) return;
   if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).catch(() => caches.match('/offline.html')));
+    if (isRegionalPage(url)) respondWithStorage(event, store => regionalNavigation(request, url, store));
+    else event.respondWith(fetch(request).catch(() => caches.match('/offline.html')));
     return;
   }
   if (isShortAudio(url)) {

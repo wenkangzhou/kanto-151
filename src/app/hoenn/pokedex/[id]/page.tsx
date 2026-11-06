@@ -5,6 +5,10 @@ import { hoennRegional } from '@/domain/hoenn';
 import { regionalDetailRelations } from '@/domain/regional-relations';
 
 type Props = { params: Promise<{ id: string }> };
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return hoennRegional.map(pokemon => ({ id: String(pokemon.id) }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;

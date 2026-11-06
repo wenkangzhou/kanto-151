@@ -15,7 +15,6 @@ export function PwaControls() {
     window.addEventListener('beforeinstallprompt', onPrompt);
     window.addEventListener('online', updateNetwork);
     window.addEventListener('offline', updateNetwork);
-    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') navigator.serviceWorker.register('/sw.js').catch(() => {});
     return () => { window.removeEventListener('beforeinstallprompt', onPrompt); window.removeEventListener('online', updateNetwork); window.removeEventListener('offline', updateNetwork); };
   }, []);
   if (offline) return <span className="network-badge"><WifiOff size={15} />{localize("当前离线")}</span>;

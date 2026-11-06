@@ -37,7 +37,7 @@ test('service worker excludes private routes, mutations, cross-origin and RSC re
   for (const request of cases) handlers.fetch({ request: { ...request, mode: request.mode ?? 'navigate', headers: { get: () => request.rsc } }, respondWith: () => assert.fail(`Intercepted excluded request ${request.url}`) });
 });
 
-test('HTML is never persisted; offline navigation uses the fallback; viewed artwork and optimized images are cached', async () => {
+test('family HTML stays online; offline navigation uses the fallback; viewed artwork and optimized images are cached', async () => {
   const handlers: Record<string, (event: unknown) => void> = {};
   const saved = new Map<string, Response>([['/offline.html', new Response('offline page')]]);
   let offline = false;
@@ -92,6 +92,78 @@ test('HTML is never persisted; offline navigation uses the fallback; viewed artw
   assert.equal(await visit(optimized, 'cors'), 'public artwork');
   assert.equal(await visit(johtoOptimized, 'cors'), 'public artwork');
   assert.equal(await visit(hoennOptimized, 'cors'), 'public artwork');
+});
+
+test('visited regional field guides reopen offline without caching other HTML', async () => {
+  const handlers: Record<string, (event: unknown) => void> = {};
+  const stores = new Map<string, Map<string, Response>>();
+  const cache = (name: string) => {
+    if (!stores.has(name)) stores.set(name, new Map());
+    const saved = stores.get(name)!;
+    const keyOf = (key: string | { url: string }) => typeof key === 'string' ? key : key.url;
+    return {
+      match: async (key: string | { url: string }) => saved.get(keyOf(key))?.clone(),
+      put: async (key: string | { url: string }, response: Response) => { saved.set(keyOf(key), response); },
+      keys: async () => [...saved.keys()],
+      delete: async (key: string | { url: string }) => saved.delete(keyOf(key)),
+    };
+  };
+  let offline = false;
+  vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
+    self: { location: { origin: 'https://kanto.test' }, addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; } },
+    URL, Response, Headers,
+    caches: { open: async (name: string) => cache(name), match: async () => new Response('offline page') },
+    fetch: async (request: string | { url: string }) => {
+      if (offline) throw Error('offline');
+      const path = new URL(typeof request === 'string' ? request : request.url).pathname;
+      const response = new Response(`page ${path}`, { headers: {
+        'content-type': 'text/html',
+        ...(path === '/hoenn/pokedex/25' ? { 'set-cookie': 'private=1' } : {}),
+        ...(path === '/hoenn/pokedex/26' ? { 'cache-control': 'private, no-store' } : {}),
+      } });
+      Object.defineProperty(response, 'type', { value: 'basic' });
+      const clone = response.clone.bind(response);
+      response.clone = () => {
+        const copy = clone();
+        Object.defineProperty(copy, 'type', { value: 'basic' });
+        return copy;
+      };
+      return response;
+    },
+  });
+  async function visit(path: string) {
+    let result: Promise<Response> | undefined;
+    const writes: Promise<unknown>[] = [];
+    handlers.fetch({ request: { url: `https://kanto.test${path}`, method: 'GET', mode: 'navigate', headers: { get: () => null } }, respondWith: (promise: Promise<Response>) => { result = promise; }, waitUntil: (promise: Promise<unknown>) => { writes.push(promise); } });
+    const response = await result;
+    await Promise.all(writes);
+    return response!.text();
+  }
+  let warmup: Promise<unknown> | undefined;
+  handlers.message({ data: { type: 'warm-regional-page', path: '/johto/pokedex' }, waitUntil: (promise: Promise<unknown>) => { warmup = promise; } });
+  await warmup;
+  for (const path of ['/parent', '//other.test/johto/pokedex', '/johto/pokedex?pokemon=25']) {
+    handlers.message({ data: { type: 'warm-regional-page', path }, waitUntil: (promise: Promise<unknown>) => { warmup = promise; } });
+    await warmup;
+  }
+  assert.equal(await visit('/hoenn/pokedex/252'), 'page /hoenn/pokedex/252');
+  assert.equal(await visit('/hoenn/pokedex/25'), 'page /hoenn/pokedex/25');
+  assert.equal(await visit('/hoenn/pokedex/26'), 'page /hoenn/pokedex/26');
+  assert.equal(await visit('/pokedex'), 'page /pokedex');
+  const regional = stores.get('kanto-public-v7-regional-pages');
+  assert.deepEqual([...regional!.keys()], ['https://kanto.test/johto/pokedex', 'https://kanto.test/hoenn/pokedex/252']);
+  offline = true;
+  assert.equal(await visit('/johto/pokedex'), 'page /johto/pokedex');
+  assert.equal(await visit('/hoenn/pokedex/252'), 'page /hoenn/pokedex/252');
+  assert.equal(await visit('/hoenn/pokedex/25'), 'offline page');
+  assert.equal(await visit('/hoenn/pokedex/26'), 'offline page');
+  assert.equal(await visit('/johto/pokedex/208'), 'offline page');
+  assert.equal(await visit('/pokedex'), 'offline page');
+  offline = false;
+  for (let id = 1; id <= 33; id++) await visit(`/johto/pokedex/${id}`);
+  assert.equal(regional!.size, 32);
+  assert.equal(regional!.has('https://kanto.test/johto/pokedex'), false);
+  assert.equal(regional!.has('https://kanto.test/johto/pokedex/33'), true);
 });
 
 test('image cache keeps a complete Pokédex and its second size within a bounded store', async () => {
@@ -344,7 +416,7 @@ test('scene warmup, pinyin and battle cues are bounded to valid short audio', as
   }
 });
 
-test('upgrading removes the old HTML cache without deleting other applications caches', async () => {
+test('upgrading removes obsolete caches without deleting other applications caches', async () => {
   const handlers: Record<string, (event: unknown) => void> = {};
   const removed: string[] = []; let claimed = false;
   vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
@@ -354,6 +426,6 @@ test('upgrading removes the old HTML cache without deleting other applications c
   let completion: Promise<unknown> | undefined;
   handlers.activate({ waitUntil: (promise: Promise<unknown>) => { completion = promise; } });
   await completion;
-  assert.deepEqual(removed, ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5']);
+  assert.deepEqual(removed, ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5', 'kanto-public-v6']);
   assert.equal(claimed, true);
 });

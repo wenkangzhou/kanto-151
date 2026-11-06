@@ -9,6 +9,7 @@ import { TYPE_NAMES, type PokemonType } from '@/domain/types';
 import { swipeDirection } from '@/domain/navigation';
 import type { RegionalDetailRelations } from '@/domain/regional-relations';
 import { useLocale, useT } from '@/lib/i18n/locale';
+import { openRegionalPageOffline } from '@/lib/regional-offline-navigation';
 import { PartnerGreeting } from './partner-greeting';
 import { PokemonArt } from './pokemon-art';
 import { ReadAloud } from './read-aloud';
@@ -65,7 +66,7 @@ export function RegionalPokemonDetail({ region, pokemon: p, previous, next, rela
   const eraTypes = p.kantoEraTypes;
   const family = relations.family;
 
-  return <SystemVoiceProvider><div className={`page detail-page ${styles.page} ${region === 'hoenn' ? styles.hoenn : ''}`}>
+  return <SystemVoiceProvider><div className={`page detail-page ${styles.page} ${region === 'hoenn' ? styles.hoenn : ''}`} onClickCapture={openRegionalPageOffline}>
     <div className="detail-navigation">
       <Link href={listHref} className="back-link"><BookOpen size={25} />{english ? `Back to ${regionName} Pokédex` : `返回${regionName}图鉴`}</Link>
       <div>
@@ -88,7 +89,10 @@ export function RegionalPokemonDetail({ region, pokemon: p, previous, next, rela
         if (!direction) return;
         suppressClick.current = true;
         const neighbor = direction === 'previous' ? previous : next;
-        if (neighbor) router.replace(href(neighbor.id), { scroll: false });
+        if (neighbor) {
+          if (navigator.onLine) router.replace(href(neighbor.id), { scroll: false });
+          else window.location.replace(href(neighbor.id));
+        }
       }} onPointerCancel={() => { gesture.current = null; }} onClickCapture={event => {
         if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; }
       }}>

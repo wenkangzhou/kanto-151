@@ -49,7 +49,7 @@ SQL 固定函数 `search_path`，对业务表使用完整 schema 名，不开放
 
 ## PWA 与验证
 
-Service Worker 仅缓存公开静态脚本、Logo 与插画，不缓存 HTML、RSC、API 或家长路径；离线时不展示缓存的家庭记录。升级清除旧版 HTML 缓存。
+Service Worker 缓存公开静态脚本、Logo、插画及最近访问的最多 32 个城都／丰缘预览 HTML。直接访问预览或站内进入预览时会保存该页；断网后可重开已保存的页面，图片只显示此前加载过的资源。家庭功能页面、RSC、API 和家长路径不缓存；离线时不展示缓存的家庭记录。升级清除旧版页面缓存。
 
 `npm run verify` 运行 lint、生成规则一致性和自动测试；`npm run build` 包含配置、TypeScript、生产构建和公开产物密钥扫描。SQL 测试用本地 PGlite 执行整份迁移及业务生命周期，不接触云端数据，也不等同于多连接并发压力测试。部署和验收步骤见 [部署说明](deployment.md)。
 

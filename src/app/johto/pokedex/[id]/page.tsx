@@ -5,6 +5,10 @@ import { johtoRegional } from '@/domain/johto';
 import { regionalDetailRelations } from '@/domain/regional-relations';
 
 type Props = { params: Promise<{ id: string }> };
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return johtoRegional.map(pokemon => ({ id: String(pokemon.id) }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;

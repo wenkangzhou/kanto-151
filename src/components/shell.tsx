@@ -8,6 +8,7 @@ import { Compass, BookOpen, Backpack, Footprints, ShieldCheck, UsersRound, Gradu
 import { useCollection } from './collection-provider';
 import { BackgroundMusic } from './background-music';
 import { PwaControls } from './pwa-controls';
+import { ServiceWorkerRegistration } from './service-worker-registration';
 import { DemoControls } from './visitor-demo';
 import { VoiceLifecycle } from './voice-lifecycle';
 import { PlayTimeProvider, PlayTimeBadge, PlayTimeNotice, PlayTimeRest, usePlayTime } from './play-time';
@@ -18,8 +19,8 @@ import { FamilyGate } from './family-access';
 const links = [{ href: '/learn', name: '去学习', en: 'LEARN', icon: GraduationCap }, { href: '/', name: '去冒险', en: 'ADVENTURE', icon: Compass }, { href: '/pokedex', name: '图鉴与百科', en: 'POKÉDEX', icon: BookOpen }, { href: '/team', name: '我的小队', en: 'MY TEAM', icon: UsersRound }, { href: '/bag', name: '我的背包', en: 'BACKPACK', icon: Backpack }, { href: '/history', name: '成长足迹', en: 'MEMORIES', icon: Footprints }];
 export function Shell({ children, musicAvailable = false }: { children: React.ReactNode; musicAvailable?: boolean }) {
   const pathname = usePathname();
-  if (pathname.startsWith('/johto/pokedex') || pathname.startsWith('/hoenn/pokedex')) return <div className="regional-standalone"><main id="main-content">{children}</main></div>;
-  return <KantoShell musicAvailable={musicAvailable}>{children}</KantoShell>;
+  if (pathname.startsWith('/johto/pokedex') || pathname.startsWith('/hoenn/pokedex')) return <><ServiceWorkerRegistration /><div className="regional-standalone"><main id="main-content">{children}</main></div></>;
+  return <><ServiceWorkerRegistration /><KantoShell musicAvailable={musicAvailable}>{children}</KantoShell></>;
 }
 function KantoShell({ children, musicAvailable }: { children: React.ReactNode; musicAvailable: boolean }) {
   const localize = useT();
