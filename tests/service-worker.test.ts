@@ -14,6 +14,7 @@ test('initial offline cache stays small and includes the fallback image', async 
   handlers.install({ waitUntil: (promise: Promise<unknown>) => { completion = promise; } });
   await completion;
   assert.ok(assets.includes('/offline.html'));
+  assert.ok(assets.includes('/offline-regional.html'));
   assert.ok(assets.includes('/icons/icon-192.png'));
   assert.ok(assets.reduce((total, path) => total + statSync(`public${path}`).size, 0) < 100_000);
 });
@@ -112,7 +113,7 @@ test('visited regional field guides reopen offline without caching other HTML', 
   vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
     self: { location: { origin: 'https://kanto.test' }, addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; } },
     URL, Response, Headers,
-    caches: { open: async (name: string) => cache(name), match: async () => new Response('offline page') },
+    caches: { open: async (name: string) => cache(name), match: async (path: string) => new Response(path === '/offline-regional.html' ? 'regional offline page' : 'offline page') },
     fetch: async (request: string | { url: string }) => {
       if (offline) throw Error('offline');
       const path = new URL(typeof request === 'string' ? request : request.url).pathname;
@@ -139,25 +140,31 @@ test('visited regional field guides reopen offline without caching other HTML', 
     await Promise.all(writes);
     return response!.text();
   }
-  let warmup: Promise<unknown> | undefined;
-  handlers.message({ data: { type: 'warm-regional-page', path: '/johto/pokedex' }, waitUntil: (promise: Promise<unknown>) => { warmup = promise; } });
-  await warmup;
+  async function status(path: string, warm: boolean) {
+    let work: Promise<unknown> | undefined;
+    let saved: boolean | undefined;
+    handlers.message({ data: { type: 'regional-page-status', path, warm }, ports: [{ postMessage: (value: { saved: boolean }) => { saved = value.saved; } }], waitUntil: (promise: Promise<unknown>) => { work = promise; } });
+    await work;
+    return saved;
+  }
+  assert.equal(await status('/johto/pokedex', true), true);
   for (const path of ['/parent', '//other.test/johto/pokedex', '/johto/pokedex?pokemon=25']) {
-    handlers.message({ data: { type: 'warm-regional-page', path }, waitUntil: (promise: Promise<unknown>) => { warmup = promise; } });
-    await warmup;
+    assert.equal(await status(path, true), false);
   }
   assert.equal(await visit('/hoenn/pokedex/252'), 'page /hoenn/pokedex/252');
   assert.equal(await visit('/hoenn/pokedex/25'), 'page /hoenn/pokedex/25');
   assert.equal(await visit('/hoenn/pokedex/26'), 'page /hoenn/pokedex/26');
   assert.equal(await visit('/pokedex'), 'page /pokedex');
-  const regional = stores.get('kanto-public-v7-regional-pages');
+  const regional = stores.get('kanto-public-v8-regional-pages');
   assert.deepEqual([...regional!.keys()], ['https://kanto.test/johto/pokedex', 'https://kanto.test/hoenn/pokedex/252']);
   offline = true;
+  assert.equal(await status('/johto/pokedex', false), true);
+  assert.equal(await status('/johto/pokedex/208', false), false);
   assert.equal(await visit('/johto/pokedex'), 'page /johto/pokedex');
   assert.equal(await visit('/hoenn/pokedex/252'), 'page /hoenn/pokedex/252');
-  assert.equal(await visit('/hoenn/pokedex/25'), 'offline page');
-  assert.equal(await visit('/hoenn/pokedex/26'), 'offline page');
-  assert.equal(await visit('/johto/pokedex/208'), 'offline page');
+  assert.equal(await visit('/hoenn/pokedex/25'), 'regional offline page');
+  assert.equal(await visit('/hoenn/pokedex/26'), 'regional offline page');
+  assert.equal(await visit('/johto/pokedex/208'), 'regional offline page');
   assert.equal(await visit('/pokedex'), 'offline page');
   offline = false;
   for (let id = 1; id <= 33; id++) await visit(`/johto/pokedex/${id}`);
@@ -421,11 +428,11 @@ test('upgrading removes obsolete caches without deleting other applications cach
   const removed: string[] = []; let claimed = false;
   vm.runInNewContext(readFileSync('public/sw.js', 'utf8'), {
     self: { addEventListener: (name: string, handler: (event: unknown) => void) => { handlers[name] = handler; }, clients: { claim: async () => { claimed = true; } } },
-    caches: { keys: async () => ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5', 'kanto-public-v5-images', 'kanto-public-v5-resources', 'kanto-public-v6', 'kanto-public-v6-audio', 'other-app'], delete: async (key: string) => { removed.push(key); } },
+    caches: { keys: async () => ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5', 'kanto-public-v5-images', 'kanto-public-v5-resources', 'kanto-public-v6', 'kanto-public-v6-audio', 'kanto-public-v7', 'kanto-public-v7-regional-pages', 'other-app'], delete: async (key: string) => { removed.push(key); } },
   });
   let completion: Promise<unknown> | undefined;
   handlers.activate({ waitUntil: (promise: Promise<unknown>) => { completion = promise; } });
   await completion;
-  assert.deepEqual(removed, ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5', 'kanto-public-v6']);
+  assert.deepEqual(removed, ['kanto-public-v1', 'kanto-public-v2', 'kanto-public-v3', 'kanto-public-v4', 'kanto-public-v5', 'kanto-public-v6', 'kanto-public-v7', 'kanto-public-v7-regional-pages']);
   assert.equal(claimed, true);
 });

@@ -1,7 +1,7 @@
 /* Family pages, RSC and API responses stay online. Only the standalone public
    regional field guides may store HTML after a visit. Asset caches keep their
    own versions so a page update does not discard downloaded artwork or audio. */
-const VERSION = 'kanto-public-v7';
+const VERSION = 'kanto-public-v8';
 const IMAGE_CACHE = 'kanto-public-v5-images';
 const RESOURCE_CACHE = 'kanto-public-v5-resources';
 const AUDIO_CACHE = 'kanto-public-v6-audio';
@@ -14,7 +14,7 @@ const AUDIO_LIMIT = 180;
 const AUDIO_MAX_BYTES = 350_000;
 const REGIONAL_PAGE_LIMIT = 32;
 const REGIONAL_PAGE_MAX_BYTES = 1_500_000;
-const SHELL = ['/offline.html', '/icons/icon-192.png'];
+const SHELL = ['/offline.html', '/offline-regional.html', '/icons/icon-192.png'];
 const SCENE_AUDIO = [
   '/audio/effects/evolution.mp3', '/audio/effects/evolution-success.mp3',
   '/audio/effects/capture.mp3', '/audio/effects/capture-success.mp3',
@@ -71,9 +71,18 @@ async function warmRegionalPage(path) {
   const url = new URL(path, self.location.origin);
   if (url.origin !== self.location.origin || !isRegionalPage(url)) return;
   const cache = await caches.open(REGIONAL_PAGE_CACHE);
+  await writes.get(REGIONAL_PAGE_CACHE)?.catch(() => {});
   if (await cache.match(url.href)) return;
   const response = await fetch(url.href, { credentials: 'same-origin', cache: 'no-store', headers: { accept: 'text/html' } });
   await rememberRegionalPage(cache, url, response);
+}
+
+async function regionalPageSaved(path, warm) {
+  if (typeof path !== 'string') return false;
+  const url = new URL(path, self.location.origin);
+  if (url.origin !== self.location.origin || !isRegionalPage(url)) return false;
+  if (warm) await warmRegionalPage(path);
+  return Boolean(await (await caches.open(REGIONAL_PAGE_CACHE)).match(url.href));
 }
 
 async function regionalNavigation(request, url, store) {
@@ -85,7 +94,7 @@ async function regionalNavigation(request, url, store) {
     return response;
   } catch {
     const saved = await cache?.match(url.href).catch(() => null);
-    return saved || caches.match('/offline.html');
+    return saved || caches.match('/offline-regional.html');
   }
 }
 
@@ -268,7 +277,11 @@ self.addEventListener('activate', event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('kanto-public-') && !current.includes(key)).map(key => caches.delete(key)))).then(() => self.clients.claim()));
 });
 self.addEventListener('message', event => {
-  if (event.data?.type === 'warm-regional-page') {
+  if (event.data?.type === 'regional-page-status') {
+    const port = event.ports?.[0];
+    event.waitUntil(regionalPageSaved(event.data.path, event.data.warm === true)
+      .then(saved => port?.postMessage({ saved }), () => port?.postMessage({ saved: false })));
+  } else if (event.data?.type === 'warm-regional-page') {
     event.waitUntil(warmRegionalPage(event.data.path).catch(() => {}));
   } else if (event.data?.type === 'warm-scene-audio') {
     event.waitUntil(caches.open(AUDIO_CACHE).then(async cache => {

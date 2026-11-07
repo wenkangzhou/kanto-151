@@ -1,0 +1,8 @@
+.notice{position:fixed;right:20px;bottom:20px;z-index:30;display:flex;align-items:center;gap:8px;max-width:min(360px,calc(100vw - 32px));padding:10px 13px;border:1px solid #d4e5d9;border-radius:12px;background:#fffcf7;box-shadow:0 8px 26px #183d2e1c;color:#486a57;font-size:12px;font-weight:700;line-height:1.5}
+.dot{width:8px;height:8px;flex:none;border-radius:50%;background:#d39a4e}
+.saved .dot{background:#57a77c}
+.checking .dot{background:#8da69b}
+.warning{border-color:#ead7bf;color:#856742}
+.notice button{border:0;background:transparent;color:inherit;text-decoration:underline;font:inherit;font-weight:800;cursor:pointer;padding:0 0 0 4px}
+.notice button:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:2px}
+@media(max-width:600px){.notice{right:12px;bottom:12px;left:12px;max-width:none;justify-content:center;text-align:center}}

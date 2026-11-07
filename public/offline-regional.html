@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#537b70">
+<title>地区图鉴暂不可离线 · Kanto 151</title>
+<style>
+body{margin:0;min-height:100dvh;display:grid;place-items:center;font-family:Arial,"PingFang SC",sans-serif;background:#f1f7f3;color:#29473d}
+main{text-align:center;max-width:390px;padding:28px}
+img{width:84px;border-radius:21px}
+h1{font-size:23px;margin:24px 0 10px}
+p{color:#617c70;line-height:1.8;font-size:15px}
+small{display:block;color:#819a8e;line-height:1.6;margin-top:12px}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:24px}
+button{font:inherit;font-weight:700;border:0;border-radius:12px;padding:13px 17px;cursor:pointer;color:#fff;background:#477b67}
+button+button{background:#fff;color:#477b67;border:1px solid #bdd5c8}
+</style>
+<main>
+  <img src="/icons/icon-192.png" alt="Kanto 151">
+  <h1>这一页还没保存到设备</h1>
+  <p>联网时打开这页，等看到“本页已保存”，以后就能离线重开。已经加载过的图片也可以离线显示。</p>
+  <small>This page has not been saved yet. Open it while online and wait for the saved notice.</small>
+  <div class="actions"><button onclick="history.back()">返回上一页</button><button onclick="location.reload()">重新尝试</button></div>
+</main>
+</html>

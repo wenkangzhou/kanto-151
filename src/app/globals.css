@@ -574,3 +574,4 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 .parent-export>div{flex:1 1 380px;min-width:0}.parent-export h2{display:flex;align-items:center;gap:10px;font-size:22px;margin-bottom:12px}.parent-export p{line-height:1.7}.parent-export>p{flex-basis:100%;margin:0}
 
 .read-aloud-error{display:inline-block;margin-inline-start:6px;color:#a13932;font-size:12px;line-height:1.4;vertical-align:middle}
+.regional-standalone{padding-bottom:64px}
