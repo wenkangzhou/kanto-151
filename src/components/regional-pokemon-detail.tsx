@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, ChartNoAxesColumnIncreasing, ChevronLeft, ChevronRight, MapPinned, Sparkles } from 'lucide-react';
+import { ArrowRight, BookOpen, ChevronLeft, ChevronRight, MapPinned, Sparkles } from 'lucide-react';
 import { TYPE_NAMES, type PokemonType } from '@/domain/types';
 import { swipeDirection } from '@/domain/navigation';
 import type { RegionalDetailRelations } from '@/domain/regional-relations';
@@ -14,6 +14,7 @@ import { PartnerGreeting } from './partner-greeting';
 import { PokemonArt } from './pokemon-art';
 import { ReadAloud } from './read-aloud';
 import { SizeComparison } from './size-comparison';
+import { BaseStatsPanel } from './base-stats-panel';
 import { TypeBadge } from './type-badge';
 import { TypeDiscovery } from './type-discovery';
 import { SystemVoiceProvider } from './voice-mode';
@@ -27,14 +28,6 @@ const regionNames = {
   johto: { zh: '城都', en: 'Johto' },
   hoenn: { zh: '丰缘', en: 'Hoenn' },
 } as const;
-const englishStatNames: Record<string, string> = {
-  hp: 'HP', attack: 'Attack', defense: 'Defense',
-  'special-attack': 'Sp. Atk', 'special-defense': 'Sp. Def', speed: 'Speed',
-};
-const chineseStatNames: Record<string, string> = {
-  hp: '体力', attack: '攻击', defense: '防御',
-  'special-attack': '特攻', 'special-defense': '特防', speed: '速度',
-};
 
 export function RegionalPokemonDetail({ region, pokemon: p, previous, next, relations }: {
   region: Region;
@@ -56,13 +49,6 @@ export function RegionalPokemonDetail({ region, pokemon: p, previous, next, rela
   const gesture = useRef<{ x: number; y: number; pointer: number } | null>(null);
   const suppressClick = useRef(false);
   const router = useRouter();
-  const stats = Object.entries(p.stats) as [keyof typeof p.stats, number][];
-  const total = stats.reduce((sum, [, value]) => sum + value, 0);
-  const strongest = Math.max(...stats.map(([, value]) => value));
-  const strongestNames = stats.filter(([, value]) => value === strongest).map(([key]) => english ? englishStatNames[key] : chineseStatNames[key]);
-  const strength = english
-    ? `Among its six base stats, ${strongestNames.join(' and ')} is highest (${strongest}).`
-    : `六项种族值中，${strongestNames.join('、')}最高（${strongest}）。`;
   const eraTypes = p.kantoEraTypes;
   const family = relations.family;
 
@@ -127,19 +113,9 @@ export function RegionalPokemonDetail({ region, pokemon: p, previous, next, rela
       <p className="panel-footnote">{english ? 'Evolution links connect the same species across regions. This preview does not change your collection.' : '进化关系跨地区相连；这里仅供认识伙伴，不改变已有收藏。'}</p>
     </section>
 
-    <details className="grownup-notes">
-      <summary><ChartNoAxesColumnIncreasing size={22} />{localize('和家长一起看 · 种族值与小知识')}</summary>
-      <section className="detail-panel">
-        <div className="section-heading"><h2><ChartNoAxesColumnIncreasing size={19} aria-hidden="true" />{localize('种族值')}</h2><span className="stat-total">{localize('合计')}<b>{total}</b></span></div>
-        <p className="strength-summary">{strength}</p>
-        <div className="stat-bars">{stats.map(([key, value]) => <div key={key} className="stat-row">
-          <span>{english ? englishStatNames[key] : chineseStatNames[key]}</span><b className="mono">{value}</b>
-          <div role="meter" aria-label={english ? englishStatNames[key] : chineseStatNames[key]} aria-valuenow={value} aria-valuemin={0} aria-valuemax={255}><motion.span initial={{ width: 0 }} animate={{ width: `${value / 255 * 100}%` }} transition={{ duration: .5 }} /></div>
-        </div>)}</div>
-        <p className="panel-footnote">{localize('种族值帮助我们认识伙伴的特点，不是成长分数。')}</p>
-      </section>
+    <BaseStatsPanel stats={p.stats}>
       {eraTypes && eraTypes.join() !== p.types.join() && <p className="type-era-note"><BookOpen size={15} />{localize('小知识：最初的关都冒险里，它的属性是')}{eraTypes.map(type => english ? type : TYPE_NAMES[type as PokemonType]).join(english ? ', ' : '、')}{localize('。这里展示现在的属性。')}</p>}
-    </details>
+    </BaseStatsPanel>
 
     <section className={`acquisition-note ${styles.regionalNote}`}>
       <div className="note-icon"><MapPinned size={23} /></div>

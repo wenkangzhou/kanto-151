@@ -1,0 +1,27 @@
+.panel{margin-top:24px;padding:28px 30px;background:linear-gradient(135deg,#fbfdf9 0%,#fff 58%);border-color:#dde8df}
+.header{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.header h2{margin:5px 0 0;color:#344f49;font-size:23px}
+.header h2 svg{color:#6d9b84}
+.kicker{font-size:11px;font-weight:800;letter-spacing:.14em;color:#7f9b88}
+.total{display:flex;align-items:baseline;gap:8px;padding:10px 15px;border:1px solid #dce9dd;border-radius:999px;background:#f1f7f0;color:#678474;font-size:13px;white-space:nowrap}
+.total b{color:#385a4a;font-size:24px;line-height:1}
+.summary{margin:15px 0 5px;color:#5b7569;font-size:15px;line-height:1.7}
+.content{display:grid;grid-template-columns:minmax(270px,360px) minmax(0,1fr);align-items:center;gap:clamp(16px,4vw,56px);margin-top:12px}
+.chart{margin:0;text-align:center}
+.chart svg{display:block;width:100%;max-width:340px;margin:auto;overflow:visible}
+.grid{fill:#f1f6f1;fill-opacity:.25;stroke:#d8e5dc;stroke-width:1.2}
+.axis{stroke:#d7e3db;stroke-width:1}
+.axisLabel{fill:#71877d;font-size:13px;font-weight:700}
+.shape{fill:#81b29a;fill-opacity:.34;stroke:#4f9176;stroke-width:2.5;stroke-linejoin:round}
+.vertex{stroke:#fff;stroke-width:2}
+.chart figcaption{margin-top:-11px;color:#7f9689;font-size:12px;line-height:1.5}
+.values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.values li{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:16px 16px 16px 14px;border:1px solid #e5ece6;border-left:4px solid var(--stat-color);border-radius:13px;background:#fff}
+.values li.strongest{background:#f2f8f1;border-color:#cfe2d1;border-left-color:var(--stat-color)}
+.name{display:inline-flex;align-items:center;gap:8px;min-width:0;color:#65786d;font-size:13px;font-weight:700}
+.name i{width:8px;height:8px;border-radius:50%;background:var(--stat-color);flex:none}
+.values b{color:#344f49;font-size:23px;line-height:1}
+.footnote{margin:20px 0 0;padding-top:15px;border-top:1px solid #e5ede6;color:#809286;font-size:12px;line-height:1.7}
+@media(max-width:900px){.content{grid-template-columns:1fr;gap:12px}.chart svg{max-width:330px}.chart figcaption{margin-top:-8px}}
+@media(max-width:760px){.panel{padding:22px 20px}.values{gap:9px}.values li{padding:13px}.values b{font-size:20px}}
+@media(max-width:380px){.header h2{font-size:20px}.total{padding:8px 10px}.total b{font-size:19px}.values li{padding:11px 9px}.name{gap:5px;font-size:12px}.values b{font-size:18px}}

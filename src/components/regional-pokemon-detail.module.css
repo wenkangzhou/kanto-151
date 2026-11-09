@@ -9,5 +9,4 @@
 .branchingFamily{flex-wrap:wrap;justify-content:flex-start}
 .branchingFamily :global(.evolution-step){flex:0 1 145px}
 .branchingFamily :global(.chain-arrow){display:none}
-.page :global(.stat-row>span){width:62px;flex:none}
 @media(max-width:640px){.page{padding-top:24px}.previewLabel{text-align:center;margin:-9px 0 18px}.regionLinks{justify-content:center}.branchingFamily :global(.evolution-step){flex:0 1 calc(50% - 10px)}}

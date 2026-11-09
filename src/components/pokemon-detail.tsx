@@ -6,10 +6,10 @@ import { useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { companionNeighbors, swipeDirection, detailReturn, detailHref, teamNeighbors } from '@/domain/navigation';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronLeft, ChevronRight, BookOpen, Sparkles, Heart, ChartNoAxesColumnIncreasing, CalendarDays } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, BookOpen, Sparkles, Heart, CalendarDays } from 'lucide-react';
 import type { Pokemon } from '@/domain/types';
 import { TYPE_NAMES } from '@/domain/types';
-import { baseStatTotal, dexNumber, evolutionFamily, statLabels, strengthSummary } from '@/domain/pokemon';
+import { dexNumber, evolutionFamily } from '@/domain/pokemon';
 import { collectionState, collectedIds, stateNames, unlockHint } from '@/domain/collection';
 import { TypeDiscovery } from './type-discovery';
 import { CollectionMark } from './collection-mark';
@@ -19,6 +19,7 @@ import { PokemonArt } from './pokemon-art';
 import { ReadAloud } from './read-aloud';
 import { TypeBadge } from './type-badge';
 import { SizeComparison } from './size-comparison';
+import { BaseStatsPanel } from './base-stats-panel';
 import { useTeamView } from './team-memory';
 import { centerPartners } from '@/domain/center';
 export function PokemonDetail({ pokemon: p }: { pokemon: Pokemon }) {
@@ -62,7 +63,9 @@ export function PokemonDetail({ pokemon: p }: { pokemon: Pokemon }) {
       const discovered = collectedIds(snapshot).has(member.id);
       return <div className="evolution-step" key={member.id}>{index > 0 && <ArrowRight className="chain-arrow" size={18} />}<Link replace href={href(member.id)} className={p.id === member.id ? 'current-evolution' : ''}><PokemonArt pokemon={member} hidden={!discovered} /><span className="mono">{localize(dexNumber(member.id))}</span><strong>{localize(discovered ? member.name : '???')}</strong><small>{localize(member.evolvesFrom === 133 ? '从伊布选择这一分支' : stateNames[collectionState(member, snapshot)])}</small></Link></div>;
     })}</div><p className="panel-footnote">{localize("一张进化券，就能与一个新形态相遇。无需等级、石头或交换。伊布的三种进化可以分别选择收集。")}</p>{state === 'evolvable' && <Link href="/bag" className="text-link">{localize("去背包看看进化券")}<ArrowRight size={16} /></Link>}</>}</section>
-    <details className="grownup-notes"><summary><ChartNoAxesColumnIncreasing size={22} />{localize("和家长一起看 · 种族值与小知识")}</summary><section className="detail-panel"><div className="section-heading"><h2><ChartNoAxesColumnIncreasing size={19} aria-hidden="true" />{localize("种族值")}</h2><span className="stat-total">{localize("合计")}<b>{localize(baseStatTotal(p))}</b></span></div><p className="strength-summary">{localize(strengthSummary(p))}</p><div className="stat-bars">{Object.entries(p.stats).map(([key, value]) => <div key={key} className="stat-row"><span>{localize(statLabels[key as keyof typeof statLabels])}</span><b className="mono">{localize(value)}</b><div role="meter" aria-label={localize(statLabels[key as keyof typeof statLabels])} aria-valuenow={value} aria-valuemin={0} aria-valuemax={255}><motion.span initial={{ width: 0 }} animate={{ width: `${value / 255 * 100}%` }} transition={{ duration: .5 }} /></div></div>)}</div><p className="panel-footnote">{localize("种族值帮助我们认识伙伴的特点，不是成长分数。")}</p></section>{p.types.join() !== p.kantoEraTypes.join() && <p className="type-era-note"><BookOpen size={15} />{localize("小知识：最初的关都冒险里，它的属性是")}{localize(p.kantoEraTypes.map(type => TYPE_NAMES[type]).join('、'))}{localize("。这里展示现在的属性。")}</p>}</details>
+    <BaseStatsPanel stats={p.stats}>
+      {p.types.join() !== p.kantoEraTypes.join() && <p className="type-era-note"><BookOpen size={15} />{localize("小知识：最初的关都冒险里，它的属性是")}{localize(p.kantoEraTypes.map(type => TYPE_NAMES[type]).join('、'))}{localize("。这里展示现在的属性。")}</p>}
+    </BaseStatsPanel>
     <section className="acquisition-note"><div className="note-icon"><Heart size={23} /></div><div><span className="eyebrow">OUR LITTLE MEMORY</span><h2>{localize("我们的相遇，是因为……")}</h2><p>「{record?.reason || localize('一次值得珍藏的成长')}」</p><span className="memory-date"><CalendarDays size={14} />{record ? new Date(record.acquiredAt).toLocaleDateString(locale === 'en' ? 'en-US' : 'zh-CN', { timeZone: 'Asia/Shanghai' }) : ''} · {localize(record?.method === 'evolution' ? '进化相遇' : '冒险相遇')}{localize(snapshot.source === 'demo' ? ' · 示例记录' : '')}</span></div></section><Link href={back.href} className="button detail-dex-return"><BookOpen size={29} />{localize(back.label)}<ArrowRight size={23} /></Link></> : <div className="mystery-note"><Sparkles size={20} /><h2>{localize("把惊喜，留给相遇的那一天")}</h2><p>{localize("继续认识新伙伴吧，这一页正在等你写下故事。")}</p><Link href={back.href} className="button secondary">{localize(back.label)} <ArrowRight size={16} /></Link></div>}
   </div>;
 }
