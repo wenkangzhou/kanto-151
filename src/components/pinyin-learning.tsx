@@ -11,6 +11,7 @@ import {type LearningView} from '@/lib/learning-session';
 import {speakLearning,stopLearningSpeech} from '@/lib/learning-speech';
 import {usePinyinAudio} from '@/lib/pinyin-audio';
 import {LearningLoading,LearningPartner} from './learning-station';
+import {LearningResultNextStep} from './learning-result-next-step';
 import {PinyinCatalog} from './pinyin-catalog';
 import {Fragment} from 'react';
 import {PinyinPicture} from './pinyin-picture';
@@ -82,7 +83,7 @@ export function PinyinLearning(){
   {!data?<LearningLoading/>:finished?<section className={styles.result}>
    <LearningPartner compact/><h2>{localize("五个小活动完成啦！")}</h2><strong className={styles.earned}>+{localize(lesson.questions.reduce((n,q)=>n+q.stars,0))}<Star fill="currentColor"/></strong>
    <div className={styles.results}>{lesson.questions.map((q,i)=><div key={q.id}><small>{localize(`第${i+1}题`)}</small><b>{localize(pinyinById.get(q.target)!.text)}</b><span>{localize(q.first?'独立答对':q.hint?'提示后完成':'自己改对')}</span></div>)}</div>
-   <p>{localize(view.pending?'这轮记录已保存在本机，星星同步后可兑换':lesson.rewarded?'星星已存入口袋':'自由练习完成啦')}</p>
+   <LearningResultNextStep balance={data.balance} pending={view.pending} syncing={view.syncing} error={view.error} rewarded={lesson.rewarded}/>
    <div className="action-row"><button className="button secondary" onClick={()=>setPracticing(false)}>{localize("回拼音小站")}</button><Link className="button" href="/learn">{localize("回学习小站")}</Link></div>
   </section>:practicing&&question&&target?<>
    <div className={styles.progress}><button className="back-link" disabled={!!celebration} onClick={()=>{setPracticing(false);stop();stopLearningSpeech();void learningClient().flush();}}><ArrowLeft size={18}/>{localize("稍后继续")}</button><div className="lesson-dots" aria-label={localize(`第${lesson!.questions.findIndex(q=>q.id===question.id)+1}题，共5题`)}>{lesson!.questions.map((q,i)=><span key={q.id} className={q.done?'done':q.id===question.id?'active':''}>{q.done?<Check size={16}/>:i+1}</span>)}</div></div>
