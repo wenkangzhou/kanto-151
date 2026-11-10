@@ -11,6 +11,8 @@ import { useCollection } from './collection-provider';
 import { CollectionMark } from './collection-mark';
 import { PokemonArt } from './pokemon-art';
 import { BattleMoveEffect, BattleHitEffect } from './battle-move-effect';
+import { BattleHitInsight, BattleRecapStats, BattleStatPreview } from './battle-stat-insight';
+import statStyles from './battle-stat-insight.module.css';
 import { TypeSymbol } from './type-symbol';
 import { TYPE_NAMES, type PokemonType } from '@/domain/types';
 import {effectiveness} from '@/domain/effectiveness';
@@ -119,6 +121,7 @@ function BattleRecap({state,active,openGuide}:{state:BattleState;active:number;o
       <span className="battle-recap-move"><b>{localize(moment.move.name)}</b>{moment.move.fallback?<small>{localize("特别招式")}</small>:<TypePicture type={moment.move.type}/>}<ArrowRight className="battle-recap-arrow" size={24} aria-hidden="true"/></span>
       <span className="battle-recap-partner"><PokemonArt pokemon={target}/><b>{localize(target.name)}</b><span className="battle-recap-types">{target.types.map(type=><TypePicture type={type} key={type}/>)}</span></span>
     </div>
+    <BattleRecapStats player={active} enemy={state.enemy} first={state.first} move={moment.move} target={moment.target} />
     {moment.move.fallback?<p>{localize('这次使用了不受属性相克影响的特别招式。')}</p>:<div className="battle-recap-explanation">
       <p>{localize(factors.length===1?'这招对目标属性的效果是：':'对手有两种属性，分别计算再相乘：')}</p>
       <div className="battle-recap-factors">{factors.map(({type,value},index)=><span key={type}>{index>0&&<b aria-hidden="true">×</b>}<span>{localize(TYPE_NAMES[moment.move.type])} → {localize(TYPE_NAMES[type])} <strong>×{localize(multiplierLabel(value))}</strong></span></span>)}</div>
@@ -177,10 +180,12 @@ function Match({presets,team,enemy,again,retry,canChange,audioOwner,initialPartn
   const strongImpact=impact&&state.move&&multiplier(state.move,state.lastHit!.target)>1;
   const choose=state.phase==='choose';
   const active=state.active===null?null:pokemonById.get(state.active)!;
+  const insightOrder=state.first==='enemy' ? (['enemy','player'] as const) : (['player','enemy'] as const);
   function pick(id:number){dispatch({type:'choose',id,tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296});setSelected(null);}
   return <>
     <div className="battle-title"><div className="battle-title-main"><Link href="/team" className="back-link"><ArrowLeft size={18}/>{localize("回小队")}</Link></div>{state.active===null&&canChange?<button className="button secondary battle-change-opponent" onClick={again}><Shuffle size={20} aria-hidden="true"/>{localize("选对手")}</button>:<span>{localize("一对一 · 选定后不换伙伴")}</span>}</div>
     <section className={`battle-arena ${strongImpact&&!reduced?'battle-arena-impact':''} ${choose?'battle-arena-choosing':''} ${state.phase==='finished'?'battle-arena-ended':''}`} aria-label={localize(state.phase==='finished'?'对战结果':'对战场地')}>
+      {choose&&selected!==null&&<div className={statStyles.arenaPlacement}><BattleStatPreview player={selected} enemy={enemy} /></div>}
       {state.phase==='finished'?<div className={`battle-result-scene ${state.result==='win'?'won':''}`}>
         <span className="battle-result-heading">{localize("对战结束")}</span>
         <div className="battle-winner-art">
@@ -199,6 +204,7 @@ function Match({presets,team,enemy,again,retry,canChange,audioOwner,initialPartn
       {[state.first==='enemy'?enemy:active.id,state.first==='enemy'?active.id:enemy].map((id,index)=><span className="battle-turn-partner" key={index}>{index===1&&<ArrowRight size={20} aria-hidden="true"/>}<PokemonArt pokemon={pokemonById.get(id)!}/><span><b>{localize(index===0?'先出招':'后出招')} · {localize(pokemonById.get(id)!.name)}</b><small>{localize("速度")}{localize(pokemonById.get(id)!.stats.speed)}</small></span></span>)}
     </div>}
     <div className={`battle-message ${choose?'battle-message-choose':''}`} role="status"><span>{localize(state.message)}</span>{narration.owner===voice&&narration.loading&&<small className="battle-voice-loading">{localize("声音加载中…")}</small>}</div>
+    {active&&state.phase!=='finished'&&state.insights&&<div className={statStyles.hitStack}>{insightOrder.map(side=>state.insights?.[side]&&<BattleHitInsight key={side} insight={state.insights[side]} player={active.id} />)}</div>}
     <section className="battle-controls" aria-label={localize("对战操作")}>
       {state.phase==='finished'?<div className="battle-end"><h2>{localize(state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！')}</h2>{state.moment&&<BattleRecap state={state} active={active!.id} openGuide={openGuide}/>}<p>{localize("下一场双方都会恢复体力，可以重新选伙伴。")}</p><div><button className="button" onClick={()=>next(active!.id)}><ArrowRight size={19}/>{localize("挑战下一位")}</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>{localize("换伙伴")}</button><Link href="/team" className="button secondary">{localize("回小队")}</Link></div></div>:choose?<><h2>{localize("选一位伙伴，再点一下就上场")}</h2><div className="battle-choices">{team.map(id=>{
         const partner=pokemonById.get(id)!;
@@ -212,7 +218,7 @@ function Match({presets,team,enemy,again,retry,canChange,audioOwner,initialPartn
           <span className="battle-choice-health" aria-hidden="true"><span style={{width:`${percent}%`,background:healthColor(percent)}}/></span>
           <small className="battle-choice-status">{localize(selected===id?'再点一下，上场！':status)}</small>
         </button><div className="battle-candidate-types" aria-label={localize(`${partner.name}的属性`)}>{partner.types.map(type=><TypePicture key={type} type={type}/>)}</div><small className="battle-candidate-speed">{localize("速度")}{localize(partner.stats.speed)}</small></article>;
-      })}</div></>:active?<><div className="battle-moves">{usableMoves(active.id,enemy,state.presets[active.id]).map(move=><button key={move.id} disabled={busy} className={state.phase==='player'&&state.move?.id===move.id?'is-casting':''} onClick={()=>{ if(state.phase!=='ready')return; if(!reduced&&typeof navigator.vibrate==='function'){try{navigator.vibrate(18);}catch{ /* Optional hardware feedback must not interrupt a turn. */ }} dispatch({type:'attack',moveId:move.id}); }}><strong>{localize(move.name)}</strong>{move.fallback?<small>{localize("特别招式")}</small>:<TypePicture type={move.type} interactive={false}/>}</button>)}</div></>:null}
+      })}</div>{selected!==null&&<div className={statStyles.mobilePlacement}><BattleStatPreview player={selected} enemy={enemy} /></div>}</>:active?<><div className="battle-moves">{usableMoves(active.id,enemy,state.presets[active.id]).map(move=><button key={move.id} disabled={busy} className={state.phase==='player'&&state.move?.id===move.id?'is-casting':''} onClick={()=>{ if(state.phase!=='ready')return; if(!reduced&&typeof navigator.vibrate==='function'){try{navigator.vibrate(18);}catch{ /* Optional hardware feedback must not interrupt a turn. */ }} dispatch({type:'attack',moveId:move.id}); }}><strong>{localize(move.name)}</strong>{move.fallback?<small>{localize("特别招式")}</small>:<TypePicture type={move.type} interactive={false}/>}</button>)}</div></>:null}
     </section>
   </>;
 }

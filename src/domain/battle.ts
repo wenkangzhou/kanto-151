@@ -6,12 +6,22 @@ export function multiplier(move: BattleMove, target: number) { return move.fallb
 // Uniform level 50, neutral nature, no IVs/EVs; move power is normalized to 40.
 export function maxHp(id: number) { return pokemonById.get(id)!.stats.hp + 60; }
 export function healthPercent(id: number, hp: number) { return Math.max(0, Math.min(100, hp / maxHp(id) * 100)); }
+export function battleStatPair(category: BattleMove['category'], attacker: number, target: number) {
+  const offense = category === 'physical' ? 'attack' : 'special-attack';
+  const guard = category === 'physical' ? 'defense' : 'special-defense';
+  return {
+    offense,
+    guard,
+    offenseValue: pokemonById.get(attacker)!.stats[offense],
+    guardValue: pokemonById.get(target)!.stats[guard],
+  } as const;
+}
 export function damage(move: BattleMove, attacker: number, target: number) {
   const effect = multiplier(move, target);
   if (effect === 0) return 0;
-  const physical = move.category === 'physical';
-  const attack = pokemonById.get(attacker)!.stats[physical ? 'attack' : 'special-attack'] + 5;
-  const defense = pokemonById.get(target)!.stats[physical ? 'defense' : 'special-defense'] + 5;
+  const pair = battleStatPair(move.category, attacker, target);
+  const attack = pair.offenseValue + 5;
+  const defense = pair.guardValue + 5;
   return Math.max(1, Math.floor((22 * 40 * attack / defense / 50 + 2) * effect));
 }
 export function usableMoves(id: number, target: number, saved?: unknown) {
@@ -30,11 +40,12 @@ export function pickOpponent(pool: number[], previous: number | undefined, rando
 }
 export type BattleHit = { target: number; before: number; after: number };
 export type BattleMoment = { move: BattleMove; target: number; multiplier: number };
+export type BattleInsight = { attacker: number; target: number; move: BattleMove; multiplier: number; lost: number };
 export function firstAttacker(player: number, enemy: number, tieRandom: number): 'player' | 'enemy' {
   const difference = pokemonById.get(player)!.stats.speed - pokemonById.get(enemy)!.stats.speed;
   return difference > 0 ? 'player' : difference < 0 ? 'enemy' : tieRandom < .5 ? 'player' : 'enemy';
 }
-export type BattleState = { team: number[]; presets: MovePresets; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; first?: 'player' | 'enemy'; lastHit?: BattleHit; moment?: BattleMoment; phase: 'order' | 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
+export type BattleState = { team: number[]; presets: MovePresets; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; first?: 'player' | 'enemy'; lastHit?: BattleHit; insights?: Partial<Record<'player' | 'enemy', BattleInsight>>; moment?: BattleMoment; phase: 'order' | 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
 export function createBattle(team: number[], enemy: number, presets: MovePresets = {}): BattleState {
   const ids = [...new Set(team)].filter(id => pokemonById.has(id)).slice(0,6);
   return { team: ids, presets: structuredClone(presets), hp: Object.fromEntries(ids.map(id => [id,maxHp(id)])), enemy, enemyHp:maxHp(enemy), active:null, phase:'choose', message:'选一位伙伴出场吧！', move:null, rounds:0 };
@@ -71,7 +82,7 @@ export function battleReducer(s:BattleState,a:BattleAction):BattleState {
     const enemyHp=Math.max(0,s.enemyHp-damage(s.move,s.active!,s.enemy));
     const value=multiplier(s.move,s.enemy);
     const moment=enemyHp<s.enemyHp&&(!s.moment||value>s.moment.multiplier)?{move:s.move,target:s.enemy,multiplier:value}:s.moment;
-    return {...s,enemyHp,moment,lastHit:{target:s.enemy,before:s.enemyHp,after:enemyHp},phase:'player-feedback',message:feedback(s.move,s.enemy)};
+    return {...s,enemyHp,moment,lastHit:{target:s.enemy,before:s.enemyHp,after:enemyHp},insights:{...s.insights,player:{attacker:s.active!,target:s.enemy,move:s.move,multiplier:value,lost:s.enemyHp-enemyHp}},phase:'player-feedback',message:feedback(s.move,s.enemy)};
   }
   if(s.phase==='player-feedback') {
     if(!s.enemyHp)return {...s,phase:'finished',result:'win',message:'配合得真棒！这场友好对战获胜啦！'};
@@ -79,7 +90,7 @@ export function battleReducer(s:BattleState,a:BattleAction):BattleState {
   }
   if(s.phase==='enemy'&&s.move&&s.active!==null) {
     const hp={...s.hp,[s.active]:Math.max(0,s.hp[s.active]-damage(s.move,s.enemy,s.active))};
-    return {...s,hp,lastHit:{target:s.active,before:s.hp[s.active],after:hp[s.active]},phase:'enemy-feedback',message:feedback(s.move,s.active)};
+    return {...s,hp,lastHit:{target:s.active,before:s.hp[s.active],after:hp[s.active]},insights:{...s.insights,enemy:{attacker:s.enemy,target:s.active,move:s.move,multiplier:multiplier(s.move,s.active),lost:s.hp[s.active]-hp[s.active]}},phase:'enemy-feedback',message:feedback(s.move,s.active)};
   }
   if(s.phase==='enemy-feedback'&&s.active!==null) {
     const hp=s.hp;

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { maxHp, healthPercent, firstAttacker, battleMoves, battleReducer, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, usableMoves, type BattleState } from '../src/domain/battle';
+import { maxHp, healthPercent, firstAttacker, battleMoves, battleReducer, battleStatPair, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, usableMoves, type BattleState } from '../src/domain/battle';
 import pokemon from '../src/data/pokemon.json';
 import {learnset} from '../src/domain/battle-loadout';
 function completeStep(s: BattleState): BattleState {
@@ -11,6 +11,26 @@ function completeStep(s: BattleState): BattleState {
 }
 test('every partner has one to four locally cached moves',()=>{for(const p of pokemon){const moves=battleMoves(p.id);assert.ok(moves.length>=1&&moves.length<=4);for(const m of moves)assert.ok(m.name&&m.type);}});
 test('dual type weaknesses, neutral fighting and immunity use the existing chart',()=>{assert.equal(multiplier({id:'x',name:'x',type:'electric',category:'special' as const},16),2);assert.equal(multiplier({id:'x',name:'x',type:'fighting',category:'physical' as const},16),1);assert.equal(damage({id:'x',name:'x',type:'ground',category:'special' as const},4,16),0);});
+test('battle explanations use the same stat pair and actual HP loss as damage',()=>{
+  assert.deepEqual(battleStatPair('physical',4,1),{offense:'attack',guard:'defense',offenseValue:52,guardValue:49});
+  assert.deepEqual(battleStatPair('special',4,1),{offense:'special-attack',guard:'special-defense',offenseValue:60,guardValue:65});
+  const move=battleMoves(4)[0];
+  let state=completeStep(battleReducer(createBattle([4],1),{type:'choose',id:4}));
+  state=battleReducer(state,{type:'attack',moveId:move.id});
+  state=battleReducer(state,{type:'advance'});
+  assert.deepEqual(state.insights?.player,{attacker:4,target:1,move,multiplier:multiplier(move,1),lost:maxHp(1)-state.enemyHp});
+  state=battleReducer(state,{type:'advance'});
+  assert.equal(state.insights?.player?.lost,maxHp(1)-state.enemyHp);
+  state=battleReducer(state,{type:'advance'});
+  assert.equal(state.phase,'enemy-feedback');
+  assert.equal(state.insights?.player?.lost,maxHp(1)-state.enemyHp);
+  assert.equal(state.insights?.enemy?.attacker,1);
+  assert.equal(state.insights?.enemy?.lost,maxHp(4)-state.hp[4]);
+  const immune={id:'mud-slap',name:'掷泥',type:'ground' as const,category:'special' as const};
+  const blocked=battleReducer({...createBattle([4],16),active:4,phase:'player',move:immune},{type:'advance'});
+  assert.equal(blocked.insights?.player?.multiplier,0);
+  assert.equal(blocked.insights?.player?.lost,0);
+});
 test('a turn cannot be double-clicked and the chosen partner is locked for the match',()=>{
   let s=createBattle([4,7],1);
   s=completeStep(battleReducer(s,{type:'choose',id:4}));
