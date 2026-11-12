@@ -27,11 +27,12 @@ export function TeamPreview() {
   </Link>;
 }
 
-export function Team() {
+export function Team({focusPartner}:{focusPartner?:number}) {
   const localize = useT();
   const speakType = useTypeVoice();
   const { snapshot, live } = useCollection();
   const team = snapshot.team ?? [];
+  const focused=focusPartner&&snapshot.records.some(record=>record.pokemonId===focusPartner)?pokemonById.get(focusPartner):undefined;
   const center = snapshot.records.filter(record => !team.includes(record.pokemonId));
   const [editing, setEditing] = useState<{ slot: number; expected: number[] } | null>(null);
   const [notice, setNotice] = useState('');
@@ -43,15 +44,16 @@ export function Team() {
   const restored = useRef(false);
   useLayoutEffect(() => {
     if (restored.current) return;
-    const frame = requestAnimationFrame(() => { window.scrollTo({ top: view.y, behavior: 'instant' }); restored.current = true; });
+    const frame = requestAnimationFrame(() => { window.scrollTo({ top: focusPartner?0:view.y, behavior: 'instant' }); restored.current = true; });
     return () => cancelAnimationFrame(frame);
-  }, [view.y]);
+  }, [focusPartner,view.y]);
   const [inviting, setInviting] = useState<{ id: number; expected: number[] } | null>(null);
   const visible = centerPartners(snapshot.records, team, filter, sort);
   const types = (Object.keys(TYPE_NAMES) as PokemonType[]).filter(type => snapshot.records.some(record => pokemonById.get(record.pokemonId)?.types.includes(type)));
   const edit = (slot: number) => { setNotice(''); setEditing({ slot, expected: [...team] }); };
   return <div className="page team-page" onClickCapture={event => { if ((event.target as HTMLElement).closest('a[href^="/pokemon/"]')) saveTeamView({ y: window.scrollY }); }}>
     <div className="page-heading team-heading"><div><div className="eyebrow">LET’S GO TOGETHER</div><div className="team-title-row"><h1>{localize("我的小队")}<span className="title-dot">.</span></h1><span className="team-count" aria-label={localize(`小队人数 ${team.length} / 6`)}><UsersRound size={24} />{localize(team.length)} / 6</span></div><p>{localize("选六位伙伴，一起出发吧。")}</p></div><Link href="/battle" className="button team-battle-button"><Swords size={24} aria-hidden="true" />{localize("去对战")}</Link></div>
+    {focused&&<div className="team-battle-guide"><PokemonArt pokemon={focused}/><div><strong>{localize(focused.name)}</strong><p role="status">{localize(team.includes(focused.id)?'已经在小队里，一起出发吧！':'先邀请这位伙伴加入小队，再去试试新招式。')}</p></div>{team.includes(focused.id)?<Link className="button" href={`/battle?partner=${focused.id}`}>{localize('去对战试试')}<ArrowRight size={18} aria-hidden="true"/></Link>:<button className="button" disabled={!live||!!inviting} onClick={()=>{setNotice('');setInviting({id:focused.id,expected:[...team]});}}>{localize('先加入小队')}<ArrowRight size={18} aria-hidden="true"/></button>}</div>}
     {!live && <p className="team-demo-note">{localize("这里是示例伙伴。连接家庭后，就能选择自己的小队。")}</p>}
     <section className="team-camp" aria-label={localize("六个随行位置")}><TeamSlots team={team} disabled={!live || Boolean(editing || inviting || movePartner)} edit={edit} configureMoves={setMovePartner} notify={setNotice} /></section>
     {live&&!editing&&!inviting&&movePartner===null&&<MoveDiscovery/>}

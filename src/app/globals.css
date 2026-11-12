@@ -531,6 +531,12 @@ button.type-badge::before{content:"";position:absolute;inset:-7px 0;border-radiu
 
 /* Playback remains independent of equipping or redeeming a move. */
 .shop-battle-link{display:flex;width:max-content;margin:18px auto 0;gap:8px}
+.shop-next-step{text-align:center}.shop-next-step>p{margin:18px 0 0;color:#728569;font-size:14px;line-height:1.6}
+.team-battle-guide,.battle-team-prompt{display:flex;align-items:center;gap:16px;padding:16px 20px;margin:0 0 20px;border:1px solid #d9e4cf;border-radius:18px;background:#f5f9ef;color:#536a4a}
+.team-battle-guide>.pokemon-art,.battle-team-prompt>.pokemon-art{width:72px;height:72px;object-fit:contain;flex:none}
+.team-battle-guide p,.battle-team-prompt p{margin:4px 0 0;font-size:14px;line-height:1.6;color:#6f8067}
+.team-battle-guide>.button,.battle-team-prompt>.button{margin-left:auto;flex:none}
+@media(max-width:640px){.team-battle-guide,.battle-team-prompt{flex-wrap:wrap;padding:14px}.team-battle-guide>.button,.battle-team-prompt>.button{width:100%;justify-content:center;margin-left:0}}
 .move-audio-card{position:relative;min-width:0;display:flex}.move-audio-card>button{width:100%;padding-bottom:54px}.move-audio-card>.read-aloud{position:absolute;right:8px;bottom:5px;margin:0;color:#66845b}.move-audio-card>.read-aloud button{opacity:1}.shop-audio-card>.shop-card{padding-bottom:58px}.shop-dialog h2 .read-aloud{font-size:16px}
 
 .move-slot-grid>.move-audio-card>button,.move-candidate-grid>.move-audio-card>button{padding-bottom:54px}
