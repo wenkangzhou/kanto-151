@@ -41,11 +41,12 @@ export function pickOpponent(pool: number[], previous: number | undefined, rando
 export type BattleHit = { target: number; before: number; after: number };
 export type BattleMoment = { move: BattleMove; target: number; multiplier: number };
 export type BattleInsight = { attacker: number; target: number; move: BattleMove; multiplier: number; lost: number };
+export type BattleMoveUse = {uses:number;damage:number};
 export function firstAttacker(player: number, enemy: number, tieRandom: number): 'player' | 'enemy' {
   const difference = pokemonById.get(player)!.stats.speed - pokemonById.get(enemy)!.stats.speed;
   return difference > 0 ? 'player' : difference < 0 ? 'enemy' : tieRandom < .5 ? 'player' : 'enemy';
 }
-export type BattleState = { team: number[]; presets: MovePresets; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; first?: 'player' | 'enemy'; lastHit?: BattleHit; insights?: Partial<Record<'player' | 'enemy', BattleInsight>>; moment?: BattleMoment; phase: 'order' | 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
+export type BattleState = { team: number[]; presets: MovePresets; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; first?: 'player' | 'enemy'; lastHit?: BattleHit; insights?: Partial<Record<'player' | 'enemy', BattleInsight>>; playerMoveUses?:Record<string,BattleMoveUse>; moment?: BattleMoment; phase: 'order' | 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
 export function createBattle(team: number[], enemy: number, presets: MovePresets = {}): BattleState {
   const ids = [...new Set(team)].filter(id => pokemonById.has(id)).slice(0,6);
   return { team: ids, presets: structuredClone(presets), hp: Object.fromEntries(ids.map(id => [id,maxHp(id)])), enemy, enemyHp:maxHp(enemy), active:null, phase:'choose', message:'选一位伙伴出场吧！', move:null, rounds:0 };
@@ -82,7 +83,9 @@ export function battleReducer(s:BattleState,a:BattleAction):BattleState {
     const enemyHp=Math.max(0,s.enemyHp-damage(s.move,s.active!,s.enemy));
     const value=multiplier(s.move,s.enemy);
     const moment=enemyHp<s.enemyHp&&(!s.moment||value>s.moment.multiplier)?{move:s.move,target:s.enemy,multiplier:value}:s.moment;
-    return {...s,enemyHp,moment,lastHit:{target:s.enemy,before:s.enemyHp,after:enemyHp},insights:{...s.insights,player:{attacker:s.active!,target:s.enemy,move:s.move,multiplier:value,lost:s.enemyHp-enemyHp}},phase:'player-feedback',message:feedback(s.move,s.enemy)};
+    const previous=s.playerMoveUses?.[s.move.id]??{uses:0,damage:0};
+    const playerMoveUses={...s.playerMoveUses,[s.move.id]:{uses:previous.uses+1,damage:previous.damage+s.enemyHp-enemyHp}};
+    return {...s,enemyHp,moment,playerMoveUses,lastHit:{target:s.enemy,before:s.enemyHp,after:enemyHp},insights:{...s.insights,player:{attacker:s.active!,target:s.enemy,move:s.move,multiplier:value,lost:s.enemyHp-enemyHp}},phase:'player-feedback',message:feedback(s.move,s.enemy)};
   }
   if(s.phase==='player-feedback') {
     if(!s.enemyHp)return {...s,phase:'finished',result:'win',message:'配合得真棒！这场友好对战获胜啦！'};

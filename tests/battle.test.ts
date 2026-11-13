@@ -31,6 +31,14 @@ test('battle explanations use the same stat pair and actual HP loss as damage',(
   assert.equal(blocked.insights?.player?.multiplier,0);
   assert.equal(blocked.insights?.player?.lost,0);
 });
+test('player move practice totals count every use and actual HP lost',()=>{
+ const move=battleMoves(4)[0];
+ const start={...createBattle([4],1),active:4,phase:'player' as const,move};
+ const first=battleReducer(start,{type:'advance'});
+ const second=battleReducer({...first,phase:'player',move},{type:'advance'});
+ assert.deepEqual(first.playerMoveUses?.[move.id],{uses:1,damage:start.enemyHp-first.enemyHp});
+ assert.deepEqual(second.playerMoveUses?.[move.id],{uses:2,damage:start.enemyHp-second.enemyHp});
+});
 test('a turn cannot be double-clicked and the chosen partner is locked for the match',()=>{
   let s=createBattle([4,7],1);
   s=completeStep(battleReducer(s,{type:'choose',id:4}));

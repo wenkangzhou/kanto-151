@@ -25,7 +25,7 @@ import { prepareBattleAudio } from '@/lib/battle-assets';
 import { battleSound } from '@/lib/battle-audio';
 import { speakText, stopVoice, subscribeVoice, voiceSnapshot, voiceServerSnapshot, voiceSource } from '@/lib/voice-audio';
 
-type MatchSetup = {team:number[];enemy:number;key:number;partner?:number;tieRandom?:number;presets:MovePresets;resumeState?:BattleState};
+type MatchSetup = {team:number[];enemy:number;key:number;partner?:number;practiceMove?:string;tieRandom?:number;presets:MovePresets;resumeState?:BattleState};
 type SavedRecap = {version:1;token:string;match:MatchSetup;state:BattleState};
 const recapStorageKey='kanto-battle-recap';
 let memoryRecap:SavedRecap|null=null;
@@ -39,7 +39,7 @@ function readRecap(token:string):SavedRecap|null {
   if(state.moment&&!pokemonById.has(state.moment.target))return null;
   return saved;
 }
-export function Battle({recapToken,preferredPartner}:{recapToken?:string;preferredPartner?:number}) {
+export function Battle({recapToken,preferredPartner,practiceMove}:{recapToken?:string;preferredPartner?:number;practiceMove?:string}) {
   const localize = useT();
   const router=useRouter();
   const { snapshot, status } = useCollection();
@@ -76,8 +76,9 @@ export function Battle({recapToken,preferredPartner}:{recapToken?:string;preferr
     // Rapid opponent changes replace the previous announcement instead of toggling it off.
     stopVoice(audioOwner);
     if (announce) speakText(audioOwner, announceOpponent ? pokemonById.get(enemy)!.name : '选一位伙伴出场吧！');
-    setMatch({ team: [...team], presets: structuredClone(snapshot.movePresets??{}), enemy, key: (match?.key ?? 0) + 1, partner:team.includes(partner!)?partner:undefined, tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296 });
-  }, [snapshot, team, match, audioOwner]);
+    const candidate=preferredPartner&&team.includes(preferredPartner)&&practiceMove&&battleMoves(preferredPartner,snapshot.movePresets?.[preferredPartner]).some(move=>move.id===practiceMove)?practiceMove:undefined;
+    setMatch({ team: [...team], presets: structuredClone(snapshot.movePresets??{}), enemy, key: (match?.key ?? 0) + 1, partner:team.includes(partner!)?partner:undefined, practiceMove:match?.practiceMove??candidate, tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296 });
+  }, [snapshot, team, match, audioOwner,preferredPartner,practiceMove]);
   useEffect(() => {
     if (!restoreChecked || match || !team.length || !['ready', 'demo'].includes(status)) return;
     const timer = setTimeout(() => start(false, false, false), 0);
@@ -96,8 +97,8 @@ export function Battle({recapToken,preferredPartner}:{recapToken?:string;preferr
     router.push(`/pokedex/encyclopedia/types?${query.toString()}`);
   },[match,router]);
   return <div className="page battle-page">{!match&&<Link href="/team" className="back-link"><ArrowLeft size={18}/>{localize("回小队")}</Link>}
-    {requestedPartner&&!team.includes(requestedPartner.id)&&<div className="battle-team-prompt"><PokemonArt pokemon={requestedPartner}/><p role="status">{localize('{0}还没加入小队，先邀请它一起出发。',[localize(requestedPartner.name)])}</p><Link className="button secondary" href={`/team?partner=${requestedPartner.id}`}>{localize('先加入小队')}<ArrowRight size={18} aria-hidden="true"/></Link></div>}
-    {match?<Match presets={match.presets} resumeState={match.resumeState} openGuide={openGuide} audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} initialPartner={match.partner} initialSelection={requestedPartner&&team.includes(requestedPartner.id)?requestedPartner.id:undefined} tieRandom={match.tieRandom} next={id=>start(false,false,false,id)} again={()=>setChoosingOpponent(true)} retry={()=>start(true)} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:restoreChecked?<section className="battle-welcome"><Swords size={40}/><h1>{localize("来一场友好对战吧！")}</h1><p>{localize("双方各选一位伙伴，体力用完，这场就结束。")}</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>{localize("正在找你的小队…")}</p>:team.length?<p role="status">{localize("正在准备对手…")}</p>:<><p>{localize("先邀请一位伙伴加入小队吧。")}</p><Link href={requestedPartner?`/team?partner=${requestedPartner.id}`:'/team'} className="button">{localize("去选伙伴")}</Link></>}<small>{localize("每场结束都会恢复体力，不消耗道具。")}</small></section>:null}
+    {requestedPartner&&!team.includes(requestedPartner.id)&&<div className="battle-team-prompt"><PokemonArt pokemon={requestedPartner}/><p role="status">{localize('{0}还没加入小队，先邀请它一起出发。',[localize(requestedPartner.name)])}</p><Link className="button secondary" href={`/team?partner=${requestedPartner.id}${practiceMove?`&move=${encodeURIComponent(practiceMove)}`:''}`}>{localize('先加入小队')}<ArrowRight size={18} aria-hidden="true"/></Link></div>}
+    {match?<Match presets={match.presets} practiceMove={match.practiceMove} resumeState={match.resumeState} openGuide={openGuide} audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} initialPartner={match.partner} initialSelection={requestedPartner&&team.includes(requestedPartner.id)?requestedPartner.id:undefined} tieRandom={match.tieRandom} next={id=>start(false,false,false,id)} again={()=>setChoosingOpponent(true)} retry={()=>start(true)} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:restoreChecked?<section className="battle-welcome"><Swords size={40}/><h1>{localize("来一场友好对战吧！")}</h1><p>{localize("双方各选一位伙伴，体力用完，这场就结束。")}</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>{localize("正在找你的小队…")}</p>:team.length?<p role="status">{localize("正在准备对手…")}</p>:<><p>{localize("先邀请一位伙伴加入小队吧。")}</p><Link href={requestedPartner?`/team?partner=${requestedPartner.id}`:'/team'} className="button">{localize("去选伙伴")}</Link></>}<small>{localize("每场结束都会恢复体力，不消耗道具。")}</small></section>:null}
     {choosingOpponent&&match&&<OpponentPicker current={match.enemy} owned={opponentPool(snapshot.records.map(r=>r.pokemonId))} onClose={()=>setChoosingOpponent(false)} onPick={id=>{setChoosingOpponent(false);start(false,true,true,undefined,id);}}/>}
   </div>;
 }
@@ -132,7 +133,19 @@ function BattleRecap({state,active,openGuide}:{state:BattleState;active:number;o
     </div>}
   </section>;
 }
-function Match({presets,team,enemy,again,retry,canChange,audioOwner,initialPartner,initialSelection,tieRandom,next,resumeState,openGuide}:{presets:MovePresets;initialPartner?:number;initialSelection?:number;tieRandom?:number;next:(id:number)=>void;team:number[];enemy:number;again:()=>void;retry:()=>void;canChange:boolean;audioOwner:string;resumeState?:BattleState;openGuide:(state:BattleState)=>void}) {
+function BattlePracticeRecap({state,active,moveId}:{state:BattleState;active:number;moveId:string}){
+ const localize=useT();
+ const move=battleMoves(active,state.presets[active]).find(candidate=>candidate.id===moveId);
+ if(!move)return null;
+ const use=state.playerMoveUses?.[moveId];
+ const effect=multiplier(move,state.enemy);
+ return <section className="battle-practice-recap" aria-label={localize('新招式练习')}>
+  <h3>{localize('新招式练习')}</h3><div><strong>{localize(move.name)}</strong><TypePicture type={move.type} interactive={false}/></div>
+  <p>{use?localize('这场用了 {0} 次，让对手减少 {1} 点体力。',[use.uses,use.damage]):localize('这场还没用到 {0}，下一场点它试试。',[localize(move.name)])}</p>
+  {use&&<small>{localize(effect===0?'这位对手不受这招影响，下一场换个对手试试。':effect>1?'这招对这位对手很有效，下场也可以试试别的属性。':effect<1?'这招对这位对手效果较弱，下一场比较其他招式。':'下场再试试它，看看遇到不同对手会怎样。')}</small>}
+ </section>;
+}
+function Match({presets,practiceMove,team,enemy,again,retry,canChange,audioOwner,initialPartner,initialSelection,tieRandom,next,resumeState,openGuide}:{presets:MovePresets;practiceMove?:string;initialPartner?:number;initialSelection?:number;tieRandom?:number;next:(id:number)=>void;team:number[];enemy:number;again:()=>void;retry:()=>void;canChange:boolean;audioOwner:string;resumeState?:BattleState;openGuide:(state:BattleState)=>void}) {
   const localize = useT();
  const locale=useLocale();
   const [state,dispatch]=useReducer(battleReducer,undefined,()=>resumeState??createNextBattle(team,enemy,initialPartner,tieRandom,presets));
@@ -208,7 +221,7 @@ function Match({presets,team,enemy,again,retry,canChange,audioOwner,initialPartn
     <div className={`battle-message ${choose?'battle-message-choose':''}`} role="status"><span>{localize(state.message)}</span>{narration.owner===voice&&narration.loading&&<small className="battle-voice-loading">{localize("声音加载中…")}</small>}</div>
     {active&&state.phase!=='finished'&&state.insights&&<div className={statStyles.hitStack}>{insightOrder.map(side=>state.insights?.[side]&&<BattleHitInsight key={side} insight={state.insights[side]} player={active.id} />)}</div>}
     <section className="battle-controls" aria-label={localize("对战操作")}>
-      {state.phase==='finished'?<div className="battle-end"><h2>{localize(state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！')}</h2>{state.moment&&<BattleRecap state={state} active={active!.id} openGuide={openGuide}/>}<p>{localize("下一场双方都会恢复体力，可以重新选伙伴。")}</p><div><button className="button" onClick={()=>next(active!.id)}><ArrowRight size={19}/>{localize("挑战下一位")}</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>{localize("换伙伴")}</button><Link href="/team" className="button secondary">{localize("回小队")}</Link></div></div>:choose?<><h2>{selected===initialSelection&&selected!==null?localize("{0}准备好啦，再点一下就上场！",[localize(pokemonById.get(selected)!.name)]):localize("选一位伙伴，再点一下就上场")}</h2><div className="battle-choices">{team.map(id=>{
+      {state.phase==='finished'?<div className="battle-end"><h2>{localize(state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！')}</h2>{practiceMove&&<BattlePracticeRecap state={state} active={active!.id} moveId={practiceMove}/>}{state.moment&&<BattleRecap state={state} active={active!.id} openGuide={openGuide}/>}<p>{localize("下一场双方都会恢复体力，可以重新选伙伴。")}</p><div><button className="button" onClick={()=>next(active!.id)}><ArrowRight size={19}/>{localize("挑战下一位")}</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>{localize("换伙伴")}</button><Link href="/team" className="button secondary">{localize("回小队")}</Link></div></div>:choose?<><h2>{selected===initialSelection&&selected!==null?localize("{0}准备好啦，再点一下就上场！",[localize(pokemonById.get(selected)!.name)]):localize("选一位伙伴，再点一下就上场")}</h2><div className="battle-choices">{team.map(id=>{
         const partner=pokemonById.get(id)!;
         const hp=state.hp[id];
         const percent=healthPercent(id,hp);
