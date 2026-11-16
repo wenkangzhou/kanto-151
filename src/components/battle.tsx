@@ -143,6 +143,7 @@ function BattlePracticeRecap({state,active,moveId}:{state:BattleState;active:num
   <h3>{localize('新招式练习')}</h3><div><strong>{localize(move.name)}</strong><TypePicture type={move.type} interactive={false}/></div>
   <p>{use?localize('这场用了 {0} 次，让对手减少 {1} 点体力。',[use.uses,use.damage]):localize('这场还没用到 {0}，下一场点它试试。',[localize(move.name)])}</p>
   {use&&<small>{localize(effect===0?'这位对手不受这招影响，下一场换个对手试试。':effect>1?'这招对这位对手很有效，下场也可以试试别的属性。':effect<1?'这招对这位对手效果较弱，下一场比较其他招式。':'下场再试试它，看看遇到不同对手会怎样。')}</small>}
+  <Link className="button secondary" href={`/learn/moves?partner=${active}`}>{localize('看看这位伙伴还能学什么招式')}<ArrowRight size={18} aria-hidden="true"/></Link>
  </section>;
 }
 function Match({presets,practiceMove,team,enemy,again,retry,canChange,audioOwner,initialPartner,initialSelection,tieRandom,next,resumeState,openGuide}:{presets:MovePresets;practiceMove?:string;initialPartner?:number;initialSelection?:number;tieRandom?:number;next:(id:number)=>void;team:number[];enemy:number;again:()=>void;retry:()=>void;canChange:boolean;audioOwner:string;resumeState?:BattleState;openGuide:(state:BattleState)=>void}) {

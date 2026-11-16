@@ -28,7 +28,7 @@ export function MovePicker({ id, onClose, discovery }: { id: number; onClose: ()
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
   const [guided,setGuided]=useState(!!discovery);
-  const [learned,setLearned]=useState<string|null>(null);
+  const [learned,setLearned]=useState<{id:string;name:string}|null>(null);
   const [error, setError] = useState('');
   const [failed,setFailed]=useState(false);
   const [saved, setSaved] = useState<MoveSlots>(() => resolvedSlots(id, snapshot.movePresets?.[id]));
@@ -62,7 +62,7 @@ export function MovePicker({ id, onClose, discovery }: { id: number; onClose: ()
     const next: MoveSlots = [...saved]; next[index] = moveId;
     try {
       await saveMoves(id,next,expected.current);
-      expected.current = next; setSaved(next); setNotice('已保存'); if(guided)setLearned(slotMoves(id,index).find(m=>m.id===moveId)?.name??null);returnToSlots(index);
+      expected.current = next; setSaved(next); setNotice('已保存'); if(guided){const move=slotMoves(id,index).find(m=>m.id===moveId);setLearned(move?{id:move.id,name:move.name}:null);}returnToSlots(index);
     } catch (err) {
       setFailed(true);setError(err instanceof Error ? err.message : '没有保存成功，请重试。');
       await refresh();
@@ -72,7 +72,7 @@ export function MovePicker({ id, onClose, discovery }: { id: number; onClose: ()
   return <dialog ref={dialog} className="loadout-dialog" aria-labelledby={title} onCancel={event=>{event.preventDefault();if(!saving.current){if(slot!==null)returnToSlots(slot);else onClose();}}}>
     <header><h2 id={title}>{localize(slot === null ? `${partner.name}的招式` : slot >= 2 ? '技能机招式' : '升级招式')}</h2><button className="opponent-close" disabled={busy} aria-label={localize("关闭招式设置")} onClick={onClose} autoFocus><X size={24}/></button></header>
     <div className="loadout-dialog-content">
-      {learned?<div className="move-discovery-success"><PokemonArt pokemon={partner}/><h3>{localize(partner.name)}{localize("学会")}{localize(learned)}{localize("啦！")}</h3><ReadAloud systemFallback text={localize(`${partner.name}学会${learned}啦！`)} label={localize("听听新招式")}/><Link className="button" href="/battle" onClick={onClose}>{localize("去对战试试")}</Link><button className="text-link" onClick={()=>{setLearned(null);setGuided(false);}}>{localize("看看其他招式")}</button></div>:slot === null ? <>
+      {learned?<div className="move-discovery-success"><PokemonArt pokemon={partner}/><h3>{localize(partner.name)}{localize("学会")}{localize(learned.name)}{localize("啦！")}</h3><ReadAloud systemFallback text={localize(`${partner.name}学会${learned.name}啦！`)} label={localize("听听新招式")}/><Link className="button" href={`/battle?partner=${id}&move=${encodeURIComponent(learned.id)}`} onClick={onClose}>{localize("去对战试试")}</Link><button className="text-link" onClick={()=>{setLearned(null);setGuided(false);}}>{localize("看看其他招式")}</button></div>:slot === null ? <>
         <div className="loadout-dialog-partner"><PokemonArt pokemon={partner}/></div>
         <div className="move-slot-grid">{saved.map((moveId,index)=>{
           const move=slotMoves(id,index).find(m=>m.id===moveId);
@@ -81,7 +81,7 @@ export function MovePicker({ id, onClose, discovery }: { id: number; onClose: ()
             <small>{localize(index>=2?`技能机 ${index-1}`:`升级 ${index+1}`)}</small><div><strong>{localize(move?.name??'空位')}</strong>{move&&<TypePicture type={move.type} interactive={false}/>}</div>
           </button>{move&&<ReadAloud systemFallback text={localize(move.name)} label={localize(`朗读${move.name}`)}/>}</div>;
         })}</div>
-        {!saved.some(Boolean)&&<p className="loadout-dialog-hint">{localize("对战时使用「挣扎」")}</p>}
+        {!saved.some(Boolean)&&<p className="loadout-dialog-hint">{localize("对战时使用「挣扎」")}</p>}<Link className="text-link move-shop-shortcut" href={`/learn/moves?partner=${id}`} onClick={onClose}>{localize("看看这位伙伴还能学什么招式")}</Link>
 
       </> : <>
         {guided&&<div className="move-discovery-instruction"><strong>{localize("选一招，学个新本领")}</strong><button className="text-link" onClick={()=>setGuided(false)}>{localize("全部招式")}</button></div>}
