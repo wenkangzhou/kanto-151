@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {battleMoves,learnset,type BattleMove} from '../src/domain/battle-loadout';
-import {recommendedMachineMoves} from '../src/domain/move-recommendations';
+import {moveRecommendationReasons,recommendedMachineMoves} from '../src/domain/move-recommendations';
 import type {PokemonType} from '../src/domain/types';
 
 test('suggestions favor stronger attack style and a new type without repeating equipped moves',()=>{
@@ -15,5 +15,7 @@ test('suggestions favor stronger attack style and a new type without repeating e
   equipped[0],
  ];
  assert.deepEqual(recommendedMachineMoves(4,candidates),['special-new','special-current','physical-new']);
+ assert.deepEqual(moveRecommendationReasons(4,candidates[2]),{attackStyle:true,newType:true});
+ assert.deepEqual(moveRecommendationReasons(4,candidates[0]),{attackStyle:false,newType:true});
  assert.ok(recommendedMachineMoves(4,learnset(4).machine).every(id=>!equipped.some(move=>move.id===id)));
 });

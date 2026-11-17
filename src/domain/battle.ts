@@ -31,6 +31,12 @@ export function usableMoves(id: number, target: number, saved?: unknown) {
 export function opponentPool(owned: number[]) {
   return [...new Set(owned)].filter(id => pokemonById.has(id));
 }
+export function suggestPracticeOpponent(move:BattleMove,owned:number[],current:number):number|undefined {
+ const currentEffect=multiplier(move,current);
+ const candidates=opponentPool(owned).filter(id=>id!==current).map(id=>({id,effect:multiplier(move,id)}));
+ return candidates.filter(candidate=>candidate.effect>1).sort((a,b)=>b.effect-a.effect||a.id-b.id)[0]?.id
+  ??candidates.filter(candidate=>candidate.effect>currentEffect).sort((a,b)=>b.effect-a.effect||a.id-b.id)[0]?.id;
+}
 // The caller supplies randomness at click time, never during React rendering.
 export function pickOpponent(pool: number[], previous: number | undefined, random: number, seen: number[] = []): number | undefined {
   const alternatives = pool.filter(id => id !== previous);
