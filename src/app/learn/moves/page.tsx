@@ -1,8 +1,9 @@
 import {MoveShop} from '@/components/move-shop';
-import {partnerFromQuery} from '@/domain/partner-link';
+import {moveFromQuery,partnerFromQuery} from '@/domain/partner-link';
 export const metadata={title:'招式兑换'};
-export default async function Page({searchParams}:{searchParams:Promise<{partner?:string|string[]}>}){
- const {partner}=await searchParams;
+export default async function Page({searchParams}:{searchParams:Promise<{partner?:string|string[];move?:string|string[]}>}){
+ const {partner,move}=await searchParams;
  const selected=partnerFromQuery(partner);
- return <MoveShop key={selected??'all'} initialPartner={selected}/>;
+ const selectedMove=moveFromQuery(move);
+ return <MoveShop key={`${selected??'all'}-${selectedMove??''}`} initialPartner={selected} initialMove={selectedMove}/>;
 }
