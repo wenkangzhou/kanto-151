@@ -142,10 +142,19 @@ function BattlePracticeRecap({state,active,moveId,opponents,onTryOpponent}:{stat
  const use=state.playerMoveUses?.[moveId];
  const effect=multiplier(move,state.enemy);
  const suggestion=suggestPracticeOpponent(move,opponents,state.enemy);
+ const unavailable=!usableMoves(active,state.enemy,state.presets[active]).some(candidate=>candidate.id===moveId);
+ const summary=use
+  ?localize('这场用了 {0} 次，让对手减少 {1} 点体力。',[use.uses,use.damage])
+  :unavailable
+   ?localize(suggestion===undefined?'这位对手不受已装备招式影响，本场只能用挣扎。先比较其他招式。':'这位对手不受已装备招式影响，本场只能用挣扎。换个对手再练习。')
+   :effect===0
+    ?localize(suggestion===undefined?'这场没用到 {0}；已收集的对手都不受这招影响，先比较其他招式。':'这场没用到 {0}；这位对手不受它影响，换个对手练习吧。',[localize(move.name)])
+    :localize('这场还没用到 {0}，下一场点它试试。',[localize(move.name)]);
+ const usedHint=use?localize(effect===0?suggestion===undefined?'已收集的对手都不受这招影响，先比较其他招式。':'这位对手不受这招影响，下一场换个对手试试。':effect>1?'这招对这位对手很有效，下场也可以试试别的属性。':effect<1?'这招对这位对手效果较弱，下一场比较其他招式。':'下场再试试它，看看遇到不同对手会怎样。'):undefined;
  return <section className="battle-practice-recap" aria-label={localize('新招式练习')}>
   <h3>{localize('新招式练习')}</h3><div><strong>{localize(move.name)}</strong><TypePicture type={move.type} interactive={false}/></div>
-  <p>{use?localize('这场用了 {0} 次，让对手减少 {1} 点体力。',[use.uses,use.damage]):localize('这场还没用到 {0}，下一场点它试试。',[localize(move.name)])}</p>
-  {use&&<small>{localize(effect===0?'这位对手不受这招影响，下一场换个对手试试。':effect>1?'这招对这位对手很有效，下场也可以试试别的属性。':effect<1?'这招对这位对手效果较弱，下一场比较其他招式。':'下场再试试它，看看遇到不同对手会怎样。')}</small>}
+  <p>{summary}</p>
+  {usedHint&&<small>{usedHint}</small>}
   {suggestion&&<div className="battle-practice-next"><p>{localize('下一位可以找 {0} 试试，属性效果 ×{1}。',[localize(pokemonById.get(suggestion)!.name),multiplier(move,suggestion)])}</p><button className="button" onClick={()=>onTryOpponent(suggestion)}>{localize('和 {0} 试试',[localize(pokemonById.get(suggestion)!.name)])}<ArrowRight size={18} aria-hidden="true"/></button></div>}
   <Link className="button secondary" href={`/learn/moves?partner=${active}&move=${encodeURIComponent(moveId)}`}>{localize('看看这位伙伴还能学什么招式')}<ArrowRight size={18} aria-hidden="true"/></Link>
  </section>;
@@ -202,7 +211,13 @@ function Match({presets,practiceMove,availableOpponents,team,enemy,again,retry,c
   const active=state.active===null?null:pokemonById.get(state.active)!;
   const practiceCandidate=selected!==null&&practiceMove?battleMoves(selected,state.presets[selected]).find(move=>move.id===practiceMove):undefined;
   const practiceEffect=practiceCandidate?multiplier(practiceCandidate,enemy):undefined;
-  const practiceFeedback=practiceEffect===0?"这招对当前对手没有效果，可以先换对手。":practiceEffect!==undefined&&practiceEffect>1?"这招对当前对手很有效，试试上场！":practiceEffect!==undefined&&practiceEffect<1?"这招对当前对手效果较弱，可以比较其他招式。":"属性效果一般，实际伤害还要看双方能力。";
+  const practiceSuggestion=practiceCandidate?suggestPracticeOpponent(practiceCandidate,availableOpponents,enemy):undefined;
+  const practiceUnavailable=selected!==null&&practiceCandidate?!usableMoves(selected,enemy,state.presets[selected]).some(move=>move.id===practiceCandidate.id):false;
+  let practiceFeedback="属性效果一般，实际伤害还要看双方能力。";
+  if(practiceUnavailable)practiceFeedback=practiceSuggestion===undefined?"这位对手不受已装备招式影响，本场只能用挣扎。先比较其他招式。":"这位对手不受已装备招式影响，本场只能用挣扎。换个对手再练习。";
+  else if(practiceEffect===0)practiceFeedback=practiceSuggestion===undefined?"已收集的对手都不受这招影响，先比较其他招式。":"这招对当前对手没有效果，可以先换对手。";
+  else if(practiceEffect!==undefined&&practiceEffect>1)practiceFeedback="这招对当前对手很有效，试试上场！";
+  else if(practiceEffect!==undefined&&practiceEffect<1)practiceFeedback="这招对当前对手效果较弱，可以比较其他招式。";
   const insightOrder=state.first==='enemy' ? (['enemy','player'] as const) : (['player','enemy'] as const);
   function pick(id:number){dispatch({type:'choose',id,tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296});setSelected(null);}
   return <>
@@ -229,7 +244,7 @@ function Match({presets,practiceMove,availableOpponents,team,enemy,again,retry,c
     <div className={`battle-message ${choose?'battle-message-choose':''}`} role="status"><span>{localize(state.message)}</span>{narration.owner===voice&&narration.loading&&<small className="battle-voice-loading">{localize("声音加载中…")}</small>}</div>
     {active&&state.phase!=='finished'&&state.insights&&<div className={statStyles.hitStack}>{insightOrder.map(side=>state.insights?.[side]&&<BattleHitInsight key={side} insight={state.insights[side]} player={active.id} />)}</div>}
     <section className="battle-controls" aria-label={localize("对战操作")}>
-      {state.phase==='finished'?<div className="battle-end"><h2>{localize(state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！')}</h2>{practiceMove&&<BattlePracticeRecap state={state} active={active!.id} moveId={practiceMove} opponents={availableOpponents} onTryOpponent={id=>next(active!.id,id)}/>}{state.moment&&<BattleRecap state={state} active={active!.id} openGuide={openGuide}/>}<p>{localize("下一场双方都会恢复体力，可以重新选伙伴。")}</p><div><button className="button" onClick={()=>next(active!.id)}><ArrowRight size={19}/>{localize("挑战下一位")}</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>{localize("换伙伴")}</button><Link href="/team" className="button secondary">{localize("回小队")}</Link></div></div>:choose?<><h2>{selected!==null?localize("{0}准备好啦，再点一下就上场！",[localize(pokemonById.get(selected)!.name)]):localize("选一位伙伴，再点一下就上场")}</h2>{practiceCandidate&&<div className="battle-practice-preview" role="status"><div><strong>{localize("新招式预览")} · {localize(practiceCandidate.name)}</strong><TypePicture type={practiceCandidate.type} interactive={false}/></div><p>{localize("对 {0} 的属性效果 ×{1}",[localize(pokemonById.get(enemy)!.name),multiplierLabel(practiceEffect!)])}</p><small>{localize(practiceFeedback)}</small>{practiceEffect!==undefined&&practiceEffect<=1&&canChange&&<button className="button secondary battle-practice-choose-opponent" onClick={()=>again(selected??undefined)}>{localize("看看别的对手")}<ArrowRight size={16} aria-hidden="true"/></button>}</div>}<div className="battle-choices">{team.map(id=>{
+      {state.phase==='finished'?<div className="battle-end"><h2>{localize(state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！')}</h2>{practiceMove&&<BattlePracticeRecap state={state} active={active!.id} moveId={practiceMove} opponents={availableOpponents} onTryOpponent={id=>next(active!.id,id)}/>}{state.moment&&<BattleRecap state={state} active={active!.id} openGuide={openGuide}/>}<p>{localize("下一场双方都会恢复体力，可以重新选伙伴。")}</p><div><button className="button" onClick={()=>next(active!.id)}><ArrowRight size={19}/>{localize("挑战下一位")}</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>{localize("换伙伴")}</button><Link href="/team" className="button secondary">{localize("回小队")}</Link></div></div>:choose?<><h2>{selected!==null?localize("{0}准备好啦，再点一下就上场！",[localize(pokemonById.get(selected)!.name)]):localize("选一位伙伴，再点一下就上场")}</h2>{practiceCandidate&&<div className="battle-practice-preview" role="status"><div><strong>{localize("新招式预览")} · {localize(practiceCandidate.name)}</strong><TypePicture type={practiceCandidate.type} interactive={false}/></div><p>{localize("对 {0} 的属性效果 ×{1}",[localize(pokemonById.get(enemy)!.name),multiplierLabel(practiceEffect!)])}</p><small>{localize(practiceFeedback)}</small>{practiceEffect!==undefined&&practiceEffect<=1&&practiceSuggestion!==undefined&&canChange&&<button className="button secondary battle-practice-choose-opponent" onClick={()=>again(selected??undefined)}>{localize("看看别的对手")}<ArrowRight size={16} aria-hidden="true"/></button>}{practiceEffect!==undefined&&practiceEffect<1&&practiceSuggestion===undefined&&selected!==null&&<Link className="button secondary battle-practice-choose-opponent" href={`/learn/moves?partner=${selected}&move=${encodeURIComponent(practiceCandidate.id)}`}>{localize("比较其他招式")}<ArrowRight size={16} aria-hidden="true"/></Link>}</div>}<div className="battle-choices">{team.map(id=>{
         const partner=pokemonById.get(id)!;
         const hp=state.hp[id];
         const percent=healthPercent(id,hp);

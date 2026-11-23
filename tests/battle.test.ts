@@ -18,6 +18,14 @@ test('practice suggestion chooses a different opponent where the move works bett
  const normal={...electric,type:'normal' as const};
  assert.equal(suggestPracticeOpponent(normal,[16,19],16),undefined);
 });
+test('practice guidance can distinguish an unavailable move from a usable matchup',()=>{
+ const move=battleMoves(129)[0];
+ assert.equal(move.type,'normal');
+ assert.deepEqual(usableMoves(129,92).map(candidate=>candidate.id),['struggle']);
+ assert.equal(suggestPracticeOpponent(move,[92,93,94],92),undefined);
+ assert.equal(suggestPracticeOpponent(move,[92,16],92),16);
+ assert.ok(usableMoves(129,16).some(candidate=>candidate.id===move.id));
+});
 test('battle explanations use the same stat pair and actual HP loss as damage',()=>{
   assert.deepEqual(battleStatPair('physical',4,1),{offense:'attack',guard:'defense',offenseValue:52,guardValue:49});
   assert.deepEqual(battleStatPair('special',4,1),{offense:'special-attack',guard:'special-defense',offenseValue:60,guardValue:65});
