@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { maxHp, healthPercent, firstAttacker, battleMoves, battleReducer, battleStatPair, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, suggestPracticeOpponent, usableMoves, type BattleState } from '../src/domain/battle';
+import { maxHp, healthPercent, firstAttacker, battleMoves, battlePracticeResult, battleReducer, battleStatPair, createBattle, damage, feedback, multiplier, opponentPool, pickOpponent, suggestPracticeOpponent, usableMoves, type BattleState } from '../src/domain/battle';
 import pokemon from '../src/data/pokemon.json';
 import {learnset} from '../src/domain/battle-loadout';
 function completeStep(s: BattleState): BattleState {
@@ -53,6 +53,15 @@ test('player move practice totals count every use and actual HP lost',()=>{
  const second=battleReducer({...first,phase:'player',move},{type:'advance'});
  assert.deepEqual(first.playerMoveUses?.[move.id],{uses:1,damage:start.enemyHp-first.enemyHp});
  assert.deepEqual(second.playerMoveUses?.[move.id],{uses:2,damage:start.enemyHp-second.enemyHp});
+});
+test('a completed practice match captures only the practiced move for the next comparison',()=>{
+ const move=battleMoves(4)[0];
+ const ready=createBattle([4],1);
+ assert.equal(battlePracticeResult(ready,move.id),undefined);
+ const finished:BattleState={...ready,active:4,phase:'finished',playerMoveUses:{[move.id]:{uses:2,damage:34}}};
+ assert.deepEqual(battlePracticeResult(finished,move.id),{partner:4,moveId:move.id,enemy:1,effect:multiplier(move,1),uses:2,damage:34});
+ assert.equal(battlePracticeResult(finished,'not-equipped'),undefined);
+ assert.deepEqual(battlePracticeResult({...finished,playerMoveUses:undefined},move.id),{partner:4,moveId:move.id,enemy:1,effect:multiplier(move,1),uses:0,damage:0});
 });
 test('a turn cannot be double-clicked and the chosen partner is locked for the match',()=>{
   let s=createBattle([4,7],1);

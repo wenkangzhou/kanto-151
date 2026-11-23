@@ -19,13 +19,14 @@ import {effectiveness} from '@/domain/effectiveness';
 import {multiplierLabel} from '@/domain/type-encyclopedia';
 import { TypePicture } from './type-badge';
 import { pokemonById } from '@/domain/pokemon';
-import { battleReducer, createNextBattle, battleMoves, maxHp, healthPercent, opponentPool, pickOpponent, multiplier, suggestPracticeOpponent, usableMoves, type BattleHit, type BattleMove, type BattleState } from '@/domain/battle';
+import { battleReducer, battlePracticeResult, createNextBattle, battleMoves, maxHp, healthPercent, opponentPool, pickOpponent, multiplier, suggestPracticeOpponent, usableMoves, type BattleHit, type BattleMove, type BattlePracticeResult, type BattleState } from '@/domain/battle';
 import type { MovePresets } from '@/domain/battle-loadout';
 import { prepareBattleAudio } from '@/lib/battle-assets';
 import { battleSound } from '@/lib/battle-audio';
 import { speakText, stopVoice, subscribeVoice, voiceSnapshot, voiceServerSnapshot, voiceSource } from '@/lib/voice-audio';
 
-type MatchSetup = {team:number[];enemy:number;key:number;partner?:number;selection?:number;practiceMove?:string;tieRandom?:number;presets:MovePresets;resumeState?:BattleState};
+type MatchSetup = {team:number[];enemy:number;key:number;partner?:number;selection?:number;practiceMove?:string;previousPractice?:BattlePracticeResult;tieRandom?:number;presets:MovePresets;resumeState?:BattleState};
+type StartOptions={keepOpponent?:boolean;announceOpponent?:boolean;announce?:boolean;partner?:number;chosenEnemy?:number;selection?:number;previousPractice?:BattlePracticeResult};
 type SavedRecap = {version:1;token:string;match:MatchSetup;state:BattleState};
 const recapStorageKey='kanto-battle-recap';
 let memoryRecap:SavedRecap|null=null;
@@ -61,7 +62,7 @@ export function Battle({recapToken,preferredPartner,practiceMove}:{recapToken?:s
     },0);
     return()=>clearTimeout(timer);
   },[recapToken]);
-  const start = useCallback((keepOpponent = false, announceOpponent = false, announce = true, partner?:number, chosenEnemy?:number, selection?:number) => {
+  const start = useCallback(({keepOpponent=false,announceOpponent=false,announce=true,partner,chosenEnemy,selection,previousPractice}:StartOptions={}) => {
     const pool=opponentPool(snapshot.records.map(r=>r.pokemonId));
     if (!team.length || !pool.length) return;
     if(chosenEnemy!==undefined&&!pool.includes(chosenEnemy))return;
@@ -78,11 +79,12 @@ export function Battle({recapToken,preferredPartner,practiceMove}:{recapToken?:s
     stopVoice(audioOwner);
     if (announce) speakText(audioOwner, announceOpponent ? pokemonById.get(enemy)!.name : '选一位伙伴出场吧！');
     const candidate=preferredPartner&&team.includes(preferredPartner)&&practiceMove&&battleMoves(preferredPartner,snapshot.movePresets?.[preferredPartner]).some(move=>move.id===practiceMove)?practiceMove:undefined;
-    setMatch({ team: [...team], presets: structuredClone(snapshot.movePresets??{}), enemy, key: (match?.key ?? 0) + 1, partner:team.includes(partner!)?partner:undefined, selection:team.includes(selection!)?selection:undefined, practiceMove:match?.practiceMove??candidate, tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296 });
+    const nextPracticeMove=match?.practiceMove??candidate;
+    setMatch({ team: [...team], presets: structuredClone(snapshot.movePresets??{}), enemy, key: (match?.key ?? 0) + 1, partner:team.includes(partner!)?partner:undefined, selection:team.includes(selection!)?selection:undefined, practiceMove:nextPracticeMove, previousPractice:previousPractice&&previousPractice.partner===partner&&previousPractice.moveId===nextPracticeMove?previousPractice:undefined, tieRandom:crypto.getRandomValues(new Uint32Array(1))[0]/4294967296 });
   }, [snapshot, team, match, audioOwner,preferredPartner,practiceMove]);
   useEffect(() => {
     if (!restoreChecked || match || !team.length || !['ready', 'demo'].includes(status)) return;
-    const timer = setTimeout(() => start(false, false, false), 0);
+    const timer = setTimeout(() => start({announce:false}), 0);
     return () => clearTimeout(timer);
   }, [restoreChecked, match, team.length, status, start]);
   const openGuide=useCallback((state:BattleState)=>{
@@ -100,8 +102,8 @@ export function Battle({recapToken,preferredPartner,practiceMove}:{recapToken?:s
   const pickerMove=match?.practiceMove&&pickerPartner!==null?battleMoves(pickerPartner,match.presets[pickerPartner]).find(move=>move.id===match.practiceMove):undefined;
   return <div className="page battle-page">{!match&&<Link href="/team" className="back-link"><ArrowLeft size={18}/>{localize("回小队")}</Link>}
     {requestedPartner&&!team.includes(requestedPartner.id)&&<div className="battle-team-prompt"><PokemonArt pokemon={requestedPartner}/><p role="status">{localize('{0}还没加入小队，先邀请它一起出发。',[localize(requestedPartner.name)])}</p><Link className="button secondary" href={`/team?partner=${requestedPartner.id}${practiceMove?`&move=${encodeURIComponent(practiceMove)}`:''}`}>{localize('先加入小队')}<ArrowRight size={18} aria-hidden="true"/></Link></div>}
-    {match?<Match presets={match.presets} practiceMove={match.practiceMove} availableOpponents={snapshot.records.map(record=>record.pokemonId)} resumeState={match.resumeState} openGuide={openGuide} audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} initialPartner={match.partner} initialSelection={match.selection??(requestedPartner&&team.includes(requestedPartner.id)?requestedPartner.id:undefined)} tieRandom={match.tieRandom} next={(id,enemy)=>start(false,false,false,id,enemy)} again={id=>{setPickerPartner(id??null);setChoosingOpponent(true);}} retry={()=>start(true)} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:restoreChecked?<section className="battle-welcome"><Swords size={40}/><h1>{localize("来一场友好对战吧！")}</h1><p>{localize("双方各选一位伙伴，体力用完，这场就结束。")}</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>{localize("正在找你的小队…")}</p>:team.length?<p role="status">{localize("正在准备对手…")}</p>:<><p>{localize("先邀请一位伙伴加入小队吧。")}</p><Link href={requestedPartner?`/team?partner=${requestedPartner.id}`:'/team'} className="button">{localize("去选伙伴")}</Link></>}<small>{localize("每场结束都会恢复体力，不消耗道具。")}</small></section>:null}
-    {choosingOpponent&&match&&<OpponentPicker current={match.enemy} owned={opponentPool(snapshot.records.map(r=>r.pokemonId))} practiceMove={pickerMove} onClose={()=>setChoosingOpponent(false)} onPick={id=>{setChoosingOpponent(false);start(false,true,true,undefined,id,pickerPartner??undefined);}}/>}
+    {match?<Match presets={match.presets} practiceMove={match.practiceMove} previousPractice={match.previousPractice} availableOpponents={snapshot.records.map(record=>record.pokemonId)} resumeState={match.resumeState} openGuide={openGuide} audioOwner={audioOwner} key={match.key} team={match.team} enemy={match.enemy} initialPartner={match.partner} initialSelection={match.selection??(requestedPartner&&team.includes(requestedPartner.id)?requestedPartner.id:undefined)} tieRandom={match.tieRandom} next={(id,enemy,previousPractice)=>start({announce:false,partner:id,chosenEnemy:enemy,previousPractice})} again={id=>{setPickerPartner(id??null);setChoosingOpponent(true);}} retry={()=>start({keepOpponent:true})} canChange={opponentPool(snapshot.records.map(r=>r.pokemonId)).some(id=>id!==match.enemy)}/>:restoreChecked?<section className="battle-welcome"><Swords size={40}/><h1>{localize("来一场友好对战吧！")}</h1><p>{localize("双方各选一位伙伴，体力用完，这场就结束。")}</p><div className="battle-lineup">{team.map(id=><PokemonArt key={id} pokemon={pokemonById.get(id)!}/>)}</div>{status==='loading'?<p>{localize("正在找你的小队…")}</p>:team.length?<p role="status">{localize("正在准备对手…")}</p>:<><p>{localize("先邀请一位伙伴加入小队吧。")}</p><Link href={requestedPartner?`/team?partner=${requestedPartner.id}`:'/team'} className="button">{localize("去选伙伴")}</Link></>}<small>{localize("每场结束都会恢复体力，不消耗道具。")}</small></section>:null}
+    {choosingOpponent&&match&&<OpponentPicker current={match.enemy} owned={opponentPool(snapshot.records.map(r=>r.pokemonId))} practiceMove={pickerMove} onClose={()=>setChoosingOpponent(false)} onPick={id=>{setChoosingOpponent(false);start({announceOpponent:true,chosenEnemy:id,selection:pickerPartner??undefined});}}/>}
   </div>;
 }
 const hitStrength = (effect: number) => effect > 1 ? 24 : effect < 1 ? 10 : 17;
@@ -135,7 +137,7 @@ function BattleRecap({state,active,openGuide}:{state:BattleState;active:number;o
     </div>}
   </section>;
 }
-function BattlePracticeRecap({state,active,moveId,opponents,onTryOpponent}:{state:BattleState;active:number;moveId:string;opponents:number[];onTryOpponent:(id:number)=>void}){
+function BattlePracticeRecap({state,active,moveId,opponents,previousPractice,currentPractice,onTryOpponent}:{state:BattleState;active:number;moveId:string;opponents:number[];previousPractice?:BattlePracticeResult;currentPractice?:BattlePracticeResult;onTryOpponent:(id:number)=>void}){
  const localize=useT();
  const move=battleMoves(active,state.presets[active]).find(candidate=>candidate.id===moveId);
  if(!move)return null;
@@ -143,6 +145,7 @@ function BattlePracticeRecap({state,active,moveId,opponents,onTryOpponent}:{stat
  const effect=multiplier(move,state.enemy);
  const suggestion=suggestPracticeOpponent(move,opponents,state.enemy);
  const unavailable=!usableMoves(active,state.enemy,state.presets[active]).some(candidate=>candidate.id===moveId);
+ const compare=previousPractice&&currentPractice&&previousPractice.partner===active&&previousPractice.moveId===moveId&&previousPractice.enemy!==state.enemy&&pokemonById.has(previousPractice.enemy)&&Number.isFinite(previousPractice.effect)&&Number.isFinite(previousPractice.uses)&&Number.isFinite(previousPractice.damage);
  const summary=use
   ?localize('这场用了 {0} 次，让对手减少 {1} 点体力。',[use.uses,use.damage])
   :unavailable
@@ -155,14 +158,19 @@ function BattlePracticeRecap({state,active,moveId,opponents,onTryOpponent}:{stat
   <h3>{localize('新招式练习')}</h3><div><strong>{localize(move.name)}</strong><TypePicture type={move.type} interactive={false}/></div>
   <p>{summary}</p>
   {usedHint&&<small>{usedHint}</small>}
+  {compare&&<div className="battle-practice-comparison" aria-label={localize('两场练习对比')}>
+   <h4>{localize('和上一场比一比')}</h4><div>{([{label:'上一场',result:previousPractice},{label:'这一场',result:currentPractice}] as const).map(({label,result})=><article key={label}><span>{localize(label)}</span><strong>{localize(pokemonById.get(result.enemy)!.name)}</strong><b>×{localize(multiplierLabel(result.effect))}</b><small>{localize('使用 {0} 次 · 减少 {1} 点体力',[result.uses,result.damage])}</small></article>)}</div>
+   <p>{localize('属性倍率可以比较；实际减少的体力还受对手能力和出招次数影响。')}</p>
+  </div>}
   {suggestion&&<div className="battle-practice-next"><p>{localize('下一位可以找 {0} 试试，属性效果 ×{1}。',[localize(pokemonById.get(suggestion)!.name),multiplier(move,suggestion)])}</p><button className="button" onClick={()=>onTryOpponent(suggestion)}>{localize('和 {0} 试试',[localize(pokemonById.get(suggestion)!.name)])}<ArrowRight size={18} aria-hidden="true"/></button></div>}
   <Link className="button secondary" href={`/learn/moves?partner=${active}&move=${encodeURIComponent(moveId)}`}>{localize('看看这位伙伴还能学什么招式')}<ArrowRight size={18} aria-hidden="true"/></Link>
  </section>;
 }
-function Match({presets,practiceMove,availableOpponents,team,enemy,again,retry,canChange,audioOwner,initialPartner,initialSelection,tieRandom,next,resumeState,openGuide}:{presets:MovePresets;practiceMove?:string;availableOpponents:number[];initialPartner?:number;initialSelection?:number;tieRandom?:number;next:(id:number,enemy?:number)=>void;team:number[];enemy:number;again:(selected?:number)=>void;retry:()=>void;canChange:boolean;audioOwner:string;resumeState?:BattleState;openGuide:(state:BattleState)=>void}) {
+function Match({presets,practiceMove,previousPractice,availableOpponents,team,enemy,again,retry,canChange,audioOwner,initialPartner,initialSelection,tieRandom,next,resumeState,openGuide}:{presets:MovePresets;practiceMove?:string;previousPractice?:BattlePracticeResult;availableOpponents:number[];initialPartner?:number;initialSelection?:number;tieRandom?:number;next:(id:number,enemy?:number,previousPractice?:BattlePracticeResult)=>void;team:number[];enemy:number;again:(selected?:number)=>void;retry:()=>void;canChange:boolean;audioOwner:string;resumeState?:BattleState;openGuide:(state:BattleState)=>void}) {
   const localize = useT();
  const locale=useLocale();
   const [state,dispatch]=useReducer(battleReducer,undefined,()=>resumeState??createNextBattle(team,enemy,initialPartner,tieRandom,presets));
+  const currentPractice=practiceMove?battlePracticeResult(state,practiceMove):undefined;
   const [selected,setSelected]=useState<number|null>(()=>initialSelection&&team.includes(initialSelection)?initialSelection:null);
   const reduced=useReducedMotion();
   const voice=useId();
@@ -244,7 +252,7 @@ function Match({presets,practiceMove,availableOpponents,team,enemy,again,retry,c
     <div className={`battle-message ${choose?'battle-message-choose':''}`} role="status"><span>{localize(state.message)}</span>{narration.owner===voice&&narration.loading&&<small className="battle-voice-loading">{localize("声音加载中…")}</small>}</div>
     {active&&state.phase!=='finished'&&state.insights&&<div className={statStyles.hitStack}>{insightOrder.map(side=>state.insights?.[side]&&<BattleHitInsight key={side} insight={state.insights[side]} player={active.id} />)}</div>}
     <section className="battle-controls" aria-label={localize("对战操作")}>
-      {state.phase==='finished'?<div className="battle-end"><h2>{localize(state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！')}</h2>{practiceMove&&<BattlePracticeRecap state={state} active={active!.id} moveId={practiceMove} opponents={availableOpponents} onTryOpponent={id=>next(active!.id,id)}/>}{state.moment&&<BattleRecap state={state} active={active!.id} openGuide={openGuide}/>}<p>{localize("下一场双方都会恢复体力，可以重新选伙伴。")}</p><div><button className="button" onClick={()=>next(active!.id)}><ArrowRight size={19}/>{localize("挑战下一位")}</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>{localize("换伙伴")}</button><Link href="/team" className="button secondary">{localize("回小队")}</Link></div></div>:choose?<><h2>{selected!==null?localize("{0}准备好啦，再点一下就上场！",[localize(pokemonById.get(selected)!.name)]):localize("选一位伙伴，再点一下就上场")}</h2>{practiceCandidate&&<div className="battle-practice-preview" role="status"><div><strong>{localize("新招式预览")} · {localize(practiceCandidate.name)}</strong><TypePicture type={practiceCandidate.type} interactive={false}/></div><p>{localize("对 {0} 的属性效果 ×{1}",[localize(pokemonById.get(enemy)!.name),multiplierLabel(practiceEffect!)])}</p><small>{localize(practiceFeedback)}</small>{practiceEffect!==undefined&&practiceEffect<=1&&practiceSuggestion!==undefined&&canChange&&<button className="button secondary battle-practice-choose-opponent" onClick={()=>again(selected??undefined)}>{localize("看看别的对手")}<ArrowRight size={16} aria-hidden="true"/></button>}{practiceEffect!==undefined&&practiceEffect<1&&practiceSuggestion===undefined&&selected!==null&&<Link className="button secondary battle-practice-choose-opponent" href={`/learn/moves?partner=${selected}&move=${encodeURIComponent(practiceCandidate.id)}`}>{localize("比较其他招式")}<ArrowRight size={16} aria-hidden="true"/></Link>}</div>}<div className="battle-choices">{team.map(id=>{
+      {state.phase==='finished'?<div className="battle-end"><h2>{localize(state.result==='win'?'我们赢啦！':state.result==='draw'?'下次再切磋！':'休息好，再出发！')}</h2>{practiceMove&&<BattlePracticeRecap state={state} active={active!.id} moveId={practiceMove} opponents={availableOpponents} previousPractice={previousPractice} currentPractice={currentPractice} onTryOpponent={id=>next(active!.id,id,currentPractice)}/>}{state.moment&&<BattleRecap state={state} active={active!.id} openGuide={openGuide}/>}<p>{localize("下一场双方都会恢复体力，可以重新选伙伴。")}</p><div><button className="button" onClick={()=>next(active!.id,undefined,currentPractice)}><ArrowRight size={19}/>{localize("挑战下一位")}</button><button className="button secondary" onClick={retry}><RotateCcw size={19}/>{localize("换伙伴")}</button><Link href="/team" className="button secondary">{localize("回小队")}</Link></div></div>:choose?<><h2>{selected!==null?localize("{0}准备好啦，再点一下就上场！",[localize(pokemonById.get(selected)!.name)]):localize("选一位伙伴，再点一下就上场")}</h2>{practiceCandidate&&<div className="battle-practice-preview" role="status"><div><strong>{localize("新招式预览")} · {localize(practiceCandidate.name)}</strong><TypePicture type={practiceCandidate.type} interactive={false}/></div><p>{localize("对 {0} 的属性效果 ×{1}",[localize(pokemonById.get(enemy)!.name),multiplierLabel(practiceEffect!)])}</p><small>{localize(practiceFeedback)}</small>{practiceEffect!==undefined&&practiceEffect<=1&&practiceSuggestion!==undefined&&canChange&&<button className="button secondary battle-practice-choose-opponent" onClick={()=>again(selected??undefined)}>{localize("看看别的对手")}<ArrowRight size={16} aria-hidden="true"/></button>}{practiceEffect!==undefined&&practiceEffect<1&&practiceSuggestion===undefined&&selected!==null&&<Link className="button secondary battle-practice-choose-opponent" href={`/learn/moves?partner=${selected}&move=${encodeURIComponent(practiceCandidate.id)}`}>{localize("比较其他招式")}<ArrowRight size={16} aria-hidden="true"/></Link>}</div>}<div className="battle-choices">{team.map(id=>{
         const partner=pokemonById.get(id)!;
         const hp=state.hp[id];
         const percent=healthPercent(id,hp);

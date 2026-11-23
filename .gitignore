@@ -6,5 +6,6 @@ out/
 *.tsbuildinfo
 .DS_Store
 .vercel/
+generated_images/
 data/.cache/
 public/audio/2004 Pokémon FireRed & Pokémon LeafGreen

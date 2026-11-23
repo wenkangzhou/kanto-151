@@ -53,6 +53,14 @@ export function firstAttacker(player: number, enemy: number, tieRandom: number):
   return difference > 0 ? 'player' : difference < 0 ? 'enemy' : tieRandom < .5 ? 'player' : 'enemy';
 }
 export type BattleState = { team: number[]; presets: MovePresets; hp: Record<number, number>; enemy: number; enemyHp: number; active: number | null; first?: 'player' | 'enemy'; lastHit?: BattleHit; insights?: Partial<Record<'player' | 'enemy', BattleInsight>>; playerMoveUses?:Record<string,BattleMoveUse>; moment?: BattleMoment; phase: 'order' | 'player-feedback' | 'enemy-feedback' | 'summon' | 'choose' | 'ready' | 'player' | 'enemy' | 'finished'; message: string; move: BattleMove | null; rounds: number; result?: 'win' | 'rest' | 'draw' };
+export type BattlePracticeResult = {partner:number;moveId:string;enemy:number;effect:number;uses:number;damage:number};
+export function battlePracticeResult(state:BattleState,moveId:string):BattlePracticeResult|undefined {
+  if(state.phase!=='finished'||state.active===null)return undefined;
+  const move=battleMoves(state.active,state.presets[state.active]).find(candidate=>candidate.id===moveId);
+  if(!move)return undefined;
+  const use=state.playerMoveUses?.[moveId];
+  return {partner:state.active,moveId,enemy:state.enemy,effect:multiplier(move,state.enemy),uses:use?.uses??0,damage:use?.damage??0};
+}
 export function createBattle(team: number[], enemy: number, presets: MovePresets = {}): BattleState {
   const ids = [...new Set(team)].filter(id => pokemonById.has(id)).slice(0,6);
   return { team: ids, presets: structuredClone(presets), hp: Object.fromEntries(ids.map(id => [id,maxHp(id)])), enemy, enemyHp:maxHp(enemy), active:null, phase:'choose', message:'选一位伙伴出场吧！', move:null, rounds:0 };
