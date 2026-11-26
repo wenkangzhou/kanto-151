@@ -12,6 +12,7 @@ import { PokemonArt } from './pokemon-art';
 import { CollectionMark } from './collection-mark';
 import { TicketUse } from './ticket-use';
 import type { InventoryTicket } from '@/domain/types';
+import { rememberDetailDeparture, useReturnPosition } from './page-return-memory';
 function ItemVoice({ name, text, children }: { name: string; text: string; children: ReactNode }) {
   const localize = useT();
   const owner = useId();
@@ -22,13 +23,14 @@ function ItemVoice({ name, text, children }: { name: string; text: string; child
 }
 export function Bag() {
   const localize = useT();
-  const { snapshot, live, pendingCaptures } = useCollection();
+  const { snapshot, live, pendingCaptures, status } = useCollection();
+  useReturnPosition('bag', ['ready', 'demo'].includes(status));
   const [useIntent, setUseIntent] = useState<{type: InventoryTicket['type']; key: number} | null>(null);
   const openTickets = (type: InventoryTicket['type']) => setUseIntent(previous => ({type, key: (previous?.key ?? 0) + 1}));
   const balls = pendingCaptures.length;
   const options = evolutionOptions(snapshot);
   const parents = [...new Set(options.map(p => p.evolvesFrom!))];
-  return <div className="page bag-page"><div className="page-heading"><div><div className="eyebrow"><span /> GOOD THINGS IN YOUR POCKET</div><h1>{localize("装着惊喜的小背包")}<span className="title-dot">.</span></h1><p>{localize("每一张券，都来自一次了不起的努力。")}</p></div></div>
+  return <div className="page bag-page" onClickCapture={event => rememberDetailDeparture('bag', event)}><div className="page-heading"><div><div className="eyebrow"><span /> GOOD THINGS IN YOUR POCKET</div><h1>{localize("装着惊喜的小背包")}<span className="title-dot">.</span></h1><p>{localize("每一张券，都来自一次了不起的努力。")}</p></div></div>
     <p className="bag-listen-hint">{localize("点点道具图片，听听它能做什么。")}</p>
     <div className="ticket-grid bag-items">
       <section className="inventory-ticket ball-ticket">

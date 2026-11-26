@@ -55,7 +55,7 @@ export function TicketUse({ preview, initialType }: { initialType?: InventoryTic
     submitting.current = true;
     if (preview) { preview.onUse(selected); return; }
     setBusy(true); setError(''); setRetrying(true);
-    try { const receipt = await api<Receipt>('tickets/use', { ticketId: ticket.id, targetId: selected.id }); await collection.refresh(); router.push(`/capture?receipt=${receipt.id}`); }
+    try { const receipt = await api<Receipt>('tickets/use', { ticketId: ticket.id, targetId: selected.id }); collection.acceptReceipt(receipt); router.push(`/capture?receipt=${receipt.id}`); }
     catch (error) {
       setError(error instanceof Error ? error.message : '请重试。');
       if (error instanceof RequestError && error.status >= 400 && error.status < 500) setRetrying(false);

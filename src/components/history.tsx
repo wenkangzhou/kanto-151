@@ -6,13 +6,15 @@ import { ArrowRight, Footprints, Heart, Sparkles } from 'lucide-react';
 import { useCollection } from './collection-provider';
 import { pokemonById, dexNumber } from '@/domain/pokemon';
 import { PokemonArt } from './pokemon-art';
+import { rememberDetailDeparture, useReturnPosition } from './page-return-memory';
 export function History() {
   const localize = useT();
   const locale = useLocale();
-  const { snapshot, demo } = useCollection();
+  const { snapshot, demo, status } = useCollection();
+  useReturnPosition('history', ['ready', 'demo'].includes(status));
   const records = [...snapshot.records].sort((a, b) => b.acquiredAt.localeCompare(a.acquiredAt));
   const days = [...new Set(records.map(record => record.acquiredAt.slice(0, 10)))];
-  return <div className="page history-page"><div className="page-heading"><div><div className="eyebrow"><span /> THE STORIES WE KEEP</div><h1>{localize("每一步，都算数")}<span className="title-dot">.</span></h1><p>{localize("宝可梦会记得，那天你很棒的样子。")}</p></div><span className="region-stamp mono">{localize("成长足迹")}<small>{localize(records.length)} LITTLE MEMORIES</small></span></div>
+  return <div className="page history-page" onClickCapture={event => rememberDetailDeparture('history', event)}><div className="page-heading"><div><div className="eyebrow"><span /> THE STORIES WE KEEP</div><h1>{localize("每一步，都算数")}<span className="title-dot">.</span></h1><p>{localize("宝可梦会记得，那天你很棒的样子。")}</p></div><span className="region-stamp mono">{localize("成长足迹")}<small>{localize(records.length)} LITTLE MEMORIES</small></span></div>
     <div className="memory-banner"><Heart size={25} /><div><h2>{localize(records.length)}{localize("件值得珍藏的小事")}</h2><p>{localize(demo ? '这是示例成长手帐，未来这里会记录属于你们的真实故事。' : '这里会记录每一位伙伴，以及那次值得奖励的努力。')}</p></div></div>
     {days.length ? <div className="timeline">{days.map(day => <section key={day} className="timeline-day"><h2><span />{new Date(`${day}T12:00:00+08:00`).toLocaleDateString(locale === 'en' ? 'en-US' : 'zh-CN', { month: 'long', day: 'numeric', timeZone: 'Asia/Shanghai' })}<small className="mono">{localize(day.slice(0, 4))}</small></h2><div className="timeline-records">{records.filter(r => r.acquiredAt.startsWith(day)).reverse().map(record => {
       const p = pokemonById.get(record.pokemonId)!;

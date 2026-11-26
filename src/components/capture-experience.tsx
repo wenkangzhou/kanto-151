@@ -31,7 +31,7 @@ const evolutionStages = [
 ] as const;
 export function Encounter({ receipt, preview = false, onPreviewContinue }: { receipt: Receipt; preview?: boolean; onPreviewContinue?: () => void }) {
   const localize = useT();
-  const { refresh, visitorDemo } = useCollection(); const router = useRouter(); const reduced = useReducedMotion();
+  const { refresh, visitorDemo, acknowledgeReceipt } = useCollection(); const router = useRouter(); const reduced = useReducedMotion();
   const evolution = receipt.kind === 'evolution'; const stages = evolution ? evolutionStages : captureStages;
   const [giftOpened, setGiftOpened] = useState(false);
   const [started, setStarted] = useState(false);
@@ -59,12 +59,12 @@ export function Encounter({ receipt, preview = false, onPreviewContinue }: { rec
     if (!revealed || preview) return;
     if (receipt.kind !== 'capture' || receipt.acknowledged_at) { void refresh(); return; }
     // A closed app before the reveal keeps the ball available. Retrying is idempotent.
-    void api('receipts/acknowledge', { id: receipt.id }).then(() => refresh()).catch(() => setError('开球进度暂未同步，请点“看详情”重试保存。'));
-  }, [revealed, refresh, preview, receipt.id, receipt.kind, receipt.acknowledged_at]);
+    void api('receipts/acknowledge', { id: receipt.id }).then(() => acknowledgeReceipt(receipt.id)).catch(() => setError('开球进度暂未同步，请点“看详情”重试保存。'));
+  }, [revealed, refresh, acknowledgeReceipt, preview, receipt.id, receipt.kind, receipt.acknowledged_at]);
   async function finish() {
     if (preview) { onPreviewContinue?.(); return; }
     if (busy) return; setBusy(true); setError('');
-    try { await api('receipts/acknowledge', { id: receipt.id }); await refresh(); router.replace(target ? `/pokemon/${target.id}?from=capture&receipt=${encodeURIComponent(receipt.id)}` : '/bag'); }
+    try { await api('receipts/acknowledge', { id: receipt.id }); acknowledgeReceipt(receipt.id); router.replace(target ? `/pokemon/${target.id}?from=capture&receipt=${encodeURIComponent(receipt.id)}` : '/bag'); }
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); setBusy(false); }
   }
   const activeArt = evolution && before && ['idle', 'prepare', 'glowing'].includes(stage) ? before : target;
@@ -79,28 +79,29 @@ export function Encounter({ receipt, preview = false, onPreviewContinue }: { rec
 }
 export function CaptureExperience() {
   const localize = useT();
-  const { live, pendingReceipt, snapshot, refresh } = useCollection(); const router = useRouter(); const search = useSearchParams();
+  const { live, pendingReceipt, snapshot, recentReceipt, acceptReceipt } = useCollection(); const router = useRouter(); const search = useSearchParams();
   const receiptId = search.get('receipt'); const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [code, setCode] = useState(''); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
+  const shownReceipt = recentReceipt?.id === receiptId ? recentReceipt : receipt?.id === receiptId ? receipt : null;
   useEffect(() => {
-    if (!receiptId || !live || receipt?.id === receiptId) return;
+    if (!receiptId || !live || shownReceipt) return;
     const controller = new AbortController();
     api<Receipt>(`receipts/${encodeURIComponent(receiptId)}`, undefined, controller.signal).then(result => { if (!controller.signal.aborted) { setReceipt(result); setError(''); } }).catch(error => { if (!controller.signal.aborted) setError(error.message); });
     return () => controller.abort();
-  }, [receiptId, live, receipt?.id]);
+  }, [receiptId, live, shownReceipt]);
   async function redeem(event: FormEvent) {
     event.preventDefault(); if (!live || busy || !/^[0-9]{6}$/.test(code)) return; setBusy(true); setError('');
-    try { const result = await api<Receipt>('redeem', { code }); setReceipt(result); void refresh(); router.push(`/capture?receipt=${result.id}`); }
+    try { const result = await api<Receipt>('redeem', { code }); setReceipt(result); acceptReceipt(result); router.push(`/capture?receipt=${result.id}`); }
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); }
     finally { setBusy(false); }
   }
   async function mew() {
     if (busy) return; setBusy(true); setError('');
-    try { const result = await api<Receipt>('mew', {}); setReceipt(result); void refresh(); router.push(`/capture?receipt=${result.id}`); }
+    try { const result = await api<Receipt>('mew', {}); setReceipt(result); acceptReceipt(result); router.push(`/capture?receipt=${result.id}`); }
     catch (error) { setError(error instanceof Error ? error.message : '请重试。'); }
     finally { setBusy(false); }
   }
-  if (live && receiptId && receipt?.id === receiptId) return <div className="page"><Encounter key={receipt.id} receipt={receipt} /></div>;
+  if (live && receiptId && shownReceipt) return <div className="page"><Encounter key={shownReceipt.id} receipt={shownReceipt} /></div>;
   if (live && receiptId) return <div className="page">{error ? <div className="empty-state"><h2>{localize("暂时没有读到这次相遇")}</h2><p role="alert">{localize(error)}</p><button className="button" onClick={() => window.location.reload()}>{localize("重新读取已保存的结果")}</button><Link href="/capture" className="text-link">{localize("返回兑换入口")}</Link></div> : <PokeballLoader label={localize("正在读取已经保存的相遇…")} />}</div>;
   return <div className="page capture-entry"><div className="page-heading"><div><div className="eyebrow"><span /> YOUR EFFORT BECOMES A MEMORY</div><h1>{localize("一份努力，一次相遇")}<span className="title-dot">.</span></h1><p>{localize("把家长送给你的六位数字，变成一次新的成长。")}</p></div></div><section className="access-card redeem-card keypad-redeem-card"><span className="redeem-ball-emblem"><CollectionMark state="available" /></span><h2>{localize("打开奖励")}</h2>{!live && <p>{localize("当前是示例冒险，连接家庭后即可兑换。")}</p>}<form onSubmit={redeem} className="family-form"><RewardKeypad value={code} onChange={value => { setCode(value); setError(''); }} disabled={!live || busy} />{error && <p className="form-error" role="alert">{localize(error)}</p>}<button className={`button keypad-submit ${code.length === 6 ? 'ready' : ''}`} disabled={!live || busy || code.length !== 6}>{busy ? <><span className="keypad-saving-ball" aria-hidden="true"><span className="pokeball"><span className="pokeball-button" /></span></span>{localize("正在打开奖励…")}</> : <><CollectionMark state="available" />{localize("打开！")}<ArrowRight size={24} /></>}</button></form><details className="keypad-parent-note"><summary>{localize("家长输入提示")}</summary><p>{localize("也可以点数字格，用键盘或粘贴输入。网络中断后，用同一码重试会返回原来的结果。")}</p></details></section>{pendingReceipt && <Link href={`/capture?receipt=${pendingReceipt.id}`} className="pending-receipt"><Sparkles size={22} /><span>{localize("还有一份已经保存的惊喜，等你打开。")}</span><ArrowRight size={18} /></Link>}{live && legendaryEligible(151, snapshot) && <section className="mew-unlock"><Sparkles size={32} /><h2>{localize("150 位伙伴，让最后的奇迹醒来了")}</h2><p>{localize("这一次，不需要奖励码，也不需要传说券。")}</p><button className="button" disabled={busy} onClick={() => void mew()}>{localize("开启最后的相遇")}</button></section>}</div>;
 }

@@ -9,15 +9,17 @@ import type { CollectionSnapshot, FamilySession, InventoryTicket, LiveSnapshot, 
 import { isVisitorDemo } from '@/lib/demo-mode';
 import { api } from '@/lib/api-client';
 import { LatestRead } from '@/lib/latest-read';
+import { includeConfirmedReceipt, markReceiptViewed } from '@/domain/receipt-session';
 interface CollectionContext {
   snapshot: CollectionSnapshot; visitorDemo: boolean; demo: boolean; live: boolean; toggleDemo: () => void;
   status: FamilySession['status'] | 'loading' | 'error'; error: string; parent: boolean;
   childName: string; familyName: string; tickets: InventoryTicket[]; pendingReceipt: Receipt | null; pendingCaptures: Receipt[];
   refresh: () => Promise<void>;
+  recentReceipt: Receipt | null; acceptReceipt: (receipt: Receipt) => void; acknowledgeReceipt: (id: string) => void;
   saveMoves: (id: number, moves: MoveSlots, expected: MoveSlots | null) => Promise<void>;
   saveTeam: (team: number[], expected: number[]) => Promise<void>;
 }
-const Context = createContext<CollectionContext>({ snapshot: emptySnapshot, visitorDemo: false, demo: false, live: false, toggleDemo() {}, status: 'loading', error: '', parent: false, childName: '', familyName: '', tickets: [], pendingReceipt: null, pendingCaptures: [], async refresh() {}, async saveTeam() {}, async saveMoves() {} });
+const Context = createContext<CollectionContext>({ snapshot: emptySnapshot, visitorDemo: false, demo: false, live: false, toggleDemo() {}, status: 'loading', error: '', parent: false, childName: '', familyName: '', tickets: [], pendingReceipt: null, pendingCaptures: [], recentReceipt: null, acceptReceipt() {}, acknowledgeReceipt() {}, async refresh() {}, async saveTeam() {}, async saveMoves() {} });
 const subscribe = (callback: () => void) => {
   window.addEventListener('storage', callback); window.addEventListener('kanto-settings', callback);
   return () => { window.removeEventListener('storage', callback); window.removeEventListener('kanto-settings', callback); };
@@ -29,6 +31,7 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
   const live = configuredLive || visitorDemo;
   const preference = useSyncExternalStore(subscribe, getPreference, () => true);
   const [session, setSession] = useState<FamilySession | null>(null);
+  const [recentReceipt, setRecentReceipt] = useState<Receipt | null>(null);
   const [error, setError] = useState('');
   const reads = useRef(new LatestRead());
   const savingTeam = useRef(false);
@@ -41,6 +44,19 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
       error => setError(error instanceof Error ? error.message : '暂时无法连接家庭手帐。'),
     );
   }, [live]);
+  const acceptReceipt = useCallback((receipt: Receipt) => {
+    reads.current.invalidate();
+    setRecentReceipt(receipt);
+    setSession(previous => previous?.snapshot ? { ...previous, snapshot: includeConfirmedReceipt(previous.snapshot, receipt) } : previous);
+    setError('');
+    void refresh();
+  }, [refresh]);
+  const acknowledgeReceipt = useCallback((id: string) => {
+    reads.current.invalidate();
+    setRecentReceipt(previous => previous?.id === id ? { ...previous, acknowledged_at: new Date().toISOString() } : previous);
+    setSession(previous => previous?.snapshot ? { ...previous, snapshot: markReceiptViewed(previous.snapshot, id) } : previous);
+    void refresh();
+  }, [refresh]);
   const saveTeam = useCallback(async (team: number[], expected: number[]) => {
     if (!live) throw new Error('示例模式只能看看伙伴，连接家庭后就能组队。');
     if (savingTeam.current) throw new Error('正在安排伙伴，请稍等。');
@@ -67,26 +83,28 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
   },[live, refresh]);
   useEffect(() => {
     if (!live) return;
+    const activeReads = reads.current;
     const lock = () => {
-      reads.current.invalidate();
+      activeReads.invalidate();
       setSession(previous => previous ? { ...previous, parent: false } : previous);
     };
     const lost = () => {
-      reads.current.invalidate();
+      activeReads.invalidate();
+      setRecentReceipt(null);
       setSession({ status: 'unpaired' });
       setError('');
     };
     const focus = () => {
       if (document.visibilityState === 'visible' && navigator.onLine) void refresh(false);
     };
-    reads.current.invalidate();
+    activeReads.invalidate();
     void refresh(false);
     const interval = window.setInterval(focus, 60_000);
     window.addEventListener('focus', focus); window.addEventListener('online', focus);
     document.addEventListener('visibilitychange', focus);
     window.addEventListener('kanto-parent-locked', lock); window.addEventListener('kanto-device-lost', lost);
     return () => {
-      reads.current.invalidate();
+      activeReads.invalidate();
       window.clearInterval(interval);
       window.removeEventListener('focus', focus); window.removeEventListener('online', focus);
       document.removeEventListener('visibilitychange', focus);
@@ -103,7 +121,7 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
   return <Context.Provider value={{ snapshot, visitorDemo, demo: !live && preference, live, toggleDemo,
     status: !live ? 'demo' : session?.status === 'ready' ? 'ready' : error ? 'error' : session?.status ?? 'loading', error,
     parent: session?.parent ?? false, childName: session?.childName ?? '', familyName: session?.familyName ?? '',
-    pendingCaptures: session?.snapshot?.pendingCaptures ?? [], tickets: session?.snapshot?.tickets ?? [], pendingReceipt: session?.snapshot?.pendingReceipt ?? null, refresh, saveTeam, saveMoves,
+    pendingCaptures: session?.snapshot?.pendingCaptures ?? [], tickets: session?.snapshot?.tickets ?? [], pendingReceipt: session?.snapshot?.pendingReceipt ?? null, recentReceipt, acceptReceipt, acknowledgeReceipt, refresh, saveTeam, saveMoves,
   }}><MotionConfig reducedMotion="user">{localize(children)}</MotionConfig></Context.Provider>;
 }
 export const useCollection = () => useContext(Context);
