@@ -63,23 +63,27 @@ export function CollectionProvider({ children, live: configuredLive = false }: {
     savingTeam.current = true;
     reads.current.invalidate();
     const token = reads.current.token();
+    let needsRefresh = true;
     try {
       const next = await api<LiveSnapshot>('team', { team, expected });
       if (!reads.current.isCurrent(token)) return;
       setSession(previous => previous ? { ...previous, snapshot: { ...next, pendingCaptures: previous.snapshot?.pendingCaptures } } : previous);
       setError('');
-    } finally { savingTeam.current = false; void refresh(); }
+      needsRefresh = false;
+    } finally { savingTeam.current = false; if (needsRefresh) void refresh(); }
   }, [live, refresh]);
   const saveMoves = useCallback(async (id:number, moves:MoveSlots, expected:MoveSlots|null) => {
     if (!live) throw new Error('请先连接家庭或进入演示模式。');
     if (savingTeam.current) throw new Error('正在保存，请稍等。');
     savingTeam.current=true; reads.current.invalidate();
     const token = reads.current.token();
+    let needsRefresh = true;
     try {
       const next=await api<LiveSnapshot>('battle/moves',{pokemonId:id,moves,expected});
       if (!reads.current.isCurrent(token)) return;
       setSession(previous=>previous?{...previous,snapshot:{...next,pendingCaptures:previous.snapshot?.pendingCaptures}}:previous);setError('');
-    } finally { savingTeam.current=false; void refresh(); }
+      needsRefresh = false;
+    } finally { savingTeam.current=false; if (needsRefresh) void refresh(); }
   },[live, refresh]);
   useEffect(() => {
     if (!live) return;
