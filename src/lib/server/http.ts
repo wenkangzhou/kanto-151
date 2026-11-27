@@ -82,16 +82,19 @@ export async function deviceSession(request: NextRequest): Promise<DeviceSession
   const token = request.cookies.get('kanto_device')?.value;
   if (!token || !/^[\w-]{43}$/.test(token)) throw new ApiError(401, 'DEVICE_REQUIRED', '请先连接家庭设备。');
   const client = db();
-  const { data: device, error } = await client.from('kanto_devices').select('id,child_id').eq('token_hash', tokenHash(token)).is('revoked_at', null).gt('expires_at', new Date().toISOString()).maybeSingle();
+  const { data: device, error } = await client.from('kanto_devices')
+    .select('id,child:kanto_children!inner(id,name,family:kanto_families!inner(id,name,auth_version))')
+    .eq('token_hash', tokenHash(token)).is('revoked_at', null).gt('expires_at', new Date().toISOString()).maybeSingle();
   if (error) throw databaseError(error);
   if (!device) throw new ApiError(401, 'DEVICE_REQUIRED', '设备连接已失效，请重新连接。');
-  const { data: child, error: childError } = await client.from('kanto_children').select('id,name,family_id').eq('id', device.child_id).single();
-  if (childError) throw databaseError(childError);
-  const { data: family, error: familyError } = await client.from('kanto_families').select('id,name,auth_version').eq('id', child.family_id).single();
-  if (familyError) throw databaseError(familyError);
+  // PostgREST returns objects for these many-to-one relations; the untyped client infers arrays.
+  const linked = device as unknown as { id: string; child: { id: string; name: string; family: { id: string; name: string; auth_version: number } } };
+  const child = linked.child;
+  const family = child?.family;
+  if (!child || !family) throw new ApiError(503, 'DATABASE', '暂时无法连接家庭手帐，请稍后重试。');
   const config = getRuntimeConfig()!;
-  const parentExpiresAt = parentSessionExpiry(request.cookies.get('kanto_parent')?.value ?? '', device.id, family.auth_version, config.sessionSecret);
-  return { deviceId: device.id, childId: child.id, familyId: family.id, childName: child.name, familyName: family.name, authVersion: family.auth_version,
+  const parentExpiresAt = parentSessionExpiry(request.cookies.get('kanto_parent')?.value ?? '', linked.id, family.auth_version, config.sessionSecret);
+  return { deviceId: linked.id, childId: child.id, familyId: family.id, childName: child.name, familyName: family.name, authVersion: family.auth_version,
     parent: parentExpiresAt !== null, parentExpiresAt };
 }
 export async function parentSession(request: NextRequest) {
